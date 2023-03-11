@@ -1,0 +1,80 @@
+.confetti-captain-profile-label-container {
+	display:flex;
+	flex-flow: row nowrap;
+	width:100%;
+	height:100%;
+	max-height:30px;
+	justify-content:flex-start;
+	align-items:center;
+	margin:10px 0 10px 0;
+}
+
+.confetti-captain-badge-container {
+	display:block;
+	z-index:30;
+	width:30px;
+	height:30px;
+	flex:0 0 30px;
+	margin:5px;
+}
+
+.confetti-captain-profile-label {
+	display:flex;
+	margin:5px;
+	color:#d1cbc1;
+	max-width:150px;
+	flex:0 0 150px;
+	align-items:center;
+	align-content:center;
+	justify-content:flex-start;
+}
+
+.confetti-captain-badge-medium {
+	background-color:transparent;
+	background-image:url('../images/sparkler.svg');
+	background-repeat:no-repeat;
+	border: 2px solid #dbb778;
+	border-radius:50%;
+	display:block;
+	width:30px;
+	height:30px;
+	margin:auto;
+}
+
+.confetti-captain-badge-small {	
+	display:block;
+	background-image:url('../images/sparkler.svg');
+	position:relative;
+	margin:-10px auto;
+	width:100%;
+	max-width:20px;
+	height:100%;
+	max-height:20px;
+	background-repeat:no-repeat;
+}
+
+@media ( max-width: 740px ) {
+	.confetti-captain-badge-container {
+		display:block;
+		margin:15px;
+		flex:1 0 100%;
+	}
+	.confetti-captain-profile-label-container {
+		width:auto;
+		height:100%;
+		max-height:100%;
+		flex-flow:row wrap;
+		justify-content:center;
+		text-align:center;
+	}
+	.confetti-captain-profile-label {
+		width:100%;
+		margin:auto;
+		flex:1 0 100%;
+		justify-content:center;
+	}
+	.confetti-captain-badge-medium {
+		width:40px;
+		height:40px;
+	}
+}
