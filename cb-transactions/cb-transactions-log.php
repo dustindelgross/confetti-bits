@@ -242,3 +242,66 @@ function cb_log_entries( $paged_transactions ) {
 	}
 }
 
+<<<<<<< HEAD
+=======
+function cb_ajax_get_transactions_by_id() {
+	if ( !isset( $_GET['user_id'] ) ) {
+		http_response_code(400);
+		die();
+	}
+	$page = 1;
+	$per_page = 15;
+
+	if ( isset( $_GET['page'] ) ) {
+		$page = intval( $_GET['page'] );
+	}
+
+	if ( isset( $_GET['per_page'] ) ) {
+		$per_page = intval( $_GET['per_page'] );
+	}
+
+	$recipient_id = intval( $_GET['user_id'] );
+
+	$args = array(
+		'where' => array(
+			'recipient_id'	=> $recipient_id,
+			'sender_id'		=> $recipient_id,
+			'or'			=> true
+		),
+		'order' => array( 'id', 'DESC' ),
+		'pagination' => array( ($page) * $per_page, $per_page )
+	);
+
+	$transaction = new Confetti_Bits_Transactions_Transaction();
+	$transactions = $transaction->get_transactions($args);
+
+	echo json_encode($transactions);
+	die();
+
+}
+add_action('wp_ajax_cb_participation_get_transactions', 'cb_ajax_get_transactions_by_id');
+
+function cb_ajax_get_total_transactions() {
+	if ( !isset( $_GET['user_id'] ) ) {
+		http_response_code(400);
+		die();
+	}
+
+	$recipient_id = intval( $_GET['user_id'] );
+	$args = array(
+		'select'	=> 'COUNT(id) as total_count',
+		'where' => array(
+			'recipient_id'	=> $recipient_id,
+			'sender_id'		=> $recipient_id,
+			'or'			=> true
+		),
+	);
+	$transaction = new Confetti_Bits_Transactions_Transaction();
+	$count = $transaction->get_transactions($args);
+
+	echo json_encode($count);
+	die();
+
+}
+add_action( 'wp_ajax_cb_participation_get_total_transactions', 'cb_ajax_get_total_transactions' );
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)

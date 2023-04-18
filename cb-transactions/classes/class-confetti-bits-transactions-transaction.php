@@ -161,8 +161,12 @@ class Confetti_Bits_Transactions_Transaction {
 		);
 
 		global $wpdb;
+<<<<<<< HEAD
 		$bp = buddypress();
 		$cb = Confetti_Bits();
+=======
+
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		$fetched_transaction = ( ! empty( $transaction[0] ) ? current( $transaction ) : array() );
 		if ( ! empty( $fetched_transaction ) && ! is_wp_error( $fetched_transaction ) ) {
 			$this->item_id           = (int) $fetched_transaction['item_id'];
@@ -457,9 +461,17 @@ class Confetti_Bits_Transactions_Transaction {
 					),
 					'component_name'	=> 'confetti_bits',
 					'component_action'	=> '',
+<<<<<<< HEAD
 				),
 				'pagination'	=> array(),
 				'group'			=> '',
+=======
+					'or'				=> false
+				),
+				'pagination'	=> array(),
+				'group'			=> '',
+				'order'		=> array()
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 			)
 		);
 
@@ -469,10 +481,17 @@ class Confetti_Bits_Transactions_Transaction {
 		$where_sql = self::get_where_sql( $r['where'], $select_sql, $from_sql );
 		$group_sql = ( ! empty( $r['group'] ) ) ? "GROUP BY {$r['group']}" : '';
 		$pagination = ( ! empty( $r['pagination'] ) ) ? implode( ',', wp_parse_id_list( $r['pagination'] ) ) : '';
+<<<<<<< HEAD
 		$orderby = ( !empty( $r['order'] ) && is_array($r['order'] ) ) ?? "ORDER BY {$r['order'][0]} {$r['order'][1]}";
 		$pagination_sql = ( ! empty( $r['pagination'] ) ) ? "LIMIT {$pagination}" : '';
 
 		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
+=======
+		$orderby = ( !empty( $r['order'] ) && is_array($r['order'] ) ) ? "ORDER BY {$r['order'][0]} {$r['order'][1]}" : "";
+		$pagination_sql = ( ! empty( $r['pagination'] ) ) ? "LIMIT {$pagination}" : '';
+
+		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$orderby} {$pagination_sql}";
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
@@ -1388,7 +1407,20 @@ class Confetti_Bits_Transactions_Transaction {
 		$where_conditions = apply_filters( 'cb_transactions_get_where_conditions', $where_conditions, $args, $select_sql, $from_sql, $join_sql, $meta_query_sql );
 
 		if ( ! empty( $where_conditions ) ) {
+<<<<<<< HEAD
 			$where = 'WHERE ' . implode( ' AND ', $where_conditions );
+=======
+			if ( isset( $args['or'] ) ) {
+				if ( $args['or'] === true ) {
+					$where = 'WHERE ' . implode( ' OR ', $where_conditions );
+				} else {
+					$where = 'WHERE ' . implode( ' AND ', $where_conditions );
+				}
+			} else {
+				$where = 'WHERE ' . implode( ' AND ', $where_conditions );	
+			}
+			
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		}
 
 		return $where;

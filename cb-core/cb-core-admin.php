@@ -287,6 +287,26 @@ if ( ! function_exists( 'cb_create_executive') ) {
 }
 add_action( 'init', 'cb_create_executive' );
 
+<<<<<<< HEAD
+=======
+if ( ! function_exists( 'cb_create_leadership') ) {
+	function cb_create_leadership() {
+		if ( get_option( 'cb_create_leaders' ) != 'done' ) {
+			add_role( 
+				'cb_leadership',
+				'Confetti Bits Leadership',
+				array(
+					'read'				=> true,
+					'cb_admin'			=> true,
+				)
+			);
+			update_option( 'cb_create_leaders', 'done' );
+		}
+	}
+}
+add_action( 'init', 'cb_create_leadership' );
+
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 if ( ! function_exists( 'cb_create_participation_admin') ) {
 
 	function cb_create_participation_admin() {
@@ -296,7 +316,12 @@ if ( ! function_exists( 'cb_create_participation_admin') ) {
 				'cb_participation_admin',
 				'Confetti Bits Participation Admin',
 				array(
+<<<<<<< HEAD
 					'read'	=> true,
+=======
+					'read' => true,
+					'cb_participation_admin' => true,
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				)
 			);
 			/*/
@@ -327,7 +352,10 @@ if ( ! function_exists( 'cb_create_participation_admin') ) {
 			$cb_participation_admin_role = get_role( 'cb_participation_admin' );
 			$cb_site_admin = get_role( 'administrator' );
 			$cb_site_admin->add_cap('cb_participation_admin');
+<<<<<<< HEAD
 			$cb_participation_admin_role->add_cap( 'cb_participation_admin' );
+=======
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 			$cb_participation_admin_role->add_cap( 'cb_admin' );
 
 			update_option( 'cb_create_participation_admins', 'done' );
@@ -401,7 +429,11 @@ if ( ! function_exists( 'cb_is_user_requests_fulfillment' ) )  {
 
 if ( ! function_exists( 'cb_is_user_site_admin' ) ) {
 	function cb_is_user_site_admin() {
+<<<<<<< HEAD
 		return current_user_can('edit_plugins');
+=======
+		return current_user_can('administrator');
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	}
 }
 

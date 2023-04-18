@@ -431,8 +431,13 @@ class Confetti_Bits_Notifications_Component extends BP_Core_Notification_Abstrac
 			'cb-participation-status-update',
 			array(
 				'email_title'         => __( '{{participation.note}} | Participation Update', 'confetti-bits' ),
+<<<<<<< HEAD
 				'email_content'       => "<h4>The status of your Confetti Bits participation submission for \"{{participation.note}}\" has been changed to \"{{participation.status}}\" by {{admin.name}}.</h4>",
 				'email_plain_content' => __( "The status of your Confetti Bits participation submission for \"{{participation.note}}\" has been changed to \"{{participation.status}}\" by {{admin.name}}.", 'confetti-bits' ),
+=======
+				'email_content'       => "<h4>The status of one of your Confetti Bits participation submissions has been changed to \"{{participation.status}}\" by {{admin.name}}.</h4><h5>Notes:</h5><p>\"{{participation.note}}\"</p>",
+				'email_plain_content' => __( "The status of one of your Confetti Bits participation submissions has been changed to \"{{participation.status}}\" by {{admin.name}}. Notes: \"{{participation.note}}\"", 'confetti-bits' ),
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				'situation_label'     => __( "Someone updates the status of a participation submission", 'confetti-bits' ),
 				'unsubscribe_text'    => __( 'You will no longer receive emails when someone updates your participation.', 'confetti-bits' ),
 			),

@@ -176,7 +176,10 @@ function cb_get_member_search_results( $search_results = array() ) {
 			return;
 		} else {
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 			foreach ($search_results as $member) {
 
 				$member_id = $member->ID;

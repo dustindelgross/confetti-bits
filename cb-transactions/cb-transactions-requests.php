@@ -34,6 +34,7 @@ function cb_requests() {
 	} else {
 
 		$member_transactions = trailingslashit( bp_loggedin_user_domain() . cb_get_transactions_slug() );
+<<<<<<< HEAD
 
 		$lauren = get_user_by( 'email', 'lauren@celebrationtitlegroup.com');
 		$lauren_id = $lauren->ID;
@@ -48,6 +49,21 @@ function cb_requests() {
 				'recipient_id' 		=> bp_current_user_id(),
 				'recipient_name'	=> bp_get_loggedin_user_fullname(),
 				'identifier'		=> bp_current_user_id(),
+=======
+		
+		$user_id = get_current_user_id();
+		
+		$subtract = cb_send_request(
+			array(
+				'item_id'			=> $user_id,
+				'secondary_item_id'	=> $user_id,
+				'user_id'			=> $user_id,
+				'sender_id'			=> $user_id,
+				'sender_name'		=> bp_core_get_user_displayname( $user_id ),
+				'recipient_id' 		=> $user_id,
+				'recipient_name'	=> bp_get_loggedin_user_fullname(),
+				'identifier'		=> $user_id,
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				'date_sent'			=> bp_core_current_time( false ),
 				'log_entry'    		=> str_replace( "\\", '', $_POST['cb_request_option'] ),
 				'component_name'    => 'confetti_bits',

@@ -13,6 +13,7 @@ jQuery(document).ready(($) => {
 	const $adminEventTypeFilter = $('#cb_participation_admin_event_type_filter');
 	const $cbParticipationAll = $('a[href=#cb-participation-all]');
 	const $cbParticipationAllPanel = $('#cb-participation-all');
+<<<<<<< HEAD
 	const cbParticipationPageNext = $('.cb-participation-pagination-next');
 	const cbParticipationPageLast = $('.cb-participation-pagination-last');
 	const cbParticipationPagePrev = $('.cb-participation-pagination-previous');
@@ -22,6 +23,23 @@ jQuery(document).ready(($) => {
 	let currentPage = $('.cb-participation-pagination-button.active').attr('data-cb-participation-page');
 	let cbTotalEntries = 0;
 
+=======
+	const cbParticipationPageNext = $('.cb-participation-admin-pagination-next');
+	const cbParticipationPageLast = $('.cb-participation-admin-pagination-last');
+	const cbParticipationPagePrev = $('.cb-participation-admin-pagination-previous');
+	const cbParticipationPageFirst = $('.cb-participation-admin-pagination-first');
+	const cbTransactionPageNext = $('.cb-transactions-pagination-next');
+	const cbTransactionPageLast = $('.cb-transactions-pagination-last');
+	const cbTransactionPagePrev = $('.cb-transactions-pagination-previous');
+	const cbTransactionPageFirst = $('.cb-transactions-pagination-first');
+
+	const entryTable = $('#cb-participation-admin-table');
+	const entryTableHeaderRow = $('#cb-participation-admin-table tr')[0];
+	let currentPage = $('.cb-participation-admin-pagination-button.active').attr('data-cb-participation-page');
+	let cbTotalEntries = 0;
+	let cbTotalTransactions = 0;
+	let transactionsTable = $('#cb-participation-admin-transaction-history-table');
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 
 	let formMessage = new function () {
@@ -106,6 +124,34 @@ jQuery(document).ready(($) => {
 	};
 
 	/**
+<<<<<<< HEAD
+=======
+	 * CB Get Total Transactions
+	 *
+	 * @param {string} status
+	 * @param {string} eventType
+	 * @returns {int}
+	 *
+	 */
+	const cbGetTotalTransactions = async (userID) => {
+
+		let retval = await $.get({
+			url: cb_upload.total_transactions,
+			data: {
+				user_id: userID
+			},
+			success: (x) => {
+				cbTotalTransactions = parseInt(JSON.parse(x)[0].total_count);
+				return cbTotalTransactions;
+			}
+		});
+
+		return retval;
+
+	};
+
+	/**
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	 * CB Create Pagination Digits
 	 *
 	 * @param {int} page
@@ -126,11 +172,48 @@ jQuery(document).ready(($) => {
 
 		for (k; (k <= (page + 2)) && (k <= last); k++) {
 			let paginationButton = $('<button>', {
+<<<<<<< HEAD
 				class: `cb-participation-pagination-button cb-participation-pagination-numbered ${(k === page ? ' active' : '')}`,
 				'data-cb-participation-page': k,
 				text: k
 			});
 			$('.cb-participation-pagination-next').before(paginationButton);
+=======
+				class: `cb-participation-admin-pagination-button cb-participation-admin-pagination-numbered ${(k === page ? ' active' : '')}`,
+				'data-cb-participation-page': k,
+				text: k
+			});
+			$('.cb-participation-admin-pagination-next').before(paginationButton);
+		}
+	}
+
+	/**
+	 * CB Create Transaction Pagination Digits
+	 *
+	 * @param {int} page
+	 * @param {int} last
+	 * @returns {void}
+	 */
+	function cbCreateTransactionPaginationDigits(page, last) {
+
+		let k;
+
+		if (page >= last - 2 && ((last - 2) > 0)) {
+			k = last - 2;
+		} else if (page + 2 <= last) {
+			k = page;
+		} else if (last < 3) {
+			k = 1;
+		}
+
+		for (k; (k <= (page + 2)) && (k <= last); k++) {
+			let paginationButton = $('<button>', {
+				class: `cb-transactions-pagination-button cb-transactions-pagination-numbered ${(k === page ? ' active' : '')}`,
+				'data-cb-transactions-page': k,
+				text: k
+			});
+			$('.cb-transactions-pagination-next').before(paginationButton);
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		}
 	}
 
@@ -159,6 +242,33 @@ jQuery(document).ready(($) => {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * CB Refactor Pagination Digits
+	 *
+	 * @param {int} page
+	 * @param {int} last
+	 * @param {array} currentButtons
+	 * @returns {void}
+	 */
+	function cbRefactorTransactionPaginationDigits(page = 1, last = 0, currentButtons = []) {
+
+		let k = (page >= last - 2) && ((last - 2) > 0) ? last - 2 : page;
+
+		if (k <= (page + 2) && k <= last) {
+			$(currentButtons).each((n, el) => {
+				$(el).attr('data-cb-transactions-page', k);
+				$(el).text(k);
+				if (k === page) {
+					$(el).addClass('active');
+				}
+				k++;
+			});
+		}
+	}
+
+	/**
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	 * CB Setup Pagination Digits
 	 *
 	 * @param {int} page
@@ -167,7 +277,11 @@ jQuery(document).ready(($) => {
 	 */
 	function cbSetupPaginationDigits(page = 1, last = 0) {
 
+<<<<<<< HEAD
 		let currentButtons = $('.cb-participation-pagination-numbered');
+=======
+		let currentButtons = $('.cb-participation-admin-pagination-numbered');
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 		currentButtons.removeClass('active');
 
@@ -189,6 +303,39 @@ jQuery(document).ready(($) => {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * CB Setup Pagination Digits
+	 *
+	 * @param {int} page
+	 * @param {int} last
+	 * @returns {void}
+	 */
+	function cbSetupTransactionPaginationDigits(page = 1, last = 0) {
+
+		let currentButtons = $('.cb-transactions-pagination-numbered');
+
+		currentButtons.removeClass('active');
+
+		if (currentButtons.length === 0) {
+			cbCreateTransactionPaginationDigits(page, last);
+		} else {
+			if (last < 3) {
+				currentButtons.remove();
+				cbCreateTransactionPaginationDigits(page, last);
+			} else {
+				if (currentButtons.length < 3) {
+					currentButtons.remove();
+					cbCreateTransactionPaginationDigits(page, last);
+				} else {
+					cbRefactorTransactionPaginationDigits(page, last, currentButtons);
+				}
+			}
+		}
+	}
+
+	/**
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	 * CB Setup Pagination Ends
 	 *
 	 * @param {int} page
@@ -210,6 +357,30 @@ jQuery(document).ready(($) => {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * CB Setup Pagination Ends
+	 *
+	 * @param {int} page
+	 * @param {int} prev
+	 * @param {int} next
+	 * @param {int} last
+	 * @returns {void}
+	 */
+	function cbSetupTransactionPaginationEnds(page = 1, prev = 0, next = 2, last = 0) {
+
+		cbTransactionPagePrev.attr('data-cb-transactions-page', prev);
+		cbTransactionPageNext.attr('data-cb-transactions-page', next);
+
+		cbTransactionPageNext.toggleClass('disabled', (page === last));
+		cbTransactionPageLast.toggleClass('disabled', (page === last));
+		cbTransactionPagePrev.toggleClass('disabled', (page === 1));
+		cbTransactionPageFirst.toggleClass('disabled', (page === 1));
+
+	}
+
+	/**
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	 * CB Pagination
 	 *
 	 * @param {int} page
@@ -236,11 +407,50 @@ jQuery(document).ready(($) => {
 			cbParticipationPageNext.toggleClass('disabled', true);
 			cbParticipationPagePrev.toggleClass('disabled', true);
 			cbParticipationPageFirst.toggleClass('disabled', true);
+<<<<<<< HEAD
 			$('.cb-participation-pagination-numbered').remove();
+=======
+			$('.cb-participation-admin-pagination-numbered').remove();
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		}
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * CB Pagination
+	 *
+	 * @param {int} page
+	 * @param {string} status
+	 * @param {string} eventType
+	 * @returns {void}
+	 */
+	let cbTransactionsPagination = async (page, userID) => {
+
+		await cbGetTotalTransactions(userID);
+		if (cbTotalTransactions > 0) {
+
+			let last = Math.ceil(cbTotalTransactions / 15);
+			let prev = page - 1;
+			let next = page + 1;
+
+			cbTransactionPageLast.attr('data-cb-transactions-page', last);
+
+			cbSetupTransactionPaginationEnds(page, prev, next, last);
+			cbSetupTransactionPaginationDigits(page, last);
+
+		} else {
+			cbTransactionPageLast.toggleClass('disabled', true);
+			cbTransactionPageNext.toggleClass('disabled', true);
+			cbTransactionPagePrev.toggleClass('disabled', true);
+			cbTransactionPageFirst.toggleClass('disabled', true);
+			$('.cb-transactions-pagination-numbered').remove();
+		}
+	}
+
+
+	/**
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	 * CB Format Date
 	 *
 	 * @param {string} date
@@ -298,6 +508,25 @@ jQuery(document).ready(($) => {
 		activePanel.append($emptyNotice);
 
 	}
+<<<<<<< HEAD
+=======
+	
+	/**
+	 * CB Create Empty Transaction Notice
+	 *
+	 * @param {string} response
+	 * @param {object} activePanel
+	 * @returns {void}
+	 */
+	function cbCreateEmptyTransactionNotice(response) {
+
+		transactionsTable.children().remove();
+
+		let $emptyNotice = $(`<div class='cb-participation-admin-empty-notice'><p>No results found.</p></div>`);
+		transactionsTable.append($emptyNotice);
+
+	}
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	/**
 	 * Format Header Row
@@ -323,6 +552,30 @@ jQuery(document).ready(($) => {
 		});
 		entryTable.append(headerRow);
 	}
+<<<<<<< HEAD
+=======
+	
+	/**
+	 * Format Header Row
+	 *
+	 * @returns {void}
+	 */
+	function formatTransactionsHeaderRow() {
+		let headers = ['Sender', 'Recipient', 'Transaction Date', 'Amount', 'Log Entry'];
+		let headerRow = $('<tr>');
+		headers.forEach((header) => {
+			let item;
+				item = $(`<th id="cb_participation_admin_transactions_table_header_${header}">${header}</th>`);
+				item.css({
+					textTransform: 'capitalize',
+					fontWeight: 'lighter'
+				});
+
+			headerRow.append(item);
+		});
+		transactionsTable.append(headerRow);
+	}
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	/**
 	 * CB Create Participation Entry
@@ -337,7 +590,11 @@ jQuery(document).ready(($) => {
 
 		let applicantId = parseInt(participation.applicant_id);
 		let eventType = participation.event_type.charAt(0).toUpperCase() + participation.event_type.slice(1).replace('_', ' ').replace('\\', '');
+<<<<<<< HEAD
 		let eventNote = participation.event_note;
+=======
+		let eventNote = participation.event_note.replace('\\', '');
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		let eventDate = cbFormatDate(participation.event_date);
 		let transactionId = (null != participation.transaction_id) ? parseInt(participation.transaction_id) : 0;
 		let dateModified = cbFormatDate(participation.date_modified);
@@ -446,6 +703,69 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		entryTable.append($entryModule);
 
 	}
+<<<<<<< HEAD
+=======
+	
+		/**
+	 * CB Create Participation Entry
+	 *
+	 * Creates a participation entry in the participation table
+	 *
+	 * @param {object} participation
+	 * @returns {void}
+	 * @async
+	 */
+	async function cbCreateTransactionEntry(transaction) {
+		let senderName = transaction.sender_name;
+		let recipientName = transaction.recipient_name;
+		let dateSent = cbFormatDate(transaction.date_sent);
+		let amount = parseInt(transaction.amount);
+		let logEntry = transaction.log_entry;
+
+		let transactionDataContainer = $('<td class="cb-transactions-entry-data-container">');
+		let transctionRow = $('<tr class="cb-transactions-admin-entry">');
+		let transactionSenderContainer = $(transactionDataContainer).clone();
+		let transactionRecipientContainer = $(transactionDataContainer).clone();
+		let transactionDateSentContainer = $(transactionDataContainer).clone();
+		let transactionAmountContainer = $(transactionDataContainer).clone();
+		let transactionLogEntryContainer = $(transactionDataContainer).clone();
+
+		let transactionSender = $('<p>', {
+			class: `cb-transactions-entry-data cb-transactions-sender`,
+			text: senderName
+		});
+		let transactionRecipient = $('<a>', {
+			class:`cb-transactions-entry-data cb-transactions-recipient`,
+			text: recipientName
+		});
+		let transactionDateSent = $(
+			`<p class='cb-transactions-entry-data'><b>${dateSent}</b></p>`
+		);
+		let transactionAmount = $('<p>', {
+			class: `cb-transactions-entry-data cb-transactions-amount`,
+			text: amount
+		});
+		let transactionLogEntry = $('<p>', {
+			class: `cb-transactions-entry-data cb-transactions-log-entry`,
+			text: logEntry
+		});
+
+		transactionSenderContainer.append(transactionSender);
+		transactionRecipientContainer.append(transactionRecipient);
+		transactionDateSentContainer.append(transactionDateSent);
+		transactionAmountContainer.append(transactionAmount);
+		transactionLogEntryContainer.append(transactionLogEntry);
+
+		transctionRow.append(transactionSenderContainer);
+		transctionRow.append(transactionRecipientContainer);
+		transctionRow.append(transactionDateSentContainer);
+		transctionRow.append(transactionAmountContainer);
+		transctionRow.append(transactionLogEntryContainer);
+
+		transactionsTable.append(transctionRow);
+
+	}
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	/**
 	 * Refresh Table
@@ -489,6 +809,47 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Refresh Table
+	 *
+	 * Refreshes the table with new data from the server.
+	 *
+	 * @param {number} page
+	 * @param {string} status
+	 * @param {string} eventFilter
+	 * @returns {void}
+	 */
+	async function refreshTransactions(page, userID) {
+
+		await $.get({
+			url: cb_upload.transactions,
+			data: {
+				user_id: userID,
+				page: page,
+				per_page: 15,
+			},
+			success: function (data) {
+				cbTransactionsPagination(page, userID);
+				let response = JSON.parse(data);
+
+				if (typeof (response) !== 'string') {
+
+					transactionsTable.children().remove();
+
+					formatTransactionsHeaderRow();
+					for (let r of response) {
+						cbCreateTransactionEntry(r);
+					}
+				} else {
+					cbCreateEmptyTransactionNotice(response);
+				}
+			}
+		});
+	}
+
+	/**
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	 * CB Get User Data
 	 *
 	 * Get user data from the BuddyBoss API
@@ -687,16 +1048,30 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		cache = {};
 	});
 
+<<<<<<< HEAD
 	$(document).on('click', '.cb-participation-admin-edit-button', function (e) {
 
 		let participationId = $(this).data('cbParticipationId');
 		let applicantId = $(this).data('cbApplicantId');
 		let eventType = $(this).data('cbEventType');
 		let eventNote = $(this).data('cbEventNote');
+=======
+	$(document).on('click', '.cb-participation-admin-edit-button', async function (e) {
+
+		let participationId = $(this).data('cbParticipationId');
+		let applicantId = $(this).data('cbApplicantId');
+		let eventType = $(this).data('cbEventType').replaceAll('_',' ');
+		let eventNote = $(this).data('cbEventNote').toString().replaceAll('\\', '');
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		let eventDate = $(this).data('cbEventDate');
 		let applicantName = $(this).data('cbApplicantName');
 		let transactionId = $(this).data('cbTransactionId');
 
+<<<<<<< HEAD
+=======
+		refreshTransactions(1, applicantId);
+
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		$($adminEditForm).addClass('active');
 		$('input[name=cb_participation_id]').val(participationId);
 		$('input[name=cb_participation_applicant_id]').val(applicantId);
@@ -708,7 +1083,11 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 
 		$('#cb-participation-admin-applicant-event').text(eventType.charAt(0).toUpperCase() + eventType.substr(1).toLowerCase().replace('\\', ''));
 
+<<<<<<< HEAD
 		if (eventType === 'other' && transactionId === 0) {
+=======
+		if ((eventType === 'other' || eventType === 'contest' ) && transactionId === 0) {
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 			$adminAmountOverride.addClass('override');
 			$adminAmountOverride.siblings('label').addClass('override');
 			$adminAmountOverride.prop('disabled', false);
@@ -737,7 +1116,11 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		'change', '#cb_participation_admin_event_type_filter',
 		function (e) {
 			e.preventDefault();
+<<<<<<< HEAD
 			let page = parseInt($('.cb-participation-pagination-button.active').attr('data-cb-participation-page'));
+=======
+			let page = parseInt($('.cb-participation-admin-pagination-button.active').attr('data-cb-participation-page'));
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 			if ( ! page ) {
 				page = 1;
 			}
@@ -749,7 +1132,19 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		}
 	);
 
+<<<<<<< HEAD
 	$('.cb-participation-pagination').on('click', '.cb-participation-pagination-button', function (e) {
+=======
+	$('#cb-participation-admin-transaction-history-pagination').on('click', '.cb-transactions-pagination-button', function(e) {
+		e.preventDefault();
+		let page = parseInt($(this).attr('data-cb-transactions-page'));
+		let userID = parseInt($('input[name=cb_participation_applicant_id]').val());
+		refreshTransactions(page, userID);
+
+	});
+
+	$('.cb-participation-admin-pagination').on('click', '.cb-participation-admin-pagination-button', function (e) {
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 		e.preventDefault();
 		let page = parseInt($(this).attr('data-cb-participation-page'));
@@ -757,7 +1152,11 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		let activePanel = $('.cb-participation-admin-panel.active');
 		let status = activePanel.attr('id').replace('cb-participation-', '');
 
+<<<<<<< HEAD
 		refreshTable(page, status, eventFilter);
+=======
+		refreshTable(page, status, eventFilter);		
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	});
 
@@ -770,7 +1169,11 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		}
 
 		let selected = $('input[name=cb_participation_admin_entry_selection]:checked');
+<<<<<<< HEAD
 		let page = $('.cb-participation-pagination-numbered.active').data('cbParticipationPage');
+=======
+		let page = $('.cb-participation-admin-pagination-numbered.active').data('cbParticipationPage');
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 		let status = $('.cb-participation-admin-nav-item.active').find('a').attr('href').replace('#cb-participation-', '');
 		let eventFilter = $('#cb_participation_admin_event_type_filter').val();
@@ -796,17 +1199,31 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 						type: type
 					});
 					formMessage.setMessage( messages, data.type );
+<<<<<<< HEAD
 				},
 				
+=======
+					
+				},
+
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				error: function(e) {
 					console.log(e)
 				}
 			});
+<<<<<<< HEAD
 			
 		});
 
 
 		refreshTable( page, status, eventFilter );
+=======
+
+		});
+
+		await refreshTable( page, status, eventFilter );
+		
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	});
 

@@ -310,6 +310,10 @@ function cb_participation_get_paged_participation( $status = '', $page = 0, $per
 	$pagination = array();
 	$select =  $count ? 'count(id) as total_count' : '*';
 	$status	= ( empty( $_GET['status'] ) ) ? 'all' : $_GET['status'];
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	$event_type = empty( $_GET['event_type'] )
 		? $event_type 
 		: trim( $_GET['event_type'] );
@@ -325,6 +329,13 @@ function cb_participation_get_paged_participation( $status = '', $page = 0, $per
 
 		)
 	);
+<<<<<<< HEAD
+=======
+	
+	if ( ! empty( $_GET['applicant_id'] ) ) {
+		$where['applicant_id'] = intval( $_GET['applicant_id'] );
+	}
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	if ( !empty($event_type) ) {
 		$where['event_type'] = trim( $event_type );
@@ -342,7 +353,11 @@ function cb_participation_get_paged_participation( $status = '', $page = 0, $per
 		)
 	);
 
+<<<<<<< HEAD
 	$feedback .= ( ! empty( $paged_participation ) ) ? json_encode( $paged_participation ) : json_encode('Empty results set.');
+=======
+	$feedback .= ( ! empty( $paged_participation ) ) ? json_encode( $paged_participation ) : json_encode('Could not find any participation entries of specified type.');
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	echo $feedback;
 	die();
@@ -377,6 +392,13 @@ function cb_participation_get_total_participation() {
 			'inclusive'	=> true
 		)
 	);
+<<<<<<< HEAD
+=======
+	
+	if ( ! empty( $_GET['applicant_id'] ) ) {
+		$where['applicant_id'] = intval( $_GET['applicant_id'] );
+	}
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	if ( !empty( $_GET['event_type'] ) ) {
 		$where['event_type'] = trim($_GET['event_type']);
@@ -485,7 +507,15 @@ function cb_participation_update_handler() {
 			);
 
 			$log_entry = cb_participation_get_log_entry( $participation_id, $admin_log_entry );
+<<<<<<< HEAD
 
+=======
+			/*
+			if ( $log_entry !== $participation->event_note ) {
+				$log_entry += " | {$participation->event_note}";
+			}
+*/
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 			// Create a transaction if we can.
 			if ( $amount !== 0 && $log_entry !== '' ) {
 
@@ -517,6 +547,10 @@ function cb_participation_update_handler() {
 				$admin_id, 
 				$modified, 
 				$status, 
+<<<<<<< HEAD
+=======
+				$log_entry,
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				$new_transaction
 			);
 		}

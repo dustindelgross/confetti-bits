@@ -204,7 +204,11 @@ class Confetti_Bits_Participation_Participation {
 			$retval = $this->id;
 
 		} else if ( is_wp_error( $result ) ) {
+<<<<<<< HEAD
 			$retval = $result;		
+=======
+			$retval = $result;
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		}
 
 		return $retval;

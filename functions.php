@@ -3,6 +3,17 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+<<<<<<< HEAD
+=======
+function cb_is_get_request() {
+	return (bool) ( 'GET' === strtoupper( $_SERVER['REQUEST_METHOD'] ) );
+}
+
+function cb_is_post_request() {
+	return (bool) ( 'POST' === strtoupper( $_SERVER['REQUEST_METHOD'] ) );
+}
+
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 function cb_participation_survey() {
 	if( is_page('participation-survey') ) {
 		echo '<script type="text/javascript" src="https://form.jotform.com/jsform/223134225267147"></script><style>.entry-title {display:none;}</style>';
@@ -35,11 +46,19 @@ add_action(
 
 				wp_enqueue_script( 'cb_dropzone_js', 'https://unpkg.com/dropzone@5/dist/min/dropzone.min.js' );
 				wp_enqueue_script( 'cb_file_uploads', CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-participation-uploads.js', 'jquery' );
+<<<<<<< HEAD
+=======
+
+
+				wp_enqueue_script( 'cb_transactions', CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-transactions.js', 'jquery' );
+
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				if ( cb_is_user_participation_admin() ) {
 					wp_enqueue_script( 'cb_hub_admin', CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-hub-admin.js', 'jquery');
 				}
 
 				$cb_upload_param = array(
+<<<<<<< HEAD
 					'upload'	=> admin_url( 'admin-ajax.php?action=cb_upload_media' ),
 					'delete'	=> admin_url( 'admin-ajax.php?action=cb_delete_media' ),
 					'total'		=> admin_url( 'admin-ajax.php?action=cb_participation_get_participation_total' ),
@@ -47,6 +66,21 @@ add_action(
 					'create'	=> admin_url( 'admin-ajax.php?action=cb_participation_create_participation' ),
 					'update'	=> admin_url( 'admin-ajax.php?action=cb_participation_update_participation' ),
 					'nonce'		=> wp_create_nonce( 'cb_participation_post' )
+=======
+					'upload'		=> admin_url( 'admin-ajax.php?action=cb_upload_media' ),
+					'delete'		=> admin_url( 'admin-ajax.php?action=cb_delete_media' ),
+					'total'			=> admin_url( 'admin-ajax.php?action=cb_participation_get_participation_total' ),
+					'paged'			=> admin_url( 'admin-ajax.php?action=cb_participation_get_paged_participation' ),
+					'create'		=> admin_url( 'admin-ajax.php?action=cb_participation_create_participation' ),
+					'update'		=> admin_url( 'admin-ajax.php?action=cb_participation_update_participation' ),
+					'transactions'	=> admin_url( 'admin-ajax.php?action=cb_participation_get_transactions' ),
+					'total_transactions'	=> admin_url( 'admin-ajax.php?action=cb_participation_get_total_transactions' ),
+					'nonce'			=> wp_create_nonce( 'cb_participation_post' ),
+				);
+
+				$cb_transactions_params = array(
+					'send'		=> admin_url( 'admin-ajax.php?action=cb_send_bits' )
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				);
 
 				wp_localize_script( 
@@ -54,6 +88,15 @@ add_action(
 					'cb_upload', 
 					$cb_upload_param 
 				);
+<<<<<<< HEAD
+=======
+				wp_localize_script( 
+					'cb_transactions', 
+					'cb', 
+					$cb_transactions_params
+				);
+
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 			}
 		}
 	}
@@ -89,10 +132,17 @@ add_action( 'user_new_form', 'cb_user_birthday_anniversary_fields' );
 function cb_save_user_birthday_anniversary_fields($user_id, $notify){
 
 	if( !current_user_can('add_users')
+<<<<<<< HEAD
 	    ) {
 		return false;
 	}
 	
+=======
+	  ) {
+		return false;
+	}
+
+>>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	$c = !empty( $_POST['cb_birthday'] ) ? date( 'Y-m-d H:i:s', strtotime( $_POST['cb_birthday'] ) ) : null;
 	$d = !empty( $_POST['cb_anniversary']) ? date( 'Y-m-d H:i:s', strtotime( $_POST['cb_anniversary'] ) ) : null;
 
