@@ -799,6 +799,7 @@ function cb_reset_date()
 	echo cb_get_reset_date();
 }
 */
+
 function cb_calculate_activity_bits($activities, $transactions)
 {
 
@@ -808,6 +809,7 @@ function cb_calculate_activity_bits($activities, $transactions)
 	if (!isset($activities, $transactions)) {
 		return;
 	}
+
 	foreach ($activities as $activity) {
 
 		$activity_id = $activity['user_id'];
@@ -842,10 +844,65 @@ function cb_calculate_activity_bits($activities, $transactions)
 
 }
 
-function cb_update_user_activity_bits_for_current_cycle($user_id = 0)
+/**
+ * CB Transactions Get Activity Transactions
+ * 
+ * Retrieves a list of all transactions from the current
+ * earning cycle that were registered by a user posting 
+ * on the BuddyBoss activity feed.
+ * 
+ * @param int $user_id The user's ID. Default current user ID.
+ * 
+ * @return array An array of transactions, if there are any.
+ * 
+ * @since Confetti_Bits 2.3.0
+ */
+function cb_transactions_get_activity_transactions( $user_id = 0 ) {
+
+	if ( $user_id === 0 ) {
+		$user_id = get_current_user_id();
+	}
+
+	$cb = Confetti_Bits();
+	$transactions = new CB_Transactions_Transaction();
+
+	$activity_bits_args = array(
+		"select" => "recipient_id, date_sent, component_name, component_action",
+		"where" => array(
+			"recipient_id" => $user_id,
+			"date_query" => array(
+				'before'		=> $cb->earn_end,
+				'after'			=> $cb->earn_start,
+				'inclusive'		=> true,
+			),
+			"component_action" => "cb_activity_bits",
+		),
+		"orderby" => array( "id", "DESC" )
+	);
+
+	return $transactions->get_transactions($activity_bits_args);
+
+}
+
+/**
+ * CB Transactions Check Activity Bits
+ * 
+ * Checks to see if there were any days throughout the
+ * cycle where the user might have posted on the 
+ * BuddyBoss activity feed, and didn't receive any 
+ * points for it. Helps cover our tail if we accidentally 
+ * push some breaking changes or do something silly
+ * with how activity bits are registered.
+ * 
+ * @param int $user_id The ID for the user we want to check.
+ * 
+ * @since Confetti_Bits 1.3.0
+ * 
+ */
+function cb_transactions_check_activity_bits($user_id = 0)
 {
 
-	if (!cb_is_confetti_bits_component() || !cb_is_user_confetti_bits()) {
+	if (!cb_is_confetti_bits_component() ) {
 		return;
 	}
 
@@ -855,16 +912,14 @@ function cb_update_user_activity_bits_for_current_cycle($user_id = 0)
 		return;
 	}
 
-	if ($user_id === 0 || empty($user_id)) {
+	if ( empty($user_id) ) {
 		$user_id = get_current_user_id();
 	}
 
-	$transaction_object = new CB_Transactions_Transaction();
-	$transactions = $transaction_object->get_activity_bits_transactions_from_current_cycle($user_id);
-	$activities = $transaction_object->get_activity_posts_for_user($user_id);
+	$transactions = cb_transactions_get_activity_transactions($user_id);
+	$activities = $transactions->get_activity_posts_for_user($user_id);
 	$missing_transactions = cb_calculate_activity_bits($activities, $transactions);
 
-	$user_name = bp_core_get_user_displayname($user_id);
 
 	if (!empty($missing_transactions)) {
 		foreach ($missing_transactions as $date_sent => $id) {
@@ -872,12 +927,8 @@ function cb_update_user_activity_bits_for_current_cycle($user_id = 0)
 				array(
 					'item_id' => 1,
 					'secondary_item_id' => $id,
-					'user_id' => $id,
 					'sender_id' => $id,
-					'sender_name' => $user_name,
 					'recipient_id' => $id,
-					'recipient_name' => $user_name,
-					'identifier' => $id,
 					'date_sent' => date('Y-m-d H:i:s', strtotime($date_sent)),
 					'log_entry' => 'Posted a new update',
 					'component_name' => 'confetti_bits',
@@ -889,7 +940,7 @@ function cb_update_user_activity_bits_for_current_cycle($user_id = 0)
 		}
 	}
 }
-//add_action('bp_actions', 'cb_update_user_activity_bits_for_current_cycle', 10, 1);
+add_action('bp_actions', 'cb_transactions_check_activity_bits', 10, 1);
 
 function cb_groups_activity_notifications($content, $user_id, $group_id, $activity_id)
 {
@@ -989,15 +1040,14 @@ function cb_is_multi_array(array $arr)
 function cb_send_sitewide_notice()
 {
 	if (
-		!cb_is_user_confetti_bits() ||
-		!bp_is_post_request() ||
 		!cb_is_confetti_bits_component() ||
 		!wp_verify_nonce($_POST['cb_sitewide_notice_nonce'], 'cb_sitewide_notice_post')
 	) {
 		return;
 	}
 
-	$redirect_to = bp_loggedin_user_domain() . cb_get_transactions_slug();
+
+	$redirect_to = Confetti_Bits()->page;
 	$success = false;
 	$feedback = '';
 
@@ -1071,23 +1121,17 @@ function cb_birthday_bits()
 	}
 
 	$user_id = get_current_user_id();
+	$user_name = bp_core_get_user_displayname($user_id);
 	$user_birthday = date_create(xprofile_get_field_data(51, $user_id));
 
 	if (date('m-d') >= $user_birthday->format('m-d')) {
-
-		$user_name = bp_get_loggedin_user_fullname();
-		$user_id = get_current_user_id();
 
 		$transaction = new CB_Transactions_Transaction();
 
 		$transaction->item_id = $user_id;
 		$transaction->secondary_item_id = $user_id;
-		$transaction->user_id = $user_id;
 		$transaction->sender_id = $user_id;
-		$transaction->sender_name = $user_name;
 		$transaction->recipient_id = $user_id;
-		$transaction->recipient_name = $user_name;
-		$transaction->identifier = $user_id;
 		$transaction->date_sent = current_time('mysql');
 		$transaction->log_entry = "Happy birthday!";
 		$transaction->component_name = 'confetti_bits';
@@ -1116,12 +1160,12 @@ function cb_anniversary_bits()
 	}
 
 	$user_id = get_current_user_id();
+	$user_name = bp_core_get_user_displayname($user_id);
 	$user_anniversary = date_create(xprofile_get_field_data(52, $user_id));
 
 	if (date('m-d') >= $user_anniversary->format('m-d')) {
 
-		$user_name = bp_get_loggedin_user_fullname();
-		$user_id = get_current_user_id();
+
 		$amount = cb_get_amount_from_anniversary($user_anniversary);
 
 		if ($amount === 0) {
@@ -1132,12 +1176,8 @@ function cb_anniversary_bits()
 
 		$transaction->item_id = $user_id;
 		$transaction->secondary_item_id = $user_id;
-		$transaction->user_id = $user_id;
 		$transaction->sender_id = $user_id;
-		$transaction->sender_name = $user_name;
 		$transaction->recipient_id = $user_id;
-		$transaction->recipient_name = $user_name;
-		$transaction->identifier = $user_id;
 		$transaction->date_sent = current_time('mysql');
 		$transaction->log_entry = "Happy anniversary!";
 		$transaction->component_name = 'confetti_bits';

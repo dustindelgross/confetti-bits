@@ -229,3 +229,29 @@ function cb_core_set_reset_date_globals() {
 	
 }
 add_action( 'cb_setup_globals', 'cb_core_set_reset_date_globals' );
+
+/**
+ * CB Core Current Date
+ * 
+ * Returns the current date and time in the given
+ * format. Defaults to MySQL format in the site's
+ * timezone.
+ * 
+ * @since Confetti_Bits 2.3.0
+ * 
+ * @param bool $offset Whether to use the site's
+ *   UTC offset setting. Default true.
+ * 
+ * @param string $format The desired datetime format.
+ *   Default MySQL - 'Y-m-d H:i:s'
+ * 
+ * @return string The formatted datetime.
+ */
+function cb_core_current_date( $offset = true, $format = "Y-m-d H:i:s" ) {
+	
+	$tz = $offset ? wp_timezone() : null;
+	$date = new DateTimeImmutable("now", $tz);
+	
+	return $date->format($format);
+
+}

@@ -21,16 +21,12 @@ function cb_import_bits($args = '')
 		array(
 			'item_id' => 0,
 			'secondary_item_id' => 0,
-			'user_id' => 0,
 			'sender_id' => 0,
-			'sender_name' => '',
 			'recipient_id' => 0,
-			'recipient_name' => '',
-			'identifier' => 0,
 			'log_entry' => '',
 			'component_name' => '',
 			'component_action' => '',
-			'date_sent' => current_time('mysql'),
+			'date_sent' => cb_core_current_date(),
 			'amount' => 0,
 			'error_type' => 'bool',
 		)
@@ -53,7 +49,7 @@ function cb_import_bits($args = '')
 		}
 	}
 
-	if (empty($r['recipient_id']) || empty($r['recipient_name'])) {
+	if (empty($r['recipient_id']) ) {
 		if ('wp_error' === $r['error_type']) {
 			if (empty($r['recipient_name'])) {
 				$error_code = 'transactions_empty_recipient_name';
@@ -81,7 +77,7 @@ function cb_import_bits($args = '')
 		}
 	}
 
-	if (abs($r['amount']) > cb_get_total_bits($r['recipient_id']) && ($r['amount'] < 0)) {
+	if (abs($r['amount']) > cb_transactions_get_request_balance($r['recipient_id']) && ($r['amount'] < 0)) {
 		if ('wp_error' === $r['error_type']) {
 
 			$error_code = 'transactions_not_enough_bits';
@@ -93,15 +89,11 @@ function cb_import_bits($args = '')
 		}
 	}
 
-	$transaction = new Confetti_Bits_Transactions_Transaction();
+	$transaction = new CB_Transactions_Transaction();
 	$transaction->item_id = $r['item_id'];
 	$transaction->secondary_item_id = $r['secondary_item_id'];
-	$transaction->user_id = $r['user_id'];
 	$transaction->sender_id = $r['sender_id'];
-	$transaction->sender_name = $r['sender_name'];
 	$transaction->recipient_id = $r['recipient_id'];
-	$transaction->recipient_name = $r['recipient_name'];
-	$transaction->identifier = $r['identifier'];
 	$transaction->date_sent = $r['date_sent'];
 	$transaction->log_entry = $r['log_entry'];
 	$transaction->component_name = $r['component_name'];

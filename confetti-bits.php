@@ -232,6 +232,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 
 			$this->current_component = '';
 			$this->table_prefix = $wpdb->prefix;
+			$this->page = trailingslashit(site_url()) . "confetti-bits";
 
 		}
 

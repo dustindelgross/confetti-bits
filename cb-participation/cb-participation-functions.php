@@ -623,12 +623,8 @@ function cb_participation_new_transaction( $args = array() ) {
 
 		$transaction->item_id			= $participation->applicant_id;
 		$transaction->secondary_item_id	= $r['admin_id'];
-		$transaction->user_id			= $participation->applicant_id;
 		$transaction->sender_id			= $r['admin_id'];
-		$transaction->sender_name		= $admin_name;
 		$transaction->recipient_id		= $participation->applicant_id;
-		$transaction->recipient_name	= bp_core_get_user_displayname($participation->applicant_id);
-		$transaction->identifier		= $participation->applicant_id;
 		$transaction->date_sent			= $r['modified'];
 		$transaction->log_entry			= $log_entry;
 		$transaction->component_name	= 'confetti_bits';

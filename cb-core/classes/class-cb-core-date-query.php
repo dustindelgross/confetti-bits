@@ -1,5 +1,7 @@
 <?php 
-class Confetti_Bits_Core_Date_Query extends WP_Date_Query {
+defined('ABSPATH') || exit;
+
+class CB_Core_Date_Query extends WP_Date_Query {
     /**
      * The column to query against. Can be changed via the query arguments.
      *
