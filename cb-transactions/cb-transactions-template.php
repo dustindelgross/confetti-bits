@@ -1,12 +1,13 @@
 <?php
-
+defined('ABSPATH') || exit;
 /**
- * CB Get Total For Current Day Notice
+ * CB Transactions Get Total Sent Today Notice
  * 
  * This function gets the total number of Confetti Bits
  * that have been sent for the current day and returns
  * a notice to the user.
  * 
+ * @since Confetti_Bits 2.2.0
  * @return string $notice The notice to be displayed to the user.
  */
 function cb_transactions_get_total_sent_today_notice()
@@ -48,11 +49,12 @@ function cb_transactions_get_total_sent_today_notice()
 }
 
 /**
- * CB Total For Current Day Notice
+ * CB Transactions Total Sent Today Notice
  * 
- * This function gets the total number of Confetti Bits
- * that have been sent for the current day and displays
- * a notice to the user.
+ * Output the total number of Confetti Bits
+ * that the user has sent for the current day.
+ * 
+ * @since Confetti_Bits 2.2.0
  */
 function cb_transactions_total_sent_today_notice() {
 	echo cb_transactions_get_total_sent_today_notice();
@@ -63,7 +65,7 @@ function cb_transactions_total_sent_today_notice() {
  * CB Users Request Balance
  * 
  * Display the users request balance.
- *
+ * @since Confetti_Bits 2.2.0
  * @param int $user_id The user ID.
  */
 function cb_transactions_request_balance($user_id = 0) {
@@ -76,11 +78,11 @@ function cb_transactions_request_balance($user_id = 0) {
 }
 
 /**
- * CB Get Users Request Balance Notice
+ * CB Transactions Get Request Balance Notice
  * 
  * Get the users request balance notice.
- *
- *
+ * 
+ * @since Confetti_Bits 2.2.0
  * @param int $user_id The user ID.
  * @return string The users request balance notice.
  */
@@ -90,33 +92,6 @@ function cb_transactions_get_request_balance_notice($user_id = 0) {
 		$user_id = get_current_user_id();
 	}
 
-	/*
-	$reset_date = get_option('cb_reset_date');
-	$cb = Confetti_Bits();
-	$transactions = new CB_Transactions_Transaction();
-	$date = new DateTimeImmutable($reset_date);
-	$spend = "`date_sent` >= '{$cb->spend_start}' AND amount < 0";
-	$earn = "`date_sent` >= '{$cb->earn_start}' AND amount > 0";
-
-	$args = array(
-		'select' => "recipient_id, 
-		SUM(CASE WHEN {$spend} THEN amount ELSE 0 END) + 
-		SUM(CASE WHEN {$earn} THEN amount ELSE 0 END) AS calculated_total",
-		'where' => array(
-			'recipient_id' => $user_id,
-			'date_query' => array(
-					'column'		=> 'date_sent',
-					'compare'		=> 'BETWEEN',
-					'relation'		=> 'AND',
-					'before'		=> $cb->spend_end,
-					'after'			=> $cb->earn_start,
-					'inclusive'		=> true,
-			)
-		)
-	);
-
-	$total = $transactions->get_transactions($args);
-*/
 	$total = cb_transactions_get_request_balance($user_id);
 	$notice = sprintf( 
 		"You have %d Confetti Bits to spend on requests until %s.", 
@@ -128,24 +103,29 @@ function cb_transactions_get_request_balance_notice($user_id = 0) {
 }
 
 /**
- * CB Users Balances
+ * CB Transactions Request Balance Notice
  * 
- * Display the users balances above the dashboard.
- *
- * @param int $user_id The user ID.
+ * Output the users request balance notice.
+ * @since Confetti_Bits 2.2.0
  */
-function cb_users_balances() {
-	echo cb_get_users_balances();
+function cb_transactions_request_balance_notice()
+{
+	echo cb_transactions_get_request_balance_notice();
 }
 
+
 /**
- * CB Get Users Balances
+ * CB Transactions Balances Notice
  * 
- * Get the users balances to display above the dashboard.
- *
- *
- * @param int $user_id The user ID.
- * @return string The users balance notice.
+ * Assemble the markup for both the user's 
+ * transfer balance and their request balance.
+ * 
+ * @since Confetti_Bits 2.3.0
+ * 
+ * @param int $user_id The id of the user whose balance notice
+ * we're assembling. Defaults to current logged-in user.
+ * 
+ * @return string $notice the formatted notice markup.
  */
 function cb_transactions_get_balances_notice($user_id = 0) {
 
@@ -183,11 +163,31 @@ function cb_transactions_get_balances_notice($user_id = 0) {
 }
 
 
-function cb_transactions_request_balance_notice()
-{
-	echo cb_transactions_get_request_balance_notice();
+/**
+ * CB Transactions Balances Notice
+ * 
+ * Display the users balances above the dashboard.
+ */
+function cb_transactions_balances_notice() {
+	echo cb_transactions_get_balances_notice();
 }
 
+
+
+/**
+ * CB Transactions Get Transfer Balance Notice
+ * 
+ * Assemble the transfer balance markup for the user's
+ * transfer balance notice.
+ * 
+ * @since Confetti_Bits 2.2.0
+ * 
+ * @param int $user_id The id of the user whose balance notice
+ * we're assembling. Defaults to current logged-in user.
+ * 
+ * @return string $notice the formatted notice markup.
+ * 
+ */
 function cb_transactions_get_transfer_balance_notice($user_id = 0)
 {
 
@@ -207,6 +207,13 @@ function cb_transactions_get_transfer_balance_notice($user_id = 0)
 
 }
 
+/**
+ * CB Transactions Transfer Balance Notice
+ * 
+ * Output markup that shows a user's transfer balance.
+ * 
+ * @since Confetti_Bits 2.2.0
+ */
 function cb_transactions_transfer_balance_notice()
 {
 	echo cb_transactions_get_transfer_balance_notice();
