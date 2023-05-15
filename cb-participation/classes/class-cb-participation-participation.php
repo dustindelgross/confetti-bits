@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class Confetti_Bits_Participation_Participation {
+class CB_Participation_Participation {
 
 	/**
 	 * The ID of the participation entry.
@@ -204,11 +204,7 @@ class Confetti_Bits_Participation_Participation {
 			$retval = $this->id;
 
 		} else if ( is_wp_error( $result ) ) {
-<<<<<<< HEAD
-			$retval = $result;		
-=======
 			$retval = $result;
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		}
 
 		return $retval;
@@ -503,7 +499,7 @@ class Confetti_Bits_Participation_Participation {
 
 		$select = ( is_array( $r['select'] ) ) ? implode( ', ', $r['select'] ) : $r['select'];
 		$select_sql = "SELECT {$select}";
-		$from_sql = "FROM {$cb->participation->table_name} n ";
+		$from_sql = "FROM {$cb->participation->table_name} ";
 		$where_sql = self::get_where_sql( $r['where'], $select_sql, $from_sql );
 		$orderby_sql = ( ! empty( $r['orderby'] ) ) ? "ORDER BY {$r['orderby']} DESC" : '';
 		$group_sql = ( ! empty( $r['group'] ) ) ? "GROUP BY {$r['group']}" : '';
@@ -531,7 +527,7 @@ class Confetti_Bits_Participation_Participation {
 	/**
 	 * Assemble the LIMIT clause of a get() SQL statement.
 	 *
-	 * Used by BP_Notifications_Notification::get() to create its LIMIT clause.
+	 * Used by CB_Participation_Participation::get_participation() to create its LIMIT clause.
 	 *
 	 *
 	 * @param	array	$args	Array consisting of 

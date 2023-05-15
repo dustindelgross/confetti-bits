@@ -2,12 +2,12 @@
 /**
  * Confetti Bits Transaction Loader.
  * A component that allows leaders to send bits to users and for users to send bits to each other.
- * @package Confetti_Bits 
+ * @package Confetti_Bits
  * @since Confetti Bits 2.0.0  */
 
 defined( 'ABSPATH' ) || exit;
 
-class Confetti_Bits_Transactions_Transaction {
+class CB_Transactions_Transaction {
 
 	public static $last_inserted_id; public $id; public $item_id;
 
@@ -36,6 +36,8 @@ class Confetti_Bits_Transactions_Transaction {
 	public $component_action;
 
 	public $amount;
+	
+	public $event_id;
 
 	public $total_count;
 
@@ -74,46 +76,20 @@ class Confetti_Bits_Transactions_Transaction {
 
 		}
 
+		$reset_date = get_option('cb_reset_date');
+		$date = new DateTimeImmutable($reset_date);
 		$this->current_date = current_time( 'Y-m-d H:i:s', false );
-
-		$this->current_cycle_end = bp_get_option( 'cb_reset_date' );
-
-		$this->current_cycle_start = date( 
-			'Y-m-d H:i:s', 
-			strtotime( bp_get_option( 'cb_reset_date' ) . ' - 1 year' )
-		);
-
-		$this->previous_cycle_end = date( 
-			'Y-m-d H:i:s', 
-			strtotime( bp_get_option( 'cb_reset_date' ) . ' - 1 year' )
-		);
-
-		$this->previous_cycle_start = date( 
-			'Y-m-d H:i:s', 
-			strtotime( bp_get_option( 'cb_reset_date' ) . ' - 2 years' )
-		);
-
-		$this->current_spending_cycle_start = date( 
-			'Y-m-d H:i:s', 
-			strtotime( bp_get_option( 'cb_reset_date' ) . ' - 1 year + 1 month' ) 
-		);
-
-		$this->current_spending_cycle_end = date( 
-			'Y-m-d H:i:s', 
-			strtotime( bp_get_option( 'cb_reset_date' ) . ' + 1 month' )
-		);
-
-		$this->previous_spending_cycle_start = date( 
-			'Y-m-d H:i:s', 
-			strtotime( bp_get_option( 'cb_reset_date' ) . ' - 2 years + 1 month' ) 
-		);
-
-		$this->previous_spending_cycle_end = date( 
-			'Y-m-d H:i:s', 
-			strtotime( bp_get_option( 'cb_reset_date' ) . ' - 1 year + 1 month' )
-		);
+		$this->current_cycle_end = $reset_date;
+		$this->current_cycle_start = $date->modify("- 1 year")->format('Y-m-d H:i:s');
+		$this->previous_cycle_end = $date->modify("- 1 year")->format('Y-m-d H:i:s');
+		$this->previous_cycle_start = $date->modify("- 2 years")->format('Y-m-d H:i:s');
+		$this->current_spending_cycle_start = $date->modify("- 1 year + 1 month")->format('Y-m-d H:i:s');
+		$this->current_spending_cycle_end = $date->modify("+ 1 month")->format('Y-m-d H:i:s');
+		$this->previous_spending_cycle_start = $date->modify("- 2 years + 1 month")->format('Y-m-d H:i:s');
+		$this->previous_spending_cycle_end = $date->modify("- 1 year + 1 month")->format('Y-m-d H:i:s');
 
 	}
+	
 	public function send_bits() {
 
 		$retval = false;
@@ -121,21 +97,18 @@ class Confetti_Bits_Transactions_Transaction {
 		$data = array (
 			'item_id' => $this->item_id,
 			'secondary_item_id' => $this->secondary_item_id,
-			'user_id' => $this->user_id,
 			'sender_id' => $this->sender_id,
-			'sender_name' => $this->sender_name,
 			'recipient_id' => $this->recipient_id,
-			'recipient_name' => $this->recipient_name,
-			'identifier' => $this->identifier,
 			'date_sent' => $this->date_sent,
 			'log_entry' => $this->log_entry,
 			'component_name' => $this->component_name,
 			'component_action' => $this->component_action,
 			'amount' => $this->amount,
+			'event_id' => $this->event_id
 		);
 
-		$data_format = array( '%d', '%d', '%d', '%d', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', );
-		
+		$data_format = array( '%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%d', '%d' );
+
 		$result = self::_insert( $data, $data_format );
 
 		if ( ! empty( $result ) && ! is_wp_error( $result ) ) {
@@ -149,7 +122,7 @@ class Confetti_Bits_Transactions_Transaction {
 
 			$retval = $this->id;
 		}
-		
+
 		return $retval;
 	}
 
@@ -161,12 +134,7 @@ class Confetti_Bits_Transactions_Transaction {
 		);
 
 		global $wpdb;
-<<<<<<< HEAD
-		$bp = buddypress();
-		$cb = Confetti_Bits();
-=======
 
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 		$fetched_transaction = ( ! empty( $transaction[0] ) ? current( $transaction ) : array() );
 		if ( ! empty( $fetched_transaction ) && ! is_wp_error( $fetched_transaction ) ) {
 			$this->item_id           = (int) $fetched_transaction['item_id'];
@@ -190,6 +158,62 @@ class Confetti_Bits_Transactions_Transaction {
 		return $wpdb->insert( Confetti_Bits()->transactions->table_name, $data, $data_format );
 	}
 
+	public function get_transactions( $args = array() ) {
+
+		global $wpdb;
+		$r = wp_parse_args( $args, array(
+			'select' => '*',
+			'where' => array(
+				'or' => false
+			),
+			'orderby' => array(),
+			'groupby' => array(),
+			'pagination' => array()
+		));
+
+		$select = "SELECT {$r['select']}";
+		$from_sql = "FROM {$wpdb->prefix}confetti_bits_transactions";
+		$where_sql = self::get_where_sql( $r['where'] );
+		$limit_sql = self::get_paged_sql($r['pagination']);
+		$orderby_sql = ! empty( $r['orderby'] ) ? "ORDER BY {$r['orderby'][0]} {$r['orderby'][1]}" : '';
+		$groupby_sql = ! empty( $r['groupby'] ) ? "GROUP BY {$r['groupby'][0]}" : '';
+
+		$sql = "{$select} {$from_sql} {$where_sql} {$groupby_sql} {$orderby_sql} {$limit_sql}";
+
+		return $wpdb->get_results( $sql, "ARRAY_A" );
+
+	}
+
+	/**
+	 * Assemble the LIMIT clause of a get() SQL statement.
+	 *
+	 * Used by CB_Participation_Participation::get_participation() to create its LIMIT clause.
+	 *
+	 *
+	 * @param	array	$args	Array consisting of 
+	 * 							the page number and items per page. { 
+	 * 			@type	int		$page		page number
+	 * 			@type	int		$per_page	items to return
+	 * }
+	 * 
+	 * @return string $retval LIMIT clause.
+	 * 
+	 */
+	protected static function get_paged_sql( $args = array() ) {
+
+		global $wpdb;
+		$retval = '';
+
+		if ( ! empty( $args['page'] ) && ! empty( $args['per_page'] ) ) {
+			$page     = absint( $args['page'] );
+			$per_page = absint( $args['per_page'] );
+			$offset   = $per_page * ( $page - 1 );
+			$retval   = $wpdb->prepare( 'LIMIT %d, %d', $offset, $per_page );
+		}
+
+		return $retval;
+	}
+
 	public function get_users_balance( $user_id = 0 ) {
 
 		if ( $user_id === 0 ) {
@@ -209,8 +233,8 @@ class Confetti_Bits_Transactions_Transaction {
 	 * The goal here is to dynamically populate whichever balance is necessary for the
 	 * module being used. So for the requests module, we need to check today's date against
 	 * the cycle reset dates.
-	 * 
-	 * If the new cycle started but our spending cycle hasn't reset yet, we'll need to 
+	 *
+	 * If the new cycle started but our spending cycle hasn't reset yet, we'll need to
 	 * use our previous cycle's balance. If we're clear of the spending cycle start date,
 	 * we'll use our current cycle's balance.
 	/*/
@@ -231,7 +255,6 @@ class Confetti_Bits_Transactions_Transaction {
 		$earned		= ( ! empty ( $total_standard ) ) ? $total_standard[0]['amount'] : 0;
 		$requests	= ( ! empty ( $total_requests ) ) ? $total_requests[0]['amount'] : 0;
 
-
 		return $earned + $requests;
 
 	}
@@ -251,12 +274,12 @@ class Confetti_Bits_Transactions_Transaction {
 
 	}
 
-	/** 
-	 * Get all transactions from whichever cycle is currently in place, 
-	 * except for transfers/requests. If the date is earlier 
-	 * than the spending cycle reset, we're going to use all 
-	 * the transactions from the previous cycle as our earnings. 
-	 * If we're after the spending reset, we'll use 
+	/**
+	 * Get all transactions from whichever cycle is currently in place,
+	 * except for transfers/requests. If the date is earlier
+	 * than the spending cycle reset, we're going to use all
+	 * the transactions from the previous cycle as our earnings.
+	 * If we're after the spending reset, we'll use
 	 * all the transactions from the current cycle as our earnings.
 	 */
 	public function get_users_earning_cycle( $user_id = 0 ) {
@@ -301,13 +324,13 @@ class Confetti_Bits_Transactions_Transaction {
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
 
-	/** 
+	/**
 	 * Get all cb_bits_request transactions from whichever cycle is currently in place.
-	 * 
-	 * If today's date is earlier than the spending cycle reset, 
+	 *
+	 * If today's date is earlier than the spending cycle reset,
 	 * we're going to use all the cb_bits_request transactions
 	 * from the previous cycle as the basis for our calculations.
-	 * If we're after the spending cycle reset, we'll use 
+	 * If we're after the spending cycle reset, we'll use
 	 * all the transactions from the current spending cycle as our request pool.
 	 */
 	public function get_users_request_cycle( $user_id = 0 ) {
@@ -352,16 +375,16 @@ class Confetti_Bits_Transactions_Transaction {
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
 
-	/** 
+	/**
 	 * Get all cb_transfer_bits transactions from whichever cycle is currently in place.
-	 * 
-	 * If today's date is earlier than the spending cycle reset, 
+	 *
+	 * If today's date is earlier than the spending cycle reset,
 	 * we're going to use all the cb_transfer_bits transactions
 	 * from the previous cycle as the basis for our calculations.
-	 * If we're after the spending cycle reset, we'll use 
+	 * If we're after the spending cycle reset, we'll use
 	 * all the transfers from the current spending cycle.
-	 * 
-	 * Both positive and negative amounts are all based on the recipient_id, 
+	 *
+	 * Both positive and negative amounts are all based on the recipient_id,
 	 * whereas all negative amounts are based on sender_id.
 	 */
 
@@ -437,61 +460,6 @@ class Confetti_Bits_Transactions_Transaction {
 		$pagination_sql = "LIMIT 0, 1";
 
 		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	public function get_transactions( $args = array() ) {
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$r = wp_parse_args( 
-			$args, 
-			array(
-				'select'		=> '*',
-				'where'			=> array(
-					'date_query'		=> array(
-						'column'		=> 'date_sent',
-						'compare'		=> 'BETWEEN',
-						'relation'		=> 'AND',
-						'before'		=> $this->current_cycle_end,
-						'after'			=> $this->current_cycle_start,
-						'inclusive'		=> true,
-					),
-					'component_name'	=> 'confetti_bits',
-					'component_action'	=> '',
-<<<<<<< HEAD
-				),
-				'pagination'	=> array(),
-				'group'			=> '',
-=======
-					'or'				=> false
-				),
-				'pagination'	=> array(),
-				'group'			=> '',
-				'order'		=> array()
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
-			)
-		);
-
-		$select = ( is_array( $r['select'] ) ) ? implode( ', ', $r['select'] ) : $r['select'];
-		$select_sql = "SELECT {$select}";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( $r['where'], $select_sql, $from_sql );
-		$group_sql = ( ! empty( $r['group'] ) ) ? "GROUP BY {$r['group']}" : '';
-		$pagination = ( ! empty( $r['pagination'] ) ) ? implode( ',', wp_parse_id_list( $r['pagination'] ) ) : '';
-<<<<<<< HEAD
-		$orderby = ( !empty( $r['order'] ) && is_array($r['order'] ) ) ?? "ORDER BY {$r['order'][0]} {$r['order'][1]}";
-		$pagination_sql = ( ! empty( $r['pagination'] ) ) ? "LIMIT {$pagination}" : '';
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-=======
-		$orderby = ( !empty( $r['order'] ) && is_array($r['order'] ) ) ? "ORDER BY {$r['order'][0]} {$r['order'][1]}" : "";
-		$pagination_sql = ( ! empty( $r['pagination'] ) ) ? "LIMIT {$pagination}" : '';
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$orderby} {$pagination_sql}";
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
@@ -774,12 +742,12 @@ class Confetti_Bits_Transactions_Transaction {
 				'column'		=> 'date_sent',
 				'compare'		=> 'BETWEEN',
 				'relation'		=> 'AND',
-				'before'		=> date( 
-					'Y-m-d H:i:s', 
+				'before'		=> date(
+					'Y-m-d H:i:s',
 					strtotime( bp_get_option('cb_reset_date') . ' - 1 year' ) ),
-				'after'			=> date( 
-					'Y-m-d H:i:s', 
-					strtotime( bp_get_option( 'cb_reset_date' ) . ' - 2 years' ) 
+				'after'			=> date(
+					'Y-m-d H:i:s',
+					strtotime( bp_get_option( 'cb_reset_date' ) . ' - 2 years' )
 				),
 				'inclusive'		=> true,
 			),
@@ -917,7 +885,7 @@ class Confetti_Bits_Transactions_Transaction {
 
 		$where_sql = self::get_where_sql( array(
 			'user_id'			=> $user_id,
-			'date_query'		=> array (
+			'date_query'		=> array(
 				'column'		=> 'date_sent',
 				'compare'		=> 'IN',
 				'relation'		=> 'AND',
@@ -1184,13 +1152,13 @@ class Confetti_Bits_Transactions_Transaction {
 			'recipient_id'		=> get_current_user_id(),
 			'component_name'	=> 'confetti_bits',
 		);
-		$r = bp_parse_args( $args, $defaults, 'cb_transactions_get_some_transactions_for_user' );
+		$r = wp_parse_args( $args, $defaults );
 		$select_sql = "SELECT id, recipient_name, date_sent, log_entry, amount";
 		$from_sql = "FROM {$cb->transactions->table_name} n ";
 		$where_sql = self::get_where_sql( array(
 			'recipient_id'		=> get_current_user_id(),
 			'component_name'	=> 'confetti_bits',
-		), $select_sql, $from_sql );
+		));
 
 		$order_sql = "ORDER BY date_sent DESC";
 
@@ -1226,9 +1194,9 @@ class Confetti_Bits_Transactions_Transaction {
 
 		if ( ! empty( $date_query ) && is_array( $date_query ) ) {
 			if ( ! empty( $date_query['column'] ) && 'date_recorded' === $date_query['column'] ) {
-				$date_query = new BP_Date_Query( $date_query, 'date_recorded' );	
+				$date_query = new BP_Date_Query( $date_query, 'date_recorded' );
 			} else {
-				$date_query = new BP_Date_Query( $date_query, 'date_sent' );	
+				$date_query = new BP_Date_Query( $date_query, 'date_sent' );
 			}
 			$sql        = preg_replace( '/^\sAND/', '', $date_query->get_sql() );
 		}
@@ -1262,11 +1230,11 @@ class Confetti_Bits_Transactions_Transaction {
 		}
 
 		if ( ! empty( $args['secondary_item_id'] ) ) {
-			$secondary_item_id_in                  = implode( 
-				',', 
-				wp_parse_id_list( 
-					$args['secondary_item_id'] 
-				) 
+			$secondary_item_id_in                  = implode(
+				',',
+				wp_parse_id_list(
+					$args['secondary_item_id']
+				)
 			);
 			$where_conditions['secondary_item_id'] = "secondary_item_id IN ({$secondary_item_id_in})";
 		}
@@ -1407,9 +1375,6 @@ class Confetti_Bits_Transactions_Transaction {
 		$where_conditions = apply_filters( 'cb_transactions_get_where_conditions', $where_conditions, $args, $select_sql, $from_sql, $join_sql, $meta_query_sql );
 
 		if ( ! empty( $where_conditions ) ) {
-<<<<<<< HEAD
-			$where = 'WHERE ' . implode( ' AND ', $where_conditions );
-=======
 			if ( isset( $args['or'] ) ) {
 				if ( $args['or'] === true ) {
 					$where = 'WHERE ' . implode( ' OR ', $where_conditions );
@@ -1417,10 +1382,9 @@ class Confetti_Bits_Transactions_Transaction {
 					$where = 'WHERE ' . implode( ' AND ', $where_conditions );
 				}
 			} else {
-				$where = 'WHERE ' . implode( ' AND ', $where_conditions );	
+				$where = 'WHERE ' . implode( ' AND ', $where_conditions );
 			}
-			
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
+
 		}
 
 		return $where;
@@ -1549,23 +1513,23 @@ class Confetti_Bits_Transactions_Transaction {
 
 		$order = bp_esc_sql_order( $order );
 
-		$orderby = apply_filters( 
-			'confetti_bits_transactions_transaction_get_orderby', 
+		$orderby = apply_filters(
+			'confetti_bits_transactions_transaction_get_orderby',
 			self::convert_orderby_to_order_by_term( $orderby ), $orderby );
 
 		$sql['orderby'] = "ORDER BY {$orderby} {$order}";
 
 		if ( ! empty( $r['per_page'] ) && ! empty( $r['page'] ) && - 1 !== $r['per_page'] ) {
-			$sql['pagination'] = $wpdb->prepare( 
-				'LIMIT %d, %d', 
-				intval( ( $r['page'] - 1 ) * $r['per_page'] ), 
-				intval( $r['per_page'] ) 
+			$sql['pagination'] = $wpdb->prepare(
+				'LIMIT %d, %d',
+				intval( ( $r['page'] - 1 ) * $r['per_page'] ),
+				intval( $r['per_page'] )
 			);
 		}
-		$where_conditions = apply_filters( 
-			'confetti_bits_transactions_transaction_get_where_conditions', 
-			$where_conditions, 
-			$r 
+		$where_conditions = apply_filters(
+			'confetti_bits_transactions_transaction_get_where_conditions',
+			$where_conditions,
+			$r
 		);
 
 		$where = '';
@@ -1576,16 +1540,16 @@ class Confetti_Bits_Transactions_Transaction {
 			$where        = "WHERE {$sql['where']}";
 		}
 
-		$sql['from'] = apply_filters( 
-			'confetti_bits_transactions_transaction_get_join_sql', 
-			$sql['from'], $r 
+		$sql['from'] = apply_filters(
+			'confetti_bits_transactions_transaction_get_join_sql',
+			$sql['from'], $r
 		);
 
 		$paged_transactions_sql = "{$sql['select']} FROM {$sql['from']} {$where} {$sql['orderby']} {$sql['pagination']}";
-		$paged_transactions_sql = apply_filters( 
-			'confetti_bits_transactions_transaction_get_paged_sql', 
-			$paged_transactions_sql, 
-			$sql, $r 
+		$paged_transactions_sql = apply_filters(
+			'confetti_bits_transactions_transaction_get_paged_sql',
+			$paged_transactions_sql,
+			$sql, $r
 		);
 
 		$cached = bp_core_get_incremented_cache( $paged_transactions_sql, 'confetti_bits_transactions' );

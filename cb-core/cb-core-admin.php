@@ -28,7 +28,7 @@
 if ( ! function_exists( 'confetti_bits_bp_admin_setting_general_register_fields' ) ) {
 	function confetti_bits_bp_admin_setting_general_register_fields( $setting ) {
 
-		$active_components = bp_get_option('cb_active_components');
+		$active_components = get_option('cb_active_components');
 		$default_components  = cb_core_admin_get_components( 'default' );
 		$optional_components = cb_core_admin_get_components( 'optional' );
 		$required_components = cb_core_admin_get_components( 'required' );
@@ -101,22 +101,16 @@ if ( ! function_exists( 'cb_admin_reset_date_options' ) ) {
 
 	function cb_admin_reset_date_options() {
 
-		$cb_cycle_reset_date = apply_filters( 'cb_cycle_reset_date', bp_get_option('cb_cycle_reset_date') );
+		$cb_reset_date =  get_option('cb_reset_date');
 		$page      = bp_core_do_network_admin() ? 'admin.php' : 'admin.php';
 
 ?>
-<input id="<?php echo esc_attr( "cb_cycle_reset_date" ) ?>" 
-	   name="<?php echo esc_attr( "cb_cycle_reset_date" ) ?>" 
+<input id="<?php echo esc_attr( "cb_reset_date" ) ?>" 
+	   name="<?php echo esc_attr( "cb_reset_date" ) ?>" 
 	   type="date"
-	   value="<?php echo date( 'Y-m-d', strtotime( bp_get_option('cb_reset_date') ) ); ?>"
+	   value="<?php echo date( 'Y-m-d', strtotime( $cb_reset_date ) ); ?>"
 	   />
 <?php
-	}
-}
-
-if ( ! function_exists( 'cb_admin_template_options' ) ) {
-	function cb_admin_template_options() {
-
 	}
 }
 
@@ -132,9 +126,9 @@ if ( ! function_exists( 'cb_admin_settings_handler' ) ) {
 		}
 
 
-		if ( isset( $_POST['cb_cycle_reset_date'] ) ) {
+		if ( isset( $_POST['cb_reset_date'] ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-			$reset_date = date( 'Y-m-d H:i:s', strtotime( $_POST['cb_cycle_reset_date'] ) );
+			$reset_date = date( 'Y-m-d H:i:s', strtotime( $_POST['cb_reset_date'] ) );
 
 			bp_update_option( 'cb_reset_date', $reset_date );
 
@@ -142,7 +136,7 @@ if ( ! function_exists( 'cb_admin_settings_handler' ) ) {
 				add_query_arg(
 					array(
 						'page'    => 'bp-settings',
-						'cb_cycle_reset_date'  => 'updated',
+						'cb_reset_date'  => 'updated',
 						'updated' => 'true',
 					),
 					'admin.php'
@@ -287,8 +281,6 @@ if ( ! function_exists( 'cb_create_executive') ) {
 }
 add_action( 'init', 'cb_create_executive' );
 
-<<<<<<< HEAD
-=======
 if ( ! function_exists( 'cb_create_leadership') ) {
 	function cb_create_leadership() {
 		if ( get_option( 'cb_create_leaders' ) != 'done' ) {
@@ -306,7 +298,6 @@ if ( ! function_exists( 'cb_create_leadership') ) {
 }
 add_action( 'init', 'cb_create_leadership' );
 
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 if ( ! function_exists( 'cb_create_participation_admin') ) {
 
 	function cb_create_participation_admin() {
@@ -316,12 +307,8 @@ if ( ! function_exists( 'cb_create_participation_admin') ) {
 				'cb_participation_admin',
 				'Confetti Bits Participation Admin',
 				array(
-<<<<<<< HEAD
-					'read'	=> true,
-=======
 					'read' => true,
 					'cb_participation_admin' => true,
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				)
 			);
 			/*/
@@ -352,10 +339,6 @@ if ( ! function_exists( 'cb_create_participation_admin') ) {
 			$cb_participation_admin_role = get_role( 'cb_participation_admin' );
 			$cb_site_admin = get_role( 'administrator' );
 			$cb_site_admin->add_cap('cb_participation_admin');
-<<<<<<< HEAD
-			$cb_participation_admin_role->add_cap( 'cb_participation_admin' );
-=======
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 			$cb_participation_admin_role->add_cap( 'cb_admin' );
 
 			update_option( 'cb_create_participation_admins', 'done' );
@@ -429,17 +412,19 @@ if ( ! function_exists( 'cb_is_user_requests_fulfillment' ) )  {
 
 if ( ! function_exists( 'cb_is_user_site_admin' ) ) {
 	function cb_is_user_site_admin() {
-<<<<<<< HEAD
-		return current_user_can('edit_plugins');
-=======
 		return current_user_can('administrator');
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	}
 }
 
 if ( ! function_exists( 'cb_is_user_participation_admin' ) ) {
 	function cb_is_user_participation_admin() {
 		return current_user_can('cb_participation_admin');
+	}
+}
+
+if ( ! function_exists( 'cb_is_user_events_admin' ) ) {
+	function cb_is_user_events_admin() {
+		return current_user_can('cb_is_user_events_admin');
 	}
 }
 
@@ -528,7 +513,7 @@ if ( ! function_exists( 'cb_core_get_roles' ) ) {
 	function cb_core_get_roles( $type = '' ) {
 
 		$roles	= array(
-
+/*
 			'executive' => array(
 				'title'       => __( 'Confetti Bits Executives', 'confetti-bits' ),
 				'description' => __( 'Configure panels for Confetti Bits Executives.', 'confetti-bits' ),
@@ -548,6 +533,7 @@ if ( ! function_exists( 'cb_core_get_roles' ) ) {
 				'title'       => __( 'Standard Users', 'confetti-bits' ),
 				'description' => __( 'Configure panels for standard users.', 'confetti-bits' ),
 			),
+			*/
 
 		);
 

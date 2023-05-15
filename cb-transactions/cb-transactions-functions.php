@@ -4,8 +4,78 @@
  * 
  * Hope this works. Good luck!
  */
-
 defined('ABSPATH') || exit;
+
+/**
+ * CB AJAX Get Transactions
+ * 
+ * Gets transactions for a user based on the user_id passed in the $_GET array.
+ * 
+ * @since 2.3.0
+ * @return JSON {
+ * 		'text': JSON (JSON encoded array of transactions, or error message),
+ * 		'type': string (success or error)
+ * }
+ */
+function cb_ajax_get_transactions() {
+
+	if ( ! cb_is_get_request() || !isset( $_GET['user_id'] ) ) {
+		return;
+	}
+
+	$feedback = array(
+		'text' => '',
+		'type' => 'error'
+	);
+
+	$select = isset($_GET['total']) ? 'count(id) as total_count' : 'sender_id, recipient_id, amount, log_entry, date_sent';
+
+	$user_id = intval( $_GET['user_id'] );
+	$page = isset( $_GET['page'] ) ? intval( $_GET['page'] ) : 1;
+	$per_page = isset($_GET['per_page']) ? intval( $_GET['per_page'] ) : 10;
+	$transaction = new CB_Transactions_Transaction();
+	$paged_transactions = $transaction->get_transactions(array(
+		'select' => $select,
+		'where' => array(
+			'recipient_id' => $user_id,
+			'sender_id' => $user_id,
+			'or' => true
+		),
+		'orderby' => array('id', 'DESC'),
+		'pagination' => array(
+			'page' => $page, 
+			'per_page' => $per_page
+		)
+	));
+
+	if ( $paged_transactions ) {
+		$feedback['text'] = $paged_transactions;
+		$feedback['type'] = 'success';
+	} else {
+		$feedback['text'] = json_encode("No transactions found");
+	}
+
+	echo json_encode( $feedback );
+	die();
+
+}
+add_action( 'wp_ajax_cb_transactions_get_transactions', 'cb_ajax_get_transactions' );
+
+/**
+ * CB Get Transactions Slug
+ * 
+ * Get the slug for the transactions component. 
+ * This is deprecated, and we're working to remove this
+ * from the codebase.
+ * 
+ * @since Confetti_Bits 1.0.0
+ * 
+ */
+function cb_get_transactions_slug() {
+	$cb = Confetti_Bits();
+	return $cb->transactions->slug;
+}
+
 
 /**
  * CB Activity Bits
@@ -13,21 +83,44 @@ defined('ABSPATH') || exit;
  * This hooks onto the BP Activity Posted Update 
  * action to give someone Confetti Bits when they
  * post an update.
+ * 
+ * @param string $content The content of the activity post.
+ * @param int $user_id The id of the user associated with the activity post.
+ * @param int $activity_id The id of the activity post.
+ * 
+ * @since Confetti_Bits 2.2.0
  */
 function cb_activity_bits($content, $user_id, $activity_id)
 {
 
-	$today = current_time('D', false);
+	if ( !$user_id ) {
+		return;
+	}
+
+	$date = new DateTimeImmutable();	
+	$today = $date->format('D');
 
 	if ($today === 'Sat' || $today === 'Sun') {
 		return;
 	}
 
-	$user_name = bp_get_loggedin_user_fullname();
 	$total_count = 0;
 
-	$transaction = new Confetti_Bits_Transactions_Transaction();
-	$activity_transactions = $transaction->get_activity_bits_transactions_for_today($user_id);
+	$args = array(
+		'select' => "recipient_id, COUNT(recipient_id) as total_count",
+		'where' => array(
+			'date_query' => array(
+				'year' => $date->format('Y'),
+				'month' => $date->format('m'),
+				'day' => $date->format('d'),
+			),
+			'recipient_id' => $user_id,
+			'component_action' => 'cb_activity_bits',
+		),
+	);
+
+	$transaction = new CB_Transactions_Transaction();
+	$activity_transactions = $transaction->get_transactions($args);
 
 	if (!empty($activity_transactions[0]['total_count'])) {
 
@@ -61,103 +154,39 @@ function cb_activity_bits($content, $user_id, $activity_id)
 add_action('bp_activity_posted_update', 'cb_activity_bits', 10, 3);
 
 /**
- * CB Get Total For Current Day
+ * CB Transactions Get Total Sent Today
  * 
  * This function gets the total number of Confetti Bits
  * that have been sent for the current day.
  * 
  * @return int $total The total number of Confetti Bits sent for the current day.
  */
-function cb_get_total_for_current_day()
+function cb_transactions_get_total_sent_today()
 {
 
-	$transaction = new Confetti_Bits_Transactions_Transaction();
-
+	$transaction = new CB_Transactions_Transaction();
+	$date = new DateTimeImmutable("now");
 	$user_id = get_current_user_id();
+	$action = cb_is_user_admin() ? 'cb_send_bits' : 'cb_transfer_bits';
+	$args = array(
+		'select' => "recipient_id, SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) as amount",
+		'where' => array(
+			'date_query' => array(
+				'year' => $date->format('Y'),
+				'month' => $date->format('m'),
+				'day' => $date->format('d'),
+			),
+			'sender_id' => $user_id,
+			'component_action' => $action,
+		)
+	);
 
-	if (cb_is_user_admin() && !cb_is_user_site_admin()) {
-		$fetched_transactions = $transaction->get_send_bits_transactions_for_today($user_id);
-	} else {
-		$fetched_transactions = $transaction->get_transfer_bits_transactions_for_today($user_id);
-	}
-
-	if (!empty($fetched_transactions)) {
-		$total = abs(intval($fetched_transactions[0]['amount']));
-	} else {
-		$total = 0;
-	}
-
+	$fetched_transactions = $transaction->get_transactions($args);
+	$total = (!empty($fetched_transactions)) ? abs(intval($fetched_transactions[0]['amount'])) : 0;
 	return $total;
 
 }
 
-/**
- * CB Get Total For Current Day Notice
- * 
- * This function gets the total number of Confetti Bits
- * that have been sent for the current day and returns
- * a notice to the user.
- * 
- * @return string $notice The notice to be displayed to the user.
- */
-function cb_get_total_for_current_day_notice()
-{
-
-	if (!cb_is_confetti_bits_component() || !cb_is_user_confetti_bits()) {
-		return;
-	}
-	$user_id = get_current_user_id();
-	$transaction = new Confetti_Bits_Transactions_Transaction();
-
-	if (cb_is_user_admin() && !cb_is_user_site_admin()) {
-		$fetched_transactions = $transaction->get_send_bits_transactions_for_today($user_id);
-	} else {
-		$fetched_transactions = $transaction->get_transfer_bits_transactions_for_today($user_id);
-	}
-
-	$amount = abs(intval($fetched_transactions[0]['amount']));
-
-	if (empty($amount) || $amount == 0) {
-
-		$notice = "You've sent 0 Confetti Bits so far today. You can send up to 20.";
-
-	} else {
-
-		if ($amount > 1 && $amount < 20) {
-			$notice = sprintf(
-				"You've sent %s Confetti Bits so far today. You can send up to %s more.",
-				$amount, 20 - $amount
-			);
-		}
-
-		if ($amount === 1) {
-			$notice = sprintf(
-				"You've sent %s Confetti Bit so far today. You can send up to 19 more.",
-				$amount
-			);
-		}
-
-		if ($amount >= 20) {
-			$notice = sprintf(
-				"You've already sent %s Confetti Bits today. Your counter should reset tomorrow!",
-				$amount
-			);
-		}
-	}
-
-	return $notice;
-}
-
-/**
- * CB Total For Current Day Notice
- * 
- * This function gets the total number of Confetti Bits
- * that have been sent for the current day and displays
- * a notice to the user.
- */
-function cb_total_for_current_day_notice() {
-	echo cb_get_total_for_current_day_notice();
-}
 
 /**
  * CB Bits Request Sender Email Notification
@@ -470,11 +499,12 @@ function cb_transactions_notifications($data = array())
 
 	}
 
-	cb_update_total_bits($r['recipient_id']);
+	// cb_update_total_bits($r['recipient_id']);
 
 }
 add_action('cb_transactions_after_send', 'cb_transactions_notifications');
 
+/*
 function cb_update_total_bits($user_id = 0, $meta_key = 'cb_total_bits', $previous_total = '')
 {
 
@@ -486,7 +516,7 @@ function cb_update_total_bits($user_id = 0, $meta_key = 'cb_total_bits', $previo
 		$user_id = get_current_user_id();
 	}
 
-	$transaction_logs = new Confetti_Bits_Transactions_Transaction();
+	$transaction_logs = new CB_Transactions_Transaction();
 	$transaction_query = $transaction_logs->get_users_balance($user_id);
 
 	$total = $transaction_query;
@@ -494,6 +524,7 @@ function cb_update_total_bits($user_id = 0, $meta_key = 'cb_total_bits', $previo
 	return update_user_meta($user_id, $meta_key, $total, $previous_total);
 
 }
+
 
 function cb_get_total_bits($user_id, $meta_key = 'cb_total_bits', $unique = true)
 {
@@ -534,7 +565,7 @@ function cb_get_total_bits_notice($user_id, $meta_key = 'cb_total_bits', $unique
 
 }
 
-function cb_get_user_meta($user_id = 0, $meta_key, $unique = true)
+function cb_get_user_meta($user_id = 0, $meta_key = '', $unique = true)
 {
 
 	if ($user_id === 0) {
@@ -544,7 +575,7 @@ function cb_get_user_meta($user_id = 0, $meta_key, $unique = true)
 	return get_user_meta($user_id, $meta_key, $unique);
 }
 
-function cb_update_user_meta($user_id = 0, $meta_key = '', $meta_value)
+function cb_update_user_meta($user_id = 0, $meta_key = '', $meta_value = '')
 {
 
 	if ($user_id === 0) {
@@ -554,163 +585,86 @@ function cb_update_user_meta($user_id = 0, $meta_key = '', $meta_value)
 	return update_user_meta($user_id, $meta_key, $meta_value);
 }
 
-function cb_get_users_request_balance($user_id = 0)
-{
+*/
 
-	if ($user_id === 0) {
-		$user_id = get_current_user_id();
-	}
-	$transactions = new Confetti_Bits_Transactions_Transaction();
-	$total = (!empty($transactions->get_users_request_balance($user_id))) ? $transactions->get_users_request_balance($user_id) : 0;
-
-	return $total;
-
-}
-
-/**
- * CB Users Request Balance
- * 
- * Display the users request balance.
- *
- * @param int $user_id The user ID.
- */
-function cb_users_request_balance($user_id = 0) {
-
-	if ($user_id === 0) {
-		$user_id = get_current_user_id();
-	}
-
-	echo cb_get_users_request_balance($user_id);
-}
-
-/**
- * CB Get Users Request Balance Notice
- * 
- * Get the users request balance notice.
- *
- *
- * @param int $user_id The user ID.
- * @return string The users request balance notice.
- */
-function cb_get_users_request_balance_notice($user_id = 0) {
-
-	if ($user_id === 0) {
-		$user_id = get_current_user_id();
-	}
-
-	$transactions = new Confetti_Bits_Transactions_Transaction();
-	$total = $transactions->get_users_request_balance($user_id);
-	$reset_date = cb_get_reset_date(array('action' => 'requests', 'cycle' => 'auto'));
-
-	$notice = sprintf( 
-		"You have %s Confetti Bits to spend on requests until %s.", 
-		$total, $reset_date
-	);
-
-	return $notice;
-
-}
-
-/**
- * CB Users Balances
- * 
- * Display the users balances above the dashboard.
- *
- * @param int $user_id The user ID.
- */
-function cb_users_balances() {
-	echo cb_get_users_balances();
-}
-
-/**
- * CB Get Users Balances
- * 
- * Get the users balances to display above the dashboard.
- *
- *
- * @param int $user_id The user ID.
- * @return string The users balance notice.
- */
-function cb_get_users_balances($user_id = 0) {
-
-	if ($user_id === 0) {
-		$user_id = get_current_user_id();
-	}
-
-	$transactions = new Confetti_Bits_Transactions_Transaction();
-	$requests = $transactions->get_users_request_balance($user_id);
-	$transfers = $transactions->get_users_transfer_balance($user_id);
-	$request_reset_date = cb_get_reset_date(array('action' => 'requests', 'cycle' => 'auto'));
-	$transfer_reset_date = cb_get_reset_date(array('action' => 'transfers', 'cycle' => 'auto'));
-
-	$notice = sprintf( 
-		"<div style='margin:10px;border:1px solid #dbb778;border-radius:10px;padding:.75rem;'>
-			<h4 style='padding:0;margin:0;'>Confetti Bits Balances</h4>
-			<div style='display:flex;'>
-				<div style='flex: 0 1 200px;padding:0;'>
-					<p style='margin:0;'>Confetti Bits Requests: %s</p>
-					<p style='color:#d1cbc1;font-size:.75rem;margin:0;'>Until %s</p>
-				</div>
-				<div style='flex: 0 1 200px;padding:0;'>
-					<p style='margin:0;'>Confetti Bits Transfers: %s</p>
-					<p style='color:#d1cbc1;font-size:.75rem;margin:0;'>Until %s</p>
-				</div>
-			</div>
-		</div>", 
-		$requests, $request_reset_date, $transfers, $transfer_reset_date
-	);
-
-	return $notice;
-
-}
-
-
-function cb_users_request_balance_notice()
-{
-	echo cb_get_users_request_balance_notice();
-}
-
-function cb_get_users_transfer_balance($user_id = 0)
+function cb_transactions_get_request_balance($user_id = 0)
 {
 
 	if ($user_id === 0) {
 		$user_id = get_current_user_id();
 	}
 
-	$transactions = new Confetti_Bits_Transactions_Transaction();
-	$total = (!empty($transactions->get_users_transfer_balance($user_id))) ? $transactions->get_users_transfer_balance($user_id) : 0;
-
-	return $total;
-}
-
-function cb_get_users_transfer_balance_notice($user_id = 0)
-{
-
-	if ($user_id === 0) {
-		$user_id = get_current_user_id();
-	}
-
-	$total = cb_get_users_transfer_balance($user_id);
+	$reset_date = get_option('cb_reset_date');
+	$cb = Confetti_Bits();
+	$transactions = new CB_Transactions_Transaction();
+	$date = new DateTimeImmutable($reset_date);
+	$spend = "`date_sent` >= '{$cb->spend_start}' AND amount < 0";
+	$earn = "`date_sent` >= '{$cb->earn_start}' AND amount > 0";
 
 	$args = array(
-		'action' => 'transfers',
-		'cycle' => 'auto'
+		'select' => "SUM(CASE WHEN {$spend} THEN amount ELSE 0 END) + 
+		SUM(CASE WHEN {$earn} THEN amount ELSE 0 END) AS calculated_total",
+		'where' => array(
+			'recipient_id' => $user_id,
+			'date_query' => array(
+				'column'		=> 'date_sent',
+				'compare'		=> 'BETWEEN',
+				'relation'		=> 'AND',
+				'before'		=> $cb->spend_end,
+				'after'			=> $cb->earn_start,
+				'inclusive'		=> true,
+			)
+		)
 	);
 
-	$plural = ($total > 1 || $total === 0) ? 'Confetti Bits' : 'Confetti Bit';
+	$results = $transactions->get_transactions($args);
+	$total = (!empty($results[0]['calculated_total'])) ? $results[0]['calculated_total'] : 0;
 
-	$notice = 'You have ' . $total . ' ' . $plural . ' to spend on transfers until ' . cb_get_reset_date($args);
-
-	return $notice;
+	return $total;
 
 }
 
-function cb_users_transfer_balance_notice()
+function cb_transactions_get_transfer_balance($user_id = 0)
 {
-	echo cb_get_users_transfer_balance_notice();
+
+	if ($user_id === 0) {
+		$user_id = get_current_user_id();
+	}
+
+	$reset_date = get_option('cb_reset_date');
+	$cb = Confetti_Bits();
+	$transactions = new CB_Transactions_Transaction();
+	$date = new DateTimeImmutable($reset_date);
+	$spend = "`date_sent` >= '{$cb->spend_start}' AND amount < 0";
+	$earn = "`date_sent` >= '{$cb->earn_start}' AND amount > 0";
+
+	$args = array(
+		'select' => "recipient_id, 
+		SUM(CASE WHEN {$spend} THEN amount ELSE 0 END) + 
+		SUM(CASE WHEN {$earn} THEN amount ELSE 0 END) AS calculated_total",
+		'where' => array(
+			'recipient_id' => $user_id,
+			'date_query' => array(
+				'column'		=> 'date_sent',
+				'compare'		=> 'BETWEEN',
+				'relation'		=> 'AND',
+				'before'		=> $cb->spend_end,
+				'after'			=> $cb->earn_start,
+				'inclusive'		=> true,
+			)
+		)
+	);
+
+	$results = $transactions->get_transactions($args);
+	$total = (!empty($results[0]['calculated_total'])) ? $results[0]['calculated_total'] : 0;
+
+	return $total;
+
 }
 
 
+
+/*
 function cb_get_users_previous_cycle_total($user_id = 0)
 {
 
@@ -718,7 +672,7 @@ function cb_get_users_previous_cycle_total($user_id = 0)
 		$user_id = get_current_user_id();
 	}
 
-	$transactions = new Confetti_Bits_Transactions_Transaction();
+	$transactions = new CB_Transactions_Transaction();
 	$total = $transactions->get_users_balance($user_id);
 
 	if (isset($total)) {
@@ -730,7 +684,8 @@ function cb_get_users_previous_cycle_total($user_id = 0)
 	return $retval;
 
 }
-
+*/
+/*
 function cb_get_users_total_earnings_from_previous_cycle($user_id = 0)
 {
 
@@ -738,7 +693,7 @@ function cb_get_users_total_earnings_from_previous_cycle($user_id = 0)
 		$user_id = get_current_user_id();
 	}
 
-	$transactions = new Confetti_Bits_Transactions_Transaction();
+	$transactions = new CB_Transactions_Transaction();
 	$total = $transactions->get_users_earnings_from_previous_cycle($user_id);
 
 	if (!empty($total)) {
@@ -751,6 +706,7 @@ function cb_get_users_total_earnings_from_previous_cycle($user_id = 0)
 
 }
 
+
 function cb_get_reset_date($args = array())
 {
 
@@ -762,51 +718,52 @@ function cb_get_reset_date($args = array())
 		)
 	);
 
-	$transaction = new Confetti_Bits_Transactions_Transaction();
-	$current_spending_cycle_end = date_create($transaction->current_spending_cycle_end);
-	$previous_spending_cycle_end = date_create($transaction->previous_spending_cycle_end);
-	$current_cycle_end = date_create($transaction->current_cycle_end);
-	$previous_cycle_end = date_create($transaction->previous_cycle_end);
-	$current_date = date_create($transaction->current_date);
+	$transaction = new CB_Transactions_Transaction();
+	$format = 'F jS, Y';
+	$reset_date = get_option("cb_reset_date");
+	$date = new DateTimeImmutable($reset_date);
+	$earn_start = $date->modify("- 1 year")->format($format);
+	$spend_start = $date->modify("- 1 year + 1 month")->format($format);
+	$spend_end = $date->modify("+ 1 month")->format($format);
 
 	if ('requests' === $r['action']) {
 		if ('current' === $r['cycle']) {
-			$notice_date = $current_spending_cycle_end->format('F jS, Y');
+			$notice_date = $date->format($format);
 		}
 
 		if ('previous' === $r['cycle']) {
-			$notice_date = $previous_spending_cycle_end->format('F jS, Y');
+			$notice_date = $spend_start;
 		}
 
 		if ('auto' === $r['cycle']) {
 			if (
-				$transaction->current_date > $transaction->previous_spending_cycle_end ||
-				$transaction->current_date > strtotime($transaction->current_cycle_end . ' - 1 week')
+				$transaction->current_date > $earn_start ||
+				$transaction->current_date > $date->format($format)
 			) {
-				$notice_date = $current_spending_cycle_end->format('F jS, Y');
+				$notice_date = $spend_end;
 			} else {
-				$notice_date = $previous_spending_cycle_end->format('F jS, Y');
+				$notice_date = $spend_start;
 			}
 		}
 	}
 
 	if ('transfers' === $r['action']) {
 		if ('current' === $r['cycle']) {
-			$notice_date = $current_cycle_end->format('F jS, Y');
+			$notice_date = $date->format($format);
 		}
 
 		if ('previous' === $r['cycle']) {
-			$notice_date = $previous_cycle_end->format('F jS, Y');
+			$notice_date = $earn_start;
 		}
 
 		if ('auto' === $r['cycle']) {
 			if (
-				$transaction->current_date > $transaction->previous_cycle_end ||
-				$transaction->current_date > strtotime($transaction->current_cycle_end . ' - 1 week')
+				$transaction->current_date > $earn_start ||
+				$transaction->current_date > $date->format($format)
 			) {
-				$notice_date = $current_cycle_end->format('F jS, Y');
+				$notice_date = $date->format($format);
 			} else {
-				$notice_date = $previous_cycle_end->format('F jS, Y');
+				$notice_date = $earn_start;
 			}
 		}
 	}
@@ -817,7 +774,7 @@ function cb_get_reset_date($args = array())
 function cb_get_reset_date_notice()
 {
 
-	$transaction = new Confetti_Bits_Transactions_Transaction();
+	$transaction = new CB_Transactions_Transaction();
 	$current_spending_cycle_end = date_create($transaction->current_spending_cycle_end);
 	$previous_spending_cycle_end = date_create($transaction->previous_spending_cycle_end);
 	$current_date = date_create($transaction->current_date);
@@ -836,11 +793,12 @@ function cb_get_reset_date_notice()
 
 }
 
+
 function cb_reset_date()
 {
 	echo cb_get_reset_date();
 }
-
+*/
 function cb_calculate_activity_bits($activities, $transactions)
 {
 
@@ -901,7 +859,7 @@ function cb_update_user_activity_bits_for_current_cycle($user_id = 0)
 		$user_id = get_current_user_id();
 	}
 
-	$transaction_object = new Confetti_Bits_Transactions_Transaction();
+	$transaction_object = new CB_Transactions_Transaction();
 	$transactions = $transaction_object->get_activity_bits_transactions_from_current_cycle($user_id);
 	$activities = $transaction_object->get_activity_posts_for_user($user_id);
 	$missing_transactions = cb_calculate_activity_bits($activities, $transactions);
@@ -929,12 +887,9 @@ function cb_update_user_activity_bits_for_current_cycle($user_id = 0)
 				)
 			);
 		}
-
 	}
-
 }
-add_action('bp_actions', 'cb_update_user_activity_bits_for_current_cycle', 10, 1);
-
+//add_action('bp_actions', 'cb_update_user_activity_bits_for_current_cycle', 10, 1);
 
 function cb_groups_activity_notifications($content, $user_id, $group_id, $activity_id)
 {
@@ -970,7 +925,7 @@ function cb_groups_activity_notifications($content, $user_id, $group_id, $activi
 				'secondary_item_id' => $user_id,
 				'component_name' => 'groups',
 				'component_action' => 'activity_update',
-				'allow_duplicate' => true,
+				'allow_duplicate' => false,
 			)
 		);
 		bp_send_email('cb-groups-activity-post', (int) $notified_user_id, $args);
@@ -1084,7 +1039,7 @@ function cb_has_bits($action = '')
 	$user_id = get_current_user_id();
 	$current_year = date('Y');
 
-	$transaction = new Confetti_Bits_Transactions_Transaction();
+	$transaction = new CB_Transactions_Transaction();
 
 	return $transaction->get_transactions(
 		array(
@@ -1123,7 +1078,7 @@ function cb_birthday_bits()
 		$user_name = bp_get_loggedin_user_fullname();
 		$user_id = get_current_user_id();
 
-		$transaction = new Confetti_Bits_Transactions_Transaction();
+		$transaction = new CB_Transactions_Transaction();
 
 		$transaction->item_id = $user_id;
 		$transaction->secondary_item_id = $user_id;
@@ -1173,7 +1128,7 @@ function cb_anniversary_bits()
 			return;
 		}
 
-		$transaction = new Confetti_Bits_Transactions_Transaction();
+		$transaction = new CB_Transactions_Transaction();
 
 		$transaction->item_id = $user_id;
 		$transaction->secondary_item_id = $user_id;

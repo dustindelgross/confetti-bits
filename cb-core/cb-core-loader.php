@@ -11,7 +11,7 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
-function cb_setup_confetti_bits_core() {
-	Confetti_Bits()->core = new Confetti_Bits_Core();
+function cb_setup_core() {
+	Confetti_Bits()->core = new CB_Core();
 }
-add_action('bp_setup_components', 'cb_setup_confetti_bits_core', 1);
+add_action('cb_setup_components', 'cb_setup_core', 1);

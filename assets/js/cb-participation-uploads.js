@@ -1,7 +1,5 @@
 jQuery( document ).ready( ( $ ) => {
 
-<<<<<<< HEAD
-=======
 	const $hubNav = $('.cb-hub-nav-container');
 	// const $adminAmountOverride = $('#cb_participation_amount_override');
 	const $eventTypeFilter = $('#cb_participation_event_type_filter');
@@ -35,7 +33,8 @@ jQuery( document ).ready( ( $ ) => {
 			status = 'new';
 		}
 		
-		let retval = await $.get({
+		let retval = await $.ajax({
+			method: "GET",
 			url: cb_upload.total,
 			data: {
 				status: status,
@@ -43,8 +42,11 @@ jQuery( document ).ready( ( $ ) => {
 				applicant_id: cbApplicantId
 			},
 			success: (x) => {
-				cbTotalEntries = parseInt(JSON.parse(x)[0].total_count);
+				cbTotalEntries = parseInt(JSON.parse(JSON.parse(x)[0].total_count));
 				return cbTotalEntries;
+			},
+			error: (e) => {
+				console.log(e)
 			}
 		});
 
@@ -282,7 +284,7 @@ jQuery( document ).ready( ( $ ) => {
 
 		let $entryDataContainer = $('<td class="cb-participation-entry-data-container">');
 		let $entryModule = $('<tr class="cb-participation-entry">');
-//		let $entryCheckboxContainer = $($entryDataContainer).clone();
+		//		let $entryCheckboxContainer = $($entryDataContainer).clone();
 		let $entryStatusContainer = $($entryDataContainer).clone();
 		let $entryApplicantNameContainer = $($entryDataContainer).clone();
 		let $entryEventDateContainer = $($entryDataContainer).clone();
@@ -358,7 +360,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 */
 		$entryStatusContainer.addClass("cb-participation-entry-status");
 
-//		$entryCheckboxContainer.append($entryCheckbox);
+		//		$entryCheckboxContainer.append($entryCheckbox);
 		$entryStatusContainer.append($entryStatus);
 		$entryEventTypeContainer.append($entryEventType);
 		$entryApplicantNameContainer.append($entryApplicantName);
@@ -371,7 +373,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		$viewAttachmentsDataContainer.append($viewAttachmentsContainer);
 		$entryEditDataContainer.append($entryEditButton);
 		*/
-//		$entryModule.append($entryCheckboxContainer);
+		//		$entryModule.append($entryCheckboxContainer);
 		$entryModule.append($entryStatusContainer);
 		$entryModule.append($entryApplicantNameContainer);
 		$entryModule.append($entryEventDateContainer);
@@ -415,7 +417,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 				let response = $.parseJSON(data);
 
 				if (typeof (response) !== 'string') {
-//					activePanel.children().remove();
+					//					activePanel.children().remove();
 					entryTable.children().remove();
 
 					formatHeaderRow();
@@ -469,15 +471,15 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 */
 	function handleNavigation(el) {
 		let $this = $(el);
-//		let activePanel = $($('.cb-participation-nav-item.active').find('a').attr('href'));
+		//		let activePanel = $($('.cb-participation-nav-item.active').find('a').attr('href'));
 		let activeItem = $('.cb-participation-nav-item.active');
-//		let id = $this.attr('href');
+		//		let id = $this.attr('href');
 
-//		activePanel.removeClass('active');
+		//		activePanel.removeClass('active');
 		activeItem.removeClass('active');
-//		activePanel = $(id);
+		//		activePanel = $(id);
 		$this.parent().addClass('active');
-//		activePanel.addClass('active');
+		//		activePanel.addClass('active');
 		let status = $this.parent().attr('cb-participation-status-type');
 		let eventFilter = $('#cb_participation_event_type_filter').val();
 
@@ -539,8 +541,8 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		}
 	}
 	*/
-	
-		$('.cb-participation-nav').on(
+
+	$('.cb-participation-nav').on(
 		'click',
 		'.cb-participation-nav-link',
 		function (e) {
@@ -589,7 +591,6 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	formatHeaderRow();
 	refreshTable(1, 'new', '');
 
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	const participationEventSelector	= $('.cb-form-selector[name=cb_participation_event_type]');
 	const participationEventNote		= $('.cb-form-textbox[name=cb_participation_event_note]');
 	const participationEventDate		= $('.cb-form-datepicker[name=cb_participation_event_date]');
@@ -634,63 +635,65 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		}
 
 	};
-
-	let cbDropzone = new Dropzone("div#cb-dropzone", { 
-		url: cb_upload.upload,
-		uploadMultiple: false,
-		paramName: 'cb_participation_image_uploads',
-		maxFiles: 1,
-		acceptedFiles: 'image/jpg, image/jpeg, image/png, image/heic, image/heif',
-		addRemoveLinks: true,
-		previewsContainer: '#cb-previews-container',
-		dictRemoveFile: '',
-		dictMaxFilesExceeded: '',
-		dictCancelUpload: '',
-		parallelUploads: 1,
-		autoProcessQueue: false
-	});
-
-	cbDropzone.on("addedfile", async function ( file ) {
-
-	});
-
-	cbDropzone.on("success", async ( file ) => {
-
-		let uuid		= await file.upload.uuid;
-		let data		= await JSON.parse(file.xhr.response);
-
-		$.ajax({
-			type: 'POST',
-			url: cb_upload.create,
-			data: {
-				'cb_applicant_id': applicantId.val(),
-				'cb_participation_event_type'	: participationEventSelector.val(),
-				'cb_participation_event_note'	: participationEventNote.val(),
-				'cb_participation_event_date'	: participationEventDate.val(),
-				'cb_participation_upload_nonce' : cb_upload.nonce,
-				'cb_participation_media_file'	: data.filename
-			},
-			success: function ( text ) {
-				let response = JSON.parse(text);
-				formMessage.setMessage( response.response, response.success ? 'success' : 'error' );
-				participationEventSelector.val('');
-				participationEventNote.val('');
-				participationEventDate.val('');
-				file.previewElement.remove();
-				cbDropzone.removeAllFiles();
-			},
-			error: function ( text ) {
-				let response = JSON.parse(text);
-				formMessage.setMessage( response.response, 'error' );
-			}
+/*
+	if ( parseInt(cbApplicantId) !== 5 ) {
+		let cbDropzone = new Dropzone("div#cb-dropzone", { 
+			url: cb_upload.upload,
+			uploadMultiple: false,
+			paramName: 'cb_participation_image_uploads',
+			maxFiles: 1,
+			acceptedFiles: 'image/jpg, image/jpeg, image/png, image/heic, image/heif',
+			addRemoveLinks: true,
+			previewsContainer: '#cb-previews-container',
+			dictRemoveFile: '',
+			dictMaxFilesExceeded: '',
+			dictCancelUpload: '',
+			parallelUploads: 1,
+			autoProcessQueue: false
 		});
 
-	});
+		cbDropzone.on("addedfile", async function ( file ) {
 
-	cbDropzone.on("complete", function ( file ) {
-		cbDropzone.removeAllFiles();
-	});
+		});
 
+		cbDropzone.on("success", async ( file ) => {
+
+			let uuid		= await file.upload.uuid;
+			let data		= await JSON.parse(file.xhr.response);
+
+			$.ajax({
+				type: 'POST',
+				url: cb_upload.create,
+				data: {
+					'cb_applicant_id': applicantId.val(),
+					'cb_participation_event_type'	: participationEventSelector.val(),
+					'cb_participation_event_note'	: participationEventNote.val(),
+					'cb_participation_event_date'	: participationEventDate.val(),
+					'cb_participation_upload_nonce' : cb_upload.nonce,
+					'cb_participation_media_file'	: data.filename
+				},
+				success: function ( text ) {
+					let response = JSON.parse(text);
+					formMessage.setMessage( response.response, response.success ? 'success' : 'error' );
+					participationEventSelector.val('');
+					participationEventNote.val('');
+					participationEventDate.val('');
+					file.previewElement.remove();
+					cbDropzone.removeAllFiles();
+				},
+				error: function ( text ) {
+					let response = JSON.parse(text);
+					formMessage.setMessage( response.response, 'error' );
+				}
+			});
+
+		});
+
+		cbDropzone.on("complete", function ( file ) {
+			cbDropzone.removeAllFiles();
+		});
+	}
+*/
 	substituteToggle.on('click', () => {
 		if ( substituteToggle.is(':checked') ) {
 			substituteContainer.show(300);
@@ -758,10 +761,35 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			formMessage.setMessage( 'Empty or invalid event type.', 'error' );
 		} else if ( month !== inputMonth && prev !== inputMonth ){
 			formMessage.setMessage( 'Cannot submit participation from outside of current or previous month.', 'error' );
-		} else if ( cbDropzone.files.length < 1 ) {
-			formMessage.setMessage( 'No files selected.', 'error' );
-		} else {
-			await cbDropzone.processQueue();
+		} /* else if ( parseInt(cbApplicantId) !== 5 ) {
+			if ( cbDropzone.files.length < 1 ) {
+				formMessage.setMessage( 'No files selected.', 'error' );	
+			} else {
+				await cbDropzone.processQueue();	
+			}
+		} */ else {
+			$.ajax({
+				type: 'POST',
+				url: cb_upload.create,
+				data: {
+					'cb_applicant_id': applicantId.val(),
+					'cb_participation_event_type'	: participationEventSelector.val(),
+					'cb_participation_event_note'	: participationEventNote.val(),
+					'cb_participation_event_date'	: participationEventDate.val(),
+					'cb_participation_upload_nonce' : cb_upload.nonce
+				},
+				success: function ( text ) {
+					let response = JSON.parse(text);
+					formMessage.setMessage( response.response, response.success ? 'success' : 'error' );
+					participationEventSelector.val('');
+					participationEventNote.val('');
+					participationEventDate.val('');
+				},
+				error: function ( text ) {
+					let response = JSON.parse(text);
+					formMessage.setMessage( response.response, 'error' );
+				}
+			});
 		}
 	});
 	$(document).on( 'click', '.cb-participation-member-search-result', function () {

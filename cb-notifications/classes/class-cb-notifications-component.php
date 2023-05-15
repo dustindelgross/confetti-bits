@@ -7,12 +7,13 @@
 
 defined( 'ABSPATH' ) || exit;
 
-
+/*
 if ( ! class_exists( 'BP_Core_Notification_Abstract' ) ) {
 	return;
 }
+*/
 
-class Confetti_Bits_Notifications_Component extends BP_Core_Notification_Abstract {
+class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 
 	private static $instance = null;
 
@@ -431,13 +432,8 @@ class Confetti_Bits_Notifications_Component extends BP_Core_Notification_Abstrac
 			'cb-participation-status-update',
 			array(
 				'email_title'         => __( '{{participation.note}} | Participation Update', 'confetti-bits' ),
-<<<<<<< HEAD
-				'email_content'       => "<h4>The status of your Confetti Bits participation submission for \"{{participation.note}}\" has been changed to \"{{participation.status}}\" by {{admin.name}}.</h4>",
-				'email_plain_content' => __( "The status of your Confetti Bits participation submission for \"{{participation.note}}\" has been changed to \"{{participation.status}}\" by {{admin.name}}.", 'confetti-bits' ),
-=======
 				'email_content'       => "<h4>The status of one of your Confetti Bits participation submissions has been changed to \"{{participation.status}}\" by {{admin.name}}.</h4><h5>Notes:</h5><p>\"{{participation.note}}\"</p>",
 				'email_plain_content' => __( "The status of one of your Confetti Bits participation submissions has been changed to \"{{participation.status}}\" by {{admin.name}}. Notes: \"{{participation.note}}\"", 'confetti-bits' ),
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				'situation_label'     => __( "Someone updates the status of a participation submission", 'confetti-bits' ),
 				'unsubscribe_text'    => __( 'You will no longer receive emails when someone updates your participation.', 'confetti-bits' ),
 			),
@@ -691,7 +687,7 @@ class Confetti_Bits_Notifications_Component extends BP_Core_Notification_Abstrac
 	public function format_notification( $content, $item_id, $secondary_item_id, $action_item_count, $component_action_name, $component_name, $notification_id, $screen ) {
 
 		$text = '';
-		$link = bp_loggedin_user_domain() . cb_get_transactions_slug();
+		$link = bp_loggedin_user_domain() . "confetti-bits";
 
 		if ( ( 'confetti_bits' === $component_name && 'cb_send_bits' === $component_action_name ) 
 			|| ( 'confetti_bits' === $component_name && 'cb_transfer_bits' === $component_action_name ) ) {

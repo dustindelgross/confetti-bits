@@ -3,17 +3,20 @@
  * Confetti Bits Template Functions
  */
 
-function cb_get_transactions_slug() {
-
-	return apply_filters( 'cb_get_transactions_slug', Confetti_Bits()->transactions->slug );
-
-}
-
+/**
+ * CB Member Locate Template Part
+ * 
+ * Attempts to locate the specified template in the TeamCTG 
+ * Child Theme, located at '/members/single/confetti-bits-hub/cb-{$template}.php'.
+ * 
+ * @param string $template The template to look for.
+ * 
+ * @return string The template, if found.
+ * 
+ */
 function cb_member_locate_template_part ( $template = '' ) {
 
-	$displayed_user = bp_get_displayed_user();
-
-	if ( ! $template || empty( $displayed_user->id ) ) {
+	if ( ! $template  ) {
 		return '';
 	}
 
@@ -27,20 +30,20 @@ function cb_member_locate_template_part ( $template = '' ) {
 		$templates[] = sprintf( $cb_template_part, $template );
 	}
 
-	return bp_locate_template( apply_filters( 'cb_member_locate_template_part', $templates ), true, true );
+	return locate_template( $templates, true, true );
 }
 
 /**
  * CB Member Get Template Part
  * 
  * Loads a template part based on the template
- * that gets passed in the parameters.
+ * that gets passed in.
  * 
  * @see cb_member_locate_template_part()
  * 
  * @return An array of the active templates.
  */
-function cb_member_get_template_part ( $template = '' ) {
+function cb_member_get_template_part( $template = '' ) {
 
 	$located = cb_member_locate_template_part( $template );
 
@@ -60,6 +63,7 @@ function cb_member_get_template_part ( $template = '' ) {
  * Confetti Bits Get Active Templates
  * 
  * Sets up the templates to show users based on permissions.
+ * 
  * @return An array of the active templates.
  */
 function cb_get_active_templates() {
@@ -69,62 +73,52 @@ function cb_get_active_templates() {
 
 	switch ( true ) {
 
-		case ( cb_is_user_confetti_bits() && cb_is_user_admin() && ! cb_is_user_site_admin() && ! cb_is_user_executive()  && ! cb_is_user_participation_admin() ) :
+		case ( cb_is_confetti_bits_component() && cb_is_user_admin() && ! cb_is_user_site_admin() && ! cb_is_user_executive()  && ! cb_is_user_participation_admin() ) :
 			$templates = array (
 				'Dashboard Header'	=> 'dashboard-header',
 				'Dashboard'			=> 'dashboard',
 				'Participation'		=> 'participation',
-				'Send Bits'			=> 'send-bits',
-				'Dev Requests'		=> 'dev-requests',
-				'Requests'			=> 'requests',
+				'My Transactions'	=> 'transactions',
 			);
 			break;
 
-		case ( cb_is_user_confetti_bits() && cb_is_user_site_admin() ) :
+		case ( cb_is_confetti_bits_component() && cb_is_user_site_admin() ) :
 			$templates = array (
 				'Dashboard Header'		=> 'dashboard-header',
 				'Dashboard'				=> 'dashboard',
 				'Culture Admin'			=> 'participation-admin',
 				'Participation'			=> 'participation',
-				'Send Bits'				=> 'send-bits',
-				'Dev Requests'			=> 'dev-requests',
-				'Requests'				=> 'requests',
+				'My Transactions'	=> 'transactions',
 			);
 			break;
 
-		case ( cb_is_user_confetti_bits() && cb_is_user_executive() && ! cb_is_user_site_admin() ) :
+		case ( cb_is_confetti_bits_component() && cb_is_user_executive() && ! cb_is_user_site_admin() ) :
 			$templates = array (
 				'Dashboard Header'	=> 'dashboard-header',
 				'Dashboard'			=> 'dashboard',
 				'Culture Admin'		=> 'participation-admin',
 				'Participation'		=> 'participation',
-				'Send Bits'			=> 'send-bits',
-				'Dev Requests'		=> 'dev-requests',
-				'Requests'			=> 'requests',
+				'My Transactions'	=> 'transactions',
 			);
 			break;
-			
-		case ( cb_is_user_confetti_bits() && cb_is_user_participation_admin() && ! cb_is_user_site_admin() && ! cb_is_user_executive() ) :
+
+		case ( cb_is_confetti_bits_component() && cb_is_user_participation_admin() && ! cb_is_user_site_admin() && ! cb_is_user_executive() ) :
 			$templates = array (
 				'Dashboard Header'	=> 'dashboard-header',
 				'Dashboard'			=> 'dashboard',
 				'Culture Admin'		=> 'participation-admin',
 				'Participation'		=> 'participation',
-				'Send Bits'			=> 'send-bits',
-				'Dev Requests'		=> 'dev-requests',
-				'Requests'			=> 'requests',
+				'My Transactions'	=> 'transactions',
 			);
 			break;
 
-		case ( cb_is_user_confetti_bits() ) :
+		case ( cb_is_confetti_bits_component() ) :
 		default :
 			$templates = array(
 				'Dashboard Header'	=> 'dashboard-header',
 				'Dashboard'			=> 'dashboard',
 				'Participation'		=> 'participation',
-				'Send Bits'			=> 'send-bits',
-				'Dev Requests'		=> 'dev-requests',
-				'Requests'			=> 'requests',
+				'My Transactions'	=> 'transactions',
 			);
 			break;
 	}
@@ -133,84 +127,229 @@ function cb_get_active_templates() {
 		$templates['Debug'] = 'debug';
 	}
 
+	if ( cb_is_user_site_admin() ) {
+		$templates['Events'] = 'events';
+	}
+
 	return $templates;
 
 }
 
+
+/**
+ * CB Member Template Part
+ * 
+ * Renders the member template part appropriate for the current page
+ * 
+ * @since 1.0.0
+ */
 function cb_member_template_part() {
+	
+	$templates = array_values( cb_get_active_templates() );
 
-	if ( bp_is_user_front() ) {
-
-		bp_displayed_user_front_template_part();
-
-	} else {
-
-		$debug = isset( $_GET['cb_debug'] ) ? $_GET['cb_debug'] : false;
-		$templates = array_values( cb_get_active_templates() );
-
-		foreach ( $templates as $template ) {
-			cb_member_get_template_part( $template );
-		}
-
+	foreach ( $templates as $template ) {
+		cb_member_get_template_part( $template );
 	}
 
 	do_action( 'cb_after_member_body' );
 }
 
-function cb_core_load_template( $templates ) {
+/**
+ * CB Container
+ *
+ * A function that lets us wrap content dynamically
+ * with the supplied arguments, so we can have more
+ * fun and less pain.
+ *
+ * @param array $args An associative array of the following: {
+ *     @var string $container The HTML tag to use for the container. Default 'div'.
+ *     @var string $container_id The ID to use for the container. Default empty.
+ *     @var array $container_classes An array of classes to use for the container.
+ *     Default empty.
+ *     @var string $output The content to wrap in the container. Default empty.
+ * }
+ * @return string The HTML markup to output.
+ * @since 2.3.0
+ */
+function cb_container( $args = array() ) {
 
-	global $wp_query;
+	$r = wp_parse_args( $args, array(
+		'container' => 'div',
+		'id' => '',
+		'classes' => array(),
+		'output' => '',
+	));
 
-	bp_theme_compat_reset_post( array(
-		'ID'          => 0,
-		'is_404'      => true,
-		'post_status' => 'publish',
-	) );
+	$valid_containers = array(
+		'div'  => true,
+		'ul'   => true,
+		'ol'   => true,
+		'span' => true,
+		'p'    => true,
+	);
 
-	bp_set_theme_compat_active( false );
+	$default_classes        = array();
+	$r['classes'] = array_merge( $r['classes'], $default_classes );
 
-	$filtered_templates = array();
-	foreach ( (array) $templates as $template ) {
-		$filtered_templates[] = $template . '.php';
+	if ( empty( $r['container'] ) || ! isset( $valid_containers[ $r['container'] ] ) || empty( $r['output'] ) ) {
+		return;
 	}
 
-	if ( ! bp_use_theme_compat_with_current_theme() ) {
-		$template = locate_template( (array) $filtered_templates, false );
+	$container = $r['container'];
+	$id = '';
+	$classes = '';
+	$output = trim($r['output']);
 
-	} else {
-		$template = '';
+	if ( ! empty( $r['id'] ) ) {
+		$id = ' id="' . esc_attr( $r['id'] ) . '"';
 	}
 
-	$located_template = apply_filters( 'bp_located_template', $template, $filtered_templates );
-
-	if ( function_exists( 'is_embed' ) && is_embed() ) {
-		$located_template = '';
+	if ( ! empty( $r['classes'] ) && is_array( $r['classes'] ) ) {
+		$classes = ' class="' . join( ' ', array_map( 'sanitize_html_class', $r['classes'] ) ) . '"';
 	}
 
-	if ( !empty( $located_template ) ) {
+	// Print the wrapper and its content.
+	return sprintf('<%1$s%2$s%3$s>%4$s</%1$s>', $container, $id, $classes, $output);
+}
 
-		status_header( 200 );
-		$wp_query->is_page     = true;
-		$wp_query->is_singular = true;
-		$wp_query->is_404      = false;
+/**
+ * CB Get Button
+ * 
+ * Formats a button element with the given arguments
+ * 
+ * @param array $args {
+ *     @var string $id The ID of the button
+ *     @var string $content The content of the button
+ *     @var string $type The type of the button (button, reset, submit). Default 'button'
+ *     @var array $classes An array of classes to add to the button.
+ *     Default array('cb-button')
+ * }
+ * @return string The formatted button element
+ * @since 2.3.0
+ */
+function cb_get_button( $args = array() ) {
 
-		do_action( 'bp_core_pre_load_template', $located_template );
+	$r = wp_parse_args( $args, array(
+		'classes' => array(),
+		'id' => '',
+		'content' => '',
+		'type' => 'button',
+		'custom_attr' => array()
+	));
 
-		load_template( apply_filters( 'bp_load_template', $located_template ) );
+	$valid_types = array( 'button', 'reset', 'submit' );
 
-		do_action( 'bp_core_post_load_template', $located_template );
+	if ( !in_array( $r['type'], $valid_types ) ) {
+		return;
+	}
 
-		exit();
+	$id = '';
+	$classes = '';
+	$custom_attrs = '';
+	$default_classes = array( 'cb-button' );
+	$content = trim( $r['content'] );
+	$type = ' type="' . trim($r['type']) . '"';
 
-	} else {
+	$r['classes'] = array_merge( $r['classes'], $default_classes );
 
-		if ( is_buddypress() ) {
-			status_header( 200 );
-			$wp_query->is_page     = true;
-			$wp_query->is_singular = true;
-			$wp_query->is_404      = false;
+	if ( !empty( $r['id'] ) ) {
+		$id = ' id="' . esc_attr( $r['id'] ) . '"';
+	}
+
+	if ( ! empty( $r['classes'] ) && is_array( $r['classes'] ) ) {
+		$classes = ' class="' . join( ' ', array_map( 'sanitize_html_class', $r['classes'] ) ) . '"';
+	}
+
+	if ( !empty( $r['custom_attr'] ) && is_array( $r['custom_attr'] ) ) {
+		foreach ( $r['custom_attr'] as $key => $val) {
+			$custom_attrs .= ' data-' . esc_attr($key) . '="' . esc_attr($val) . '"';
 		}
-
-		do_action( 'bp_setup_theme_compat' );
 	}
+
+	return "<button{$type}{$id}{$classes}{$custom_attrs}>{$content}</button>";
+
+}
+
+/**
+ * CB AJAX Table
+ * 
+ * Returns a table for the specified component. Typically
+ * used for displaying items from the database that are
+ * fetched via AJAX. Optionally, a pagination bar can be
+ * displayed above and below the table.
+ * 
+ * @param array $args {
+ *     @var string $component The component to display the table for.
+ *     @var bool $paginated Whether or not to display a pagination bar.
+ * }
+ * @return string|void The HTML for the table or nothing if the component is empty.
+ * @since 2.3.0
+ */
+function cb_ajax_table( $component = '', $paginated = true ) {
+
+	if ( empty( $component ) ) {
+		return;
+	}
+
+	$pagination = '';
+	$component = trim( $component );
+
+	if ( $paginated ) {
+		$pagination = cb_container(array(
+			'classes' => array("cb-{$component}-pagination-container"),
+			'output'  => cb_get_pagination($component)
+		));
+	}
+
+	$table = cb_container(array(
+		"classes" => array("cb-data-table-container"),
+		"output" => sprintf( '%1$s<table class="cb-data-table" id="cb_%2$s_table"></table>', $pagination, $component )
+	));
+
+	return printf("%s", $table);
+
+}
+
+/**
+ * CB Get Pagination
+ * 
+ * Returns a pagination bar for the specified component.
+ * Typically used when displaying items from the database
+ * that are fetched via AJAX.
+ * 
+ * @param string $component The component to display the pagination bar for.
+ * @return string|void The HTML for the pagination bar or nothing 
+ * if the component is empty.
+ * @since 2.3.0
+ */
+function cb_get_pagination( $component = '' ) {
+
+	if ( empty( $component ) ) {
+		return;
+	}
+
+	$pagination_buttons = '';
+	$button_args = array(
+		'first' => '«',
+		'previous' => '‹',
+		'next' => '›',
+		'last' => '»'
+	);
+
+	foreach ( $button_args as $placement => $content ) {
+		$attr_val = $placement === 'first' ? 1 : '';
+		$pagination_buttons .= cb_get_button(array(
+			'classes' => array( "cb-{$component}-pagination-{$placement}", "cb-{$component}-pagination-button" ),
+			'content' => $content,
+			'custom_attr' => array("cb-{$component}-page" => $attr_val )
+		));
+	}
+
+	$pagination = cb_container(array(
+		'classes' => array("cb-{$component}-pagination"),
+		'output'            => $pagination_buttons,
+	));
+
+	return $pagination;
+
 }

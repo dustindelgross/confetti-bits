@@ -11,7 +11,7 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
-function cb_setup_confetti_bits_transactions() {
-	Confetti_Bits()->transactions = new Confetti_Bits_Transactions_Component();
+function cb_setup_transactions() {
+	Confetti_Bits()->transactions = new CB_Transactions_Component();
 }
-add_action('bp_setup_components', 'cb_setup_confetti_bits_transactions', 13);
+add_action('cb_setup_components', 'cb_setup_transactions', 3);

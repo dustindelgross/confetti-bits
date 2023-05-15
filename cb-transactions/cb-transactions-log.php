@@ -2,15 +2,13 @@
 defined('ABSPATH') || exit;
 function cb_log() {
 
-	if ( !cb_is_confetti_bits_component() || !cb_is_user_confetti_bits() ) {
-
+	if ( !cb_is_confetti_bits_component() ) {
 		return false;
-
 	}
 
 	$cb_log_url			= trailingslashit(bp_loggedin_user_domain() . cb_get_transactions_slug());
 	$current_log_page	= ( !empty($_GET['cb_log_page'] ) ? $_GET['cb_log_page'] : 1 );
-	$transactions	 	= new Confetti_Bits_Transactions_Transaction();
+	$transactions	 	= new CB_Transactions_Transaction();
 	$paged_transactions = $transactions->get_paged_transactions_for_user(
 		get_current_user_id(),
 		array(
@@ -35,21 +33,15 @@ function cb_log_pagination( $current_log_page, $page_total_cap, $cb_log_url ) {
 	foreach ( $pagination_links as $pagination_link ) {
 
 		if ( $pagination_link['enabled'] ) {
-
 			$pagination_list_items[] = '<li><a href="' .
 				$pagination_link['url'] . '">' .
 				$pagination_link['text'] .
 				'</a></li>';
-
 		} else {
-
 			$pagination_list_items[] = '<li class="cb-log-link-disabled">' .
 				$pagination_link['text'] .
 				'</li>';
-
 		}
-
-
 	}
 
 	$args = $pagination_list_items;
@@ -242,8 +234,6 @@ function cb_log_entries( $paged_transactions ) {
 	}
 }
 
-<<<<<<< HEAD
-=======
 function cb_ajax_get_transactions_by_id() {
 	if ( !isset( $_GET['user_id'] ) ) {
 		http_response_code(400);
@@ -304,4 +294,3 @@ function cb_ajax_get_total_transactions() {
 
 }
 add_action( 'wp_ajax_cb_participation_get_total_transactions', 'cb_ajax_get_total_transactions' );
->>>>>>> 4bd4bbb (The Big Commit of April 2023)

@@ -113,10 +113,11 @@ jQuery(document).ready( function($) {
 			return [ object.name.replace( 'cb_transactions_', '' ), object.value ];
 		}));
 		let send = $.ajax({
-			url: cb.send,
+			url: cb_transactions.send,
 			method: 'POST',
 			data: values,
 			success: (response) => {
+				console.log(response);
 				let data = JSON.parse(response);
 				formMessage.setMessage(
 					data.text,

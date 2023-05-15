@@ -11,7 +11,7 @@
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
-function cb_setup_confetti_bits_participation() {
-	Confetti_Bits()->participation = new Confetti_Bits_Participation_Component();
+function cb_setup_participation() {
+	Confetti_Bits()->participation = new CB_Participation_Component();
 }
-add_action('bp_setup_components', 'cb_setup_confetti_bits_participation', 14);
+add_action( 'cb_setup_components', 'cb_setup_participation', 4 );

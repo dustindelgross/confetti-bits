@@ -161,7 +161,7 @@ function cb_import_bits($args = '')
 function cb_importer()
 {
 
-	if (!bp_is_post_request() || !cb_is_confetti_bits_component() || !isset($_POST['cb_bits_imported'])) {
+	if (!cb_is_post_request() || !cb_is_confetti_bits_component() || !isset($_POST['cb_bits_imported'])) {
 		return;
 	}
 

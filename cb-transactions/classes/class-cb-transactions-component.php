@@ -9,13 +9,13 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class Confetti_Bits_Participation_Component extends BP_Component {
+class CB_Transactions_Component extends CB_Component {
 
 
 	public function __construct() {
 		parent::start(
-			'participation',
-			__( 'Confetti Bits Participation', 'confetti-bits' ),
+			'transactions',
+			__( 'Confetti Bits Transactions', 'confetti-bits' ),
 			CONFETTI_BITS_PLUGIN_PATH,
 			array(
 				'adminbar_myaccount_order' => 50,
@@ -26,43 +26,27 @@ class Confetti_Bits_Participation_Component extends BP_Component {
 
 	public function includes( $includes = array() ) {
 
+		// Files to include.
 		$includes = array(
 			'functions',
+			'search',
+			'log',
+			'requests',
+			'exports',
+			'imports',
+			'leaderboard',
+			'transfers',
+			'sender',
+			'template',
 		);
 		
-		if ( ! empty( $includes ) ) {
-			$slashed_path = trailingslashit( $this->path );
-
-			foreach ( (array) $includes as $file ) {
-
-				$paths = array(
-
-					'cb-' . $this->id . '/cb-' . $this->id . '-' . $file . '.php',
-					'cb-' . $this->id . '-' . $file . '.php',
-					'cb-' . $this->id . '/' . $file . '.php',
-
-					$file,
-					'cb-' . $this->id . '-' . $file,
-					'cb-' . $this->id . '/' . $file,
-				);
-
-				foreach ( $paths as $path ) {
-					if ( @is_file( $slashed_path . $path ) ) {
-						require $slashed_path . $path;
-						break;
-					}
-				}
-			}
-
-		}
-
-		do_action( 'bp_' . $this->id . '_includes' );
+		parent::includes($includes);
 
 	}
 
 	public function late_includes() {
-		if ( cb_is_confetti_bits_component() ) {
-
+		if ( cb_is_user_confetti_bits() ) {
+			require_once $this->path . 'cb-transactions/screens/confetti-bits.php';
 		}
 	}
 
@@ -70,19 +54,21 @@ class Confetti_Bits_Participation_Component extends BP_Component {
 
 		$cb = Confetti_Bits();
 
-		if ( ! defined( 'CONFETTI_BITS_PARTICIPATION_SLUG' ) ) {
-			define( 'CONFETTI_BITS_PARTICIPATION_SLUG', 'confetti-bits' );
+		// Define a slug, if necessary.
+		if ( ! defined( 'CONFETTI_BITS_TRANSACTIONS_SLUG' ) ) {
+			define( 'CONFETTI_BITS_TRANSACTIONS_SLUG', 'confetti-bits' );
 		}
 
+		// Global tables for messaging component.
 		$global_tables = array(
-			'table_name'    		=> $cb->table_prefix . 'confetti_bits_participation',
+			'table_name'    		=> $cb->table_prefix . 'confetti_bits_transactions',
 		);
 
 		parent::setup_globals(
 			array(
-				'slug'                  => CONFETTI_BITS_PARTICIPATION_SLUG,
+				'slug'                  => CONFETTI_BITS_TRANSACTIONS_SLUG,
 				'has_directory'         => true,
-				'search_string'         => __( 'Search Participation', 'confetti-bits' ),
+				'search_string'         => __( 'Search Transactions', 'confetti-bits' ),
 				'global_tables'         => $global_tables,
 			)
 		);
@@ -93,6 +79,7 @@ class Confetti_Bits_Participation_Component extends BP_Component {
 
 	public function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 
+		// Determine user to use.
 		if ( bp_displayed_user_domain() ) {
 			$user_domain = bp_displayed_user_domain();
 		} elseif ( bp_loggedin_user_domain() ) {
@@ -102,11 +89,12 @@ class Confetti_Bits_Participation_Component extends BP_Component {
 		}
 
 		$access             = bp_core_can_edit_settings();
-		$slug               = cb_get_transactions_slug();
+		$slug               = "confetti-bits";
 		$transactions_link = trailingslashit( $user_domain . $slug );
 
 		$nav_name = __( 'Confetti Bits', 'confetti-bits' );
 
+		// Add 'Notifications' to the main navigation.
 		$main_nav = array(
 			'name'                    => $nav_name,
 			'slug'                    => $slug,
@@ -116,15 +104,8 @@ class Confetti_Bits_Participation_Component extends BP_Component {
 			'item_css_id'             => $this->id,
 		);
 
-		$sub_nav[] = array(
-			'name'				=> __( 'Confetti Bits', 'confetti-bits' ),
-			'slug'				=> 'participation',
-			'parent_url'		=> $transactions_link,
-			'parent_slug'		=> $slug,
-			'screen_function'	=> '',
-			'position'			=> 30,
-			'user_has_access'	=> $access,
-		);
+		// Add the subnav items to the profile.
+		$sub_nav[] = array();
 
 		parent::setup_nav( $main_nav, $sub_nav );
 
@@ -132,11 +113,14 @@ class Confetti_Bits_Participation_Component extends BP_Component {
 
 	public function setup_admin_bar( $wp_admin_nav = array() ) {
 
+		// Menus for logged in user.
 		if ( is_user_logged_in() ) {
 
-			$transactions_link = trailingslashit( bp_loggedin_user_domain() . CONFETTI_BITS_PARTICIPATION_SLUG );
+			// Setup the logged in user variables.
+			$transactions_link = trailingslashit( bp_loggedin_user_domain() . CONFETTI_BITS_TRANSACTIONS_SLUG );			
 			$title  = __( 'Confetti Bits', 'buddyboss' );
 
+			// Add the "My Account" sub menus.
 			$wp_admin_nav[] = array(
 				'parent' => buddypress()->my_account_menu_id,
 				'id'     => 'my-account-' . $this->id,
@@ -151,12 +135,13 @@ class Confetti_Bits_Participation_Component extends BP_Component {
 
 	public function setup_title() {
 
+		// Adjust title.
 		if ( cb_is_confetti_bits_component() ) {
 			$cb = Confetti_Bits();
 			$bp = buddypress();
 
 			if ( bp_is_my_profile() ) {
-				$bp->bp_options_title = __( 'Confetti Bits Participation', 'confetti-bits' );
+				$bp->bp_options_title = __( 'Confetti Bits', 'confetti-bits' );
 			} else {
 				$bp->bp_options_avatar = bp_core_fetch_avatar(
 					array(
@@ -174,9 +159,11 @@ class Confetti_Bits_Participation_Component extends BP_Component {
 
 	public function setup_cache_groups() {
 
+		// Global groups.
 		wp_cache_add_global_groups(
 			array(
-				'confetti_bits_participation',
+				'confetti_bits_transactions',
+				'confetti_bits_transactions_recipients',
 			)
 		);
 

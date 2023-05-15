@@ -8,6 +8,7 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
+
 /** 
  * CB AJAX Participation Bulk Update
  * 
@@ -29,7 +30,7 @@ function cb_ajax_update_participation() {
 	$participation_id = intval($_POST['participation_id']);
 	$admin_id = intval($_POST['admin_id']);
 	$status = $_POST['status'] === 'approved' ? 'approved' : 'denied';
-	$participation = new Confetti_Bits_Participation_Participation($participation_id);
+	$participation = new CB_Participation_Participation($participation_id);
 	if ( $participation->event_type === 'other' ) {
 		$feedback['text'] = "Update unsuccessful. Cannot process 'Other' category event types using the Confetti Bits API.";
 		echo json_encode($feedback);
@@ -111,7 +112,7 @@ function cb_ajax_update_participation() {
 			$status, 
 			$new_transaction
 		);
-		
+
 		echo json_encode($feedback);
 		die();
 	}
@@ -167,7 +168,7 @@ add_action( 'wp_ajax_cb_participation_update_participation', 'cb_ajax_update_par
  */
 function cb_participation_new_participation( array $args ) {
 
-	if ( ! cb_is_user_confetti_bits() ) {
+	if ( ! cb_is_confetti_bits_component() ) {
 		return;
 	}
 
@@ -191,7 +192,7 @@ function cb_participation_new_participation( array $args ) {
 		)
 	);
 
-	$participation = new Confetti_Bits_Participation_Participation();
+	$participation = new CB_Participation_Participation();
 	$participation->item_id				= $r['item_id'];
 	$participation->secondary_item_id	= $r['secondary_item_id'];
 	$participation->applicant_id		= $r['applicant_id'];
@@ -224,29 +225,30 @@ function cb_participation_new_participation( array $args ) {
  */
 function cb_ajax_new_participation() {
 
-	if ( ! bp_is_post_request() || 
-		! cb_is_confetti_bits_component() || 
-		! cb_is_user_confetti_bits() //||
-		// ! wp_verify_nonce( $_POST['cb_participation_upload_nonce'], 'cb_participation_post' )
+	if ( ! cb_is_post_request() || 
+		! cb_is_confetti_bits_component()
 	   ) {
 		return false;
 	}
 
+
+	// TODO: Put logic somewhere in here to check for event_id and user_id on transactions table
+
 	$success		= false;
 	$feedback		= '';
-	$applicant_id	= intval( $_POST['cb_applicant_id'] );	
+	$applicant_id	= intval( $_POST['cb_applicant_id'] );
 	$event_type		= sanitize_text_field( $_POST['cb_participation_event_type'] );
 	$event_note		= sanitize_text_field( $_POST['cb_participation_event_note'] );
 	$date_input		= sanitize_text_field( $_POST['cb_participation_event_date'] );
-	$event_date		= date_format( date_create( $date_input ), 'Y-m-d H:i:s' );
-	$media = sanitize_text_field( $_POST['cb_participation_media_file'] );
+	$date = new DateTimeImmutable($date_input);
+	$event_date		= $date->format( 'Y-m-d H:i:s' );
+	$media = '';
+	if ( isset( $_POST['cb_participation_media_file'] )) {
+		$media = sanitize_text_field( $_POST['cb_participation_media_file'] );
+	}
 
 	if ( empty( $event_type ) || ( $event_type === 'other' && empty( $event_note ) ) ) {
 		$feedback	= 'No events selected. Please select or input the event type you are attempting to register.';
-	} else if ( empty( $media ) ) {
-		$feedback	= 'No file selected. Please select an image that indicates your participation.';
-	} else if ( ! is_string( $media ) ) {
-		$feedback	= 'Process error 2005. Media not found.';
 	} else if ( empty( $applicant_id ) )  {
 		$feedback = "Authentication error 1000. Failed to authenticate request.";
 	} else if ( ! isset( $_POST['cb_participation_upload_nonce'] ) ) {
@@ -303,17 +305,14 @@ add_action( 'wp_ajax_cb_participation_create_participation', 'cb_ajax_new_partic
  * 
  * @return	array	Array of 6 paged participation entries.
  */
-function cb_participation_get_paged_participation( $status = '', $page = 0, $per_page = 6, $count = false, $event_type = '' ) {
+function cb_ajax_get_paged_participation( $status = '', $page = 0, $per_page = 6, $count = false, $event_type = '' ) {
 
-	$participation = new Confetti_Bits_Participation_Participation();
+	$participation = new CB_Participation_Participation();
 	$feedback = '';
 	$pagination = array();
 	$select =  $count ? 'count(id) as total_count' : '*';
 	$status	= ( empty( $_GET['status'] ) ) ? 'all' : $_GET['status'];
-<<<<<<< HEAD
-=======
 
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 	$event_type = empty( $_GET['event_type'] )
 		? $event_type 
 		: trim( $_GET['event_type'] );
@@ -329,16 +328,13 @@ function cb_participation_get_paged_participation( $status = '', $page = 0, $per
 
 		)
 	);
-<<<<<<< HEAD
-=======
-	
+
 	if ( ! empty( $_GET['applicant_id'] ) ) {
 		$where['applicant_id'] = intval( $_GET['applicant_id'] );
 	}
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	if ( !empty($event_type) ) {
-		$where['event_type'] = trim( $event_type );
+		$where['event_type'] = $event_type;
 	}
 
 	$pagination['page'] = ( empty( $_GET['page'] ) ) ? $page : $_GET['page'];
@@ -353,27 +349,24 @@ function cb_participation_get_paged_participation( $status = '', $page = 0, $per
 		)
 	);
 
-<<<<<<< HEAD
-	$feedback .= ( ! empty( $paged_participation ) ) ? json_encode( $paged_participation ) : json_encode('Empty results set.');
-=======
 	$feedback .= ( ! empty( $paged_participation ) ) ? json_encode( $paged_participation ) : json_encode('Could not find any participation entries of specified type.');
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	echo $feedback;
+
 	die();
 
 }
-add_action( 'wp_ajax_cb_participation_get_paged_participation', 'cb_participation_get_paged_participation' );
+add_action( 'wp_ajax_cb_participation_get_paged_participation', 'cb_ajax_get_paged_participation' );
 
 /**
  * Confetti Bits Get Total Participation
  * 
  * @return Total of all participation entries.
  */
-function cb_participation_get_total_participation() {
+function cb_ajax_get_total_participation() {
 
-	if ( !cb_is_user_confetti_bits() || ! bp_is_get_request() ) { 
-		return;
+	if ( ! cb_is_get_request() ) { 
+		return;	
 	}
 
 	$status = ( !empty( $_GET['status'] ) && is_string( $_GET['status'] ) ) ? $_GET['status'] : 'new';
@@ -381,7 +374,7 @@ function cb_participation_get_total_participation() {
 	$valid_statuses = array( 'new', 'all', 'approved', 'denied' );
 
 	$status = ( in_array( $status, $valid_statuses ) ) ? $status : 'new';
-	$participation = new Confetti_Bits_Participation_Participation();
+	$participation = new CB_Participation_Participation();
 	$where = array(
 		'status'		=> $status,
 		'date_query'	=> array(
@@ -392,13 +385,10 @@ function cb_participation_get_total_participation() {
 			'inclusive'	=> true
 		)
 	);
-<<<<<<< HEAD
-=======
-	
+
 	if ( ! empty( $_GET['applicant_id'] ) ) {
 		$where['applicant_id'] = intval( $_GET['applicant_id'] );
 	}
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 
 	if ( !empty( $_GET['event_type'] ) ) {
 		$where['event_type'] = trim($_GET['event_type']);
@@ -417,7 +407,7 @@ function cb_participation_get_total_participation() {
 	die();
 
 }
-add_action( 'wp_ajax_cb_participation_get_participation_total', 'cb_participation_get_total_participation' );
+add_action( 'wp_ajax_cb_participation_get_total_participation', 'cb_ajax_get_total_participation' );
 
 /**
  * Confetti Bits Update Request Status
@@ -434,7 +424,7 @@ function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_m
 		return;
 	}
 
-	$participation = new Confetti_Bits_Participation_Participation($id);
+	$participation = new CB_Participation_Participation($id);
 	if ( ! is_wp_error( $participation ) ) {
 		return 	$participation->update(
 			array(
@@ -460,9 +450,8 @@ function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_m
  */
 function cb_participation_update_handler() {
 
-	if ( ! bp_is_post_request() || 
+	if ( ! cb_is_post_request() || 
 		! cb_is_confetti_bits_component() || 
-		! cb_is_user_confetti_bits() ||
 		! cb_is_user_participation_admin() ||
 		! wp_verify_nonce( $_POST['cb_participation_admin_nonce'], 'cb_participation_admin_post' )
 	   ) {
@@ -507,15 +496,11 @@ function cb_participation_update_handler() {
 			);
 
 			$log_entry = cb_participation_get_log_entry( $participation_id, $admin_log_entry );
-<<<<<<< HEAD
-
-=======
 			/*
 			if ( $log_entry !== $participation->event_note ) {
 				$log_entry += " | {$participation->event_note}";
 			}
 */
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 			// Create a transaction if we can.
 			if ( $amount !== 0 && $log_entry !== '' ) {
 
@@ -547,10 +532,7 @@ function cb_participation_update_handler() {
 				$admin_id, 
 				$modified, 
 				$status, 
-<<<<<<< HEAD
-=======
 				$log_entry,
->>>>>>> 4bd4bbb (The Big Commit of April 2023)
 				$new_transaction
 			);
 		}
@@ -616,7 +598,7 @@ function cb_participation_new_transaction( $args = array() ) {
 		$feedback = "One of the following parameters is missing: Participation ID, date modified, status, admin ID, amount.";
 	}
 
-	$participation = new Confetti_Bits_Participation_Participation( $r['participation_id'] );
+	$participation = new CB_Participation_Participation( $r['participation_id'] );
 	$admin_name = bp_core_get_user_displayname( $r['admin_id'] );
 	$log_entry = $r['log_entry'];
 	$amount = $r['amount'];
@@ -637,7 +619,7 @@ function cb_participation_new_transaction( $args = array() ) {
 
 		$log_entry .= " on {$event_date} - from {$admin_name}";
 
-		$transaction = new Confetti_Bits_Transactions_Transaction();
+		$transaction = new CB_Transactions_Transaction();
 
 		$transaction->item_id			= $participation->applicant_id;
 		$transaction->secondary_item_id	= $r['admin_id'];
@@ -682,7 +664,7 @@ function cb_participation_get_amount( $transaction_id, $event_type = '', $presta
 		return;
 	}
 
-	$transaction = new Confetti_Bits_Transactions_Transaction( $transaction_id );
+	$transaction = new CB_Transactions_Transaction( $transaction_id );
 	$amount = 0;
 
 	// If this is the first time we're updating the status...
@@ -744,7 +726,7 @@ function cb_participation_get_log_entry( $participation_id = 0, $admin_log_entry
 		return ucwords( str_replace( '_', ' ', $admin_log_entry ) );
 	}
 
-	$participation = new Confetti_Bits_Participation_Participation( $participation_id );
+	$participation = new CB_Participation_Participation( $participation_id );
 	$log_entry = $participation->event_type;
 	// Second priority, if the applicant supplied a note
 	if ( $participation->event_note !== '' ) {
@@ -799,7 +781,7 @@ function cb_participation_get_transaction( $transaction_id = 0 ) {
 		return false;
 	}
 
-	$transaction = new Confetti_Bits_Transactions_Transaction( $transaction_id );
+	$transaction = new CB_Transactions_Transaction( $transaction_id );
 
 	return ( ! empty( $transaction ) ) ? $transaction : false;
 
@@ -839,7 +821,7 @@ function cb_get_upload_dir() {
  * */
 function cb_ajax_create_file_from_upload() {
 
-	if ( !cb_is_user_confetti_bits() || ! bp_is_post_request() ) { 
+	if ( !cb_is_user_confetti_bits() || ! cb_is_post_request() ) { 
 		return;
 	}
 
