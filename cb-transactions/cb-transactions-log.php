@@ -1,5 +1,6 @@
 <?php 
 defined('ABSPATH') || exit;
+/*
 function cb_log() {
 
 	if ( !cb_is_confetti_bits_component() ) {
@@ -233,6 +234,7 @@ function cb_log_entries( $paged_transactions ) {
 		);
 	}
 }
+*/
 
 function cb_ajax_get_transactions_by_id() {
 	if ( !isset( $_GET['user_id'] ) ) {
@@ -286,7 +288,7 @@ function cb_ajax_get_total_transactions() {
 			'or'			=> true
 		),
 	);
-	$transaction = new Confetti_Bits_Transactions_Transaction();
+	$transaction = new CB_Transactions_Transaction();
 	$count = $transaction->get_transactions($args);
 
 	echo json_encode($count);

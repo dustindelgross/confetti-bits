@@ -620,6 +620,7 @@ class CB_Transactions_Transaction {
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
 
+	/*
 	public function get_users_total_from_current_cycle( $user_id = 0 ) {
 
 		if ( $user_id === 0 ) {
@@ -853,6 +854,7 @@ class CB_Transactions_Transaction {
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 
 	}
+	*/
 
 	public function get_activity_bits_transactions_for_today( $user_id = 0 ) {
 
@@ -963,7 +965,7 @@ class CB_Transactions_Transaction {
 
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
-
+/*
 	public function get_send_bits_transactions_for_today( $user_id ) {
 
 		global $wpdb;
@@ -1093,6 +1095,7 @@ class CB_Transactions_Transaction {
 
 	}
 
+	*/
 	
 	public function get_paged_transactions_for_user( $user_id, $args = array() ) {
 		global $wpdb;
@@ -1131,64 +1134,18 @@ class CB_Transactions_Transaction {
 
 	}
 
-	public function get_transactions_for_user( $args = array() ) {
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-		$defaults = array (
-			'recipient_id'		=> get_current_user_id(),
-			'component_name'	=> 'confetti_bits',
-		);
-		$r = wp_parse_args( $args, $defaults );
-		$select_sql = "SELECT id, recipient_name, date_sent, log_entry, amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> get_current_user_id(),
-			'component_name'	=> 'confetti_bits',
-		));
-
-		$order_sql = "ORDER BY date_sent DESC";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-	public function get_leadership_transactions() {
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-		$select_sql = "SELECT id, component_action, sender_name, recipient_name, date_sent, log_entry, amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> array('cb_send_bits', 'cb_import_bits'),
-			'search_terms'		=> 'from',
-			'exclude_terms'		=> 'Kevin Doherty',
-		), $select_sql, $from_sql );
-
-		$order_sql = "ORDER BY date_sent DESC";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
 	public static function get_date_query_sql( $date_query = array() ) {
 
 		$sql = '';
 
 		if ( ! empty( $date_query ) && is_array( $date_query ) ) {
-			if ( ! empty( $date_query['column'] ) && 'date_sent' === $date_query['column'] ) {
-				$date_query = new CB_Core_Date_Query( $date_query, 'date_sent' );
+			if ( ! empty( $date_query['column'] ) && 'date_recorded' === $date_query['column'] ) {
+				$date_query = new CB_Core_Date_Query( $date_query, 'date_recorded' );
 			} else {
 				$date_query = new CB_Core_Date_Query( $date_query, 'date_sent' );
 			}
 			$sql = preg_replace( '/^\sAND/', '', $date_query->get_sql() );
 		}
-
 		return $sql;
 	}
 

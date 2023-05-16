@@ -132,7 +132,7 @@ function cb_activity_bits($content, $user_id, $activity_id)
 
 	}
 
-	$activity_post = cb_send_bits(
+	$activity_post = cb_transactions_send_bits(
 		array(
 			'item_id' => 1,
 			'secondary_item_id' => $user_id,
@@ -826,7 +826,7 @@ function cb_calculate_activity_bits($activities, $transactions)
 
 	foreach ($transactions as $transaction) {
 
-		$transaction_id = $transaction['user_id'];
+		$transaction_id = $transaction['recipient_id'];
 		$transaction_date = date('Y-m-d', strtotime($transaction['date_sent']));
 		$t_weekend_check = date('D', strtotime($transaction_date));
 
@@ -916,10 +916,10 @@ function cb_transactions_check_activity_bits($user_id = 0)
 		$user_id = get_current_user_id();
 	}
 
-	$transactions = cb_transactions_get_activity_transactions($user_id);
-	$activities = $transactions->get_activity_posts_for_user($user_id);
-	$missing_transactions = cb_calculate_activity_bits($activities, $transactions);
 
+	$transactions = cb_transactions_get_activity_transactions($user_id);
+	$activities = cb_transactions_get_activity_posts($user_id);
+	$missing_transactions = cb_calculate_activity_bits($activities, $transactions);
 
 	if (!empty($missing_transactions)) {
 		foreach ($missing_transactions as $date_sent => $id) {
@@ -941,6 +941,27 @@ function cb_transactions_check_activity_bits($user_id = 0)
 	}
 }
 add_action('bp_actions', 'cb_transactions_check_activity_bits', 10, 1);
+
+/**
+ * CB Transactions Get Activity Posts
+ * 
+ * Returns an array of activity posts for the given user.
+ * Uses BuddyBoss's global value for the activities table name.
+ * 
+ * @param int $user_id The ID of the user whose posts we want.
+ * 
+ * @return array An array of activity posts, if any.
+ */
+function cb_transactions_get_activity_posts( $user_id = 0 ) {
+	
+	if ( empty( $user_id ) ) {
+		$user_id = get_current_user_id();
+	}
+	
+	$transactions_obj = new CB_Transactions_Transaction();
+	return $transactions_obj->get_activity_posts_for_user($user_id);
+	
+}
 
 function cb_groups_activity_notifications($content, $user_id, $group_id, $activity_id)
 {
@@ -1041,6 +1062,7 @@ function cb_send_sitewide_notice()
 {
 	if (
 		!cb_is_confetti_bits_component() ||
+		!cb_is_post_request() ||
 		!wp_verify_nonce($_POST['cb_sitewide_notice_nonce'], 'cb_sitewide_notice_post')
 	) {
 		return;

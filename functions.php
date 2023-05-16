@@ -52,21 +52,25 @@ add_action(
 		if ( function_exists( 'cb_is_confetti_bits_component' ) ) {
 			if ( cb_is_confetti_bits_component() ) {
 
-				wp_enqueue_script( 'cb_dropzone_js', 'https://unpkg.com/dropzone@5/dist/min/dropzone.min.js' );
-				wp_enqueue_script( 'cb_file_uploads', CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-participation-uploads.js', array('jquery') );
+//				wp_enqueue_script( 'cb_dropzone_js', 'https://unpkg.com/dropzone@5/dist/min/dropzone.min.js' );
+				wp_enqueue_script( 'cb_participation', CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-participation.js', array('jquery') );
 
 				wp_enqueue_script( 
-					'cb_hub', 
-					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-hub.js',
+					'cb_core', 
+					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-core.js',
 					array('jquery')
 				);
 
-				wp_enqueue_script( 'cb_transactions', CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-transactions.js', 'jquery' );
+				wp_enqueue_script( 
+					'cb_transactions', 
+					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-transactions.js', 
+					array('jquery') 
+				);
 
 				if ( cb_is_user_participation_admin() ) {
 					wp_enqueue_script( 
-						'cb_hub_admin', 
-						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-hub-admin.js', 
+						'cb_core_admin', 
+						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-core-admin.js', 
 						array('jquery')
 					);
 				}
@@ -78,6 +82,17 @@ add_action(
 						array('jquery', 'jquery-ui-datepicker')
 					);
 				}
+				
+				// @TODO: Standardize this - find a good naming convention
+				// and figure out a way to dynamically set all these
+				
+				$params = array(
+					'core'		=> array(
+						'transactions' => '',
+						'user_id' => '',
+					),
+					'events'	=> array(),
+				);
 
 				$cb_events_params = array(
 
@@ -85,12 +100,12 @@ add_action(
 
 				$user_id = intval(get_current_user_id());
 
-				$cb_hub_params = array(
+				$cb_core_params = array(
 					'transactions'=> admin_url( 'admin-ajax.php?action=cb_transactions_get_transactions' ),
 					'user_id'	=> $user_id,
 				);
 
-				$cb_upload_params = array(
+				$cb_participation_params = array(
 					'upload'		=> admin_url( 'admin-ajax.php?action=cb_upload_media' ),
 					'delete'		=> admin_url( 'admin-ajax.php?action=cb_delete_media' ),
 					'total'			=> admin_url( 'admin-ajax.php?action=cb_participation_get_total_participation' ),
@@ -107,15 +122,15 @@ add_action(
 				);
 
 				wp_localize_script( 
-					'cb_file_uploads', 
-					'cb_upload', 
-					$cb_upload_params
+					'cb_participation', 
+					'cb_participation', 
+					$cb_participation_params
 				);
 
 				wp_localize_script( 
-					'cb_hub', 
-					'cb_hub', 
-					$cb_hub_params
+					'cb_core', 
+					'cb_core', 
+					$cb_core_params
 				);
 
 				wp_localize_script( 
@@ -126,7 +141,7 @@ add_action(
 
 				wp_localize_script( 
 					'cb_events', 
-					'cb', 
+					'cb_events', 
 					$cb_events_params
 				);
 
