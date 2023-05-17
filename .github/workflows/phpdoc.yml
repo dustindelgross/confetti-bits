@@ -1,34 +1,30 @@
-name: Generate Documentation
+name: PHPDoc
 
 on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-         uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Set up PHP
-         uses: shivammathur/setup-php@v2
-         with:
-          php-version: '7.4'  # Specify the desired PHP version
-          extensions: intl  # Install any necessary PHP extensions
+        uses: shivammathur/setup-php@v2
 
-      - name: Install Dependencies
-         run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
 
-       - name: Generate documentation
-          run: vendor/bin/phpdoc -d src -t docs
+      - name: Generate documentation
+        run: vendor/bin/phpdoc -d src -t docs
 
-       - name: Commit and Push Documentation
-          run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git add docs
-          git commit -m "Update documentation"
-          git push origin main
+      - name: Commit and push documentation
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update documentation
+          branch: main
