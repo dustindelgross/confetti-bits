@@ -587,6 +587,16 @@ function cb_update_user_meta($user_id = 0, $meta_key = '', $meta_value = '')
 
 */
 
+/**
+ * CB Transactions Get Request Balance
+ * 
+ * Get the balance available to a user for the current spending
+ * cycle. 
+ * 
+ * @since Confetti_Bits 1.3.0
+ * @param int $user_id The ID for the user whose balance we want.
+ * @return int The calculated balance available for requests.
+ */
 function cb_transactions_get_request_balance($user_id = 0)
 {
 
@@ -624,6 +634,16 @@ function cb_transactions_get_request_balance($user_id = 0)
 
 }
 
+/**
+ * CB Transactions Get Transfer Balance
+ * 
+ * Get the balance available to a user for the current 
+ * earning cycle. 
+ * 
+ * @since Confetti_Bits 1.3.0
+ * @param int $user_id The ID for the user whose balance we want.
+ * @return int The calculated balance available for transfers.
+ */
 function cb_transactions_get_transfer_balance($user_id = 0)
 {
 
@@ -662,50 +682,7 @@ function cb_transactions_get_transfer_balance($user_id = 0)
 
 }
 
-
-
 /*
-function cb_get_users_previous_cycle_total($user_id = 0)
-{
-
-	if ($user_id === 0) {
-		$user_id = get_current_user_id();
-	}
-
-	$transactions = new CB_Transactions_Transaction();
-	$total = $transactions->get_users_balance($user_id);
-
-	if (isset($total)) {
-		$retval = $total;
-	} else {
-		$retval = 0;
-	}
-
-	return $retval;
-
-}
-*/
-/*
-function cb_get_users_total_earnings_from_previous_cycle($user_id = 0)
-{
-
-	if ($user_id === 0) {
-		$user_id = get_current_user_id();
-	}
-
-	$transactions = new CB_Transactions_Transaction();
-	$total = $transactions->get_users_earnings_from_previous_cycle($user_id);
-
-	if (!empty($total)) {
-		$retval = $total[0]['amount'];
-	} else {
-		$retval = 0;
-	}
-
-	return $retval;
-
-}
-
 
 function cb_get_reset_date($args = array())
 {
@@ -800,13 +777,30 @@ function cb_reset_date()
 }
 */
 
-function cb_calculate_activity_bits($activities, $transactions)
+/**
+ * CB Calculate Activity Bits
+ * 
+ * Calculates how many points a user should receive 
+ * according to the number of unaccounted for activity
+ * posts they've sent out, that don't have an 
+ * accompanying Confetti Bits transaction on that same
+ * day.
+ * 
+ * @param array $activities An array of activity posts
+ * @param array $transactions An array of transactions
+ * 
+ * @return array An array of activity posts that are 
+ * missing an accompanying transaction on a given day.
+ * 
+ * @since Confetti_Bits 1.3.0
+ */
+function cb_calculate_activity_bits($activities = array(), $transactions = array() )
 {
 
 	$activity_data = array();
 	$transaction_data = array();
 
-	if (!isset($activities, $transactions)) {
+	if (empty($activities) || !isset($transactions, $activities)) {
 		return;
 	}
 
@@ -855,7 +849,7 @@ function cb_calculate_activity_bits($activities, $transactions)
  * 
  * @return array An array of transactions, if there are any.
  * 
- * @since Confetti_Bits 2.3.0
+ * @since Confetti_Bits 1.3.0
  */
 function cb_transactions_get_activity_transactions( $user_id = 0 ) {
 
@@ -951,6 +945,8 @@ add_action('bp_actions', 'cb_transactions_check_activity_bits', 10, 1);
  * @param int $user_id The ID of the user whose posts we want.
  * 
  * @return array An array of activity posts, if any.
+ * 
+ * @since Confetti_Bits 1.3.0
  */
 function cb_transactions_get_activity_posts( $user_id = 0 ) {
 	
@@ -963,85 +959,6 @@ function cb_transactions_get_activity_posts( $user_id = 0 ) {
 	
 }
 
-function cb_groups_activity_notifications($content, $user_id, $group_id, $activity_id)
-{
-
-	$group = bp_groups_get_activity_group($group_id);
-	$user_ids = BP_Groups_Member::get_group_member_ids($group_id);
-
-	foreach ((array) $user_ids as $notified_user_id) {
-
-		if ('no' === bp_get_user_meta($notified_user_id, 'cb_group_activity', true)) {
-			continue;
-		}
-
-		$unsubscribe_args = array(
-			'user_id' => $notified_user_id,
-			'notification_type' => 'cb-groups-activity-post',
-		);
-
-		$args = array(
-			'tokens' => array(
-				'group_member.name' => bp_core_get_user_displayname($user_id),
-				'group.name' => $group->name,
-				'group.id' => $group_id,
-				'group.url' => esc_url(bp_get_group_permalink($group)),
-				'group_activity.content' => esc_html($content),
-				'unsubscribe' => esc_url(bp_email_get_unsubscribe_link($unsubscribe_args)),
-			),
-		);
-		bp_notifications_add_notification(
-			array(
-				'user_id' => $notified_user_id,
-				'item_id' => $group_id,
-				'secondary_item_id' => $user_id,
-				'component_name' => 'groups',
-				'component_action' => 'activity_update',
-				'allow_duplicate' => false,
-			)
-		);
-		bp_send_email('cb-groups-activity-post', (int) $notified_user_id, $args);
-	}
-}
-add_action('bp_groups_posted_update', 'cb_groups_activity_notifications', 10, 4);
-
-function cb_add_confetti_captain_badges()
-{
-	if ((!cb_is_user_site_admin() || !bp_is_user_profile()) && !bp_is_activity_component()) {
-		return;
-	}
-
-	$cb = Confetti_Bits();
-
-	wp_enqueue_script('cb_member_profile_badge_js', $cb->plugin_url . '/assets/js/cb-member-profile.js', array('jquery'));
-	wp_enqueue_style('cb_member_profile_badge_css', $cb->plugin_url . '/assets/css/cb-member-profile.css');
-
-}
-add_action('wp_enqueue_scripts', 'cb_add_confetti_captain_badges');
-
-function cb_member_confetti_captain_class($class, $item_id)
-{
-
-	$is_confetti_captain = groups_is_user_member($item_id, 1);
-	if (is_int($is_confetti_captain)) {
-		$class .= ' confetti-captain';
-	}
-	return $class;
-}
-add_filter('bp_core_avatar_class', 'cb_member_confetti_captain_class', 10, 2);
-
-function cb_member_confetti_captain_profile_badge()
-{
-
-	$badge = '';
-	$user_id = bp_displayed_user_id();
-	$is_confetti_captain = groups_is_user_member($user_id, 1);
-	if (is_int($is_confetti_captain)) {
-		$badge .= '<div class="confetti-captain-profile-label-container"><div class="confetti-captain-badge-container"><div class="confetti-captain-badge-medium"></div></div><p class="confetti-captain-profile-label">Confetti Captain</p></div>';
-	}
-	echo $badge;
-}
-add_filter('bp_before_member_in_header_meta', 'cb_member_confetti_captain_profile_badge');
 
 /**
  * Confetti Bits Multiarray Check
@@ -1051,7 +968,6 @@ add_filter('bp_before_member_in_header_meta', 'cb_member_confetti_captain_profil
  * @param array $arr The array to check.
  * 
  */
-
 function cb_is_multi_array(array $arr)
 {
 	rsort($arr);

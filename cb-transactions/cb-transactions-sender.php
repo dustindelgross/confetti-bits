@@ -367,7 +367,20 @@ function cb_transactions_send_bits($args = array()) {
 
 }
 
-function cb_remove_bits( $id, $reassign, $user ) {
+/**
+ * CB Transactions Remove Bits
+ * 
+ * This is hooked into the delete_user action, so that 
+ * transactions get deleted whenever a user is.
+ * 
+ * @TODO: Still need to implement this... Yikes. Also.
+ * why send negative bits, instead of deleting from 
+ * the DB? This program doesn't need analytics based
+ * on that type of stuff, just delete from the DB.
+ * 
+ * @since Confetti_Bits 2.3.0
+ */
+function cb_transactions_remove_bits( $id, $reassign, $user ) {
 
 	$transaction = new CB_Transactions_Transaction();
 	$sender_id = get_current_user_id();
@@ -501,7 +514,7 @@ function cb_ajax_send_bits() {
 
 	$action = $is_admin ? "send" : "transfer";
 
-	$send = cb_send_bits(
+	$send = cb_transactions_send_bits(
 		array(
 			'item_id'			=> $recipient_id,
 			'secondary_item_id'	=> $sender_id,
@@ -536,7 +549,7 @@ function cb_ajax_send_bits() {
 			echo json_encode($feedback);
 			die();
 		} else {
-			$subtract = cb_send_bits(
+			$subtract = cb_transactions_send_bits(
 				array(
 					'item_id'			=> $sender_id,
 					'secondary_item_id'	=> $recipient_id,

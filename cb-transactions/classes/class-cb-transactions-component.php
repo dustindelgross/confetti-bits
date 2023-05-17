@@ -11,7 +11,6 @@ defined( 'ABSPATH' ) || exit;
 
 class CB_Transactions_Component extends CB_Component {
 
-
 	public function __construct() {
 		parent::start(
 			'transactions',
@@ -38,6 +37,7 @@ class CB_Transactions_Component extends CB_Component {
 			'transfers',
 			'sender',
 			'template',
+			'notifications',
 		);
 		
 		parent::includes($includes);

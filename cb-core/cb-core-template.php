@@ -353,3 +353,66 @@ function cb_get_pagination( $component = '' ) {
 	return $pagination;
 
 }
+
+/**
+ * CB Core Add Confetti Captain Badges
+ * 
+ * Adds Confetti Captain badges to the user's member profile page
+ * as well as to the activity feed, if they are a Confetti Captain.
+ * 
+ * @since Confetti_Bits 1.2.0
+ */
+function cb_core_add_confetti_captain_badges()
+{
+	if ((!cb_is_user_site_admin() || !bp_is_user_profile()) && !bp_is_activity_component()) {
+		return;
+	}
+
+	$cb = Confetti_Bits();
+
+	wp_enqueue_script('cb_member_profile_badge_js', $cb->plugin_url . '/assets/js/cb-member-profile.js', array('jquery'));
+	wp_enqueue_style('cb_member_profile_badge_css', $cb->plugin_url . '/assets/css/cb-member-profile.css');
+
+}
+add_action('wp_enqueue_scripts', 'cb_core_add_confetti_captain_badges');
+
+/**
+ * CB Core Confetti Captain Class
+ * 
+ * Adds our custom 'confetti-captain' class to the BuddyBoss user avatar
+ * so that we can add a cute little sparkler icon using JS.
+ * 
+ * @since Confetti_Bits 1.2.0
+ */
+function cb_core_confetti_captain_class($class, $item_id)
+{
+
+	$is_confetti_captain = groups_is_user_member($item_id, 1);
+	if (is_int($is_confetti_captain)) {
+		$class .= ' confetti-captain';
+	}
+	return $class;
+}
+add_filter('bp_core_avatar_class', 'cb_core_confetti_captain_class', 10, 2);
+
+/**
+ * CB Core Confetti Captain Profile Badge
+ * 
+ * Adds a cute litte sparkler badge on the profile page of users
+ * who are designated as "Confetti Captains", which meand they are
+ * part of the Confetti Captains group.
+ * 
+ * @since Confetti_Bits 1.2.0
+ */
+function cb_core_confetti_captain_profile_badge()
+{
+
+	$badge = '';
+	$user_id = bp_displayed_user_id();
+	$is_confetti_captain = groups_is_user_member($user_id, 1);
+	if (is_int($is_confetti_captain)) {
+		$badge .= '<div class="confetti-captain-profile-label-container"><div class="confetti-captain-badge-container"><div class="confetti-captain-badge-medium"></div></div><p class="confetti-captain-profile-label">Confetti Captain</p></div>';
+	}
+	echo $badge;
+}
+add_filter('bp_before_member_in_header_meta', 'cb_core_confetti_captain_profile_badge');

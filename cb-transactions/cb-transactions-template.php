@@ -218,3 +218,6 @@ function cb_transactions_transfer_balance_notice()
 {
 	echo cb_transactions_get_transfer_balance_notice();
 }
+
+
+
