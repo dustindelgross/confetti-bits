@@ -19,10 +19,13 @@ jobs:
           php-version: '7.4'  # Specify the desired PHP version
           extensions: intl  # Install any necessary PHP extensions
 
+      - name: Play Nice With Composer
+        run: |
+        composer config --no-plugins allow-plugins.symfony/flex
+
       - name: Install Dependencies
         run: |
           composer install --no-progress --prefer-dist --optimize-autoloader
-
 
       - name: Generate Documentation
         run: |
