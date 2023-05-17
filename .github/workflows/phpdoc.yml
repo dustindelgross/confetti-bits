@@ -21,7 +21,7 @@ jobs:
 
       - name: Play Nice With Composer
         run: |
-        composer config --no-plugins allow-plugins.symfony/flex
+          composer config --no-plugins allow-plugins.symfony/flex
 
       - name: Install Dependencies
         run: |
