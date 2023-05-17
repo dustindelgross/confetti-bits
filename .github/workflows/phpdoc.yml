@@ -20,7 +20,7 @@ jobs:
           extensions: intl  # Install any necessary PHP extensions
 
       - name: Install Dependencies
-        run: composer install
+        run: composer install --no-dev
 
       - name: Generate Documentation
         run: php vendor/bin/phpdoc run -d src -t docs
