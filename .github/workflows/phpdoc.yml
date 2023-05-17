@@ -23,7 +23,7 @@ jobs:
         run: composer install --no-dev
 
       - name: Generate Documentation
-        run: phpdoc -d src -t docs
+        run: php usr/local/bin/phpdoc -d src -t docs
 
       - name: Commit and Push Documentation
         run: |
