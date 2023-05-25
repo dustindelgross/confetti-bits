@@ -124,6 +124,9 @@ class CB_Participation_Participation {
 	 */
 	public $transaction_id;
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct( $id = 0 ) {
 
 		$this->errors	= new WP_Error();
@@ -137,6 +140,13 @@ class CB_Participation_Participation {
 
 	}
 
+	/**
+	 * Populate
+	 * 
+	 * Populates object data associated with the given ID.
+	 * 
+	 * @param int $id The participation ID.
+	 */
 	public function populate( $id = 0 ) {
 
 		$participation = $this->get_participation(
@@ -168,6 +178,14 @@ class CB_Participation_Participation {
 	}
 
 
+	/**
+	 * Save
+	 * 
+	 * Handles saving data to the database using our static
+	 * _insert method.
+	 * 
+	 * @return obj|int WP_Error on failure, participation ID on success.
+	 */
 	public function save() {
 
 		$retval = false;
@@ -185,7 +203,6 @@ class CB_Participation_Participation {
 			'component_name'	=> $this->component_name,
 			'component_action'	=> $this->component_action,
 			'status'			=> $this->status,
-			'media_filepath'	=> $this->media_filepath,
 			'transaction_id'	=> $this->transaction_id
 		);
 
@@ -210,32 +227,11 @@ class CB_Participation_Participation {
 		return $retval;
 	}
 
-
-
-	protected static function convert_orderby_to_order_by_term( $orderby ) {
-		$order_by_term = '';
-
-		switch ( $orderby ) {
-			case 'id':
-				$order_by_term = 'id';
-				break;
-			case 'applicant_id':
-				$order_by_term = 'applicant_id';
-				break;
-			case 'date_created':
-			default:
-				$order_by_term = 'date_created';
-				break;
-		}
-
-		return $order_by_term;
-	}
-
 	/**
 	 * Update participation status. Uses our static _update method.
 	 * 
 	 * @param	array	$args	The arguments for the update. Accepts all attributes
-	 * 							of the Confetti_Bits_Participation_Participation object. {  
+	 * 							of the CB_Participation_Participation object. {  
 	 *   
 	 * 		@type	int		$item_id				The item_id of the object. 
 	 * 												Usually the admin_id
@@ -249,7 +245,6 @@ class CB_Participation_Participation {
 	 * 		@type	string	$status					The current status of the object
 	 * 		@type	string	$media_filepath			The filepath where the media objects are
 	 * }
-	 * 		
 	 * 
 	 */
 	public function update_participation_request_status() {
@@ -384,11 +379,6 @@ class CB_Participation_Participation {
 			$where_clauses['format'][]       = '%s';
 		}
 
-		if ( isset( $args['media_filepath'] ) ) {
-			$where_clauses['data']['media_filepath'] = $args['media_filepath'];
-			$where_clauses['format'][]       = '%s';
-		}
-
 		if ( isset( $args['transaction_id'] ) ) {
 			$where_clauses['data']['transaction_id'] = $args['transaction_id'];
 			$where_clauses['format'][]       = '%d';
@@ -397,6 +387,13 @@ class CB_Participation_Participation {
 		return $where_clauses;
 	}
 
+	/**
+	 * _insert
+	 * 
+	 * Handles the actual insertion into the database.
+	 * 
+	 * @return int|bool The inserted ID on success, false on failure.
+	 */
 	protected static function _insert( $data = array(), $data_format = array() ) {
 		global $wpdb;
 		$cb = Confetti_Bits();
@@ -481,6 +478,19 @@ class CB_Participation_Participation {
 
 	}
 
+	/**
+	 * get_participation
+	 * 
+	 * Handles retrieving data from the database. Nice and clean!
+	 * 
+	 * @param array $args An array of stuff to get! { 
+	 *   @type string $select The database column to get
+	 *   @type array $where A selection of key-value pairs that 
+	 *         get evaluated by another method. See self::get_where_sql()
+	 * 
+	 * @TODO: Finish documenting this (sweat emoji)
+	 * }
+	 */
 	public function get_participation( $args = array() ) {
 
 		global $wpdb;
@@ -490,9 +500,9 @@ class CB_Participation_Participation {
 			$args, 
 			array(
 				'select'		=> '*',
-				'where'			=> array(),
-				'orderby'		=> '',
-				'pagination'	=> array(),
+				'where'			=> [],
+				'orderby'		=> [],
+				'pagination'	=> [],
 				'group'			=> '',
 			)
 		);
@@ -501,7 +511,7 @@ class CB_Participation_Participation {
 		$select_sql = "SELECT {$select}";
 		$from_sql = "FROM {$cb->participation->table_name} ";
 		$where_sql = self::get_where_sql( $r['where'], $select_sql, $from_sql );
-		$orderby_sql = ( ! empty( $r['orderby'] ) ) ? "ORDER BY {$r['orderby']} DESC" : '';
+		$orderby_sql = ( ! empty( $r['orderby'] ) ) ? "ORDER BY {$r['orderby'][0]} {$r['orderby'][1]}" : '';
 		$group_sql = ( ! empty( $r['group'] ) ) ? "GROUP BY {$r['group']}" : '';
 		$pagination_sql = self::get_paged_sql( $r['pagination'] );
 
@@ -554,7 +564,7 @@ class CB_Participation_Participation {
 		return $retval;
 	}
 
-	protected static function get_where_sql( $args = array(), $select_sql = '', $from_sql = '', $join_sql = '', $meta_query_sql = '' ) {
+	protected static function get_where_sql( $args = array() ) {
 		global $wpdb;
 		$where_conditions = array();
 		$where            = '';
@@ -660,20 +670,6 @@ class CB_Participation_Participation {
 			$where_conditions['status'] = "status IN ({$s_in})";
 		}
 
-		if ( ! empty( $args['media_filepath'] ) ) {
-			if ( ! is_array( $args['media_filepath'] ) ) {
-				$media_filepaths = explode( ',', $args['media_filepath'] );
-			} else {
-				$media_filepaths = $args['media_filepath'];
-			}
-			$fp_clean = array();
-			foreach ( $media_filepaths as $fp ) {
-				$fp_clean[] = $wpdb->prepare( '%s', $fp );
-			}
-			$fp_in = implode( ',', $fp_clean );
-			$where_conditions['media_filepath'] = "media_filepath IN ({$fp_in})";
-		}
-
 		if ( ! empty( $args['excluded_action'] ) ) {
 			if ( ! is_array( $args['excluded_action'] ) ) {
 				$excluded_action = explode( ',', $args['excluded_action'] );
@@ -691,12 +687,6 @@ class CB_Participation_Participation {
 		if ( ! empty( $args['date_query'] ) ) {
 			$where_conditions['date_query'] = self::get_date_query_sql( $args['date_query'] );
 		}
-
-		if ( ! empty( $meta_query_sql['where'] ) ) {
-			$where_conditions['meta_query'] = $meta_query_sql['where'];
-		}
-
-		$where_conditions = apply_filters( 'cb_participation_get_where_conditions', $where_conditions, $args, $select_sql, $from_sql, $join_sql, $meta_query_sql );
 
 		if ( ! empty( $where_conditions ) ) {
 			$where = 'WHERE ' . implode( ' AND ', $where_conditions );

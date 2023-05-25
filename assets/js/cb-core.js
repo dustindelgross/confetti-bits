@@ -3,7 +3,6 @@ jQuery( document ).ready( function( $ ) {
 	const requestAmount = $('#cb_request_option');
 	const memberName = $('.memberName');
 	const submitMessage = $('.submission-message-popup');
-	//		requestSubmitConfirm = $('#send_bits_request'),
 	const requestSubmitConfirm = $('#cb_request_form');
 	const closeNoticeContainer = $('.cb-close-notice-container');
 	const $hubNav = $('.cb-hub-nav-container');
@@ -21,6 +20,57 @@ jQuery( document ).ready( function( $ ) {
 	let userID = parseInt(cb_core.user_id);
 	let activeTab = window.location.hash;
 	let cbTotalTransactions = null;
+
+	let formMessage = new function () {
+		this.element	= $('.cb-feedback-message');
+		this.p			= $('<p class="cb-feedback-message">');
+		this.br			= $('<br />');
+		this.container	= $('.cb-feedback');
+		this.position = this.element.offset().top;
+
+		this.style = {
+			error:		'#ffad87',
+			info:		'#007692',
+			warning:	'#dbb778',
+			success:	'#62cc8f'
+		};
+
+		this.container.children('.cb-close').on( 'click', () => {
+			this.container.slideUp( 400 );
+			this.element.text('');
+		});
+
+		this.setMessage = ( text, type ) => {
+			if ( typeof(text) === 'object' ) {
+				this.element.remove();
+				text.forEach((t) => {
+					let p = this.p;
+					p.css({
+						'color': this.style[t.type]
+					}).text(t.text);
+					this.container.append(p);
+				});
+			} else if ( typeof(text) === 'string' ) {
+				this.element.remove();
+				let p = this.p;
+				p.css({
+					'color': this.style[text.type]
+				}).text(text.text);
+				this.container.append(p);
+			}
+
+			this.element.css('color', this.style[type] );
+			this.container.css({ 
+				display: 'flex',
+				border: '1px solid #dbb778',
+				borderRadius: '10px',
+				margin: '1rem auto'
+			});
+
+			window.scrollTo({top: this.element.offset().top - 135, behavior: 'smooth'})
+		}
+
+	};
 
 	if ( activeTab ) {
 

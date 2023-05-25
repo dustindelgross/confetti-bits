@@ -46,7 +46,7 @@ class CB_Participation_Component extends CB_Component {
 		$cb = Confetti_Bits();
 
 		if ( ! defined( 'CONFETTI_BITS_PARTICIPATION_SLUG' ) ) {
-			define( 'CONFETTI_BITS_PARTICIPATION_SLUG', 'confetti-bits' );
+			define( 'CONFETTI_BITS_PARTICIPATION_SLUG', 'participation' );
 		}
 
 		$global_tables = array(

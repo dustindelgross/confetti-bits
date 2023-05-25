@@ -1,12 +1,7 @@
 jQuery( document ).ready( ( $ ) => {
 
 	const $hubNav = $('.cb-hub-nav-container');
-	// const $adminAmountOverride = $('#cb_participation_amount_override');
 	const $eventTypeFilter = $('#cb_participation_event_type_filter');
-	/*
-	const $cbParticipationAll = $('a[href=#cb-participation-all]');
-	const $cbParticipationAllPanel = $('#cb-participation-all');
-	*/
 	const cbParticipationPageNext = $('.cb-participation-pagination-next');
 	const cbParticipationPageLast = $('.cb-participation-pagination-last');
 	const cbParticipationPagePrev = $('.cb-participation-pagination-previous');
@@ -17,7 +12,6 @@ jQuery( document ).ready( ( $ ) => {
 	const entryTableHeaderRow = $('#cb_participation_table tr')[0];
 	let currentPage = $('.cb-participation-pagination-button.active').attr('data-cb-participation-page');
 	let cbTotalEntries = 0;
-
 
 	/**
 	 * CB Get Total Entries
@@ -32,7 +26,7 @@ jQuery( document ).ready( ( $ ) => {
 		if ('string' !== typeof (status)) {
 			status = 'new';
 		}
-		
+
 		let retval = await $.ajax({
 			method: "GET",
 			url: cb_participation.total,
@@ -41,13 +35,11 @@ jQuery( document ).ready( ( $ ) => {
 				event_type: eventType,
 				applicant_id: cbApplicantId
 			},
-			success: (x) => {
+			success: x => {
 				cbTotalEntries = parseInt(JSON.parse(JSON.parse(x)[0].total_count));
 				return cbTotalEntries;
 			},
-			error: (e) => {
-				console.log(e)
-			}
+			error: e => console.error(e)
 		});
 
 		return retval;
@@ -284,34 +276,13 @@ jQuery( document ).ready( ( $ ) => {
 
 		let $entryDataContainer = $('<td class="cb-participation-entry-data-container">');
 		let $entryModule = $('<tr class="cb-participation-entry">');
-		//		let $entryCheckboxContainer = $($entryDataContainer).clone();
 		let $entryStatusContainer = $($entryDataContainer).clone();
 		let $entryApplicantNameContainer = $($entryDataContainer).clone();
 		let $entryEventDateContainer = $($entryDataContainer).clone();
 		let $entryModifiedDateContainer = $($entryDataContainer).clone();
 		let $entryEventNoteContainer = $($entryDataContainer).clone();
 		let $entryEventTypeContainer = $($entryDataContainer).clone();
-		let $viewAttachmentsDataContainer = $entryDataContainer.clone();
-		/* let $entryEditDataContainer = $($entryDataContainer).clone(); 
-		let $viewAttachmentsContainer = $(
-			"<div>",
-			{ class: `cb-participation-view-attachments-container
-cb-participation-admin-entry-data`
-			}
-		);
-		let $entryCheckbox = $(`<input type="checkbox" name="cb_participation_admin_entry_selection" 
-data-cb-participation-id="${participation.id}"
-data-cb-event-type="${participation.event_type}"
-data-cb-applicant-id="${participation.applicant_id}"
-data-cb-event-note="${participation.event_note}"
-date-cb-event-date="${participation.event_date}"
-data-cb-applicant-name="${userDisplayName}"
-data-cb-transaction-id="${transactionId}"
-value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
-
-
-		let mediaFiles = participation.media_filepath.split(', ');
-		*/
+		
 		let $entryStatus = $('<p>', {
 			class: `cb-participation-entry-data cb-participation-status-${participation.status}`,
 			text: participation.status.charAt(0).toUpperCase() + participation.status.slice(1)
@@ -335,32 +306,9 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			class: 'cb-participation-entry-data cb-participation-entry-event-note',
 			text: `${eventNote}`
 		});
-		/*
-		let $viewAttachmentsLink = $("<a class='cb-participation-view-attachments-link' href='#cb-participation-file-viewer-wrapper'>View Attachments</a>");
 
-		for (let file of mediaFiles) {
-			let mediaContainer = $("<div>", {
-				class: "cb-media-urls",
-				style: 'display:none;',
-				'data-cb-media-url': 'https://teamctg.com/wp-content/uploads/confetti-bits/' + file
-			});
-			$viewAttachmentsContainer.append(mediaContainer);
-		}
-		let $entryEditButton = $("<button>", {
-			class: "cb-participation-admin-edit-button",
-			'data-cb-participation-id': participation.id,
-			'data-cb-event-type': participation.event_type,
-			'data-cb-applicant-id': participation.applicant_id,
-			'data-cb-event-note': participation.event_note,
-			'date-cb-event-date': participation.event_date,
-			'data-cb-applicant-name': userDisplayName,
-			'data-cb-transaction-id': transactionId,
-			text: "Edit"
-		});
-*/
 		$entryStatusContainer.addClass("cb-participation-entry-status");
 
-		//		$entryCheckboxContainer.append($entryCheckbox);
 		$entryStatusContainer.append($entryStatus);
 		$entryEventTypeContainer.append($entryEventType);
 		$entryApplicantNameContainer.append($entryApplicantName);
@@ -368,22 +316,12 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		$entryModifiedDateContainer.append($entryModifiedDate);
 		$entryEventTypeContainer.append($entryEventType);
 		$entryEventNoteContainer.append($entryEventNote);
-		/*
-		$viewAttachmentsContainer.append($viewAttachmentsLink);
-		$viewAttachmentsDataContainer.append($viewAttachmentsContainer);
-		$entryEditDataContainer.append($entryEditButton);
-		*/
-		//		$entryModule.append($entryCheckboxContainer);
 		$entryModule.append($entryStatusContainer);
 		$entryModule.append($entryApplicantNameContainer);
 		$entryModule.append($entryEventDateContainer);
 		$entryModule.append($entryModifiedDateContainer);
 		$entryModule.append($entryEventTypeContainer);
 		$entryModule.append($entryEventNoteContainer);
-		/*
-		$entryModule.append($viewAttachmentsDataContainer);
-		$entryModule.append($entryEditDataContainer);
-		*/
 
 		entryTable.append($entryModule);
 
@@ -486,61 +424,6 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		refreshTable(1, status, eventFilter);
 
 	}
-	/*
-	function handleRowCheckboxChange() {
-
-		const headerCheckbox = $('#cb_participation_admin_bulk_edit_toggle');
-		const rowCheckboxes = $('.cb-participation-admin-entry-selection');
-
-		let allChecked = true;
-		let anyChecked = false;
-
-		// Check if all row checkboxes are checked or if any row checkbox is checked
-		rowCheckboxes.each(function() {
-			if (!$(this).prop('checked')) {
-				allChecked = false;
-			} else {
-				anyChecked = true;
-			}
-		});
-
-		// Update the state of the header checkbox
-		if (allChecked) {
-			headerCheckbox.prop('checked', true);
-			headerCheckbox.prop('indeterminate', false);
-			headerCheckbox.data('state', 'checked');
-		} else if (anyChecked) {
-			headerCheckbox.prop('checked', false);
-			headerCheckbox.prop('indeterminate', true);
-			headerCheckbox.data('state', 'indeterminate');
-		} else {
-			headerCheckbox.prop('checked', false);
-			headerCheckbox.prop('indeterminate', false);
-			headerCheckbox.data('state', 'unchecked');
-		}
-	}
-
-	function handleHeaderCheckboxChange() {
-		const headerCheckbox = $('#cb_participation_admin_bulk_edit_toggle');
-		const rowCheckboxes = $('.cb-participation-admin-entry-selection');
-
-		const checked = headerCheckbox.prop('checked');
-
-		if (checked) {
-			// Check all row checkboxes
-			rowCheckboxes.prop('checked', true);
-
-			headerCheckbox.prop( 'checked', true );
-			headerCheckbox.prop('indeterminate', false);
-		} else {
-			// Uncheck all row checkboxes
-			rowCheckboxes.prop('checked', false);
-
-			headerCheckbox.prop('checked', false);
-			headerCheckbox.prop('indeterminate', false);
-		}
-	}
-	*/
 
 	$('.cb-participation-nav').on(
 		'click',
@@ -579,14 +462,6 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		refreshTable(page, status, eventFilter);
 
 	});
-
-	/*	
-    // Add event listener to each row checkbox
-	$(document).on('change', '.cb-participation-admin-entry-selection', handleRowCheckboxChange);
-
-	// Add event listener to the header checkbox
-	$(document).on('change','#cb_participation_admin_bulk_edit_toggle', handleHeaderCheckboxChange);
-	*/
 
 	formatHeaderRow();
 	refreshTable(1, 'new', '');
@@ -703,37 +578,34 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			formMessage.setMessage( 'Empty or invalid event type.', 'error' );
 		} else if ( month !== inputMonth && prev !== inputMonth ){
 			formMessage.setMessage( 'Cannot submit participation from outside of current or previous month.', 'error' );
-		} /* else if ( parseInt(cbApplicantId) !== 5 ) {
-			if ( cbDropzone.files.length < 1 ) {
-				formMessage.setMessage( 'No files selected.', 'error' );	
-			} else {
-				await cbDropzone.processQueue();	
-			}
-		} */ else {
+		} else {
 			$.ajax({
 				type: 'POST',
-				url: cb_participation.create,
+				url: cb_participation.new,
 				data: {
-					'cb_applicant_id': applicantId.val(),
-					'cb_participation_event_type'	: participationEventSelector.val(),
-					'cb_participation_event_note'	: participationEventNote.val(),
-					'cb_participation_event_date'	: participationEventDate.val(),
+					'applicant_id': applicantId.val(),
+					'event_type'	: participationEventSelector.val(),
+					'event_note'	: participationEventNote.val(),
+					'event_date'	: participationEventDate.val(),
 					'cb_participation_upload_nonce' : cb_participation.nonce
 				},
 				success: function ( text ) {
+					console.log(text)
 					let response = JSON.parse(text);
-					formMessage.setMessage( response.response, response.success ? 'success' : 'error' );
+					formMessage.setMessage( response.text, response.type );
 					participationEventSelector.val('');
 					participationEventNote.val('');
 					participationEventDate.val('');
 				},
 				error: function ( text ) {
+					console.log(text)
 					let response = JSON.parse(text);
-					formMessage.setMessage( response.response, 'error' );
+					formMessage.setMessage( response.text, 'error' );
 				}
 			});
 		}
 	});
+	
 	$(document).on( 'click', '.cb-participation-member-search-result', function () {
 		substituteInput.val( $(this).text() );
 		applicantId.val( $(this).data('cbParticipantId') );

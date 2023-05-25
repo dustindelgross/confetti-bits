@@ -14,7 +14,7 @@ add_action( 'generate_rewrite_rules', 'cb_generate_rewrite_rules', 10 );
 
 add_action( 'cb_loaded', 'cb_setup_components', 1 );
 add_action( 'cb_loaded', 'cb_include', 3 );
-add_action( 'rest_api_ini', 'cb_rest_api_init' );
+add_action( 'rest_api_init', 'cb_rest_api_init', 1 );
 
 add_action( 'cb_init', 'cb_register_post_types', 1 );
 add_action( 'cb_init', 'cb_register_taxonomies', 2 );

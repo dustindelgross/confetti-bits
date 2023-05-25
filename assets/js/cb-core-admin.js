@@ -2,9 +2,6 @@ jQuery(document).ready(($) => {
 
 	let request;
 	let $current;
-//	let cache = {};
-//	const $frame = $('#cb-participation-file-viewer');
-	const $fileViewerClose = $('#cb-participation-file-view-close');
 	const $adminEditButton = $('.cb-participation-admin-edit-button');
 	const $adminEditForm = $('#cb-participation-admin-edit-form-wrapper');
 	const $adminEditFormClose = $('#cb-participation-admin-edit-form-close');
@@ -817,7 +814,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 					username: text[0].user_login,
 					userDisplayName: text[0].name
 				};
-			}
+			}, error: e => console.error(e)
 		});
 		return retval;
 	}

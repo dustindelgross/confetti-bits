@@ -168,10 +168,6 @@ add_action( 'wp_ajax_cb_participation_update_participation', 'cb_ajax_update_par
  */
 function cb_participation_new_participation( array $args ) {
 
-	if ( ! cb_is_confetti_bits_component() ) {
-		return;
-	}
-
 	$r = wp_parse_args(
 		$args,
 		array(
@@ -187,7 +183,6 @@ function cb_participation_new_participation( array $args ) {
 			'component_name'	=> 'confetti_bits',
 			'component_action'	=> 'cb_participation',
 			'status'			=> 'new',
-			'media_filepath'	=> '',
 			'transaction_id'	=> 0
 		)
 	);
@@ -203,7 +198,6 @@ function cb_participation_new_participation( array $args ) {
 	$participation->event_date			= $r['event_date'];
 	$participation->event_note			= $r['event_note'];
 	$participation->status				= $r['status'];
-	$participation->media_filepath		= $r['media_filepath'];
 	$participation->component_name		= $r['component_name'];
 	$participation->component_action	= $r['component_action'];
 	$participation->transaction_id		= $r['transaction_id'];
@@ -225,39 +219,25 @@ function cb_participation_new_participation( array $args ) {
  */
 function cb_ajax_new_participation() {
 
-	if ( ! cb_is_post_request() || 
-		! cb_is_confetti_bits_component()
-	   ) {
-		return false;
+	if ( ! cb_is_post_request() ) {
+		return;
 	}
-
 
 	// TODO: Put logic somewhere in here to check for event_id and user_id on transactions table
 
-	$success		= false;
-	$feedback		= '';
-	$applicant_id	= intval( $_POST['cb_applicant_id'] );
-	$event_type		= sanitize_text_field( $_POST['cb_participation_event_type'] );
-	$event_note		= sanitize_text_field( $_POST['cb_participation_event_note'] );
-	$date_input		= sanitize_text_field( $_POST['cb_participation_event_date'] );
+	$feedback		= ['type' => 'error', 'text' => ''];
+	$applicant_id	= intval( $_POST['applicant_id'] );
+	$event_type		= sanitize_text_field( $_POST['event_type'] );
+	$event_note		= sanitize_text_field( $_POST['event_note'] );
+	$date_input		= sanitize_text_field( $_POST['event_date'] );
 	$date = new DateTimeImmutable($date_input);
 	$event_date		= $date->format( 'Y-m-d H:i:s' );
-	$media = '';
-	if ( isset( $_POST['cb_participation_media_file'] )) {
-		$media = sanitize_text_field( $_POST['cb_participation_media_file'] );
-	}
-
-	if ( empty( $event_type ) || ( $event_type === 'other' && empty( $event_note ) ) ) {
-		$feedback	= 'No events selected. Please select or input the event type you are attempting to register.';
+//|| ( $event_type === 'other' && empty( $event_note ) )
+	if ( empty( $event_type ) ) {
+		$feedback['text'] = "No events selected. Please select or input the event type you are attempting to register.{$event_type} {$event_note}" . print_r($_POST);
 	} else if ( empty( $applicant_id ) )  {
-		$feedback = "Authentication error 1000. Failed to authenticate request.";
-	} else if ( ! isset( $_POST['cb_participation_upload_nonce'] ) ) {
-		$feedback = 'Nonce not set.';
-	} else if ( ! wp_verify_nonce( $_POST['cb_participation_upload_nonce'], 'cb_participation_post' ) ) {
-		$feedback = 'Invalid nonce.';
+		$feedback['text'] = "Authentication error 1000. Failed to authenticate request.";
 	} else {
-
-		$success = true;
 
 		$send = cb_participation_new_participation(
 			array(
@@ -273,28 +253,23 @@ function cb_ajax_new_participation() {
 				'component_name'	=> 'confetti_bits',
 				'component_action'	=> 'cb_participation_new',
 				'status'			=> 'new',
-				'media_filepath'	=> $media,
 				'transaction_id'	=> 0
 			)
 		);
 
 		if ( false === is_int( $send ) ) {
-			$feedback = "Request processing error 2000.";
+			$feedback['text'] = "Request processing error 2000.";
 		} else {
-			$feedback = 'Your participation has been successfully submitted. You should receive a notification when it has been processed.';
+			$feedback['type'] = 'success';
+			$feedback['text'] = 'Your participation has been successfully submitted. You should receive a notification when it has been processed.';
 		}
 	}
 
-	echo json_encode(
-		array(
-			'success'	=> $success,
-			'response'	=> $feedback
-		)
-	);
+	echo json_encode( $feedback );
 
 	die();
 }
-add_action( 'wp_ajax_cb_participation_create_participation', 'cb_ajax_new_participation' );
+add_action( 'wp_ajax_cb_participation_new_participation', 'cb_ajax_new_participation' );
 
 
 /**

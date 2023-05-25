@@ -383,4 +383,5 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 	}
 
 	add_action( 'plugins_loaded', 'confetti_bits_init', 9 );
+	
 }

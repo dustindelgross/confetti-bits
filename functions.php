@@ -121,7 +121,7 @@ add_action(
 				$cb_participation_params = array(
 					'total'			=> admin_url( 'admin-ajax.php?action=cb_participation_get_total_participation' ),
 					'paged'			=> admin_url( 'admin-ajax.php?action=cb_participation_get_paged_participation' ),
-					'create'		=> admin_url( 'admin-ajax.php?action=cb_participation_create_participation' ),
+					'new'		=> admin_url( 'admin-ajax.php?action=cb_participation_new_participation' ),
 					'update'		=> admin_url( 'admin-ajax.php?action=cb_participation_update_participation' ),
 					'transactions'	=> admin_url( 'admin-ajax.php?action=cb_participation_get_transactions' ),
 					'total_transactions'	=> admin_url( 'admin-ajax.php?action=cb_participation_get_total_transactions' ),
@@ -143,7 +143,7 @@ add_action(
 					'cb_core', 
 					$cb_core_params
 				);
-				
+
 				wp_localize_script( 
 					'cb_core_admin', 
 					'cb_core_admin', 
@@ -302,9 +302,9 @@ if (!function_exists('str_starts_with')) {
 	 * 
 	 * @return bool Whether the string starts with the given substring.
 	 */
-    function str_starts_with($haystack = '', $needle = '') {
-        return (string)$needle !== '' && strncmp($haystack, $needle, strlen($needle)) === 0;
-    }
+	function str_starts_with($haystack = '', $needle = '') {
+		return (string)$needle !== '' && strncmp($haystack, $needle, strlen($needle)) === 0;
+	}
 }
 if (!function_exists('str_ends_with')) {
 	/**
@@ -319,9 +319,9 @@ if (!function_exists('str_ends_with')) {
 	 * 
 	 * @return bool Whether the string ends with the given substring.
 	 */
-    function str_ends_with($haystack, $needle) {
-        return $needle !== '' && substr($haystack, -strlen($needle)) === (string)$needle;
-    }
+	function str_ends_with($haystack, $needle) {
+		return $needle !== '' && substr($haystack, -strlen($needle)) === (string)$needle;
+	}
 }
 
 if (!function_exists('str_contains')) {
@@ -337,7 +337,20 @@ if (!function_exists('str_contains')) {
 	 * 
 	 * @return bool Whether the string contains the given substring.
 	 */
-    function str_contains($haystack, $needle) {
-        return $needle !== '' && mb_strpos($haystack, $needle) !== false;
-    }
+	function str_contains($haystack, $needle) {
+		return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+	}
 }
+
+/**
+ * CB Flush Rewrite Rules
+ * 
+ * Flushes the rewrite rules after we update a
+ * plugin or theme, so our pages stop disappearing.
+ * 
+ * @since Confetti_Bits 2.3.0
+ */
+function cb_flush_rewrite_rules() {
+	flush_rewrite_rules();
+}
+add_action( 'after_plugin_or_theme_update', 'cb_flush_rewrite_rules' );
