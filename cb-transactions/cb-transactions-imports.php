@@ -1,17 +1,27 @@
-<?php 
+<?php
+// Exit if accessed directly
+defined('ABSPATH') || exit;
+
 /**
  * CB Import Functions
  *
  * This is going to allow an admin user to bulk import
  * transactions, birthdays, and anniversaries from CSV files.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
  */
-// Exit if accessed directly
-defined('ABSPATH') || exit;
+
 /**
  * CB Import Bits
  *
  * This is going to allow an admin user to bulk import
  * Confetti Bits transactions from a CSV file.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
  */
 function cb_import_bits($args = '')
 {
@@ -128,7 +138,7 @@ function cb_import_bits($args = '')
 
 
 
-/*
+/**
  * Confetti Bits Importer
  *
  * This is going to allow an admin user to bulk import a whole list of Confetti Bits
@@ -149,7 +159,10 @@ function cb_import_bits($args = '')
  * 		Redirect
  * 		Get the messages, kick back and enjoy
  *
- * */
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
+ */
 function cb_importer()
 {
 
@@ -442,6 +455,10 @@ add_action('bp_actions', 'cb_importer');
  *
  * This is going to allow an admin user to bulk import
  * birthdays and anniversaries from a CSV file.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
  */
 function cb_import_bda($args = '')
 {
@@ -466,7 +483,7 @@ function cb_import_bda($args = '')
 
 }
 
-/*
+/**
  * CB BDA Importer
  *
  * This is going to allow an admin user to bulk import a whole list of birthdays and anniversaries
@@ -486,11 +503,14 @@ function cb_import_bda($args = '')
  * 		Redirect
  * 		Get the messages, kick back and enjoy
  *
- * */
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
+ */
 function cb_bda_importer()
 {
 
-	if (!bp_is_post_request() || !cb_is_confetti_bits_component() || !isset($_POST['cb_bda_import'])) {
+	if (!cb_is_post_request() || !cb_is_confetti_bits_component() || !isset($_POST['cb_bda_import'])) {
 		return;
 	}
 

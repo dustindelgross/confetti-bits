@@ -2,13 +2,16 @@
 defined('ABSPATH') || exit;
 /**
  * CB Transactions Get Total Sent Today Notice
- * 
+ *
  * This function gets the total number of Confetti Bits
  * that have been sent for the current day and returns
  * a notice to the user.
- * 
- * @since Confetti_Bits 2.2.0
+ *
  * @return string $notice The notice to be displayed to the user.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.2.0
  */
 function cb_transactions_get_total_sent_today_notice()
 {
@@ -50,11 +53,13 @@ function cb_transactions_get_total_sent_today_notice()
 
 /**
  * CB Transactions Total Sent Today Notice
- * 
+ *
  * Output the total number of Confetti Bits
  * that the user has sent for the current day.
- * 
- * @since Confetti_Bits 2.2.0
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.2.0
  */
 function cb_transactions_total_sent_today_notice() {
 	echo cb_transactions_get_total_sent_today_notice();
@@ -63,10 +68,14 @@ function cb_transactions_total_sent_today_notice() {
 
 /**
  * CB Users Request Balance
- * 
+ *
  * Display the users request balance.
- * @since Confetti_Bits 2.2.0
+ *
  * @param int $user_id The user ID.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.2.0
  */
 function cb_transactions_request_balance($user_id = 0) {
 
@@ -79,12 +88,15 @@ function cb_transactions_request_balance($user_id = 0) {
 
 /**
  * CB Transactions Get Request Balance Notice
- * 
+ *
  * Get the users request balance notice.
- * 
- * @since Confetti_Bits 2.2.0
+ *
  * @param int $user_id The user ID.
  * @return string The users request balance notice.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.2.0
  */
 function cb_transactions_get_request_balance_notice($user_id = 0) {
 
@@ -94,8 +106,8 @@ function cb_transactions_get_request_balance_notice($user_id = 0) {
 
 	$date = new DateTime(Confetti_Bits()->spend_end);
 	$total = cb_transactions_get_request_balance($user_id);
-	$notice = sprintf( 
-		"You have %d Confetti Bits to spend on requests until %s.", 
+	$notice = sprintf(
+		"You have %d Confetti Bits to spend on requests until %s.",
 		$total, $date->format( 'F jS, Y')
 	);
 
@@ -105,9 +117,12 @@ function cb_transactions_get_request_balance_notice($user_id = 0) {
 
 /**
  * CB Transactions Request Balance Notice
- * 
+ *
  * Output the users request balance notice.
- * @since Confetti_Bits 2.2.0
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.2.0
  */
 function cb_transactions_request_balance_notice()
 {
@@ -117,16 +132,19 @@ function cb_transactions_request_balance_notice()
 
 /**
  * CB Transactions Balances Notice
- * 
- * Assemble the markup for both the user's 
+ *
+ * Assemble the markup for both the user's
  * transfer balance and their request balance.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
+ *
  * @param int $user_id The id of the user whose balance notice
  * we're assembling. Defaults to current logged-in user.
- * 
+ *
  * @return string $notice the formatted notice markup.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.2.0
  */
 function cb_transactions_get_balances_notice($user_id = 0) {
 
@@ -142,7 +160,7 @@ function cb_transactions_get_balances_notice($user_id = 0) {
 	$transfers = cb_transactions_get_transfer_balance($user_id);
 
 
-	$notice = sprintf( 
+	$notice = sprintf(
 		"<div style='margin:10px;border:1px solid #dbb778;border-radius:10px;padding:.75rem;'>
 			<h4 style='padding:0;margin:0;'>Confetti Bits Balances</h4>
 			<div style='display:flex;'>
@@ -155,7 +173,7 @@ function cb_transactions_get_balances_notice($user_id = 0) {
 					<p style='color:#d1cbc1;font-size:.75rem;margin:0;'>Until %s</p>
 				</div>
 			</div>
-		</div>", 
+		</div>",
 		$requests, $spend_end->format('F jS, Y'), $transfers, $earn_end->format('F jS, Y')
 	);
 
@@ -166,8 +184,12 @@ function cb_transactions_get_balances_notice($user_id = 0) {
 
 /**
  * CB Transactions Balances Notice
- * 
+ *
  * Display the users balances above the dashboard.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.2.0
  */
 function cb_transactions_balances_notice() {
 	echo cb_transactions_get_balances_notice();
@@ -177,17 +199,19 @@ function cb_transactions_balances_notice() {
 
 /**
  * CB Transactions Get Transfer Balance Notice
- * 
+ *
  * Assemble the transfer balance markup for the user's
  * transfer balance notice.
- * 
- * @since Confetti_Bits 2.2.0
- * 
+ *
+ *
  * @param int $user_id The id of the user whose balance notice
  * we're assembling. Defaults to current logged-in user.
- * 
+ *
  * @return string $notice the formatted notice markup.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.2.0
  */
 function cb_transactions_get_transfer_balance_notice($user_id = 0)
 {
@@ -199,8 +223,8 @@ function cb_transactions_get_transfer_balance_notice($user_id = 0)
 	$date = new DateTimeImmutable($reset_date);
 	$total = cb_transactions_get_transfer_balance($user_id);
 
-	$notice = sprintf( 
-		"You have %s Confetti Bits to spend on transfers until %s.", 
+	$notice = sprintf(
+		"You have %s Confetti Bits to spend on transfers until %s.",
 		$total, $date->format( 'F jS, Y')
 	);
 
@@ -223,8 +247,8 @@ function cb_transactions_get_balance_notice( $type = '', $user_id = 0 ) {
 	$date = new DateTimeImmutable($reset_date);
 	$total = call_user_func("cb_transactions_get_{$type}_balance", $user_id );
 
-	$notice = sprintf( 
-		"You have %s Confetti Bits to spend on %s until %s.", 
+	$notice = sprintf(
+		"You have %s Confetti Bits to spend on %s until %s.",
 		$total, $type, $date->format( 'F jS, Y')
 	);
 
@@ -248,10 +272,12 @@ function cb_transactions_balance_notice( $type = '', $user_id = 0 ) {
 
 /**
  * CB Transactions Transfer Balance Notice
- * 
+ *
  * Output markup that shows a user's transfer balance.
- * 
- * @since Confetti_Bits 2.2.0
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.2.0
  */
 function cb_transactions_transfer_balance_notice()
 {
@@ -260,12 +286,14 @@ function cb_transactions_transfer_balance_notice()
 
 /**
  * CB Transactions Get Request Selection
- * 
+ *
  * Get markup for the Request Selection Input
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
  * @return string The formatted select input.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.3.0
  */
 function cb_transactions_get_request_selection() {
 	$options = [
@@ -285,15 +313,17 @@ function cb_transactions_get_request_selection() {
 		"placeholder" => "--- Select an Option ---",
 		"select_options" => $options
 	]);
-	
+
 }
 
 /**
  * CB Transactions Request Selection
- * 
+ *
  * Output markup for the request selector.
- * 
- * @since Confetti_Bits 2.3.0
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.3.0
  */
 function cb_transactions_request_selection() {
 	echo cb_transactions_get_request_selection();
@@ -301,12 +331,14 @@ function cb_transactions_request_selection() {
 
 /**
  * CB Transactions Get Leaderboard Module
- * 
+ *
  * Returns container markup with transactions leaderboard content inside.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
  * @return string The formatted markup
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.3.0
  */
 function cb_transactions_get_leaderboard_module() {
 
@@ -322,10 +354,12 @@ function cb_transactions_get_leaderboard_module() {
 
 /**
  * CB Transactions Leaderboard Module
- * 
+ *
  * Outputs the markup for the Confetti Bits leaderboard module.
- * 
- * @since Confetti_Bits 2.3.0
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.3.0
  */
 function cb_transactions_leaderboard_module() {
 	echo cb_transactions_get_leaderboard_module();
@@ -334,13 +368,15 @@ add_action('cb_dashboard', 'cb_transactions_leaderboard_module', 1 );
 
 /**
  * CB Transactions Get Send Bits Module
- * 
+ *
  * Gets the containerized markup for the send bits module on the Confetti
  * Bits dashboard.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
  * @return string The formatted markup.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.3.0
  */
 function cb_transactions_get_send_bits_module() {
 
@@ -382,7 +418,7 @@ function cb_transactions_get_send_bits_module() {
 	if ( !cb_is_user_admin() || cb_is_user_site_admin() ) {
 		array_unshift($content, cb_transactions_get_transfer_balance_notice());
 	}
-	
+
 	$form = cb_templates_get_form([
 		'name' => 'cb_transactions_send_bits_form',
 		'autocomplete' => 'off',
@@ -394,16 +430,18 @@ function cb_transactions_get_send_bits_module() {
 		'classes' => ['cb-module'],
 		'output' => $form
 	]);
-	
+
 }
 
 /**
-* CB Transactions Send Bits Module
-* 
-* Outputs the markup for the send bits module.
-* 
-* @since Confetti_Bits 2.3.0
-*/
+ * CB Transactions Send Bits Module
+ *
+ * Outputs the markup for the send bits module.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.3.0
+ */
 function cb_transactions_send_bits_module() {
 	echo cb_transactions_get_send_bits_module();
 }
@@ -411,12 +449,15 @@ add_action( 'cb_dashboard', 'cb_transactions_send_bits_module', 2 );
 
 /**
  * CB Transactions Get Formatted Leaderboard
- * 
+ *
  * Returns a string of markup that contains listings for the top 15
  * users with the most Confetti Bits.
  *
- * @since Confetti_Bits 1.0.0
  * @return string The formatted markup.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
  */
 function cb_transactions_get_formatted_leaderboard() {
 
@@ -470,10 +511,12 @@ function cb_transactions_get_formatted_leaderboard() {
 
 /**
  * CB Transactions Leaderboard
- * 
+ *
  * Output markup for the transactions leaderboard.
- * 
- * @since Confetti_Bits 2.3.0
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
  */
 function cb_transactions_leaderboard() {
 	echo cb_transactions_get_formatted_leaderboard();

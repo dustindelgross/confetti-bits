@@ -1,14 +1,17 @@
 <?php
-/**
- * Confetti Bits Transaction Loader.
- *
- * A component that allows leaders to send bits to users and for users to send bits to each other.
- *
- * @since Confetti Bits 2.0.0
- */
-
+// Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * CB Transactions Component
+ *
+ * Gives us access to global values elsewhere, and includes
+ * files associated with the component.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
+ */
 class CB_Transactions_Component extends CB_Component {
 
 	public function __construct() {
@@ -39,7 +42,7 @@ class CB_Transactions_Component extends CB_Component {
 			'template',
 			'notifications',
 		);
-		
+
 		parent::includes($includes);
 
 	}
@@ -71,7 +74,7 @@ class CB_Transactions_Component extends CB_Component {
 				'global_tables'         => $global_tables,
 			)
 		);
-		
+
 		$cb->loaded_components[ $this->slug ] = $this->id;
 
 	}
@@ -116,7 +119,7 @@ class CB_Transactions_Component extends CB_Component {
 		if ( is_user_logged_in() ) {
 
 			// Setup the logged in user variables.
-			$transactions_link = trailingslashit( bp_loggedin_user_domain() . CONFETTI_BITS_TRANSACTIONS_SLUG );			
+			$transactions_link = trailingslashit( bp_loggedin_user_domain() . CONFETTI_BITS_TRANSACTIONS_SLUG );
 			$title  = __( 'Confetti Bits', 'buddyboss' );
 
 			// Add the "My Account" sub menus.

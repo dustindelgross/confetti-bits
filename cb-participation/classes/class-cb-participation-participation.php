@@ -1,13 +1,17 @@
 <?php
-/**
- * Confetti Bits Participation Loader.
- * A component that allows leaders to send bits to users and for users to send bits to each other.
- * @package Confetti_Bits 
- * @since Confetti Bits 2.0.0 
- */
-
+// Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * CB Participation Participation
+ *
+ * A component that allows users to register their participation
+ * in company activities.
+ *
+ * @package ConfettiBits
+ * @subpackage Participation
+ * @since 2.2.0
+ */
 class CB_Participation_Participation {
 
 	/**
@@ -142,9 +146,9 @@ class CB_Participation_Participation {
 
 	/**
 	 * Populate
-	 * 
+	 *
 	 * Populates object data associated with the given ID.
-	 * 
+	 *
 	 * @param int $id The participation ID.
 	 */
 	public function populate( $id = 0 ) {
@@ -159,7 +163,7 @@ class CB_Participation_Participation {
 
 		$fetched_participation = ! empty( $participation ) ? current( $participation ) : array();
 
-		if ( ! empty( $fetched_participation ) && is_array( $fetched_participation ) ) {	
+		if ( ! empty( $fetched_participation ) && is_array( $fetched_participation ) ) {
 			$this->item_id				= $fetched_participation['item_id'];
 			$this->secondary_item_id	= $fetched_participation['secondary_item_id'];
 			$this->applicant_id			= $fetched_participation['applicant_id'];
@@ -180,10 +184,10 @@ class CB_Participation_Participation {
 
 	/**
 	 * Save
-	 * 
+	 *
 	 * Handles saving data to the database using our static
 	 * _insert method.
-	 * 
+	 *
 	 * @return obj|int WP_Error on failure, participation ID on success.
 	 */
 	public function save() {
@@ -229,13 +233,13 @@ class CB_Participation_Participation {
 
 	/**
 	 * Update participation status. Uses our static _update method.
-	 * 
+	 *
 	 * @param	array	$args	The arguments for the update. Accepts all attributes
-	 * 							of the CB_Participation_Participation object. {  
-	 *   
-	 * 		@type	int		$item_id				The item_id of the object. 
+	 * 							of the CB_Participation_Participation object. {
+	 *
+	 * 		@type	int		$item_id				The item_id of the object.
 	 * 												Usually the admin_id
-	 * 		@type	int		$secondary_item_id		The secondary_item_id of the object. 
+	 * 		@type	int		$secondary_item_id		The secondary_item_id of the object.
 	 * 												Usually the applicant_id
 	 * 		@type	int		$applicant_id			The applicant_id of the object.
 	 * 		@type	int		$admin_id				The admin_id of the object.
@@ -245,7 +249,7 @@ class CB_Participation_Participation {
 	 * 		@type	string	$status					The current status of the object
 	 * 		@type	string	$media_filepath			The filepath where the media objects are
 	 * }
-	 * 
+	 *
 	 */
 	public function update_participation_request_status() {
 
@@ -265,8 +269,8 @@ class CB_Participation_Participation {
 		$data_format = array( '%d', '%d', '%s', '%s', '%s', '%s' );
 		$where_format = array( '%d' );
 
-		return self::_update( 
-			$data, 
+		return self::_update(
+			$data,
 			$where,
 			$data_format,
 			$where_format
@@ -310,7 +314,7 @@ class CB_Participation_Participation {
 	 *
 	 *
 	 * @param array $args Associative array of filter arguments.
-	 *                    
+	 *
 	 * @return array Associative array of 'data' and 'format' args.
 	 */
 	protected static function get_query_clauses( $args = array() ) {
@@ -389,9 +393,9 @@ class CB_Participation_Participation {
 
 	/**
 	 * _insert
-	 * 
+	 *
 	 * Handles the actual insertion into the database.
-	 * 
+	 *
 	 * @return int|bool The inserted ID on success, false on failure.
 	 */
 	protected static function _insert( $data = array(), $data_format = array() ) {
@@ -418,13 +422,13 @@ class CB_Participation_Participation {
 	 */
 	protected static function _update( $data = array(), $where = array(), $data_format = array(), $where_format = array() ) {
 		global $wpdb;
-				
-		$retval = $wpdb->update( 
-			Confetti_Bits()->participation->table_name, 
-			$data, $where, 
-			$data_format, $where_format 
+
+		$retval = $wpdb->update(
+			Confetti_Bits()->participation->table_name,
+			$data, $where,
+			$data_format, $where_format
 		);
-		
+
 		do_action( 'cb_participation_after_update', $data );
 		return $retval;
 	}
@@ -480,14 +484,14 @@ class CB_Participation_Participation {
 
 	/**
 	 * get_participation
-	 * 
+	 *
 	 * Handles retrieving data from the database. Nice and clean!
-	 * 
-	 * @param array $args An array of stuff to get! { 
+	 *
+	 * @param array $args An array of stuff to get! {
 	 *   @type string $select The database column to get
-	 *   @type array $where A selection of key-value pairs that 
+	 *   @type array $where A selection of key-value pairs that
 	 *         get evaluated by another method. See self::get_where_sql()
-	 * 
+	 *
 	 * @TODO: Finish documenting this (sweat emoji)
 	 * }
 	 */
@@ -496,8 +500,8 @@ class CB_Participation_Participation {
 		global $wpdb;
 		$cb = Confetti_Bits();
 
-		$r = wp_parse_args( 
-			$args, 
+		$r = wp_parse_args(
+			$args,
 			array(
 				'select'		=> '*',
 				'where'			=> [],
@@ -524,7 +528,7 @@ class CB_Participation_Participation {
 
 		$sql = '';
 		$columns = array( 'date_created', 'date_modified', 'event_date' );
-		$column = ! empty( $date_query['column'] ) && in_array( $date_query['column'], $columns ) ? 
+		$column = ! empty( $date_query['column'] ) && in_array( $date_query['column'], $columns ) ?
 			$date_query['column'] : 'event_date';
 
 		$date_query = new CB_Core_Date_Query( $date_query, $column );
@@ -540,14 +544,14 @@ class CB_Participation_Participation {
 	 * Used by CB_Participation_Participation::get_participation() to create its LIMIT clause.
 	 *
 	 *
-	 * @param	array	$args	Array consisting of 
-	 * 							the page number and items per page. { 
+	 * @param	array	$args	Array consisting of
+	 * 							the page number and items per page. {
 	 * 			@type	int		$page		page number
 	 * 			@type	int		$per_page	items to return
 	 * }
-	 * 
+	 *
 	 * @return string $retval LIMIT clause.
-	 * 
+	 *
 	 */
 	protected static function get_paged_sql( $args = array() ) {
 
@@ -590,11 +594,11 @@ class CB_Participation_Participation {
 		}
 
 		if ( ! empty( $args['secondary_item_id'] ) ) {
-			$secondary_item_id_in                  = implode( 
-				',', 
-				wp_parse_id_list( 
-					$args['secondary_item_id'] 
-				) 
+			$secondary_item_id_in                  = implode(
+				',',
+				wp_parse_id_list(
+					$args['secondary_item_id']
+				)
 			);
 			$where_conditions['secondary_item_id'] = "secondary_item_id IN ({$secondary_item_id_in})";
 		}

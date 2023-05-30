@@ -1,18 +1,17 @@
-<?php 
-/**
- * Events Component
- *
- * @package Confetti Bits
- */
+<?php
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
 /**
- * Events Component Initialization
+ * CB Setup Events
  *
- * @since 1.0.0
+ * Loads our Events component to give us easy access to global values.
+ *
+ * @package ConfettiBits
+ * @subpackage Events
+ * @since 2.3.0
  */
 function cb_setup_events() {
-	Confetti_Bits()->events = new Confetti_Bits_Events_Component();
+	Confetti_Bits()->events = new CB_Events_Component();
 }
-add_action('bp_setup_components', 'cb_setup_events', 5);
+add_action('cb_setup_components', 'cb_setup_events', 5);

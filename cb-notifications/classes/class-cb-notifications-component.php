@@ -1,18 +1,25 @@
 <?php
-/**
- * Confetti Bits Notifications Loader.
- *
- * Establishes the Confetti Bits Notifications component.
- */
-
+// Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-/*
 if ( ! class_exists( 'BP_Core_Notification_Abstract' ) ) {
 	return;
 }
-*/
 
+/**
+ * CB Notifications Component
+ *
+ * Establishes the Confetti Bits Notifications component.
+ *
+ * We use this in tandem with BuddyBoss platform to give us
+ * email, web, and push notifications. An absolute godsend,
+ * this makes it a million times easier to do that stuff, so
+ * we can focus on the actual functionality.
+ *
+ * @package ConfettiBits
+ * @subpackage Notifications
+ * @since 2.0.0
+ */
 class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 
 	private static $instance = null;
@@ -42,7 +49,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		$this->register_notification_group(
 			'confetti_bits',
 
-			esc_html__( 'Confetti Bits Notifications', 'confetti-bits' ), 
+			esc_html__( 'Confetti Bits Notifications', 'confetti-bits' ),
 			esc_html__( 'Confetti Bits Notifications Admin', 'confetti-bits' ),
 		);
 
@@ -138,7 +145,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		);
 
 
-		//		add_filter( 'cb_transactions_send_bits', array( $this, 'format_notification' ), 10, 7 );	
+		//		add_filter( 'cb_transactions_send_bits', array( $this, 'format_notification' ), 10, 7 );
 
 	}
 
@@ -200,7 +207,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		);
 
 
-		//		add_filter( 'cb_transactions_send_bits', array( $this, 'format_notification' ), 10, 7 );	
+		//		add_filter( 'cb_transactions_send_bits', array( $this, 'format_notification' ), 10, 7 );
 
 	}
 
@@ -262,7 +269,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		);
 
 
-		//		add_filter( 'cb_transactions_send_bits', array( $this, 'format_notification' ), 10, 7 );	
+		//		add_filter( 'cb_transactions_send_bits', array( $this, 'format_notification' ), 10, 7 );
 
 	}
 
@@ -689,13 +696,13 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		$text = '';
 		$link = bp_loggedin_user_domain() . "confetti-bits";
 
-		if ( ( 'confetti_bits' === $component_name && 'cb_send_bits' === $component_action_name ) 
+		if ( ( 'confetti_bits' === $component_name && 'cb_send_bits' === $component_action_name )
 			|| ( 'confetti_bits' === $component_name && 'cb_transfer_bits' === $component_action_name ) ) {
 
 			$text = esc_html__( bp_core_get_user_displayname( $item_id ) . ' just sent you bits!', 'confetti-bits' );
 
 			$content = array(
-				'title' => "Someone just sent Confetti Bits!", 
+				'title' => "Someone just sent Confetti Bits!",
 				'text' => $text,
 				'link' => $link,
 			);
@@ -714,7 +721,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			}
 
 			$content = array(
-				'title' => "You just got Confetti Bits!", 
+				'title' => "You just got Confetti Bits!",
 				'text' => $text,
 				'link' => $link,
 			);
@@ -725,7 +732,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$text = esc_html__( bp_core_get_user_displayname( $item_id ) . ' just imported bits!', 'confetti-bits' );
 
 			$content = array(
-				'title' => "Someone just imported Confetti Bits!", 
+				'title' => "Someone just imported Confetti Bits!",
 				'text' => $text,
 				'link' => $link,
 			);
@@ -736,7 +743,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$text = bp_core_get_user_displayname( $secondary_item_id ) . ' just sent in a new Confetti Bits Request!';
 
 			$content = array(
-				'title' => "New Confetti Bits Request!", 
+				'title' => "New Confetti Bits Request!",
 				'text' => $text,
 				'link' => $link,
 			);
@@ -745,11 +752,11 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		if ( ( 'groups' === $component_name && 'activity_update' === $component_action_name ) ) {
 
 			$group = groups_get_group( $item_id );
-			$text = bp_core_get_user_displayname( $secondary_item_id ) . 
+			$text = bp_core_get_user_displayname( $secondary_item_id ) .
 				' just posted in the group ' . $group->name;
 			$link = esc_url( bp_get_group_permalink( $group ) );
 			$content = array(
-				'title' => "Activity update in " . $group->name, 
+				'title' => "Activity update in " . $group->name,
 				'text' => $text,
 				'link' => $link,
 			);
@@ -762,7 +769,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$text = esc_html__( "{$admin_name} just updated your participation status.", 'confetti-bits' );
 			$link = bp_core_get_user_domain( $item_id ) . 'confetti-bits/';
 			$content = array(
-				'title' => "Participation Update", 
+				'title' => "Participation Update",
 				'text' => $text,
 				'link' => $link,
 			);
@@ -774,7 +781,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$text = esc_html__( "Happy Birthday!", 'confetti-bits' );
 			$link = bp_core_get_user_domain( $item_id ) . 'confetti-bits/';
 			$content = array(
-				'title' => "Happy Birthday!", 
+				'title' => "Happy Birthday!",
 				'text' => $text,
 				'link' => $link,
 			);
@@ -786,7 +793,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$text = esc_html__( "Happy Anniversary!", 'confetti-bits' );
 			$link = bp_core_get_user_domain( $item_id ) . 'confetti-bits/';
 			$content = array(
-				'title' => "Happy Anniversary!", 
+				'title' => "Happy Anniversary!",
 				'text' => $text,
 				'link' => $link,
 			);

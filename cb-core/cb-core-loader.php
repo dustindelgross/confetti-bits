@@ -1,16 +1,16 @@
 <?php
-
-/**
- * Confetti Bits Transactions Loader.
- *
- * A transaction component, for users to send bits to each other.
- *
- * @since Confetti Bits 2.0.0
- */
-
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+/**
+ * CB Setup Core
+ *
+ * Sets up our Core component, which loads all of our other components.
+ *
+ * @package ConfettiBits
+ * @subpackage Core
+ * @since 1.0.0
+ */
 function cb_setup_core() {
 	Confetti_Bits()->core = new CB_Core();
 }

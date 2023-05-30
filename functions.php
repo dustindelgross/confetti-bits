@@ -5,12 +5,12 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * CB Is Get Request
- * 
+ *
  * Checks if the current request is a GET request
- * 
+ *
  * @since 1.0.0
  * @return bool True if GET request, false otherwise
- * 
+ *
  */
 function cb_is_get_request() {
 	return (bool) ( 'GET' === strtoupper( $_SERVER['REQUEST_METHOD'] ) );
@@ -18,9 +18,9 @@ function cb_is_get_request() {
 
 /**
  * CB Is Post Request
- * 
+ *
  * Checks if the current request is a POST request
- * 
+ *
  * @since 1.0.0
  * @return bool True if POST request, false otherwise
  */
@@ -46,42 +46,42 @@ add_action(
 	10
 );
 
-add_action( 
-	'cb_enqueue_scripts', 
+add_action(
+	'cb_enqueue_scripts',
 	function () {
 		if ( function_exists( 'cb_is_confetti_bits_component' ) ) {
 			if ( cb_is_confetti_bits_component() ) {
 
-				wp_enqueue_script( 
-					'cb_participation', 
-					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-participation.js', 
-					array('jquery') 
+				wp_enqueue_script(
+					'cb_participation',
+					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-participation.js',
+					array('jquery')
 				);
 
-				wp_enqueue_script( 
-					'cb_core', 
+				wp_enqueue_script(
+					'cb_core',
 					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-core.js',
 					array('jquery')
 				);
 
-				wp_enqueue_script( 
-					'cb_transactions', 
-					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-transactions.js', 
-					array('jquery') 
+				wp_enqueue_script(
+					'cb_transactions',
+					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-transactions.js',
+					array('jquery')
 				);
 
 				if ( cb_is_user_participation_admin() ) {
-					wp_enqueue_script( 
-						'cb_core_admin', 
-						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-core-admin.js', 
+					wp_enqueue_script(
+						'cb_core_admin',
+						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-core-admin.js',
 						array('jquery')
 					);
 				}
 
 				if ( cb_is_user_site_admin() ) {
-					wp_enqueue_script( 
-						'cb_events', 
-						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-events.js', 
+					wp_enqueue_script(
+						'cb_events',
+						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-events.js',
 						array('jquery', 'jquery-ui-datepicker')
 					);
 				}
@@ -132,33 +132,33 @@ add_action(
 					'send'		=> admin_url( 'admin-ajax.php?action=cb_send_bits' )
 				);
 
-				wp_localize_script( 
-					'cb_participation', 
-					'cb_participation', 
+				wp_localize_script(
+					'cb_participation',
+					'cb_participation',
 					$cb_participation_params
 				);
 
-				wp_localize_script( 
-					'cb_core', 
-					'cb_core', 
+				wp_localize_script(
+					'cb_core',
+					'cb_core',
 					$cb_core_params
 				);
 
-				wp_localize_script( 
-					'cb_core_admin', 
-					'cb_core_admin', 
+				wp_localize_script(
+					'cb_core_admin',
+					'cb_core_admin',
 					$cb_core_admin_params
 				);
 
-				wp_localize_script( 
-					'cb_transactions', 
+				wp_localize_script(
+					'cb_transactions',
 					'cb_transactions',
 					$cb_transactions_params
 				);
 
-				wp_localize_script( 
-					'cb_events', 
-					'cb_events', 
+				wp_localize_script(
+					'cb_events',
+					'cb_events',
 					$cb_events_params
 				);
 
@@ -212,35 +212,37 @@ add_action( 'edit_user_created_user', 'cb_save_user_birthday_anniversary_fields'
 
 /**
  * CB Core Set Reset Date Globals
- * 
- * Sets a few internal globals using the DateTimeImmutable class 
- * so that we can reference these spending/earning cycles throughout 
+ *
+ * Sets a few internal globals using the DateTimeImmutable class
+ * so that we can reference these spending/earning cycles throughout
  * the app without running these calculations all the time.
- * 
+ *
  * A breakdown of what this does:
- * 
+ *
  * - There are two cycles: an earning cycle and a spending cycle
- * 
- * - The reset date refers to the earning cycle. That is when 
- * users start over with a zero'd out bank of confetti bits. 
+ *
+ * - The reset date refers to the earning cycle. That is when
+ * users start over with a zero'd out bank of confetti bits.
  * So the earning cycle "ends" on the reset date.
- * 
+ *
  * - The earning cycle "starts" one year prior to that, on the
  * same date. Please don't set it to February 29th, I did not
  * account for that when I built this forsaken system.
- * 
+ *
  * - The spending cycle is offset by 1 month after the earning
  * cycle. So the spending cycle "ends" 1 month after the earning
- * cycle does. That means that the spending cycle "starts" one month 
+ * cycle does. That means that the spending cycle "starts" one month
  * after the earning cycle does as well.
- * 
+ *
  * - There are situations where a user may want to look back
  * at a previous cycle, so we account for those here as well.
- * We only need the dates that those cycles started, because 
+ * We only need the dates that those cycles started, because
  * they ended when the current cycles started.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Core
+ * @since 2.3.0
+ *
  */
 function cb_core_set_reset_date_globals() {
 
@@ -264,20 +266,23 @@ add_action( 'cb_setup_globals', 'cb_core_set_reset_date_globals' );
 
 /**
  * CB Core Current Date
- * 
+ *
  * Returns the current date and time in the given
  * format. Defaults to MySQL format in the site's
  * timezone.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
+ *
  * @param bool $offset Whether to use the site's
  *   UTC offset setting. Default true.
- * 
+ *
  * @param string $format The desired datetime format.
  *   Default MySQL - 'Y-m-d H:i:s'
- * 
+ *
  * @return string The formatted datetime.
+ *
+ * @package ConfettiBits
+ * @subpackage Core
+ * @since 2.3.0
  */
 function cb_core_current_date( $offset = true, $format = "Y-m-d H:i:s" ) {
 
@@ -292,14 +297,16 @@ function cb_core_current_date( $offset = true, $format = "Y-m-d H:i:s" ) {
 if (!function_exists('str_starts_with')) {
 	/**
 	 * Str Starts With
-	 * 
+	 *
 	 * PHP 8 Polyfill for str_starts_with
-	 * 
-	 * @since Confetti_Bits 2.3.0
-	 * 
+	 *
+	 * @package ConfettiBits
+	 * @subpackage Core
+	 * @since 2.3.0
+	 *
 	 * @param string $haystack The string to search.
 	 * @param string $needle The substring to search for at the beginning.
-	 * 
+	 *
 	 * @return bool Whether the string starts with the given substring.
 	 */
 	function str_starts_with($haystack = '', $needle = '') {
@@ -309,14 +316,16 @@ if (!function_exists('str_starts_with')) {
 if (!function_exists('str_ends_with')) {
 	/**
 	 * Str Ends With
-	 * 
+	 *
 	 * PHP 8 Polyfill for str_ends_with
-	 * 
-	 * @since Confetti_Bits 2.3.0
-	 * 
+	 *
+	 * @package ConfettiBits
+	 * @subpackage Core
+	 * @since 2.3.0
+	 *
 	 * @param string $haystack The string to search.
 	 * @param string $needle The substring to search for at the end.
-	 * 
+	 *
 	 * @return bool Whether the string ends with the given substring.
 	 */
 	function str_ends_with($haystack, $needle) {
@@ -327,14 +336,16 @@ if (!function_exists('str_ends_with')) {
 if (!function_exists('str_contains')) {
 	/**
 	 * Str Contains
-	 * 
+	 *
 	 * PHP 8 Polyfill for str_contains
-	 * 
-	 * @since Confetti_Bits 2.3.0
-	 * 
+	 *
+	 * @package ConfettiBits
+	 * @subpackage Core
+	 * @since 2.3.0
+	 *
 	 * @param string $haystack The string to search.
 	 * @param string $needle The substring to search for.
-	 * 
+	 *
 	 * @return bool Whether the string contains the given substring.
 	 */
 	function str_contains($haystack, $needle) {
@@ -344,11 +355,12 @@ if (!function_exists('str_contains')) {
 
 /**
  * CB Flush Rewrite Rules
- * 
+ *
  * Flushes the rewrite rules after we update a
  * plugin or theme, so our pages stop disappearing.
- * 
- * @since Confetti_Bits 2.3.0
+ *
+ * @package ConfettiBits
+ * @since 2.3.0
  */
 function cb_flush_rewrite_rules() {
 	flush_rewrite_rules();

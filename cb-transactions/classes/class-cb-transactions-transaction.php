@@ -1,18 +1,22 @@
 <?php
-/**
- * Confetti Bits Transaction Loader.
- * A component that allows leaders to send bits to users and for users to send bits to each other.
- * @package Confetti_Bits
- * @since Confetti Bits 2.0.0  */
-
+// Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * CB Transactions Transaction
+ *
+ * A component that allows users to send bits.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
+ */
 class CB_Transactions_Transaction {
 
-	public static $last_inserted_id; 
-	
-	public $id; 
-	
+	public static $last_inserted_id;
+
+	public $id;
+
 	public $item_id;
 
 	public $secondary_item_id;
@@ -30,7 +34,7 @@ class CB_Transactions_Transaction {
 	public $component_action;
 
 	public $amount;
-	
+
 	public $event_id;
 
 	public $total_count;
@@ -79,7 +83,7 @@ class CB_Transactions_Transaction {
 		$this->previous_spending_cycle_end = $date->modify("- 1 year + 1 month")->format('Y-m-d H:i:s');
 
 	}
-	
+
 	public function send_bits() {
 
 		$retval = false;
@@ -176,14 +180,14 @@ class CB_Transactions_Transaction {
 	 * Used by CB_Participation_Participation::get_participation() to create its LIMIT clause.
 	 *
 	 *
-	 * @param	array	$args	Array consisting of 
-	 * 							the page number and items per page. { 
+	 * @param	array	$args	Array consisting of
+	 * 							the page number and items per page. {
 	 * 			@type	int		$page		page number
 	 * 			@type	int		$per_page	items to return
 	 * }
-	 * 
+	 *
 	 * @return string $retval LIMIT clause.
-	 * 
+	 *
 	 */
 	protected static function get_paged_sql( $args = array() ) {
 
@@ -1096,7 +1100,7 @@ class CB_Transactions_Transaction {
 	}
 
 	*/
-	
+
 	public function get_paged_transactions_for_user( $user_id, $args = array() ) {
 		global $wpdb;
 		$bp = buddypress();

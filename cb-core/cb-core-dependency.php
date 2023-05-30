@@ -2,10 +2,10 @@
 
 /**
  * CB Core Dependencies
- * 
+ *
  * The purpose of this file is to allow plugins to hook into the core
- * of the CB plugin. 
- * 
+ * of the CB plugin.
+ *
  */
 
 /**
@@ -51,7 +51,7 @@ function cb_setup_current_user() {
 }
 
 /**
- * Fires the cb_setup_theme action, where plugins can modify what happens 
+ * Fires the cb_setup_theme action, where plugins can modify what happens
  * while the theme is being setup.
  */
 function cb_setup_theme() {
@@ -66,7 +66,7 @@ function cb_after_setup_theme() {
 }
 
 /**
- * Fires the cb_enqueue_scripts action, where plugins can register their 
+ * Fires the cb_enqueue_scripts action, where plugins can register their
  * front-end scripts.
  */
 function cb_enqueue_scripts() {
@@ -131,7 +131,7 @@ function cb_setup_globals() {
 }
 
 /**
- * Fires the cb_setup_canonical_stack action, where plugins can 
+ * Fires the cb_setup_canonical_stack action, where plugins can
  * register their canonical stack.
  */
 function cb_setup_canonical_stack() {
@@ -196,7 +196,7 @@ function cb_screens() {
 
 
 /**
- * Fires the cb_late_include action, where plugins can add include files after 
+ * Fires the cb_late_include action, where plugins can add include files after
  * the canonical stack has been established.
  */
 function cb_late_include() {
@@ -276,7 +276,7 @@ function cb_login_redirect( $redirect_to = '', $redirect_to_raw = '', $user = fa
 
 /**
  * Fires the cb_template_include action, where plugins can modify the template.
- * 
+ *
  * @param string $template The template to include.
  */
 function cb_template_include( $template = '' ) {
@@ -285,7 +285,7 @@ function cb_template_include( $template = '' ) {
 
 /**
  * Fires the cb_allowed_themes action, where plugins can modify the allowed themes.
- * 
+ *
  * @param array $themes The allowed themes.
  */
 function cb_allowed_themes( $themes ) {
@@ -294,10 +294,11 @@ function cb_allowed_themes( $themes ) {
 
 /**
  * CB REST API Init
- * 
+ *
  * Fires the cb_rest_api_init action, so we (and others) can easily hook into our REST API.
- * 
- * @since Confetti_Bits 2.3.0
+ *
+ * @package ConfettiBits
+ * @since 2.3.0
  */
 function cb_rest_api_init() {
 	do_action('cb_rest_api_init');

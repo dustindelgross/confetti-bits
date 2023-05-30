@@ -1,14 +1,16 @@
 <?php
-/**
- * Confetti Bits Transaction Loader.
- *
- * A component that allows leaders to send bits to users and for users to send bits to each other.
- *
- * @since Confetti Bits 2.0.0
- */
-
+// Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * CB Participation Component
+ *
+ * Lets us set some global values to use elsewhere.
+ *
+ * @package ConfettiBits
+ * @subpackage Participation
+ * @since 2.2.0
+ */
 class CB_Participation_Component extends CB_Component {
 
 
@@ -30,7 +32,7 @@ class CB_Participation_Component extends CB_Component {
 			'functions',
 			'template',
 		);
-		
+
 		parent::includes($includes);
 
 	}
@@ -61,7 +63,7 @@ class CB_Participation_Component extends CB_Component {
 				'global_tables'         => $global_tables,
 			)
 		);
-		
+
 		$cb->loaded_components[ $this->slug ] = $this->id;
 
 	}

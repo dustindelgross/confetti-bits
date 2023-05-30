@@ -1,6 +1,7 @@
 <?php
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
+
 class CB_Core extends CB_Component {
 
 	public function __construct() {

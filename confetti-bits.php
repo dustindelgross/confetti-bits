@@ -7,7 +7,7 @@
  * at company events to receive points (Confetti Bits), which they
  * can then either redeem for certain items or save up
  * for a chance to win a spot in a company-sponsored retreat.
- * 
+ *
  * Author:      Dustin Delgross
  * Author URI:  https://dustindelgross.com/
  * Version:     2.3.0
@@ -93,23 +93,25 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 	 	 * Magic method for checking the existence of a
 		 * certain custom field.
 		 *
-		 * @since Confetti_Bits 2.3.0
-		 *
 		 * @param string $key Key to check the set status for.
 		 *
 		 * @return bool
+		 *
+		 * @package ConfettiBits
+		 * @since 2.3.0
 		 */
 		public function __isset( $key ) {
 			return isset( $this->data[ $key ] ); }
 
 		/**
-		 * Magic method for getting BuddyPress variables.
-		 *
-		 * @since Confetti_Bits 2.3.0
+		 * Magic method for getting Confetti_Bits variables.
 		 *
 		 * @param string $key Key to return the value for.
 		 *
 		 * @return mixed
+		 *
+		 * @package ConfettiBits
+		 * @since 2.3.0
 		 */
 		public function __get( $key ) {
 			return isset( $this->data[ $key ] ) ? $this->data[ $key ] : null; }
@@ -117,10 +119,11 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Magic method for setting Confetti_Bits variables.
 		 *
-		 * @since Confetti_Bits 2.3.0
-		 *
 		 * @param string $key   Key to set a value for.
 		 * @param mixed  $value Value to set.
+		 *
+		 * @package ConfettiBits
+		 * @since 2.3.0
 		 */
 		public function __set( $key, $value ) {
 			$this->data[ $key ] = $value; }
@@ -128,8 +131,10 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Magic method for unsetting Confetti_Bits variables.
 		 *
-		 * @since  Confetti_Bits 2.3.0
 		 * @param string $key Key to unset a value for.
+		 *
+		 * @package ConfettiBits
+		 * @since 2.3.0
 		 */
 		public function __unset( $key ) {
 			if ( isset( $this->data[ $key ] ) ) {
@@ -155,7 +160,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Define constants.
 		 *
-		 * @since Confetti_Bits 1.0.0
+		 * @package ConfettiBits
+		 * @since 1.0.0
 		 */
 		private function define_constants() {
 
@@ -203,7 +209,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Include required files.
 		 *
-		 * @since Confetti_Bits 2.3.0
+		 * @package ConfettiBits
+		 * @since 1.0.0
 		 */
 		public function includes() {
 
@@ -226,7 +233,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 *
 		 * Globals are accessible via Confetti_Bits()->{$global_name}.
 		 *
-		 * @since Confetti_Bits 2.3.0
+		 * @package ConfettiBits
+		 * @since 1.0.0
 		 */
 		private function setup_globals() {
 
@@ -241,7 +249,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * This method is passed to spl_autoload_register to load classes on demand.
 		 *
-		 * @since Confetti_Bits 2.3.0
+		 * @package ConfettiBits
+		 * @since 1.0.0
 		 */
 		public function load_components( $class ) {
 
@@ -336,7 +345,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 	/**
 	 * Display notice if BuddyBoss Platform is not installed.
 	 */
-	function confetti_bits_install_bb_platform_notice() {
+	function cb_install_bb_platform_notice() {
 		echo '<div class="error fade"><p>';
 		_e('<strong>Confetti Bits</strong></a> requires the BuddyBoss Platform plugin to work. Please <a href="https://buddyboss.com/platform/" target="_blank">install BuddyBoss Platform</a> first.', 'confetti-bits');
 		echo '</p></div>';
@@ -345,7 +354,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 	/**
 	 * Display notice if BuddyBoss Platform is not updated.
 	 */
-	function confetti_bits_update_bb_platform_notice() {
+	function cb_update_bb_platform_notice() {
 		echo '<div class="error fade"><p>';
 		_e('<strong>Confetti Bits</strong></a> requires BuddyBoss Platform plugin version 1.2.6 or higher to work. Please update BuddyBoss Platform.', 'confetti-bits');
 		echo '</p></div>';
@@ -354,7 +363,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 	/**
 	 * Check if Confetti Bits is active.
 	 */
-	function cb_confetti_bits_is_active() {
+	function cb_bp_is_active() {
 		if ( defined( 'BP_PLATFORM_VERSION' ) && version_compare( BP_PLATFORM_VERSION,'1.2.6', '>=' ) ) {
 			return true;
 		}
@@ -366,22 +375,22 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 	 * @since 1.0.0
 	 * @return void
 	 */
-	function confetti_bits_init() {
+	function cb_plugin_init() {
 		if ( ! defined( 'BP_PLATFORM_VERSION' ) ) {
-			add_action( 'admin_notices', 'confetti_bits_install_bb_platform_notice' );
-			add_action( 'network_admin_notices', 'confetti_bits_install_bb_platform_notice' );
+			add_action( 'admin_notices', 'cb_install_bb_platform_notice' );
+			add_action( 'network_admin_notices', 'cb_install_bb_platform_notice' );
 			return;
 		}
 
 		if ( version_compare( BP_PLATFORM_VERSION,'1.2.6', '<' ) ) {
-			add_action( 'admin_notices', 'confetti_bits_update_bb_platform_notice' );
-			add_action( 'network_admin_notices', 'confetti_bits_update_bb_platform_notice' );
+			add_action( 'admin_notices', 'cb_update_bb_platform_notice' );
+			add_action( 'network_admin_notices', 'cb_update_bb_platform_notice' );
 			return;
 		}
 
 		Confetti_Bits();
 	}
 
-	add_action( 'plugins_loaded', 'confetti_bits_init', 9 );
-	
+	add_action( 'plugins_loaded', 'cb_plugin_init', 9 );
+
 }

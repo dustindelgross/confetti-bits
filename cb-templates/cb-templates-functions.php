@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * CB Templates Container
  *
@@ -14,6 +14,9 @@
  *     @var string $output The content to wrap in the container. Default empty.
  * }
  * @return string The HTML markup to output.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
  * @since 2.3.0
  */
 function cb_templates_container( $args = array() ) {
@@ -60,9 +63,9 @@ function cb_templates_container( $args = array() ) {
 
 /**
  * CB Get Button
- * 
+ *
  * Formats a button element with the given arguments
- * 
+ *
  * @param array $args {
  *     @var string $id The ID of the button
  *     @var string $content The content of the button
@@ -71,6 +74,9 @@ function cb_templates_container( $args = array() ) {
  *     Default array('cb-button')
  * }
  * @return string The formatted button element
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
  * @since 2.3.0
  */
 function cb_templates_get_button( $args = array() ) {
@@ -118,9 +124,9 @@ function cb_templates_get_button( $args = array() ) {
 
 /**
  * CB Templates Get List Item
- * 
+ *
  * Formats a list item element with the given arguments
- * 
+ *
  * @param array $args {
  *     @var string $id The ID of the item
  *     @var string $content The content of the item
@@ -128,6 +134,9 @@ function cb_templates_get_button( $args = array() ) {
  *     Default array('cb-button')
  * }
  * @return string The formatted button element
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
  * @since 2.3.0
  */
 function cb_templates_get_list_item( $args = array() ) {
@@ -160,32 +169,36 @@ function cb_templates_get_list_item( $args = array() ) {
 			if ( str_starts_with($key, "no_data_") ) {
 				$custom_attrs .= ' ' . esc_attr(str_replace('no_data_', '', $key ) ) . '="' . esc_attr($val) . '"';
 			} else {
-				$custom_attrs .= ' data-' . esc_attr($key) . '="' . esc_attr($val) . '"';	
+				$custom_attrs .= ' data-' . esc_attr($key) . '="' . esc_attr($val) . '"';
 			}
 		}
 	}
-	
+
 	return "<li{$id}{$classes}{$custom_attrs}>{$content}</li>";
 
 }
 
 /**
  * CB Templates Get Link
- * 
+ *
  * Returns a formatted anchor tag.
- * 
- * @param array $args An array of options. { 
+ *
+ * @param array $args An array of options. {
  *   @type array $classes An array of classes to add to the element.
  *   @type string $href The href for the element. Default '#'.
  *   @type string $id The id for the element.
  *   @type string $content The text content of the element.
  *   @type array $custom_attr An array of custom data attributes for the element.
  * }
- * 
+ *
  * @return string The formatted anchor markup.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_get_link($args = array()) {
-	
+
 	$r = wp_parse_args( $args, array(
 		'classes' => array(),
 		'href' => '',
@@ -193,7 +206,7 @@ function cb_templates_get_link($args = array()) {
 		'content' => '',
 		'custom_attr' => array(),
 	));
-	
+
 	$id = '';
 	$classes = '';
 	$custom_attrs = '';
@@ -201,7 +214,7 @@ function cb_templates_get_link($args = array()) {
 	$content = trim( $r['content'] );
 	$url = ! empty($r['href']) ? esc_url( $r['href'] ) : '#';
 	$href = ' href ="' . $url . '"';
-	
+
 	$r['classes'] = array_merge( $r['classes'], $default_classes );
 
 	if ( !empty( $r['id'] ) ) {
@@ -217,24 +230,27 @@ function cb_templates_get_link($args = array()) {
 			$custom_attrs .= ' data-' . esc_attr($key) . '="' . esc_attr($val) . '"';
 		}
 	}
-	
+
 	return "<a{$href}{$id}{$classes}{$custom_attrs}>{$content}</a>";
-	
+
 }
 
 /**
  * CB AJAX Table
- * 
+ *
  * Returns a table for the specified component. Typically
  * used for displaying items from the database that are
  * fetched via AJAX. Optionally, a pagination bar can be
  * displayed above and below the table.
- * 
+ *
  * @param array $args {
  *     @var string $component The component to display the table for.
  *     @var bool $paginated Whether or not to display a pagination bar.
  * }
  * @return string|void The HTML for the table or nothing if the component is empty.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
  * @since 2.3.0
  */
 function cb_templates_ajax_table( $component = '', $paginated = true ) {
@@ -265,14 +281,17 @@ function cb_templates_ajax_table( $component = '', $paginated = true ) {
 
 /**
  * CB Get Pagination
- * 
+ *
  * Returns a pagination bar for the specified component.
  * Typically used when displaying items from the database
  * that are fetched via AJAX.
- * 
+ *
  * @param string $component The component to display the pagination bar for.
- * @return string|void The HTML for the pagination bar or nothing 
+ * @return string|void The HTML for the pagination bar or nothing
  * if the component is empty.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
  * @since 2.3.0
  */
 function cb_templates_get_pagination( $component = '' ) {
@@ -288,7 +307,7 @@ function cb_templates_get_pagination( $component = '' ) {
 		'next' => '›',
 		'last' => '»'
 	);
-	
+
 	$with_dashes = str_replace( '_', '-', $component );
 
 	foreach ( $button_args as $placement => $content ) {
@@ -311,15 +330,17 @@ function cb_templates_get_pagination( $component = '' ) {
 
 /**
  * CB Templates Format Heading
- * 
+ *
  * Format the markup for a heading element.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
  * @param string $content The content for the heading element. Default empty.
  * @param int $level The level for the heading element. Default 4.
- * 
+ *
  * @return string the formatted heading.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_format_heading( $content = '', $level = 4 ) {
 	return sprintf( '<h%1$s class="cb-heading">%2$s</h%1$s>', $level, $content );
@@ -327,13 +348,15 @@ function cb_templates_format_heading( $content = '', $level = 4 ) {
 
 /**
  * CB Templates Heading
- * 
+ *
  * Output the markup for a heading element.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
  * @param string $content The content for the heading element. Default empty.
  * @param int $level The level for the heading element. Default 4.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_heading( $content = '', $level = 4 ) {
 	echo cb_templates_format_heading( $content, $level );
@@ -341,23 +364,25 @@ function cb_templates_heading( $content = '', $level = 4 ) {
 
 /**
  * CB Templates Get Nav Items
- * 
+ *
  * Returns a list of dynamically populated nav items as a string.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
  * @param string $component The component whose nav we need to make.
- * @param array $items A 2D array of items to put into the nav. { 
+ * @param array $items A 2D array of items to put into the nav. {
  *   @type array $label The label that will be used in the markup
- *     acts as a key for the nav item options { 
+ *     acts as a key for the nav item options {
  *       @type bool $active Adds an "active" class onto the list item if true.
  *       @type array $custom_attr An optional array of key => value pairs.
  *       @type string $href An href for the anchor element that will go inside
  *         the list item.
  *   }
  * }
- * 
+ *
  * @return string The markup of all the collective nav items.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_get_nav_items( $component = '', $items = array() ) {
 
@@ -391,30 +416,32 @@ function cb_templates_get_nav_items( $component = '', $items = array() ) {
 
 /**
  * CB Templates Get Nav
- * 
+ *
  * Returns a dynamically populated nav as a string.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
  * @param string $component The component whose nav we need to make.
- * @param array $items A 2D array of items to put into the nav. { 
+ * @param array $items A 2D array of items to put into the nav. {
  *   @type array $label The label that will be used in the markup
- *     acts as a key for the nav item options { 
+ *     acts as a key for the nav item options {
  *       @type bool $active Adds an "active" class onto the list item if true.
  *       @type array $custom_attr An optional array of key => value pairs.
  *       @type string $href An href for the anchor element that will go inside
  *         the list item.
  *   }
  * }
- * 
+ *
  * @return string The nav markup.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_get_nav( $component = '', $items = array() ) {
 
 	if ( empty( $component ) || empty( $items ) ) {
 		return;
 	}
-	
+
 	$with_dashes = str_replace( '_', '-', $component );
 
 	return cb_templates_container(array(

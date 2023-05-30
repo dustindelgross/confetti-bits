@@ -1,36 +1,42 @@
 <?php
-/**
- * Confetti Bits Form Components
- * 
- * These functions are going to help us easily create new form markup for the platform.
- * 
- * @since Confetti Bits 2.1.0
- * 
- */
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Confetti Bits Transactions Text Input
- * 
+ * CB Templates Forms
+ *
+ * These functions are going to help us easily create new form markup for the platform.
+ *
+ * @TODO: Clean this up and start deprecating some stuff.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.1.0
+ */
+
+/**
+ * CB Format Text Input
+ *
  * Use this to easily create different a text input.
- * 
- * 
- * @param array $args Input args listed below. { 
- * 
- * 
+ *
+ * @param array $args Input args listed below. {
+ *
+ *
  * @type string name		The form input and label name
  * @type string label		The label for the input
  * @type string placeholder	The placeholder for the input
  * @type string value		The default value of the input
- * 
+ *
  * @type bool	$hidden 			Hides the element if true. Default false.
  * @type bool	$disabled			Disables the element if true. Default false.
  * @type bool	$textarea			Changes markup to instead be a textarea input.
  * @type arr	$container_classes	Provides the option to add container classes.
- * 
+ *
  * }
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.1.0
  */
 function cb_format_text_input( $args = array() ) {
 
@@ -56,15 +62,15 @@ function cb_format_text_input( $args = array() ) {
 	$value			= !empty( $r['value'] ) ?? "value='{$r['value']}'";
 	$container_classes = implode( ' ', $r['container_classes'] );
 	$input_markup = "<label for='{$r['name']}'>{$r['label']}</label>
-	<{$input_tag[0]} 
-		{$input_type} 
-		name='{$r['name']}' 
-		id='{$r['name']}' 
-		class='cb-form-textbox' 
-		{$placeholder} 
-		{$value} 
-		{$disabled} 
-		{$hidden} 
+	<{$input_tag[0]}
+		{$input_type}
+		name='{$r['name']}'
+		id='{$r['name']}'
+		class='cb-form-textbox'
+		{$placeholder}
+		{$value}
+		{$disabled}
+		{$hidden}
 		{$input_tag[1]}>";
 
 	$markup = sprintf(
@@ -78,23 +84,26 @@ function cb_format_text_input( $args = array() ) {
 
 /**
  * CB Templates Get Text Input
- * 
+ *
  * Formats a text input that plays nice with our scripts.
- * 
- * @param array $args A list of arguments { 
- * 
+ *
+ * @param array $args A list of arguments {
+ *
  * @type string label		The label for the input
  * @type string name		The form input and label name
  * @type string placeholder	The placeholder for the input
  * @type string value		The default value of the input
- * 
+ *
  * @type bool	$disabled			Disables the element if true. Default false.
  * @type bool	$hidden 			Hides the element if true. Default false.
  * @type bool	$textarea			Changes markup to instead be a textarea input.
  * @type arr	$container_classes	Provides the option to add container classes.
- * 
+ *
  * }
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_get_text_input( $args = array() ) {
 
@@ -121,14 +130,14 @@ function cb_templates_get_text_input( $args = array() ) {
 	$container_classes = implode( ' ', $r['container_classes'] );
 	$label = "<label for='{$r['name']}'>{$r['label']}</label>";
 	$input_markup = "<{$input_tag[0]}
-		{$input_type} 
-		name='{$r['name']}' 
-		id='{$r['name']}' 
-		class='cb-form-textbox' 
-		{$placeholder} 
-		{$value} 
-		{$disabled} 
-		{$hidden} 
+		{$input_type}
+		name='{$r['name']}'
+		id='{$r['name']}'
+		class='cb-form-textbox'
+		{$placeholder}
+		{$value}
+		{$disabled}
+		{$hidden}
 		{$input_tag[1]}>";
 
 	return sprintf(
@@ -140,11 +149,15 @@ function cb_templates_get_text_input( $args = array() ) {
 
 /**
  * CB Text Input
- * 
- * Outputs the text input. 
- * 
+ *
+ * Outputs the text input.
+ *
  * @param 	array 	$args	The array of arguments that get passed to the getter.
  * 							It would be wise to check what all is needed.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_text_input( $args = array() ) {
 	echo cb_templates_get_text_input( $args );
@@ -153,20 +166,22 @@ function cb_text_input( $args = array() ) {
 
 /**
  * CB Templates Get Select Input
- * 
+ *
  * Creates a select input element.
- * 
+ *
  * @param array $args Accepts a bunch of optional arguments.
- * 
+ *
  * @type string $for The name and for label of the select element.
  * @type string $label The readable label of the element.
- * @type array $select_options The options housed inside the select element. 
+ * @type array $select_options The options housed inside the select element.
  * 		Accepts a 2D array of option names and their attributes, which get pushed to cb_select_options.
  * 		Required.
  * 		@see cb_select_options()
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
-
 function cb_templates_get_select_input( $args = array() ) {
 
 	$r = wp_parse_args(
@@ -183,7 +198,7 @@ function cb_templates_get_select_input( $args = array() ) {
 	$required = $r['required'] ? 'required' : "";
 
 	if ( ! empty($r['placeholder'] ) ) {
-		$r['select_options'] = array_merge( 
+		$r['select_options'] = array_merge(
 			[$r['placeholder'] => ['disabled' => true, 'selected' => true]],
 			$r['select_options']
 		);
@@ -196,8 +211,8 @@ function cb_templates_get_select_input( $args = array() ) {
 		<label for="%1$s">%2$s</label>
 		<select class="cb-form-textbox cb-form-selector"
 			name="%1$s" id="%1$s" %3$s>%4$s
-		</select></li></ul>', 
-		$r['name'], $r['label'], $required, $options 
+		</select></li></ul>',
+		$r['name'], $r['label'], $required, $options
 	);
 
 	return $markup;
@@ -205,19 +220,22 @@ function cb_templates_get_select_input( $args = array() ) {
 }
 
 /**
- * CB Select Input Options
- * 
+ * CB Templates Get Select Options
+ *
  * Takes care of some of the business for making select inputs.
- * 
+ *
  * @param array $args Arguments for the select input, listed below. Required.
  * 		@type string $name The name of the option. Required.
  * 		@type array $options The input values, and whether they are disabled or selected.
  * 			@type string	$value The value for the option. Required.
  * 			@type bool		$disabled Whether the option is disabled or not. Optional.
- * 			@type bool		$selected Whether the option is selected by default. Optional. 
- * 
+ * 			@type bool		$selected Whether the option is selected by default. Optional.
+ *
  * @see cb_select_input()
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_get_select_options( $args = array() ) {
 
@@ -244,14 +262,17 @@ function cb_templates_get_select_options( $args = array() ) {
 
 /**
  * Confetti Bits Select Input
- * 
- * Outputs the select input. 
- * 
+ *
+ * Outputs the select input.
+ *
  * @param 	array 	$args	The array of arguments that get passed to the getter.
  * 							It would be wise to check what all is needed.
- * 
+ *
  * @see cb_get_select_input()
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_select_input( $args = array() ) {
 	echo cb_templates_get_select_input( $args );
@@ -259,21 +280,23 @@ function cb_select_input( $args = array() ) {
 
 /**
  * CB Templates Get Number Input
- * 
+ *
  * Use this to create a number input element.
- * 
+ *
  * @param array $args An array of arguments for the input element. Details below. All settings are optional.
- * 
+ *
  * @type string 	$label The label used for the number input. Default 'Number' Optional.
- * @type string 	$for Used for the for attribute in the label, and the name attribute and id for the input. 
+ * @type string 	$for Used for the for attribute in the label, and the name attribute and id for the input.
  * 						Default 'cb_number' Optional.
  * @type int 		$value The default value of the input element. Optional.
  * @type int|string $placeholder The placeholder for the input element. Optional.
  * @type bool 		$disabled Whether the element is disabled. Default false. Optional.
  * @type bool 		$readonly Whether the element is readonly. Default false. Optional.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
-
 function cb_templates_get_number_input( $args = array() ) {
 
 	$r = wp_parse_args(
@@ -301,7 +324,7 @@ function cb_templates_get_number_input( $args = array() ) {
 	}
 
 	if ( $r['max'] === '' || ! is_int( $r['max'] ) ) {
-		$minmax .= ' max="' . $r['max'] . '"';	
+		$minmax .= ' max="' . $r['max'] . '"';
 	}
 
 	$required		= $r['required'] ? 'required' : "";
@@ -312,20 +335,23 @@ function cb_templates_get_number_input( $args = array() ) {
 		'<ul class="cb-form-page-section"><li class="cb-form-line">
 		<label for="%1$s">%2$s</label>
 		<input type="number" name="%1$s" id="%1$s" %3$s%4$s%5$s%6$s%7$s%8$s />
-		</li></ul>', 
-		$esc_name, $r['label'], $minmax, $placeholder, $value, $required, $disabled, $readonly 
+		</li></ul>',
+		$esc_name, $r['label'], $minmax, $placeholder, $value, $required, $disabled, $readonly
 	);
 
 }
 
 /**
  * CB Number Input
- * 
+ *
  * Outputs the number input.
- * 
+ *
  * @param 	array 	$args	The array of arguments that get passed to the getter.
  * 							It would be wise to check what all is needed.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_number_input( $args = array() ) {
 	echo cb_templates_get_number_input( $args );
@@ -333,14 +359,14 @@ function cb_number_input( $args = array() ) {
 
 /**
  * Confetti Bits Get File Input.
- * 
+ *
  * Creates a file input element that accepts the specified filetypes.
- * 
+ *
  * @param	array	$args An array of arguments for the input element. All optional.
- * 
+ *
  * 		@type	string	$label		The label for the input. Default 'Upload a File'.
  * 		@type	string	$class		Custom class attribute for file input.
- * 		@type	string	$name		The value used in the for attribute of the label 
+ * 		@type	string	$name		The value used in the for attribute of the label
  * 									and the name and id attributes of the input.
  * 									Default 'cb_file_upload'.
  * 		@type	bool	$required	Whether or not the field is required. Default false.
@@ -351,9 +377,11 @@ function cb_number_input( $args = array() ) {
  * 									Accepts either MIME type structures or filetype structures.
  * 									Should be compliant with your Wordpress configuration.
  * 									Default empty.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.1.0
  */
-
 function cb_format_file_input( $args = array() ) {
 
 	$r = wp_parse_args(
@@ -387,23 +415,23 @@ function cb_format_file_input( $args = array() ) {
 
 	$container_id = ! empty( $r['container_id'] ) ? "id='{$r['container_id']}'" : '';
 
-	$accepts	= !empty($r['accepts']) ? 'accept="' . implode( ', ', $r['accepts'] ) . '"' : '';	
+	$accepts	= !empty($r['accepts']) ? 'accept="' . implode( ', ', $r['accepts'] ) . '"' : '';
 
 	$markup = "<ul class='cb-form-page-section'>
 	<li class='cb-form-line'>
 	<div class='cb-file-input-container' {$container_id}>
 	<label for='{$r['name']}'>";
 
-	$markup .= "<input 
+	$markup .= "<input
 	placeholder=''
 	class='cb-file-input'
-	type='file' 
-	name='{$r['name']}' 
-	id='{$r['name']}' 
-	{$required} 
-	{$accepts} 
-	{$multiple} 
-	{$capture} 
+	type='file'
+	name='{$r['name']}'
+	id='{$r['name']}'
+	{$required}
+	{$accepts}
+	{$multiple}
+	{$capture}
 	{$disabled} />";
 
 	$markup .= "</label><span>{$r['label']}</span></div></li></ul>";
@@ -414,12 +442,15 @@ function cb_format_file_input( $args = array() ) {
 
 /**
  * Confetti Bits File Input
- * 
+ *
  * Outputs the file input.
- * 
+ *
  * @param 	array 	$args	The array of arguments that get passed to the getter.
  * 							It would be wise to check what all is needed.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.1.0
  */
 function cb_file_input( $args = array() ) {
 	echo cb_format_file_input( $args );
@@ -427,16 +458,19 @@ function cb_file_input( $args = array() ) {
 
 /**
  * CB Templates Get Submit Input.
- * 
+ *
  * Creates a submit input element that submits a form.
- * 
+ *
  * @param	array	$args An array of arguments for the input element. All optional.
- * 
+ *
  * 		@type	string	$id			The value used in the id attribute of the input.
  * 									Default empty.
  * 		@type	value	$value		Value for the submit input. Default "Submit".
  * 		@type	bool	$disabled	Whether or not the field is disabled. Default false.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_get_submit_input( $args = array() ) {
 	$r = wp_parse_args(
@@ -448,18 +482,18 @@ function cb_templates_get_submit_input( $args = array() ) {
 		)
 	);
 
-	$disabled	= $r['disabled'] ? 'disabled' : '';	
+	$disabled	= $r['disabled'] ? 'disabled' : '';
 	$id			= !empty( $r['name'] ) ? ' id="' . $r['name'] . '"' : '';
 	$name		= !empty( $r['name'] ) ? ' name="' . $r['name'] . '"' : '';
 
 	$markup = "<ul class='cb-form-page-section'>
 		<li class='cb-form-line'>
-		<input 
-		type='submit' 
+		<input
+		type='submit'
 		class='cb-submit'
 		value='{$r['value']}'
-		{$name} 
-		{$id} 
+		{$name}
+		{$id}
 		{$disabled} />
 		</li></ul>";
 
@@ -469,12 +503,15 @@ function cb_templates_get_submit_input( $args = array() ) {
 
 /**
  * CB Submit Input
- * 
+ *
  * Outputs the submit input markup.
- * 
+ *
  * @param 	array 	$args	The array of arguments that get passed to the getter.
  * 							It would be wise to check what all is needed.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.1.0
  */
 function cb_submit_input( $args = array() ) {
 	echo cb_templates_get_submit_input( $args );
@@ -482,15 +519,18 @@ function cb_submit_input( $args = array() ) {
 
 /**
  * CB Templates Get Hidden Input
- * 
+ *
  * Creates a hidden input that's either ready to receive a value or has a preset value.
- * 
+ *
  * Suggested utilities are getting things like user ids, logged-in usernames, emails, or empty inputs
  * that get calculated on the page via javascript. We probably haven't written things like that yet,
  * so you may have to set it up for your needs.
- * 
+ *
  * @param array $args An array of arguments for the input. Name, id, value, disabled, multiple.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_get_hidden_input( $args = array() ) {
 
@@ -510,7 +550,7 @@ function cb_templates_get_hidden_input( $args = array() ) {
 	}
 
 	$esc_name = esc_attr($r['name']);
-	$disabled	= $r['disabled'] ? ' disabled' : '';	
+	$disabled	= $r['disabled'] ? ' disabled' : '';
 	$multiple	= $r['multiple'] ? ' multiple' : '';
 	$classes = ' class="' . join( ' ', $r['classes'] ) . '"';
 	$name = ' name="' . $esc_name . '"';
@@ -523,33 +563,41 @@ function cb_templates_get_hidden_input( $args = array() ) {
 
 /**
  * CB Hidden Input
- * 
+ *
  * Outputs the hidden input markup.
- * 
+ *
  * @param 	array 	$args	The array of arguments that get passed to the getter.
  * 							It would be wise to check what all is needed.
- * 
- * */
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
+ */
 function cb_hidden_input( $args = array() ) {
 	echo cb_templates_get_hidden_input( $args );
 }
 
 /**
  * CB Templates Get Checkbox Input
- * 
+ *
  * Creates a checkbox input with a label and as many options as you want.
- * 
- * 
+ *
+ *
  * @param	array	$args	An array of options for each input you want to include, structured in
- * 							a 2D array of option names => array of option parameters.
- * 				
+ * 							a 2D array of option names => array of option parameters. {
+ *
  * 				@type	string	$name		The value used in the for, name, and id attributes.
  * 				@type	string	$label		The label for the option.
  * 				@type	string	$value		The value of the option.
  * 				@type	bool	$checked	Whether the field is checked or not.
  * 				@type	bool	$disabled	Whether the field is disabled or not.
- * 
- * */
+ *
+ * }
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.2.0
+ */
 function cb_templates_get_checkbox_input( array $args ) {
 
 	$r = wp_parse_args(
@@ -572,11 +620,11 @@ function cb_templates_get_checkbox_input( array $args ) {
 	if ( $r['other'] ) {
 		$markup = "
 	<div class='cb-checkbox-container'>
-		<input 
-		type='checkbox' 
+		<input
+		type='checkbox'
 		class='cb-checkbox'
 		{$value}
-		{$checked} 
+		{$checked}
 		{$disabled} />
 		<label for='{$r['name']}'>{$r['label']}</label>
 		<input type='text' name='{$r['name']}' class='cb-textbox' />
@@ -588,12 +636,12 @@ function cb_templates_get_checkbox_input( array $args ) {
 		$value		= !empty( $r['value'] ) ? "value='{$r['value']}'" : '';
 		$markup = "
 	<div class='cb-checkbox-container'>
-		<input 
-		type='checkbox' 
+		<input
+		type='checkbox'
 		class='cb-checkbox'
-		name='{$r['name']}' 
+		name='{$r['name']}'
 		{$value}
-		{$checked} 
+		{$checked}
 		{$disabled} />
 		<label for='{$r['name']}'>{$r['label']}</label></div>";
 
@@ -603,27 +651,32 @@ function cb_templates_get_checkbox_input( array $args ) {
 
 }
 
-/*
+/**
  * CB Checkbox Input
- * 
+ *
  * Outputs the checkbox input markup.
- * 
+ *
  * @param 	array 	$args	The array of arguments that get passed to the getter.
  * 							It would be wise to check what all is needed.
- * 
- * */
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.1.0
+ */
 function cb_checkbox_input( $args = array() ) {
 	echo cb_templates_get_checkbox_input( $args );
 }
 
 /**
- * Confetti Bits Get Dropzone Input
- * 
+ * CB Format Dropzone Input
+ *
  * Creates a hidden input and a container that can be used for drag-and-drop file uploads.
- * 
- * 
+ *
  * @param array $args An array of arguments for the input. Name, id, value, disabled, multiple, etc.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.1.0
  */
 function cb_format_dropzone_input( array $args ) {
 
@@ -639,24 +692,24 @@ function cb_format_dropzone_input( array $args ) {
 		)
 	);
 
-	$disabled		= $r['disabled'] ? 'disabled' : '';	
+	$disabled		= $r['disabled'] ? 'disabled' : '';
 	$multiple		= $r['multiple'] ? 'multiple' : '';
 	$id				= !empty( $r['id'] ) ? "id={$r['id']}" : '';
 	$container_id	= !empty( $r['container_id'] ) ? "id={$r['container_id']}" : '';
-	$file_types		= !empty( $r['filetypes'] ) && is_array( $r['filetypes'] ) ? 
-		"data-valid-types" . implode( ' ', $r['filetypes'] ) 
+	$file_types		= !empty( $r['filetypes'] ) && is_array( $r['filetypes'] ) ?
+		"data-valid-types" . implode( ' ', $r['filetypes'] )
 		: '';
-	$markup = 
+	$markup =
 		"<ul class='cb-form-page-section'>
 			<li class='cb-form-line'>
 				<div class='cb-file-input-container' {$container_id}>
-					<input 
-					type='hidden' 
-					class='cb-hidden' 
+					<input
+					type='hidden'
+					class='cb-hidden'
 					name='{$r['name']}'
 					value='{$r['value']}'
 					{$id}
-					{$disabled} 
+					{$disabled}
 					{$multiple} />
 				</div>
 			</li>
@@ -667,32 +720,38 @@ function cb_format_dropzone_input( array $args ) {
 }
 
 /**
- * Confetti Bits Dropzone Input
- * 
+ * CB Dropzone Input
+ *
  * Outputs the hidden input markup.
- * 
+ *
  * @param 	array 	$args	The array of arguments that get passed to the getter.
  * 							It would be wise to check what all is needed.
- * 
- * */
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.1.0
+ */
 function cb_dropzone_input( array $args ) {
 	echo cb_format_hidden_input( $args );
 }
 
 /**
- * Confetti Bits Toggle Switch
- * 
- * Outputs toggle switch markup.
- * 
- * @param	array	$args	An array of options for each input you want to include, 
+ * CB Templates Get Toggle Switch
+ *
+ * Gets toggle switch markup.
+ *
+ * @param	array	$args	An array of options for each input you want to include,
  * 							structured in a 2D array of options.
- * 				
+ *
  * 		@type	string	$name		The value used in the for, name, and id attributes.
  * 		@type	string	$label		The label for the option.
  * 		@type	string	$value		The value of the option.
  * 		@type	bool	$checked	Whether the field is checked or not.
  * 		@type	bool	$disabled	Whether the field is disabled or not.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.2.0
  */
 function cb_templates_get_toggle_switch( array $args ) {
 
@@ -711,13 +770,13 @@ function cb_templates_get_toggle_switch( array $args ) {
 	$checked	= $r['checked'] ? 'checked' : '';
 
 	$markup = "<div class='cb-toggle-switch-container'>
-				<input 
-					type='checkbox' 
-					class='cb-toggle-switch' 
+				<input
+					type='checkbox'
+					class='cb-toggle-switch'
 					name='{$r['name']}'
-					id='{$r['name']}' 
-					value='{$r['value']}' 
-					{$disabled} 
+					id='{$r['name']}'
+					value='{$r['value']}'
+					{$disabled}
 					{$checked} />
 				<label for='{$r['name']}'>{$r['label']}</label>
 			</div>";
@@ -726,19 +785,22 @@ function cb_templates_get_toggle_switch( array $args ) {
 }
 
 /**
- * Confetti Bits Toggle Switch
- * 
+ * CB Toggle Switch
+ *
  * Outputs toggle switch markup.
- * 
- * @param	array	$args	An array of options for each input you want to include, 
+ *
+ * @param	array	$args	An array of options for each input you want to include,
  * 							structured in a 2D array of options.
- * 				
+ *
  * 		@type	string	$name		The value used in the for, name, and id attributes.
  * 		@type	string	$label		The label for the option.
  * 		@type	string	$value		The value of the option.
  * 		@type	bool	$checked	Whether the field is checked or not.
  * 		@type	bool	$disabled	Whether the field is disabled or not.
- * 
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.2.0
  */
 function cb_toggle_switch( array $args ) {
 	echo cb_templates_get_toggle_switch($args);
@@ -746,17 +808,19 @@ function cb_toggle_switch( array $args ) {
 
 /**
  * CB Templates Get Form
- * 
+ *
  * Gets the markup for a form element.
- * 
- * @since Confetti_Bits 2.3.0
- * 
+ *
  * @return string The formatted markup.
+ *
+ * @package ConfettiBits
+ * @subpackage Templates
+ * @since 2.3.0
  */
 function cb_templates_get_form( $args = array() ) {
 
 	$cb = Confetti_Bits();
-	$r = wp_parse_args( 
+	$r = wp_parse_args(
 		$args, [
 			'name' => '',
 			'method' => '',
@@ -768,7 +832,7 @@ function cb_templates_get_form( $args = array() ) {
 		]
 	);
 
-	$valid_methods = ['GET', 'PUT', 'POST', 'DELETE'];
+	$valid_methods = ['GET', 'PUT', 'PATCH', 'POST', 'DELETE'];
 	$method = strtoupper($r['method']);
 
 	if ( empty($r['name']) || empty($r['method'] ) ) {

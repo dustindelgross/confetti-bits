@@ -1,13 +1,16 @@
 <?php
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
+
 /**
- * Confetti Bits AJAX Component.
+ * CB AJAX Component
  *
  * A component that helps organize our AJAX endpoints.
  *
- * @since Confetti Bits 2.3.0
+ * @package ConfettiBits
+ * @subpackage AJAX
+ * @since 2.3.0
  */
-defined( 'ABSPATH' ) || exit;
-
 class CB_Ajax_Component extends CB_Component {
 
 
@@ -29,7 +32,7 @@ class CB_Ajax_Component extends CB_Component {
 			'participation',
 			'functions',
 		);
-		
+
 		parent::includes($includes);
 
 	}
@@ -52,7 +55,7 @@ class CB_Ajax_Component extends CB_Component {
 				'search_string'         => __( 'Search Transactions', 'confetti-bits' ),
 			)
 		);
-		
+
 		$cb->loaded_components[ $this->slug ] = $this->id;
 
 	}

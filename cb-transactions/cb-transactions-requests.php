@@ -1,17 +1,21 @@
-<?php 
-
+<?php
+// Exit if accessed directly
 defined('ABSPATH') || exit;
 
-/*/ 
- * In the future will set this via admin panel settings, should always be lauren though
- * this is only for the transactions table and the in-app notification
- * NOT the email notification. 
- * it's for reporting in the transactions log and registering an in-platform notification
-/*/
-
+/**
+ * CB Requests
+ *
+ * In the future we ~~will set this via admin panel settings~~ (get
+ * rid of this completely). This is for processing when a user
+ * cashes in their Confetti Bits.
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.1.0
+ */
 function cb_requests() {
 
-	if (! cb_is_confetti_bits_component() || 
+	if (! cb_is_confetti_bits_component() ||
 		! isset( $_POST['cb_send_bits_request'] ) ) {
 		return false;
 	}
@@ -20,7 +24,7 @@ function cb_requests() {
 	$feedback    = '';
 	$success     = false;
 	$user_id = get_current_user_id();
-	
+
 
 	if ( empty( $_POST['cb_request_option'] ) || empty( $_POST['cb_request_amount'] ) ) {
 
@@ -28,10 +32,10 @@ function cb_requests() {
 		$feedback = __('The request was not sent. Please select a request option.', 'confetti-bits');
 
 	}
-	
+
 	$amount = intval( $_POST['cb_request_amount'] );
 	$cb = Confetti_Bits();
-	
+
 	if ( abs( $amount ) > cb_transactions_get_request_balance( $user_id ) ) {
 
 		$success     = false;
@@ -40,7 +44,7 @@ function cb_requests() {
 	} else {
 
 		$member_transactions = $cb->page;
-		
+
 		$subtract = cb_send_request(
 			array(
 				'item_id'			=> $user_id,

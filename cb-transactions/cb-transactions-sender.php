@@ -3,54 +3,57 @@ defined('ABSPATH') || exit;
 
 /**
  * CB Transactions Send Bits
- * 
- * Manages sending bits between users.
- * 
- * @since Confetti_Bits 1.0.0
- * 
+ *
+ * Manages sending bits between users... I kinda want to
+ * get rid of this tho.
+ *
  * @param array $args An array of arguments that
- * get merged into a set of default values. { 
- * 
- *   @var int $item_id The item ID associated with 
- *     the transaction. Used with BuddyBoss's 
+ * get merged into a set of default values. {
+ *
+ *   @var int $item_id The item ID associated with
+ *     the transaction. Used with BuddyBoss's
  *     Notifications API to help format some
- *     dynamic information in the notifications. 
+ *     dynamic information in the notifications.
  *     We use the sender_id for this.
- * 
+ *
  *   @var int $secondary_item_id The secondary
  *     item ID associated with the transaction. Used with
  *     BuddyBoss's Notifications API to help format some
- *     dynamic information in the notifications. 
+ *     dynamic information in the notifications.
  *     We use the recipient_id for this.
- * 
- *   @var int $sender_id The ID of the user 
+ *
+ *   @var int $sender_id The ID of the user
  *     sending the bits.
- * 
+ *
  *   @var int $recipient_id The ID of the user
  *     recieving the bits.
- * 
+ *
  *   @var datetime $date_sent The date and
  *     time of the transaction.
- * 
- *   @var string $log_entry A note that usually 
+ *
+ *   @var string $log_entry A note that usually
  *     references the purpose for the transaction.
- * 
- *   @TODO: Make log entries optional?
- * 
- *   @var string $component_name The name 
+ *
+ *   @TODO: Make log entries optional? Oof.
+ *
+ *   @var string $component_name The name
  *     associated with the component that is sending
  *     the bits. Used with BuddyBoss's Notifications
- *     API. This will almost always just be 
+ *     API. This will almost always just be
  *     'confetti_bits'.
- * 
+ *
  *   @var string $component_action The action
  *     associated with the transaction. We use this
  *     to differentiate transaction types to easily
  *     categorize them and run calculations. It
  *     is also used with BuddyBoss's Notifications
- *     API to send certain notifications that are 
+ *     API to send certain notifications that are
  *     associated with certain actions.
  * }
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 1.0.0
  */
 function cb_send_bits($args = '') {
 
@@ -63,7 +66,7 @@ function cb_send_bits($args = '') {
 		'log_entry'			=> '',
 		'component_name'    => '',
 		'component_action'  => '',
-		'date_sent'     	=> bp_core_current_time( false ),
+		'date_sent'     	=> cb_core_current_date(),
 		'amount'			=> 0,
 		'error_type'		=> 'bool',
 	));
@@ -186,54 +189,56 @@ function cb_send_bits($args = '') {
 
 /**
  * CB Transactions Send Bits
- * 
- * Manages sending bits between users.
- * 
- * @since Confetti_Bits 1.0.0
- * 
+ *
+ * Manages sending bits between users. Yikes.
+ *
  * @param array $args An array of arguments that
- * get merged into a set of default values. { 
- * 
- *   @var int $item_id The item ID associated with 
- *     the transaction. Used with BuddyBoss's 
+ * get merged into a set of default values. {
+ *
+ *   @var int $item_id The item ID associated with
+ *     the transaction. Used with BuddyBoss's
  *     Notifications API to help format some
- *     dynamic information in the notifications. 
+ *     dynamic information in the notifications.
  *     We use the sender_id for this.
- * 
+ *
  *   @var int $secondary_item_id The secondary
  *     item ID associated with the transaction. Used with
  *     BuddyBoss's Notifications API to help format some
- *     dynamic information in the notifications. 
+ *     dynamic information in the notifications.
  *     We use the recipient_id for this.
- * 
- *   @var int $sender_id The ID of the user 
+ *
+ *   @var int $sender_id The ID of the user
  *     sending the bits.
- * 
+ *
  *   @var int $recipient_id The ID of the user
  *     recieving the bits.
- * 
+ *
  *   @var datetime $date_sent The date and
  *     time of the transaction.
- * 
- *   @var string $log_entry A note that usually 
+ *
+ *   @var string $log_entry A note that usually
  *     references the purpose for the transaction.
- * 
+ *
  *   @TODO: Make log entries optional?
- * 
- *   @var string $component_name The name 
+ *
+ *   @var string $component_name The name
  *     associated with the component that is sending
  *     the bits. Used with BuddyBoss's Notifications
- *     API. This will almost always just be 
+ *     API. This will almost always just be
  *     'confetti_bits'.
- * 
+ *
  *   @var string $component_action The action
  *     associated with the transaction. We use this
  *     to differentiate transaction types to easily
  *     categorize them and run calculations. It
  *     is also used with BuddyBoss's Notifications
- *     API to send certain notifications that are 
+ *     API to send certain notifications that are
  *     associated with certain actions.
  * }
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.3.0
  */
 function cb_transactions_send_bits($args = array()) {
 
@@ -369,16 +374,18 @@ function cb_transactions_send_bits($args = array()) {
 
 /**
  * CB Transactions Remove Bits
- * 
- * This is hooked into the delete_user action, so that 
+ *
+ * This is hooked into the delete_user action, so that
  * transactions get deleted whenever a user is.
- * 
+ *
  * @TODO: Still need to implement this... Yikes. Also.
- * why send negative bits, instead of deleting from 
+ * why send negative bits, instead of deleting from
  * the DB? This program doesn't need analytics based
  * on that type of stuff, just delete from the DB.
- * 
- * @since Confetti_Bits 2.3.0
+ *
+ * @package ConfettiBits
+ * @subpackage Transactions
+ * @since 2.3.0
  */
 function cb_transactions_remove_bits( $id, $reassign, $user ) {
 

@@ -1,4 +1,5 @@
 <?php 
+/*
 function cb_screen_view() {
 	
 	if ( cb_is_confetti_bits_component() ) {
@@ -8,3 +9,4 @@ function cb_screen_view() {
     }
 	
 }
+*/
