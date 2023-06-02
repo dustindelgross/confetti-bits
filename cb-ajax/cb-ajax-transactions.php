@@ -1,56 +1,62 @@
-<?php
+<?php 
 // Exit if accessed directly
 defined('ABSPATH') || exit;
 /**
  * CB AJAX Get Transactions
- *
+ * 
  * Gets transactions for a user based on the user_id passed in the $_GET array.
- *
+ * 
  * @return JSON {
  * 		'text': JSON (JSON encoded array of transactions, or error message),
  * 		'type': string (success or error)
  * }
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage AJAX
  * @since 2.3.0
  */
 function cb_ajax_get_transactions() {
 
-	if ( ! cb_is_get_request() || empty( $_GET['user_id'] ) ) {
+	if ( ! cb_is_get_request() ) {
 		return;
 	}
 
-	$feedback = array(
-		'text' => '',
-		'type' => 'error'
-	);
+	$transactions = new CB_Transactions_Transaction();
+	$feedback = ['type' => 'error', 'text' => ''];
+	$get_args = [];
 
-	$select = isset($_GET['total']) ? 'count(id) as total_count' : 'sender_id, recipient_id, amount, log_entry, date_sent';
+	if ( isset($_GET['count'] ) ) {
+		$get_args['select'] = 'COUNT(id) AS total_count';
+	} else {
+		$get_args = [
+			'select' => ! empty( $_GET['select'] ) ? trim( $_GET['select'] ) : '*',
+			'pagination' => [
+				'page' => empty( $_GET['page'] ) ? 1 : intval($_GET['page']),
+				'per_page' => empty( $_GET['per_page'] ) ? 10 : intval($_GET['per_page']),
+			],
+			'orderby' => ['column' => 'id','order' => 'DESC']
+		];
+	}
+	
+	if ( ! empty( $_GET['recipient_id'] ) ) {
+		$get_args['where']['recipient_id'] = intval( $_GET['recipient_id'] );
+	}
+	
+	if ( !empty( $_GET['sender_id'] ) ) {
+		$get_args['where']['sender_id'] = intval( $_GET['sender_id'] );
+	}
+	
+	if ( !empty( $_GET['or'] ) ) {
+		$get_args['where']['or'] = true;
+	}
+	
+	$get = $transactions->get_transactions($get_args);
 
-	$user_id = intval( $_GET['user_id'] );
-	$page = isset( $_GET['page'] ) ? intval( $_GET['page'] ) : 1;
-	$per_page = isset($_GET['per_page']) ? intval( $_GET['per_page'] ) : 10;
-	$transaction = new CB_Transactions_Transaction();
-	$paged_transactions = $transaction->get_transactions(array(
-		'select' => $select,
-		'where' => array(
-			'recipient_id' => $user_id,
-			'sender_id' => $user_id,
-			'or' => true
-		),
-		'orderby' => array('id', 'DESC'),
-		'pagination' => array(
-			'page' => $page,
-			'per_page' => $per_page
-		)
-	));
-
-	if ( $paged_transactions ) {
-		$feedback['text'] = $paged_transactions;
+	if ( $get ) {
+		$feedback['text'] = $get;
 		$feedback['type'] = 'success';
 	} else {
-		$feedback['text'] = json_encode("No transactions found");
+		$feedback['text'] = false;
 	}
 
 	echo json_encode( $feedback );
@@ -62,19 +68,19 @@ add_action( 'wp_ajax_cb_transactions_get_transactions', 'cb_ajax_get_transaction
 
 /**
  * CB AJAX New Transactions
- *
+ * 
  * AJAX handler for creating transactions.
- *
+ * 
  * All parameters are passed via POST request.
- *
+ * 
  * The following parameters are required:
- *
+ * 
  * - sender_id (int) - The ID of the user sending the bits.
  * - recipient_id (int) - The ID of the user receiving the bits.
  * - amount (int) - The amount of bits to send.
  * - log_entry (string) - The log entry to record for this transaction.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage AJAX
  * @since 2.3.0
  */
@@ -138,8 +144,8 @@ function cb_ajax_new_transactions() {
 		$amount = intval( $_POST['amount'] );
 	}
 
-	if ( ( abs( $amount ) > cb_transactions_get_transfer_balance( $recipient_id ) ) &&
-		( $amount < 0 )
+	if ( ( abs( $amount ) > cb_transactions_get_transfer_balance( $recipient_id ) ) && 
+		( $amount < 0 ) 
 	   ) {
 		http_response_code(403);
 		$feedback["text"] = "{$recipient_name} doesn't have enough Confetti Bits for that.";
@@ -242,19 +248,19 @@ function cb_ajax_new_transactions() {
 
 /**
  * CB AJAX Send Bits
- *
+ * 
  * AJAX handler for sending bits.
- *
+ * 
  * All parameters are passed via $_POST.
- *
+ * 
  * The following parameters are required:
- *
+ * 
  * - sender_id (int) - The ID of the user sending the bits.
  * - recipient_id (int) - The ID of the user receiving the bits.
  * - amount (int) - The amount of bits to send.
  * - log_entry (string) - The log entry to record for this transaction.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage AJAX
  * @since 2.1.1
  */
@@ -318,8 +324,8 @@ function cb_ajax_send_bits() {
 		$amount = intval( $_POST['amount'] );
 	}
 
-	if ( ( abs( $amount ) > cb_transactions_get_transfer_balance( $recipient_id ) ) &&
-		( $amount < 0 )
+	if ( ( abs( $amount ) > cb_transactions_get_transfer_balance( $recipient_id ) ) && 
+		( $amount < 0 ) 
 	   ) {
 		http_response_code(403);
 		$feedback["text"] = "{$recipient_name} doesn't have enough Confetti Bits for that.";

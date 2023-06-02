@@ -4,10 +4,10 @@ defined('ABSPATH') || exit;
 
 /**
  * CB Participation Event Type Filter
- *
+ * 
  * Outputs markup for a participation event type select input.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -38,10 +38,10 @@ function cb_participation_event_type_filter() {
 
 /**
  * CB Participation Nav
- *
+ * 
  * Outputs the participation nav.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -51,17 +51,17 @@ function cb_participation_nav() {
 
 /**
  * CB Participation Format Nav Data
- *
+ * 
  * Formats the nav data for the participation component.
- * We need a pretty complicated set of arguments for
+ * We need a pretty complicated set of arguments for 
  * cb_templates_get_nav() and cb_templates_get_nav_items()
  * and this helps us achieve that in a structured way.
- *
+ * 
  * @param array $items A collection of key => value pairs
- *
+ * 
  * @return array The list of formatted nav data.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -91,12 +91,12 @@ function cb_participation_format_nav_data( $component = '', $items = array() ) {
 
 /**
  * CB Participation Get Nav
- *
+ * 
  * Returns the nav for the participation filtering system.
- *
+ * 
  * @return string The nav markup.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -104,7 +104,7 @@ function cb_participation_get_nav() {
 
 	$items = cb_participation_format_nav_data(
 		'participation',
-		array(
+		array( 
 			'New' => 'new',
 			'Approved' => 'approved',
 			'Denied' => 'denied',
@@ -118,10 +118,10 @@ function cb_participation_get_nav() {
 
 /**
  * CB Participation Admin Nav
- *
+ * 
  * Outputs the participation admin nav.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -131,12 +131,12 @@ function cb_participation_admin_nav() {
 
 /**
  * CB Participation Admin Get Nav
- *
+ * 
  * Returns the nav for the participation admin filtering system.
- *
+ * 
  * @return string The nav markup.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -144,7 +144,7 @@ function cb_participation_admin_get_nav() {
 
 	$items = cb_participation_format_nav_data(
 		'participation_admin',
-		array(
+		array( 
 			'New' => 'new',
 			'Approved' => 'approved',
 			'Denied' => 'denied',

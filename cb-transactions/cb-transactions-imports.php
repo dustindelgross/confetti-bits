@@ -1,4 +1,4 @@
-<?php
+<?php 
 // Exit if accessed directly
 defined('ABSPATH') || exit;
 
@@ -7,8 +7,8 @@ defined('ABSPATH') || exit;
  *
  * This is going to allow an admin user to bulk import
  * transactions, birthdays, and anniversaries from CSV files.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */
@@ -18,8 +18,8 @@ defined('ABSPATH') || exit;
  *
  * This is going to allow an admin user to bulk import
  * Confetti Bits transactions from a CSV file.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */
@@ -158,8 +158,8 @@ function cb_import_bits($args = '')
  * 		Compile the feedback and shove it into a session token
  * 		Redirect
  * 		Get the messages, kick back and enjoy
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */
@@ -455,8 +455,8 @@ add_action('bp_actions', 'cb_importer');
  *
  * This is going to allow an admin user to bulk import
  * birthdays and anniversaries from a CSV file.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */
@@ -502,8 +502,8 @@ function cb_import_bda($args = '')
  * 		Compile the feedback and shove it into a session token
  * 		Redirect
  * 		Get the messages, kick back and enjoy
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */

@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * A component that allows certain users to create and manage company events.
  *
- * @package ConfettiBits
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -31,7 +31,7 @@ class CB_Events_Component extends CB_Component {
 		$includes = array(
 			'functions',
 		);
-
+		
 		parent::includes($includes);
 
 		do_action( 'cb_' . $this->id . '_includes' );
@@ -58,7 +58,7 @@ class CB_Events_Component extends CB_Component {
 				'global_tables'         => $global_tables,
 			)
 		);
-
+		
 		$cb->loaded_components[ $this->slug ] = $this->id;
 
 	}

@@ -1,13 +1,13 @@
-<?php
+<?php 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
 /**
  * CB Setup Events
- *
+ * 
  * Loads our Events component to give us easy access to global values.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */

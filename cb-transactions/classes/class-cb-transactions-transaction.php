@@ -4,18 +4,18 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * CB Transactions Transaction
- *
+ * 
  * A component that allows users to send bits.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */
 class CB_Transactions_Transaction {
 
-	public static $last_inserted_id;
+	public static $last_inserted_id; 
 
-	public $id;
+	public $id; 
 
 	public $item_id;
 
@@ -140,6 +140,7 @@ class CB_Transactions_Transaction {
 			$this->component_name    = $fetched_transaction['component_name'];
 			$this->component_action  = $fetched_transaction['component_action'];
 			$this->amount			 = (int) $fetched_transaction['amount'];
+			$this->event_id			 = (int) $fetched_transaction['event_id'];
 		}
 	}
 
@@ -153,20 +154,18 @@ class CB_Transactions_Transaction {
 		global $wpdb;
 		$r = wp_parse_args( $args, array(
 			'select' => '*',
-			'where' => array(
-				'or' => false
-			),
-			'orderby' => array(),
-			'groupby' => array(),
-			'pagination' => array()
+			'where' => array(),
+			'orderby' => [],
+			'groupby' => '',
+			'pagination' => []
 		));
 
 		$select = "SELECT {$r['select']}";
 		$from_sql = "FROM {$wpdb->prefix}confetti_bits_transactions";
 		$where_sql = self::get_where_sql( $r['where'] );
 		$limit_sql = self::get_paged_sql($r['pagination']);
-		$orderby_sql = ! empty( $r['orderby'] ) ? "ORDER BY {$r['orderby'][0]} {$r['orderby'][1]}" : '';
-		$groupby_sql = ! empty( $r['groupby'] ) ? "GROUP BY {$r['groupby'][0]}" : '';
+		$orderby_sql = ! empty( $r['orderby'] ) ? self::get_orderby_sql($r['orderby']) : '';
+		$groupby_sql = ! empty( $r['groupby'] ) ? "GROUP BY {$r['groupby']}" : '';
 
 		$sql = "{$select} {$from_sql} {$where_sql} {$groupby_sql} {$orderby_sql} {$limit_sql}";
 
@@ -175,19 +174,58 @@ class CB_Transactions_Transaction {
 	}
 
 	/**
+	 * Get Orderby SQL
+	 * 
+	 * Checks against the columns available and order
+	 * arguments, then spits out usable SQL if everything
+	 * looks okay.
+	 * 
+	 * @return string The ORDER BY clause of an SQL query.
+	 */
+	public static function get_orderby_sql( $args = [] ) {
+
+		global $wpdb;
+		$sql = '';
+
+		if ( empty($args) ) {
+			return $sql;
+		}
+
+		$valid_sql = array_merge( self::$columns, ['DESC', 'ASC', 'calculated_total'] );
+
+		$r = wp_parse_args( $args, [
+			'column' => 'id',
+			'order' => 'DESC',
+		]);
+
+		if ( !in_array(strtolower($r['column']), $valid_sql ) ) {
+			return $sql;
+		}
+
+
+		if ( !in_array( strtoupper($r['order']), $valid_sql ) ) {
+			return $sql;
+		}
+
+		$sql = sprintf("ORDER BY %s %s", $r['column'], $r['order']);
+
+		return $sql;
+	}
+
+	/**
 	 * Assemble the LIMIT clause of a get() SQL statement.
 	 *
 	 * Used by CB_Participation_Participation::get_participation() to create its LIMIT clause.
 	 *
 	 *
-	 * @param	array	$args	Array consisting of
-	 * 							the page number and items per page. {
+	 * @param	array	$args	Array consisting of 
+	 * 							the page number and items per page. { 
 	 * 			@type	int		$page		page number
 	 * 			@type	int		$per_page	items to return
 	 * }
-	 *
+	 * 
 	 * @return string $retval LIMIT clause.
-	 *
+	 * 
 	 */
 	protected static function get_paged_sql( $args = array() ) {
 
@@ -376,7 +414,7 @@ class CB_Transactions_Transaction {
 	 *
 	 * Both positive and negative amounts are all based on the recipient_id,
 	 * whereas all negative amounts are based on sender_id.
-	 */
+
 
 	public function get_users_transfer_cycle( $user_id = 0 ) {
 
@@ -418,7 +456,9 @@ class CB_Transactions_Transaction {
 		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
 
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
+	}	 */
+
+	/*
 
 	public function get_users_earnings_from_previous_cycle( $user_id = 0 ) {
 
@@ -522,6 +562,8 @@ class CB_Transactions_Transaction {
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
 
+
+
 	public function get_users_earnings_from_current_cycle( $user_id = 0 ) {
 
 		if ( $user_id === 0 ) {
@@ -623,7 +665,7 @@ class CB_Transactions_Transaction {
 
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
-
+*/
 	/*
 	public function get_users_total_from_current_cycle( $user_id = 0 ) {
 
@@ -858,7 +900,7 @@ class CB_Transactions_Transaction {
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 
 	}
-	*/
+
 
 	public function get_activity_bits_transactions_for_today( $user_id = 0 ) {
 
@@ -931,6 +973,7 @@ class CB_Transactions_Transaction {
 
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
+*/
 
 	public function get_activity_posts_for_user( $user_id = 0 ) {
 
@@ -969,7 +1012,8 @@ class CB_Transactions_Transaction {
 
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
-/*
+
+	/*
 	public function get_send_bits_transactions_for_today( $user_id ) {
 
 		global $wpdb;
@@ -1153,24 +1197,14 @@ class CB_Transactions_Transaction {
 		return $sql;
 	}
 
-	protected static function get_where_sql( $args = array(), $select_sql = '', $from_sql = '', $join_sql = '', $meta_query_sql = '' ) {
+	protected static function get_where_sql( $args = [] ) {
 		global $wpdb;
 		$where_conditions = array();
-		$where            = '';
+		$where = '';
 
 		if ( ! empty( $args['id'] ) ) {
 			$id_in                  = implode( ',', wp_parse_id_list( $args['id'] ) );
 			$where_conditions['id'] = "id IN ({$id_in})";
-		}
-
-		if ( ! empty( $args['user_id'] ) ) {
-			$user_id_in                  = implode( ',', wp_parse_id_list( $args['user_id'] ) );
-			$where_conditions['user_id'] = "user_id IN ({$user_id_in})";
-		}
-
-		if ( ! empty( $args['sender_id'] ) ) {
-			$sender_id_in                  = implode( ',', wp_parse_id_list( $args['sender_id'] ) );
-			$where_conditions['sender_id'] = "sender_id IN ({$sender_id_in})";
 		}
 
 		if ( ! empty( $args['item_id'] ) ) {
@@ -1188,14 +1222,14 @@ class CB_Transactions_Transaction {
 			$where_conditions['secondary_item_id'] = "secondary_item_id IN ({$secondary_item_id_in})";
 		}
 
+		if ( ! empty( $args['sender_id'] ) ) {
+			$sender_id_in                  = implode( ',', wp_parse_id_list( $args['sender_id'] ) );
+			$where_conditions['sender_id'] = "sender_id IN ({$sender_id_in})";
+		}
+
 		if ( ! empty( $args['recipient_id'] ) ) {
 			$recipient_id_in                  = implode( ',', wp_parse_id_list( $args['recipient_id'] ) );
 			$where_conditions['recipient_id'] = "recipient_id IN ({$recipient_id_in})";
-		}
-
-		if ( ! empty( $args['identifier'] ) ) {
-			$identifier_in                  = implode( ',', wp_parse_id_list( $args['identifier'] ) );
-			$where_conditions['identifier'] = "identifier IN ({$identifier_in})";
 		}
 
 		if ( ! empty( $args['log_entry'] ) ) {
@@ -1223,34 +1257,6 @@ class CB_Transactions_Transaction {
 			}
 			$cn_in                              = implode( ',', $cn_clean );
 			$where_conditions['component_name'] = "component_name IN ({$cn_in})";
-		}
-
-		if ( ! empty( $args['component'] ) ) {
-			if ( ! is_array( $args['component'] ) ) {
-				$components = explode( ',', $args['component'] );
-			} else {
-				$components = $args['component'];
-			}
-			$c_clean = array();
-			foreach ( $components as $c ) {
-				$c_clean[] = $wpdb->prepare( '%s', $c );
-			}
-			$c_in                              = implode( ',', $c_clean );
-			$where_conditions['component'] = "component IN ({$c_in})";
-		}
-
-		if ( ! empty( $args['type'] ) ) {
-			if ( ! is_array( $args['type'] ) ) {
-				$types = explode( ',', $args['type'] );
-			} else {
-				$types = $args['type'];
-			}
-			$t_clean = array();
-			foreach ( $types as $t ) {
-				$t_clean[] = $wpdb->prepare( '%s', $t );
-			}
-			$t_in                              = implode( ',', $t_clean );
-			$where_conditions['type'] = "type IN ({$t_in})";
 		}
 
 		if ( ! empty( $args['component_action'] ) ) {
@@ -1305,11 +1311,6 @@ class CB_Transactions_Transaction {
 			$where_conditions['search_terms'] = $wpdb->prepare( '( component_name LIKE %s OR component_action LIKE %s OR log_entry LIKE %s )', $search_terms_like, $search_terms_like, $search_terms_like );
 		}
 
-		if ( ! empty( $args['exclude_terms'] ) ) {
-			$search_terms_not_like                = '%' . bp_esc_like( $args['exclude_terms'] ) . '%';
-			$where_conditions['exclude_terms'] = $wpdb->prepare( '( log_entry NOT LIKE %s )', $search_terms_not_like );
-		}
-
 		if ( ! empty( $args['date_query'] ) ) {
 			$where_conditions['date_query'] = self::get_date_query_sql( $args['date_query'] );
 		}
@@ -1321,19 +1322,12 @@ class CB_Transactions_Transaction {
 			$where_conditions['amount'] = "amount " . $args['amount_comparison'] . " " . $args['amount'];
 		}
 
-		$where_conditions = apply_filters( 'cb_transactions_get_where_conditions', $where_conditions, $args, $select_sql, $from_sql, $join_sql, $meta_query_sql );
+		$where_conditions = apply_filters( 'cb_transactions_get_where_conditions', $where_conditions, $args );
 
 		if ( ! empty( $where_conditions ) ) {
-			if ( isset( $args['or'] ) ) {
-				if ( $args['or'] === true ) {
-					$where = 'WHERE ' . implode( ' OR ', $where_conditions );
-				} else {
-					$where = 'WHERE ' . implode( ' AND ', $where_conditions );
-				}
-			} else {
-				$where = 'WHERE ' . implode( ' AND ', $where_conditions );
-			}
-
+			$where = !empty( $args['or'] ) ? 
+				'WHERE ' . implode( ' OR ', $where_conditions ) 
+				: 'WHERE ' . implode( ' AND ', $where_conditions );
 		}
 
 		return $where;

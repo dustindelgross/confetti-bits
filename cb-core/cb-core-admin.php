@@ -1,8 +1,8 @@
-<?php
+<?php 
 /**
  * CB Core Admin
- *
- * This file will register fields for admin settings, using
+ * 
+ * This file will register fields for admin settings, using 
  * some of the following actions associated with
  * BuddyBoss Platform:
  * - bp_admin_setting_general_register_fields
@@ -14,24 +14,24 @@
  * - bp_admin_setting_friends_register_fields
  * - bp_admin_setting_invites_register_fields
  * - bp_admin_setting_search_register_fields
- * We're going to have our own little box for these settings.
- *
- * @package ConfettiBits
+ * We're going to have our own little box for these settings. 
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.0.0
  */
 
 /**
  * CB Core Admin Settings General Register Fields
- *
- * Registers our settings fields in the general context of
+ * 
+ * Registers our settings fields in the general context of 
  * the BuddyBoss settings page environment.
  * Key part of this is the "bp_admin_setting_{ component }_register_fields"
  * `add_section` is a wordpress method to create the settings section. It requires a setting object.
  * `add_field` is a wordpress method that creates a field within the section we just made.
  * `bp_admin_setting_{ component }_register_fields` handles the rest.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.0.0
  */
@@ -84,8 +84,8 @@ function cb_core_admin_setting_general_register_fields( $setting ) {
 
 		foreach ( $current_components as $name => $labels ) {
 			$setting->add_checkbox_field(
-				"cb_components[{$name}]",
-				__( 'Enable ' . $labels['title'], 'confetti-bits' ),
+				"cb_components[{$name}]", 
+				__( 'Enable ' . $labels['title'], 'confetti-bits' ), 
 				array(
 					'input_name'		=> "cb_components[{$name}]",
 					'input_id'			=> "cb_components[{$name}]",
@@ -100,7 +100,7 @@ function cb_core_admin_setting_general_register_fields( $setting ) {
 add_action( 'bp_admin_setting_general_register_fields', 'cb_core_admin_setting_general_register_fields' );
 
 
-function cb_core_admin_components_settings() {
+function cb_core_admin_components_settings() { 
 	cb_core_admin_components_options();
 }
 
@@ -110,8 +110,8 @@ function cb_admin_reset_date_options() {
 	$page      = bp_core_do_network_admin() ? 'admin.php' : 'admin.php';
 
 ?>
-<input id="<?php echo esc_attr( "cb_reset_date" ) ?>"
-	   name="<?php echo esc_attr( "cb_reset_date" ) ?>"
+<input id="<?php echo esc_attr( "cb_reset_date" ) ?>" 
+	   name="<?php echo esc_attr( "cb_reset_date" ) ?>" 
 	   type="date"
 	   value="<?php echo date( 'Y-m-d', strtotime( $cb_reset_date ) ); ?>"
 	   />
@@ -224,7 +224,7 @@ function cb_admin_components_options() {
 		$disabled_attr = ( isset( $required_components[$name] ) ) ? 'disabled' : '';
 ?>
 
-<input id="<?php echo esc_attr( "cb_components[$name]" ) ?>"
+<input id="<?php echo esc_attr( "cb_components[$name]" ) ?>" 
 	   name="<?php echo esc_attr( "cb_components[$name]" ) ?>" type="checkbox"
 	   value="1"
 	   <?php echo $disabled_attr; ?>
@@ -251,7 +251,7 @@ function cb_admin_components_options() {
 function cb_create_executive() {
 
 	if ( get_option( 'cb_create_executives' ) != 'done' ) {
-		add_role(
+		add_role( 
 			'cb_executive',
 			'Confetti Bits Executive',
 			array(
@@ -284,7 +284,7 @@ add_action( 'init', 'cb_create_executive' );
 
 function cb_create_leadership() {
 	if ( get_option( 'cb_create_leaders' ) != 'done' ) {
-		add_role(
+		add_role( 
 			'cb_leadership',
 			'Confetti Bits Leadership',
 			array(
@@ -302,7 +302,7 @@ add_action( 'init', 'cb_create_leadership' );
 function cb_create_participation_admin() {
 
 	if ( get_option( 'cb_create_participation_admins' ) != 'done' ) {
-		add_role(
+		add_role( 
 			'cb_participation_admin',
 			'Confetti Bits Participation Admin',
 			array(
@@ -352,7 +352,7 @@ add_action( 'init', 'cb_create_participation_admin' );
 function cb_create_requests_fulfillment() {
 
 	if ( get_option( 'cb_create_requests_fulfillment' ) != 'complete' ) {
-		add_role(
+		add_role( 
 			'cb_requests_fulfillment',
 			'Confetti Bits Requests Fulfillment',
 			array(
@@ -544,7 +544,7 @@ function cb_core_get_roles( $type = '' ) {
 
 }
 
-/*
+/* 
  * Let Editors manage users, and run this only once.
  * Version: 1.0.0
  */
@@ -569,7 +569,7 @@ function editor_manage_users() {
 
 		update_option( 'give_editor_caps', 'done' );
 
-	}
+	} 
 }
 add_action( 'init', 'editor_manage_users' );
 

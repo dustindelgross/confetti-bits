@@ -7,7 +7,7 @@ defined('ABSPATH') || exit;
  *
  * Sets up our Core component, which loads all of our other components.
  *
- * @package ConfettiBits
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.0.0
  */

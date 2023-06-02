@@ -24,12 +24,12 @@ function cb_export_leadership_history( $user_id = 0, $export_type = '' ) {
 
 /**
  * CB Transactions Get History for User
- *
+ * 
  * Handles the logic behind getting the right data from the database.
- *
+ * 
  * @todo: Fix this tomfoolery. And type check your variables for the love of god
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */
@@ -101,12 +101,12 @@ function cb_transactions_get_history_for_user( $user_id = 0, $export_type = '' )
 
 /**
  * CB CSV Send Headers
- *
+ * 
  * Manually alters headers to allow for us to modify how a
  * csv reaches an end user, and to ensure safe passage for
  * our noble data wizards.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */
@@ -128,13 +128,13 @@ function cb_csv_send_headers( $file_name = '' ) {
 
 /**
  * CB Generate CSV
- *
+ * 
  * Responsible for generating csv files for users that request an export of their data.
- *
+ * 
  * @param array $user_transactions A 2D array of transactions
  * @param string $export_type The type of export the user requested.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */
@@ -178,8 +178,8 @@ function cb_generate_csv( $user_transactions = array(), $export_type = '' ) {
 
 	if ( $export_type !== 'self' && (cb_is_user_executive() || cb_is_user_site_admin()) ) {
 
-		$leaderboards = array(
-			'current_cycle_leaderboard',
+		$leaderboards = array( 
+			'current_cycle_leaderboard', 
 			'previous_cycle_leaderboard',
 			'current_cycle_totals',
 			'previous_cycle_totals'
@@ -227,11 +227,11 @@ function cb_generate_csv( $user_transactions = array(), $export_type = '' ) {
 
 /**
  * CB Export
- *
+ * 
  * Checks to see if export parameters are set on a POST request,
  * exports transactions from the database based on parameters.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Transactions
  * @since 1.0.0
  */

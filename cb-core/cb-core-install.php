@@ -1,7 +1,4 @@
 <?php 
-function cb_core_prepare_install() {
-
-}
 
 
 function cb_core_install_transactions() {
@@ -66,7 +63,6 @@ function cb_core_install_participation() {
 				component_name varchar(75) NOT NULL,
 				component_action varchar(75) NOT NULL,
 				status varchar(75) NOT NULL,
-				media_filepath varchar(150) NULL,
 				transaction_id bigint(20) NULL,
 				event_id bigint(20) NULL,
 				KEY item_id (item_id),
@@ -81,7 +77,6 @@ function cb_core_install_participation() {
 				KEY component_name (component_name),
 				KEY component_action (component_action),
 				KEY status (status),
-				KEY media_filepath (media_filepath),
 				KEY transaction_id (transaction_id),
 				CONSTRAINT fk_event_id FOREIGN KEY (event_id) REFERENCES {$wpdb->prefix}confetti_bits_events(id)
 			) {$charset_collate};";
@@ -179,32 +174,11 @@ function cb_core_install_download_logs() {
 
 function cb_core_install( $active_components = array() ) {
 
-	cb_core_prepare_install();
-
-	if ( empty( $active_components ) ) {
-		$active_components = bp_get_option( 'cb_active_components' );	
-	}
-
-	cb_core_install_events();
-
-	if ( ! empty ( $active_components['transactions'] ) ) {
-		cb_core_install_transactions();		
-	}
-
-	if ( ! empty ( $active_components['downloads'] ) ) {
-		cb_core_install_download_logs();
-	}
-
-
-
+	cb_core_install_transactions();
 	cb_core_install_participation();
-
+	cb_core_install_events();
 	do_action('cb_core_install');
-
-	// Needs to flush all cache when component activate/deactivate.
 	wp_cache_flush();
-
-	// Reset the permalink to fix the 404 on some pages.
 	flush_rewrite_rules();
 
 }

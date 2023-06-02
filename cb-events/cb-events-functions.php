@@ -7,8 +7,8 @@ defined('ABSPATH') || exit;
  *
  * These are going to be all of our CRUD functions for
  * the events component.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -17,8 +17,8 @@ defined('ABSPATH') || exit;
  * CB AJAX Create Event
  *
  * Creates a new event object and saves it to the database.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -110,8 +110,8 @@ add_action('wp_ajax_cb_events_new_event', 'cb_ajax_new_event');
  * CB AJAX Update Event
  *
  * Updates an existing event object and saves it to the database.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -174,8 +174,8 @@ add_action('wp_ajax_cb_events_update_event', 'cb_ajax_update_event');
  * CB AJAX Delete Event
  *
  * Deletes an existing event object from the database.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -214,8 +214,8 @@ add_action('wp_ajax_cb_events_delete_event', 'cb_ajax_delete_event');
  * CB AJAX Get Paged Events
  *
  * Retrieves a paginated list of events.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -316,8 +316,8 @@ add_action('wp_ajax_cb_events_get_event', 'cb_ajax_get_event');
  * CB AJAX Get Event Participants
  *
  * Retrieves a list of participants for a given event.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -363,8 +363,8 @@ add_action('wp_ajax_cb_events_get_event_participants', 'cb_ajax_get_event_partic
  * CB AJAX New Contest
  *
  * Saves contest placements for a given event.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -416,10 +416,10 @@ add_action('wp_ajax_cb_events_new_contest', 'cb_ajax_new_contest');
 
 /**
  * CB Events New Notifications
- *
+ * 
  * Sends out notifications when a new event is created.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -492,10 +492,10 @@ function cb_events_new_notifications($data = array())
 
 /**
  * CB Events Update Notifications
- *
+ * 
  * Sends out an update notification when an event is updated.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */

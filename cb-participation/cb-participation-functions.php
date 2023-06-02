@@ -3,135 +3,20 @@
 defined( 'ABSPATH' ) || exit;
 /**
  * CB Participation Functions
- *
- * These are going to be all of our CRUD functions for
+ * 
+ * These are going to be all of our CRUD functions for 
  * the participation component.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
-
-/**
- * CB AJAX Participation Bulk Update
- *
- * Processes bulk participation updates from an AJAX post request.
- *
- * @package ConfettiBits
- * @subpackage Participation
- * @since 2.2.0
- */
-function cb_ajax_update_participation() {
-	if ( !isset(
-		$_POST['admin_id'],
-		$_POST['participation_id'],
-		$_POST['status'],
-		$_POST['transaction_id']
-	) ) {
-		return;
-	}
-	$feedback = array(
-		'text' => "",
-		'type' => 'error'
-	);
-	$participation_id = intval($_POST['participation_id']);
-	$admin_id = intval($_POST['admin_id']);
-	$status = $_POST['status'] === 'approved' ? 'approved' : 'denied';
-	$participation = new CB_Participation_Participation($participation_id);
-	if ( $participation->event_type === 'other' ) {
-		$feedback['text'] = "Update unsuccessful. Cannot process 'Other' category event types using the Confetti Bits API.";
-		echo json_encode($feedback);
-		die();
-	}
-
-	$update_args = array(
-		'status' => $status,
-		'admin_id' => $admin_id,
-		'date_modified' => current_time( 'mysql' ),
-	);
-	$where_args = array(
-		'id' => $participation_id
-	);
-
-	$transaction_id		= intval( $_POST['transaction_id'] );
-	$admin_log_entry	= sanitize_text_field( $_POST['log_entry'] );
-	$amount_override	= intval( $_POST['amount_override'] );
-	$admin_log_entry	= isset( $_POST['admin_log_entry'] )
-		? sanitize_text_field( $_POST['admin_log_entry'] )
-		: "";
-	$amount = 0;
-	$log_entry = '';
-	$new_transaction = 0;
-
-	if ( $admin_id == $participation->applicant_id && ! cb_is_user_site_admin() ) {
-		$feedback['text'] = "Update unsuccessful. Cannot self-approve culture participation.";
-		echo json_encode($feedback);
-		die();
-	} else if ( $status === $participation->status ) {
-		$feedback['text'] = "Update unsuccessful. Status already marked as {$status}.";
-		echo json_encode($feedback);
-		die();
-	} else {
-
-		$amount = cb_participation_get_amount(
-			$transaction_id,
-			$participation->event_type,
-			$participation->status,
-			$status,
-			$amount_override
-		);
-
-		$log_entry = cb_participation_get_log_entry( $participation_id, $admin_log_entry );
-
-		// Create a transaction if we can.
-		if ( $amount !== 0 && $log_entry !== '' ) {
-
-			$modified = current_time('mysql');
-			$new_transaction = cb_participation_new_transaction(
-				array(
-					'transaction_id'	=> $transaction_id,
-					'participation_id'	=> $participation_id,
-					'admin_id'			=> $admin_id,
-					'modified'			=> $modified,
-					'status'			=> $status,
-					'amount'			=> $amount,
-					'log_entry'			=> $log_entry
-				)
-			);
-
-			if ( is_int( $new_transaction ) ) {
-
-				$success = true;
-				$feedback['text'] = "Update successful. Transaction ID: {$new_transaction}";
-				$feedback['type'] = "success";
-
-			} else {
-				$feedback['text'] = "Update failed. Processing error 3050. Error processing Confetti Bits transaction. {$new_transaction}";
-				echo json_encode($feedback);
-				die();
-			}
-		}
-
-		cb_participation_update_request_status(
-			$participation_id,
-			$admin_id,
-			$modified,
-			$status,
-			$new_transaction
-		);
-
-		echo json_encode($feedback);
-		die();
-	}
-
-}
-add_action( 'wp_ajax_cb_participation_update_participation', 'cb_ajax_update_participation' );
 
 /**
  * CB Participation Create Participation
- *
+ * 
  * Creates a new participation object and saves it to the database.
- *
+ * 
  * @param	array	$args	Associative array of arguments for saving.
  * 							All arguments are optional except for media_filepath. {
  * 		@type	int		$item_id			For BuddyBoss Platform's Notifications API.
@@ -139,22 +24,22 @@ add_action( 'wp_ajax_cb_participation_update_participation', 'cb_ajax_update_par
  * 											We'll use the applicant_id for this.
  * 											----------
  * 											@TODO: We need to make sure this is correct.
- *
+ * 
  * 		@type	int		$secondary_item_id	For BuddyBoss Platform's Notifications API.
  * 											Register's the receiver's profile avatar in the notification.
  * 											We'll use the admin_id for this.
  * 											----------
  * 											@TODO: We need to make sure this is correct.
- *
+ * 
  * 		@type	int		$applicant_id		The user_id associated with the participation entry.
  * 		@type	int		$admin_id			The user_id of the last admin that modified the entry.
  * 		@type	string	$date_created		A mysql datetime entry for when the participation was registered.
  * 		@type	string	$date_modified		A mysql datetime entry for when the participation was registered.
  * 		@type	string	$event_type			The type of event being registered.
- * 											We typically use these event_types: {
- * 												"dress_up",
- * 												"food",
- * 												"holiday",
+ * 											We typically use these event_types: {  
+ * 												"dress_up", 
+ * 												"food", 
+ * 												"holiday", 
  * 												"activity",
  * 												"awareness",
  * 												"meeting",
@@ -168,11 +53,11 @@ add_action( 'wp_ajax_cb_participation_update_participation', 'cb_ajax_update_par
  * 											Helps the API know which notification format to use.
  * 		@type	string	$status				The status of the participation entry.
  * 											Common statuses include "new", "approved", "denied", or "pending".
- * 		@type	array	$media_filepath		An indexed array of filepaths to the
+ * 		@type	array	$media_filepath		An indexed array of filepaths to the 
  * 											media files submitted along with the entry.
  * }
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -222,192 +107,19 @@ function cb_participation_new_participation( array $args ) {
 
 }
 
-/**
- * Confetti Bits Ajax New Participation
- *
- * We'll use this to process the new participation entries sent via ajax.
- *
- * @package ConfettiBits
- * @subpackage Participation
- * @since 2.2.0
- */
-function cb_ajax_new_participation() {
-
-	if ( ! cb_is_post_request() ) {
-		return;
-	}
-
-	// TODO: Put logic somewhere in here to check for event_id and user_id on transactions table
-
-	$feedback		= ['type' => 'error', 'text' => ''];
-	$applicant_id	= intval( $_POST['applicant_id'] );
-	$event_type		= sanitize_text_field( $_POST['event_type'] );
-	$event_note		= sanitize_text_field( $_POST['event_note'] );
-	$date_input		= sanitize_text_field( $_POST['event_date'] );
-	$date = new DateTimeImmutable($date_input);
-	$event_date		= $date->format( 'Y-m-d H:i:s' );
-//|| ( $event_type === 'other' && empty( $event_note ) )
-	if ( empty( $event_type ) ) {
-		$feedback['text'] = "No events selected. Please select or input the event type you are attempting to register.{$event_type} {$event_note}" . print_r($_POST);
-	} else if ( empty( $applicant_id ) )  {
-		$feedback['text'] = "Authentication error 1000. Failed to authenticate request.";
-	} else {
-
-		$send = cb_participation_new_participation(
-			array(
-				'item_id'			=> $applicant_id,
-				'secondary_item_id'	=> 0,
-				'applicant_id'		=> $applicant_id,
-				'admin_id'			=> 0,
-				'date_created'		=> current_time('mysql'),
-				'date_modified'		=> current_time('mysql'),
-				'event_type'		=> $event_type,
-				'event_date'		=> $event_date,
-				'event_note'		=> $event_note,
-				'component_name'	=> 'confetti_bits',
-				'component_action'	=> 'cb_participation_new',
-				'status'			=> 'new',
-				'transaction_id'	=> 0
-			)
-		);
-
-		if ( false === is_int( $send ) ) {
-			$feedback['text'] = "Request processing error 2000.";
-		} else {
-			$feedback['type'] = 'success';
-			$feedback['text'] = 'Your participation has been successfully submitted. You should receive a notification when it has been processed.';
-		}
-	}
-
-	echo json_encode( $feedback );
-
-	die();
-}
-add_action( 'wp_ajax_cb_participation_new_participation', 'cb_ajax_new_participation' );
 
 
-/**
- * CB Get Paged Participation
- *
- * @param	string	$status	Status type to return. Default 'all'.
- * @param	int		$page	Page number to return. Default 0.
- *
- * @return	array	Array of 6 paged participation entries.
- *
- * @package ConfettiBits
- * @subpackage Participation
- * @since 2.2.0
- */
-function cb_ajax_get_paged_participation() {
-
-	$participation = new CB_Participation_Participation();
-	$feedback = '';
-	$pagination = array(
-		'page' => ( empty( $_GET['page'] ) ) ? 0 : $_GET['page'],
-		'per_page' => ( empty( $_GET['per_page'] ) ) ? 6 : $_GET['per_page'],
-	);
-	$select =  isset( $_GET['count'] ) ? 'count(id) as total_count' : '*';
-	$status	= ( empty( $_GET['status'] ) ) ? 'all' : $_GET['status'];
-
-	$event_type = empty( $_GET['event_type'] ) ? '' : trim( $_GET['event_type'] );
-	$where = array(
-		'status'		=> $status,
-		'date_query'	=> array(
-			'column'	=> 'event_date',
-			'compare'	=> 'BETWEEN',
-			'before'	=> date( 'Y-m-d' , strtotime("last day of this month")),
-			'after'		=> date( 'Y-m-d', strtotime("first day of last month")),
-			'inclusive'	=> true
-		)
-	);
-
-	if ( ! empty( $_GET['applicant_id'] ) ) {
-		$where['applicant_id'] = intval( $_GET['applicant_id'] );
-	}
-
-	if ( !empty($event_type) ) {
-		$where['event_type'] = $event_type;
-	}
-
-	$paged_participation = $participation->get_participation(
-		array(
-			'select'		=> $select,
-			'where'			=> $where,
-			'orderby'		=> 'date_modified',
-			'pagination'	=> $pagination
-		)
-	);
-
-	$feedback .= ( ! empty( $paged_participation ) ) ? json_encode( $paged_participation ) : json_encode('Could not find any participation entries of specified type.');
-
-	echo $feedback;
-
-	die();
-
-}
-add_action( 'wp_ajax_cb_participation_get_paged_participation', 'cb_ajax_get_paged_participation' );
-
-/**
- * Confetti Bits Get Total Participation
- *
- * @return Total of all participation entries.
- *
- * @package ConfettiBits
- * @subpackage Participation
- * @since 2.2.0
- */
-function cb_ajax_get_total_participation() {
-
-	if ( ! cb_is_get_request() ) {
-		return;
-	}
-
-	$status = ( !empty( $_GET['status'] ) && is_string( $_GET['status'] ) ) ? $_GET['status'] : 'new';
-
-	$valid_statuses = array( 'new', 'all', 'approved', 'denied' );
-
-	$status = ( in_array( $status, $valid_statuses ) ) ? $status : 'new';
-	$participation = new CB_Participation_Participation();
-	$where = array(
-		'status'		=> $status,
-		'date_query'	=> array(
-			'column'	=> 'event_date',
-			'compare'	=> 'BETWEEN',
-			'before'	=> date( 'Y-m-d' , strtotime("last day of this month")),
-			'after'		=> date( 'Y-m-d', strtotime("first day of last month")),
-			'inclusive'	=> true
-		)
-	);
-
-	if ( ! empty( $_GET['applicant_id'] ) ) {
-		$where['applicant_id'] = intval( $_GET['applicant_id'] );
-	}
-
-	if ( !empty( $_GET['event_type'] ) ) {
-		$where['event_type'] = trim($_GET['event_type']);
-	}
 
 
-	$all_participation = $participation->get_participation(
-		array(
-			'select' => 'count(id) as total_count',
-			'where' => $where
-		)
-	);
 
-	echo json_encode( $all_participation );
 
-	die();
-
-}
-add_action( 'wp_ajax_cb_participation_get_total_participation', 'cb_ajax_get_total_participation' );
 
 /**
  * Confetti Bits Update Request Status
- *
+ * 
  * Update the request status for a participation entry.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -444,18 +156,18 @@ function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_m
 
 /**
  * CB Participation Update Handler
- *
+ * 
  * We're probably going to deprecate all over this bad boy as
  * we continue to transition everything to async.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.1.0
  */
 function cb_participation_update_handler() {
 
-	if ( ! cb_is_post_request() ||
-		! cb_is_confetti_bits_component() ||
+	if ( ! cb_is_post_request() || 
+		! cb_is_confetti_bits_component() || 
 		! cb_is_user_participation_admin() ||
 		! wp_verify_nonce( $_POST['cb_participation_admin_nonce'], 'cb_participation_admin_post' )
 	   ) {
@@ -466,9 +178,9 @@ function cb_participation_update_handler() {
 	$feedback = '';
 	$redirect_to = bp_loggedin_user_domain() . cb_get_transactions_slug() . '/#cb-participation-admin';
 
-	if ( ! isset(
-		$_POST['cb_participation_admin_id'],
-		$_POST['cb_participation_id'],
+	if ( ! isset( 
+		$_POST['cb_participation_admin_id'], 
+		$_POST['cb_participation_id'], 
 		$_POST['cb_participation_approval_status']
 	) ) {
 		$feedback = 'Update invalid. Please try again.';
@@ -491,11 +203,11 @@ function cb_participation_update_handler() {
 			$feedback = "Update unsuccessful. Status already marked as {$status}.";
 		} else {
 
-			$amount = cb_participation_get_amount(
-				$transaction_id,
-				$participation->event_type,
-				$participation->status,
-				$status,
+			$amount = cb_participation_get_amount( 
+				$transaction_id, 
+				$participation->event_type, 
+				$participation->status, 
+				$status, 
 				$amount_override
 			);
 
@@ -509,7 +221,7 @@ function cb_participation_update_handler() {
 			if ( $amount !== 0 && $log_entry !== '' ) {
 
 				$modified = current_time('mysql');
-				$new_transaction = cb_participation_new_transaction(
+				$new_transaction = cb_participation_new_transaction( 
 					array(
 						'transaction_id'	=> $transaction_id,
 						'participation_id'	=> $participation_id,
@@ -531,11 +243,11 @@ function cb_participation_update_handler() {
 				}
 			}
 
-			cb_participation_update_request_status(
-				$participation_id,
-				$admin_id,
-				$modified,
-				$status,
+			cb_participation_update_request_status( 
+				$participation_id, 
+				$admin_id, 
+				$modified, 
+				$status, 
 				$log_entry,
 				$new_transaction
 			);
@@ -558,25 +270,25 @@ add_action( 'bp_actions', 'cb_participation_update_handler' );
 
 /**
  * Confetti Bits Participation New Transaction
- *
+ * 
  * Add or subtract Confetti Bits based on participation approval status.
  * We're probably going to deprecate all over this bad boy as we continue
  * to transition everything to async.
- *
- * @param array $args An array of parameters for us to work with. {
+ * 
+ * @param array $args An array of parameters for us to work with. { 
  * 		@type int 		$transaction_id		A transaction ID for us to check for.
  * 		@type int 		$participation_id	A participation ID for us to check for.
  * 		@type int 		$admin_id			An admin ID for us to check for.
  * 		@type string	$status 			The status of the participation entry.
- * 		@type string	$modified 			The date of the last modification
+ * 		@type string	$modified 			The date of the last modification 
  * 												for the participation entry.
  * 		@type int		$amount				An amount to check for in the transaction.
  * }
- *
- *
+ * 
+ * 
  * @return int|string Transaction ID on success, error on failure.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.1.0
  */
@@ -598,9 +310,9 @@ function cb_participation_new_transaction( $args = array() ) {
 	$success = false;
 	$feedback = '';
 
-	if ( $r['participation_id'] === 0 ||
-		$r['modified'] === '' ||
-		$r['status'] === '' ||
+	if ( $r['participation_id'] === 0 || 
+		$r['modified'] === '' || 
+		$r['status'] === '' || 
 		$r['admin_id'] === 0 ||
 		$r['amount'] === 0
 	   ) {
@@ -651,17 +363,17 @@ function cb_participation_new_transaction( $args = array() ) {
 
 /**
  * CB Participation Get Amount
- *
+ * 
  * Attempt to extract a predetermined value from valid event types.
- *
+ * 
  * @param string $event_type	The event type to check against.
  * @param string $prestatus		The preexisting status to check against.
  * @param string $status		The status that we are changing into.
  * @param string $override		The amount override submitted in the form.
- *
+ * 
  * @return int $amount The amount we extracted.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.1.0
  */
@@ -713,15 +425,15 @@ function cb_participation_get_amount( $transaction_id, $event_type = '', $presta
 
 /**
  * CB Participation Get Log Entry
- *
+ * 
  * Attempt to extract a predetermined log entry from valid event types.
- *
+ * 
  * @param int		$participation_id	The ID for the participation entry we're checking.
  * @param string	$admin_log_entry	An optional admin log entry override.
- *
+ * 
  * @return string	$log_entry The log entry we extracted.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.1.0
  */
@@ -731,7 +443,7 @@ function cb_participation_get_log_entry( $participation_id = 0, $admin_log_entry
 		return;
 	}
 
-	$log_entry = '';
+	$log_entry = ''; 
 
 	// Prioritize the admin post
 	if ( $admin_log_entry !== '' ) {
@@ -750,7 +462,7 @@ function cb_participation_get_log_entry( $participation_id = 0, $admin_log_entry
 		case 'workshop':
 			$log_entry	= "Amanda's Workshop";
 			break;
-		case 'holiday':
+		case 'holiday':	
 			$log_entry	= "In-Office Holiday Event";
 			break;
 		case 'dress_up':
@@ -779,15 +491,15 @@ function cb_participation_get_log_entry( $participation_id = 0, $admin_log_entry
 
 /**
  * CB Get Transaction
- *
- * We need to check if a transaction exists for a given participation entry,
+ * 
+ * We need to check if a transaction exists for a given participation entry, 
  * and perform operations based on that result.
- *
+ * 
  * @param int $transaction_id The ID for the transaction we're looking for.
- *
+ * 
  * @return array|bool Transaction if the object exists, false if not or we get an error.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.1.0
  */
@@ -805,18 +517,18 @@ function cb_participation_get_transaction( $transaction_id = 0 ) {
 
 /**
  * CB Get Uploads Directory
- *
+ * 
  * NOTE: We're removing support for file uploads ASAP. No need for them.
- *
- * We're going to use wp_mkdir_p() to create our media directory for the
- * Confetti Bits Participation attachments.
- *
+ * 
+ * We're going to use wp_mkdir_p() to create our media directory for the 
+ * Confetti Bits Participation attachments. 
+ * 
  * @return bool Whether the directory was made, already exists, or failed to create.
- *
+ * 
  * @todo: We'll store the names in the wp_confetti_bits_participation table under media_filepath.
  * We'll create a unique name for each file upload. This will be in a separate function.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.1.0
  */
@@ -832,103 +544,6 @@ function cb_get_upload_dir() {
 
 }
 
-/**
- * CB AJAX Create File from Upload
- *
- * We're trying to create a new file from the participation form.
- * Once we verify that it's a legit file, we'll give it a new name
- * and stow it away in our uploads folder.
- *
- * @package ConfettiBits
- * @subpackage Participation
- * @since 2.1.0
- */
-function cb_ajax_create_file_from_upload() {
-
-	if ( !cb_is_user_confetti_bits() || ! cb_is_post_request() ) {
-		return;
-	}
-
-	status_header(200);
-	require_once( ABSPATH . 'wp-admin/includes/image.php' );
-	require_once( ABSPATH . 'wp-admin/includes/file.php' );
-	require_once( ABSPATH . 'wp-admin/includes/media.php' );
-
-	$success		= false;
-	$feedback		= '';
-	$filename		= '';
-	$upload_dir		= cb_get_upload_dir();
-	$files_loaded	= isset(
-		$_FILES['cb_participation_image_uploads'],
-		$_FILES['cb_participation_image_uploads']['tmp_name']
-	);
-
-	if ( ! $files_loaded ) {
-		$feedback = 'File Processing Error 2002: File not found.';
-	} else {
-
-		$file = $_FILES['cb_participation_image_uploads'];
-		$filename	= wp_unique_filename( $upload_dir, $file['name'] );
-		$new_file	= $upload_dir . "/{$filename}";
-		$success	= move_uploaded_file( $file['tmp_name'], $new_file );
-		$feedback	.= $success ? $filename : 'File processing error: 2001';
-
-	}
-
-	echo json_encode(
-		array(
-			'success'	=> $success,
-			'filename'	=> $filename,
-			'response'	=> $feedback
-		)
-	);
-
-	die();
-
-}
-add_action( 'wp_ajax_cb_upload_media', 'cb_ajax_create_file_from_upload' );
-
-/**
- * Confetti Bits Delete File from Upload
- *
- * Someday we'll implement this. We need a trashcan or DRP to prevent
- * over-filling our storage space with junk.
- *
- * @package ConfettiBits
- * @subpackage Participation
- * @since 2.1.0
- */
-function cb_delete_file_from_upload() {
-
-	if ( !cb_is_user_confetti_bits() || !cb_is_user_site_admin() || ! bp_is_post_request() ) {
-		return;
-	}
-
-	status_header(200);
-
-	$feedback = '';
-	$upload_dir = cb_get_upload_dir();
-
-	if ( isset( $_REQUEST['cb_participation_image_filename'] ) ) {
-
-		$filepath = trim( "{$upload_dir}/{$_REQUEST['cb_participation_image_filename']}" );
-		$file = file_exists( $filepath ) ? $filepath : false;
-		if ( $file ) {
-			$feedback = unlink( $file ) ? 'File removed.' : ' Process error 2003: Could not find or delete file.';
-		} else {
-			$feedback = 'Process error 2004: File does not exist.';
-		}
-
-		echo $feedback;
-
-	}
-
-	die();
-
-}
-add_action( 'wp_ajax_cb_delete_media', 'cb_delete_file_from_upload' );
-
-
 function cb_participation_new_notifications( $data = array() ) {
 
 	$r = wp_parse_args(
@@ -942,7 +557,7 @@ function cb_participation_new_notifications( $data = array() ) {
 		)
 	);
 
-	if (
+	if ( 
 		empty( $data ) ||
 		empty( $r['applicant_id'] ) ||
 		empty( $r['admin_id'] ) ||
@@ -997,11 +612,11 @@ add_action( 'cb_participation_after_save', 'cb_participation_new_notifications' 
 
 /**
  * CB Participation Update Notifications
- *
- * This will notify a user after a participation entry
+ * 
+ * This will notify a user after a participation entry 
  * has been updated to a new status.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -1019,7 +634,7 @@ function cb_participation_update_notifications( $data = array() ) {
 		)
 	);
 
-	if (
+	if ( 
 		empty( $data ) ||
 		empty( $r['applicant_id'] ) ||
 		empty( $r['admin_id'] ) ||
@@ -1042,7 +657,7 @@ function cb_participation_update_notifications( $data = array() ) {
 
 	switch ( $r['component_action'] ) {
 
-		case ( 'cb_participation_status_update' ) :
+		case ( 'cb_participation_status_update' ) : 
 
 			$item_id = $r['applicant_id'];
 			$secondary_item_id = $r['admin_id'];

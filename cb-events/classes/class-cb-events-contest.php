@@ -4,10 +4,10 @@ defined('ABSPATH') || exit;
 
 /**
  * CB Events Contest
- *
+ * 
  * Handles the creation and management of contests within the Events component.
  *
- * @package ConfettiBits
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */

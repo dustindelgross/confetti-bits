@@ -7,7 +7,7 @@
  * at company events to receive points (Confetti Bits), which they
  * can then either redeem for certain items or save up
  * for a chance to win a spot in a company-sponsored retreat.
- *
+ * 
  * Author:      Dustin Delgross
  * Author URI:  https://dustindelgross.com/
  * Version:     2.3.0
@@ -96,8 +96,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 * @param string $key Key to check the set status for.
 		 *
 		 * @return bool
-		 *
-		 * @package ConfettiBits
+		 * 
+		 * @package Confetti_Bits
 		 * @since 2.3.0
 		 */
 		public function __isset( $key ) {
@@ -109,8 +109,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 * @param string $key Key to return the value for.
 		 *
 		 * @return mixed
-		 *
-		 * @package ConfettiBits
+		 * 
+		 * @package Confetti_Bits
 		 * @since 2.3.0
 		 */
 		public function __get( $key ) {
@@ -121,8 +121,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 *
 		 * @param string $key   Key to set a value for.
 		 * @param mixed  $value Value to set.
-		 *
-		 * @package ConfettiBits
+		 * 
+		 * @package Confetti_Bits
 		 * @since 2.3.0
 		 */
 		public function __set( $key, $value ) {
@@ -132,8 +132,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 * Magic method for unsetting Confetti_Bits variables.
 		 *
 		 * @param string $key Key to unset a value for.
-		 *
-		 * @package ConfettiBits
+		 * 
+		 * @package Confetti_Bits
 		 * @since 2.3.0
 		 */
 		public function __unset( $key ) {
@@ -160,7 +160,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Define constants.
 		 *
-		 * @package ConfettiBits
+		 * @package Confetti_Bits
 		 * @since 1.0.0
 		 */
 		private function define_constants() {
@@ -209,7 +209,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Include required files.
 		 *
-		 * @package ConfettiBits
+		 * @package Confetti_Bits
 		 * @since 1.0.0
 		 */
 		public function includes() {
@@ -233,7 +233,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 *
 		 * Globals are accessible via Confetti_Bits()->{$global_name}.
 		 *
-		 * @package ConfettiBits
+		 * @package Confetti_Bits
 		 * @since 1.0.0
 		 */
 		private function setup_globals() {
@@ -249,7 +249,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * This method is passed to spl_autoload_register to load classes on demand.
 		 *
-		 * @package ConfettiBits
+		 * @package Confetti_Bits
 		 * @since 1.0.0
 		 */
 		public function load_components( $class ) {
@@ -263,10 +263,11 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 
 			$components = array (
 				'core',
+				'ajax',
 				'notifications',
 				'transactions',
 				'participation',
-				'ajax',
+				
 			);
 
 			$irregular_map = array('CB_Component' => 'core');
@@ -392,5 +393,5 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 	}
 
 	add_action( 'plugins_loaded', 'cb_plugin_init', 9 );
-
+	
 }

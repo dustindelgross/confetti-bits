@@ -4,10 +4,10 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * CB Participation Component
- *
+ * 
  * Lets us set some global values to use elsewhere.
  *
- * @package ConfettiBits
+ * @package Confetti_Bits
  * @subpackage Participation
  * @since 2.2.0
  */
@@ -32,7 +32,7 @@ class CB_Participation_Component extends CB_Component {
 			'functions',
 			'template',
 		);
-
+		
 		parent::includes($includes);
 
 	}
@@ -63,90 +63,15 @@ class CB_Participation_Component extends CB_Component {
 				'global_tables'         => $global_tables,
 			)
 		);
-
+		
 		$cb->loaded_components[ $this->slug ] = $this->id;
 
 	}
 
-	public function setup_nav( $main_nav = array(), $sub_nav = array() ) {
+	public function setup_nav( $main_nav = array(), $sub_nav = array() ) {}
 
-		if ( bp_displayed_user_domain() ) {
-			$user_domain = bp_displayed_user_domain();
-		} elseif ( bp_loggedin_user_domain() ) {
-			$user_domain = bp_loggedin_user_domain();
-		} else {
-			return;
-		}
+	public function setup_admin_bar( $wp_admin_nav = array() ) {}
 
-		$access             = bp_core_can_edit_settings();
-		$slug               = "confetti-bits";
-		$transactions_link = trailingslashit( $user_domain . $slug );
-
-		$nav_name = __( 'Confetti Bits', 'confetti-bits' );
-
-		$main_nav = array(
-			'name'                    => $nav_name,
-			'slug'                    => $slug,
-			'position'                => 30,
-			'show_for_displayed_user' => $access,
-			'screen_function'         => 'cb_screen_view',
-			'item_css_id'             => $this->id,
-		);
-
-		$sub_nav[] = array(
-			'name'				=> __( 'Confetti Bits', 'confetti-bits' ),
-			'slug'				=> 'participation',
-			'parent_url'		=> $transactions_link,
-			'parent_slug'		=> $slug,
-			'screen_function'	=> '',
-			'position'			=> 30,
-			'user_has_access'	=> $access,
-		);
-
-		parent::setup_nav( $main_nav, $sub_nav );
-
-	}
-
-	public function setup_admin_bar( $wp_admin_nav = array() ) {
-
-		if ( is_user_logged_in() ) {
-
-			$transactions_link = trailingslashit( bp_loggedin_user_domain() . CONFETTI_BITS_PARTICIPATION_SLUG );
-			$title  = __( 'Confetti Bits', 'buddyboss' );
-
-			$wp_admin_nav[] = array(
-				'parent' => buddypress()->my_account_menu_id,
-				'id'     => 'my-account-' . $this->id,
-				'title'  => $title,
-				'href'   => $transactions_link,
-			);
-
-		}
-
-		parent::setup_admin_bar( $wp_admin_nav );
-	}
-
-	public function setup_title() {
-
-		if ( cb_is_confetti_bits_component() ) {
-			$cb = Confetti_Bits();
-			$bp = buddypress();
-
-			if ( bp_is_my_profile() ) {
-				$bp->bp_options_title = __( 'Confetti Bits Participation', 'confetti-bits' );
-			} else {
-				$bp->bp_options_avatar = bp_core_fetch_avatar(
-					array(
-						'item_id' => bp_displayed_user_id(),
-						'type'    => 'thumb',
-						'alt'     => sprintf( __( 'Profile photo of %s', 'buddyboss' ), bp_get_displayed_user_fullname() ),
-					)
-				);
-				$bp->bp_options_title  = bp_get_displayed_user_fullname();
-			}
-		}
-
-		parent::setup_title();
-	}
+	public function setup_title() {}
 
 }

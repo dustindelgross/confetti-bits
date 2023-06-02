@@ -4,10 +4,10 @@ defined('ABSPATH') || exit;
 
 /**
  * CB Events Event
- *
+ * 
  * Handles the creation and management of events.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Events
  * @since 2.3.0
  */
@@ -18,67 +18,85 @@ class CB_Events_Event {
 	 *
 	 * @var int
 	 */
-	private $id;
+	public $id;
 
 	/**
 	 * The title of the event.
 	 *
 	 * @var string
 	 */
-	private $event_title;
+	public $event_title;
 
 	/**
 	 * The description of the event.
 	 *
 	 * @var string
 	 */
-	private $event_desc;
+	public $event_desc;
 
 	/**
 	 * The date and time that the event starts.
 	 *
 	 * @var datetime
 	 */
-	private $event_date_start;
-
+	public $event_date_start;
+	
 	/**
 	 * The date and time that the event ends.
 	 *
 	 * @var datetime
 	 */
-	private $event_date_end;
+	public $event_date_end;
 
 	/**
 	 * The amount that the user will receive for participating in the event.
 	 *
 	 * @var int
 	 */
-	private $participation_amount;
+	public $participation_amount;
 
 	/**
 	 * The ID of the user who created the event.
 	 *
 	 * @var int
 	 */
-	private $user_id;
+	public $user_id;
 
 	/**
 	 * The date the event was created.
 	 *
 	 * @var string
 	 */
-	private $date_created;
+	public $date_created;
 
 	/**
 	 * The date of the last time the entry was modified.
 	 *
 	 * @var string
 	 */
-	private $date_modified;
+	public $date_modified;
+	
+	/**
+	 * The columns available in the database. Used to help 
+	 * build our orderby clause.
+	 * 
+	 * @var array
+	 */
+	private $columns = [
+		'id', 
+		'event_title', 
+		'event_desc', 
+		'event_date_start', 
+		'event_date_end', 
+		'participation_amount', 
+		'user_id', 
+		'date_created', 
+		'date_modified'
+	];
 
 	/**
 	 * Constructor
-	 *
+	 * 
 	 * If an ID is supplied, populate information about that event.
 	 */
 	public function __construct($id = 0)
@@ -95,9 +113,9 @@ class CB_Events_Event {
 
 	/**
 	 * Populate
-	 *
+	 * 
 	 * Get information for specific event.
-	 * @uses Confetti_Bits_Events_Event::get_event()
+	 * @uses CB_Events_Event::get_event()
 	 */
 	public function populate($id = 0)
 	{
@@ -131,7 +149,7 @@ class CB_Events_Event {
 	 * @return int|WP_Error The ID of the event if successful, WP_Error otherwise.
 	 * @since 1.0.0
 	 * @access public
-	 * @uses Confetti_Bits_Events_Event::_insert()
+	 * @uses CB_Events_Event::_insert()
 	 */
 	public function save()
 	{
@@ -186,8 +204,7 @@ class CB_Events_Event {
 	protected static function _insert($data = array(), $data_format = array())
 	{
 		global $wpdb;
-		$cb = Confetti_Bits();
-		return $wpdb->insert($cb->events->table_name, $data, $data_format);
+		return $wpdb->insert(Confetti_Bits()->events->table_name, $data, $data_format);
 	}
 
 	/**
@@ -360,7 +377,7 @@ class CB_Events_Event {
 			$where_clauses['data']['event_date_start'] = $args['event_date_start'];
 			$where_clauses['format'][] = '%s';
 		}
-
+		
 		if (!empty($args['event_date_end'])) {
 			$where_clauses['data']['event_date_end'] = $args['event_date_end'];
 			$where_clauses['format'][] = '%s';
@@ -405,7 +422,7 @@ class CB_Events_Event {
 			array(
 				'select' => '*',
 				'where' => array(),
-				'orderby' => '',
+				'orderby' => [],
 				'pagination' => array(),
 				'group' => '',
 			)
@@ -413,15 +430,55 @@ class CB_Events_Event {
 
 		$select = (is_array($r['select'])) ? implode(', ', $r['select']) : $r['select'];
 		$select_sql = "SELECT {$select}";
-		$from_sql = "FROM {$cb->event->table_name} n ";
+		$from_sql = "FROM {$cb->events->table_name}";
 		$where_sql = self::get_where_sql($r['where'], $select_sql, $from_sql);
-		$orderby_sql = (!empty($r['orderby'])) ? "ORDER BY {$r['orderby']} DESC" : '';
+		$orderby_sql = (!empty($r['orderby'])) ? self::get_orderby_sql($r['orderby']) : '';
 		$group_sql = (!empty($r['group'])) ? "GROUP BY {$r['group']}" : '';
 		$pagination_sql = self::get_paged_sql($r['pagination']);
 
 		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$orderby_sql} {$pagination_sql}";
 
 		return $wpdb->get_results($sql, 'ARRAY_A');
+	}
+	
+	/**
+	 * Get Orderby SQL
+	 * 
+	 * Checks against the columns available and order
+	 * arguments, then spits out usable SQL if everything
+	 * looks okay.
+	 * 
+	 * @return string The ORDER BY clause of an SQL query.
+	 */
+	public static function get_orderby_sql( $orderby = [] ) {
+		
+		global $wpdb;
+		$sql = '';
+		
+		if ( empty($orderby) ) {
+			return $sql;
+		}
+		
+		$valid_sql = array_merge( $this->columns, ['DESC', 'ASC'] );
+		
+		$r = wp_parse_args( $orderby, [
+			'column' => 'id',
+			'order' => 'DESC',
+		]);
+		
+		if ( !in_array(strtolower($r['column']), $valid_sql ) ) {
+			return $sql;
+		}
+		
+		if ( !in_array( strtoupper($r['order']), $valid_sql ) ) {
+			return $sql;
+		}
+		
+		$sql = $wpdb->prepare(
+			"ORDER BY %s %s", [$r['column'], $r['order']]
+		);
+		
+		return $sql;
 	}
 
 	/**

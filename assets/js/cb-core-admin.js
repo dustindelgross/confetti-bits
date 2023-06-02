@@ -14,18 +14,47 @@ jQuery(document).ready(($) => {
 	const cbParticipationPageLast = $('.cb-participation-admin-pagination-last');
 	const cbParticipationPagePrev = $('.cb-participation-admin-pagination-previous');
 	const cbParticipationPageFirst = $('.cb-participation-admin-pagination-first');
-	const cbTransactionPageNext = $('.cb-transactions-pagination-next');
-	const cbTransactionPageLast = $('.cb-transactions-pagination-last');
-	const cbTransactionPagePrev = $('.cb-transactions-pagination-previous');
-	const cbTransactionPageFirst = $('.cb-transactions-pagination-first');
+	const cbTransactionPageNext = $('.cb-participation-admin-transactions-pagination-next');
+	const cbTransactionPageLast = $('.cb-participation-admin-transactions-pagination-last');
+	const cbTransactionPagePrev = $('.cb-participation-admin-transactions-pagination-previous');
+	const cbTransactionPageFirst = $('.cb-participation-admin-transactions-pagination-first');
 
 	const entryTable = $('#cb_participation_admin_table');
-	const entryTableHeaderRow = $('#cb-participation-admin-table tr')[0];
+	const entryTableHeaderRow = $('#cb_participation_admin_table tr')[0];
 	let currentPage = $('.cb-participation-admin-pagination-button.active').attr('data-cb-participation-admin-page');
 	let cbTotalEntries = 0;
 	let cbTotalTransactions = 0;
-	let transactionsTable = $('#cb-participation-admin-transaction-history-table');
-
+	let transactionsTable = $('#cb_participation_admin_transactions_table');
+	
+	/**
+	 * CB Get User Data
+	 *
+	 * Get user data from the BuddyBoss API
+	 *
+	 * @param {int} applicantId
+	 * @returns {object}
+	 * @async
+	 * @since 1.0.0
+	 *
+	 */
+	async function cbGetUserData(applicantId) {
+		let retval = {
+			username: '',
+			userDisplayName: ''
+		};
+		await $.get({
+			url: 'https://teamctg.com/wp-json/buddyboss/v1/members',
+			data: {
+				include: applicantId
+			}, success: function (text) {
+				retval = {
+					username: text[0].user_login,
+					userDisplayName: text[0].name
+				};
+			}, error: e => console.error(e)
+		});
+		return retval;
+	}
 
 	let formMessage = new function () {
 		this.element	= $('.cb-feedback-message');
@@ -77,7 +106,6 @@ jQuery(document).ready(($) => {
 		}
 
 	};
-
 	/**
 	 * CB Get Total Entries
 	 *
@@ -86,28 +114,38 @@ jQuery(document).ready(($) => {
 	 * @returns {int}
 	 *
 	 */
-	const cbGetTotalEntries = async (status = '', eventType = '') => {
+	const cbGetTotalEntries = async () => {
 
-		if ('string' !== typeof (status)) {
-			status = 'new';
+		let status = $('.cb-participation-admin-nav-item.active').attr('cb-participation-admin-status-type');
+		let eventType = $('.cb-form-selector[name=cb_participation_admin_event_type]').val();
+
+		let getData = {
+			count: true,
 		}
 
-		let retval = await $.get({
-			url: cb_core_admin.total,
-			data: {
-				status: status,
-				event_type: eventType
-			},
-			success: (x) => {
-				cbTotalEntries = parseInt(JSON.parse(x)[0].total_count);
+		if ('' !== status) {
+			getData.status = status;
+		}
+
+		if ( '' !== eventType ) {
+			getData.event_type = eventType;
+		}
+
+		let retval = await $.ajax({
+			method: "GET",
+			url: cb_core_admin.get_participation,
+			data: getData,
+			success: x => {
+				cbTotalEntries = parseInt(JSON.parse(x.text)[0].total_count);
 				return cbTotalEntries;
-			}
+			},
+			error: e => console.error(e)
 		});
 
 		return retval;
 
-	};
-
+	}
+	
 	/**
 	 * CB Get Total Transactions
 	 *
@@ -118,15 +156,22 @@ jQuery(document).ready(($) => {
 	 */
 	const cbGetTotalTransactions = async (userID) => {
 
+		let getData = {
+			
+			recipient_id: userID,
+			sender_id: userID,
+			or: true,
+			count: true,
+		};
+
 		let retval = await $.get({
-			url: cb_core_admin.total_transactions,
-			data: {
-				user_id: userID
-			},
+			url: cb_core_admin.get_transactions,
+			data: getData,
 			success: (x) => {
-				cbTotalTransactions = parseInt(JSON.parse(x)[0].total_count);
+				cbTotalTransactions = parseInt(x.text[0].total_count);
 				return cbTotalTransactions;
-			}
+			},
+			error: e => console.log(e)
 		});
 
 		return retval;
@@ -183,11 +228,11 @@ jQuery(document).ready(($) => {
 
 		for (k; (k <= (page + 2)) && (k <= last); k++) {
 			let paginationButton = $('<button>', {
-				class: `cb-transactions-pagination-button cb-transactions-pagination-numbered ${(k === page ? ' active' : '')}`,
-				'data-cb-transactions-page': k,
+				class: `cb-participation-admin-transactions-pagination-button cb-participation-admin-transactions-pagination-numbered ${(k === page ? ' active' : '')}`,
+				'data-cb-participation-admin-transactions-page': k,
 				text: k
 			});
-			$('.cb-transactions-pagination-next').before(paginationButton);
+			$('.cb-participation-admin-transactions-pagination-next').before(paginationButton);
 		}
 	}
 
@@ -229,7 +274,7 @@ jQuery(document).ready(($) => {
 
 		if (k <= (page + 2) && k <= last) {
 			$(currentButtons).each((n, el) => {
-				$(el).attr('data-cb-transactions-page', k);
+				$(el).attr('data-cb-participation-admin-transactions-page', k);
 				$(el).text(k);
 				if (k === page) {
 					$(el).addClass('active');
@@ -278,7 +323,7 @@ jQuery(document).ready(($) => {
 	 */
 	function cbSetupTransactionPaginationDigits(page = 1, last = 0) {
 
-		let currentButtons = $('.cb-transactions-pagination-numbered');
+		let currentButtons = $('.cb-participation-admin-transactions-pagination-numbered');
 
 		currentButtons.removeClass('active');
 
@@ -331,8 +376,8 @@ jQuery(document).ready(($) => {
 	 */
 	function cbSetupTransactionPaginationEnds(page = 1, prev = 0, next = 2, last = 0) {
 
-		cbTransactionPagePrev.attr('data-cb-transactions-page', prev);
-		cbTransactionPageNext.attr('data-cb-transactions-page', next);
+		cbTransactionPagePrev.attr('data-cb-participation-admin-transactions-page', prev);
+		cbTransactionPageNext.attr('data-cb-participation-admin-transactions-page', next);
 
 		cbTransactionPageNext.toggleClass('disabled', (page === last));
 		cbTransactionPageLast.toggleClass('disabled', (page === last));
@@ -389,7 +434,7 @@ jQuery(document).ready(($) => {
 			let prev = page - 1;
 			let next = page + 1;
 
-			cbTransactionPageLast.attr('data-cb-transactions-page', last);
+			cbTransactionPageLast.attr('data-cb-participation-admin-transactions-page', last);
 
 			cbSetupTransactionPaginationEnds(page, prev, next, last);
 			cbSetupTransactionPaginationDigits(page, last);
@@ -399,7 +444,7 @@ jQuery(document).ready(($) => {
 			cbTransactionPageNext.toggleClass('disabled', true);
 			cbTransactionPagePrev.toggleClass('disabled', true);
 			cbTransactionPageFirst.toggleClass('disabled', true);
-			$('.cb-transactions-pagination-numbered').remove();
+			$('.cb-participation-admin-transactions-pagination-numbered').remove();
 		}
 	}
 
@@ -430,24 +475,6 @@ jQuery(document).ready(($) => {
 	}
 
 	/**
-	 * Crossfade
-	 *
-	 * @param {object} $img
-	 * @returns {void}
-	 */
-	/*
-	function crossfade($img) {
-		if ($current) {
-			$current.stop().fadeOut('slow');
-		}
-
-		$img.css({
-		});
-		$img.stop().fadeTo('slow', 1);
-		$current = $img;
-	}
-*/
-	/**
 	 * CB Create Empty Participation Notice
 	 *
 	 * @param {string} response
@@ -463,7 +490,7 @@ jQuery(document).ready(($) => {
 		activePanel.append($emptyNotice);
 
 	}
-	
+
 	/**
 	 * CB Create Empty Transaction Notice
 	 *
@@ -471,13 +498,9 @@ jQuery(document).ready(($) => {
 	 * @param {object} activePanel
 	 * @returns {void}
 	 */
-	function cbCreateEmptyTransactionNotice(response) {
-
-		transactionsTable.children().remove();
-
+	function cbCreateEmptyTransactionNotice() {
 		let $emptyNotice = $(`<div class='cb-participation-admin-empty-notice'><p>No results found.</p></div>`);
 		transactionsTable.append($emptyNotice);
-
 	}
 
 	/**
@@ -504,7 +527,7 @@ jQuery(document).ready(($) => {
 		});
 		entryTable.append(headerRow);
 	}
-	
+
 	/**
 	 * Format Header Row
 	 *
@@ -515,11 +538,11 @@ jQuery(document).ready(($) => {
 		let headerRow = $('<tr>');
 		headers.forEach((header) => {
 			let item;
-				item = $(`<th id="cb_participation_admin_transactions_table_header_${header}">${header}</th>`);
-				item.css({
-					textTransform: 'capitalize',
-					fontWeight: 'lighter'
-				});
+			item = $(`<th id="cb_participation_admin_transactions_table_header_${header}">${header}</th>`);
+			item.css({
+				textTransform: 'capitalize',
+				fontWeight: 'lighter'
+			});
 
 			headerRow.append(item);
 		});
@@ -555,14 +578,8 @@ jQuery(document).ready(($) => {
 		let $entryModifiedDateContainer = $($entryDataContainer).clone();
 		let $entryEventNoteContainer = $($entryDataContainer).clone();
 		let $entryEventTypeContainer = $($entryDataContainer).clone();
-//		let $viewAttachmentsDataContainer = $entryDataContainer.clone();
 		let $entryEditDataContainer = $($entryDataContainer).clone();
-		let $viewAttachmentsContainer = $(
-			"<div>",
-			{ class: `cb-participation-view-attachments-container
-cb-participation-admin-entry-data`
-			}
-		);
+
 		let $entryCheckbox = $(`<input type="checkbox" name="cb_participation_admin_entry_selection" 
 data-cb-participation-id="${participation.id}"
 data-cb-event-type="${participation.event_type}"
@@ -573,7 +590,6 @@ data-cb-applicant-name="${userDisplayName}"
 data-cb-transaction-id="${transactionId}"
 value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 
-		let mediaFiles = participation.media_filepath.split(', ');
 		let $entryStatus = $('<p>', {
 			class: `cb-participation-entry-data cb-participation-status-${participation.status}`,
 			text: participation.status.charAt(0).toUpperCase() + participation.status.slice(1)
@@ -597,18 +613,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			class: 'cb-participation-admin-entry-data cb-participation-admin-entry-event-note',
 			text: `${eventNote}`
 		});
-/*
-		let $viewAttachmentsLink = $("<a class='cb-participation-view-attachments-link' href='#cb-participation-file-viewer-wrapper'>View Attachments</a>");
 
-		for (let file of mediaFiles) {
-			let mediaContainer = $("<div>", {
-				class: "cb-media-urls",
-				style: 'display:none;',
-				'data-cb-media-url': 'https://teamctg.com/wp-content/uploads/confetti-bits/' + file
-			});
-			$viewAttachmentsContainer.append(mediaContainer);
-		}
-*/
 		let $entryEditButton = $("<button>", {
 			class: "cb-participation-admin-edit-button",
 			'data-cb-participation-id': participation.id,
@@ -631,8 +636,6 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		$entryModifiedDateContainer.append($entryModifiedDate);
 		$entryEventTypeContainer.append($entryEventType);
 		$entryEventNoteContainer.append($entryEventNote);
-//		$viewAttachmentsContainer.append($viewAttachmentsLink);
-//		$viewAttachmentsDataContainer.append($viewAttachmentsContainer);
 		$entryEditDataContainer.append($entryEditButton);
 
 		$entryModule.append($entryCheckboxContainer);
@@ -642,14 +645,13 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		$entryModule.append($entryModifiedDateContainer);
 		$entryModule.append($entryEventTypeContainer);
 		$entryModule.append($entryEventNoteContainer);
-//		$entryModule.append($viewAttachmentsDataContainer);
 		$entryModule.append($entryEditDataContainer);
 
 		entryTable.append($entryModule);
 
 	}
-	
-		/**
+
+	/**
 	 * CB Create Participation Entry
 	 *
 	 * Creates a participation entry in the participation table
@@ -659,8 +661,9 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @async
 	 */
 	async function cbCreateTransactionEntry(transaction) {
-		let senderName = transaction.sender_name;
-		let recipientName = transaction.recipient_name;
+		
+		let senderData = await cbGetUserData(transaction.sender_id);
+		let recipientData = await cbGetUserData(transaction.recipient_id);
 		let dateSent = cbFormatDate(transaction.date_sent);
 		let amount = parseInt(transaction.amount);
 		let logEntry = transaction.log_entry;
@@ -675,11 +678,11 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 
 		let transactionSender = $('<p>', {
 			class: `cb-transactions-entry-data cb-transactions-sender`,
-			text: senderName
+			text: senderData.userDisplayName
 		});
 		let transactionRecipient = $('<a>', {
 			class:`cb-transactions-entry-data cb-transactions-recipient`,
-			text: recipientName
+			text: recipientData.userDisplayName
 		});
 		let transactionDateSent = $(
 			`<p class='cb-transactions-entry-data'><b>${dateSent}</b></p>`
@@ -761,63 +764,34 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @returns {void}
 	 */
 	async function refreshTransactions(page, userID) {
-
+		let getData = {
+			select: 'sender_id, recipient_id, amount, log_entry, date_sent',
+			recipient_id: userID,
+			sender_id: userID,
+			or: true,
+			page: page,
+			per_page: 15,
+		};
 		await $.get({
-			url: cb_core_admin.transactions,
-			data: {
-				user_id: userID,
-				page: page,
-				per_page: 15,
-			},
+			url: cb_core_admin.get_transactions,
+			data: getData,
 			success: function (data) {
 				cbTransactionsPagination(page, userID);
-				let response = JSON.parse(data);
-
-				if (typeof (response) !== 'string') {
-
-					transactionsTable.children().remove();
-
+				transactionsTable.children().remove();
+				if ( data.text !== false ) {	
 					formatTransactionsHeaderRow();
-					for (let r of response) {
-						cbCreateTransactionEntry(r);
+					for (let entry of data.text) {
+						cbCreateTransactionEntry(entry);
 					}
 				} else {
-					cbCreateEmptyTransactionNotice(response);
+					cbCreateEmptyTransactionNotice();
 				}
 			},
 			error: e => console.log(e)
 		});
 	}
 
-	/**
-	 * CB Get User Data
-	 *
-	 * Get user data from the BuddyBoss API
-	 *
-	 * @param {int} applicantId
-	 * @returns {object}
-	 * @async
-	 * @since 1.0.0
-	 *
-	 */
-	async function cbGetUserData(applicantId) {
-		let retval = {
-			username: '',
-			userDisplayName: ''
-		};
-		await $.get({
-			url: 'https://teamctg.com/wp-json/buddyboss/v1/members',
-			data: {
-				include: applicantId
-			}, success: function (text) {
-				retval = {
-					username: text[0].user_login,
-					userDisplayName: text[0].name
-				};
-			}, error: e => console.error(e)
-		});
-		return retval;
-	}
+
 
 	/**
 	 * Handle Navigation
@@ -971,7 +945,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		}
 	);
 
-	$('#cb-participation-admin-transaction-history-pagination').on('click', '.cb-transactions-pagination-button', function(e) {
+	$('#cb-participation-admin-transactions-pagination').on('click', '.cb-participation-admin-transactions-pagination-button', function(e) {
 		e.preventDefault();
 		let page = parseInt($(this).attr('data-cb-transactions-page'));
 		let userID = parseInt($('input[name=cb_participation_applicant_id]').val());
@@ -1026,7 +1000,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 						type: type
 					});
 					formMessage.setMessage( messages, data.type );
-					
+
 				},
 
 				error: function(e) {
@@ -1037,7 +1011,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		});
 
 		await refreshTable( page, status, eventFilter );
-		
+
 
 	});
 
@@ -1050,89 +1024,4 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	formatHeaderRow();
 	refreshTable(1, 'new', '');
 
-
-	/*
-	$(document).on('click', '.cb-participation-view-attachments-link', function (e) {
-		e.preventDefault();
-		let $this = $(this);
-		let $fileViewer = $($this).attr('href');
-		let $files = $($this).siblings('.cb-media-urls');
-		let id = this.hash;
-		let $thumbContainer = $('#cb-participation-thumbnail-container');
-
-		if (id && !$($fileViewer).is('.active')) {
-			$($fileViewer).addClass('active');
-		}
-
-		let $thumbs = $($thumbContainer).find('a');
-		if ($($thumbs).length > 0) {
-			$($thumbContainer).children().remove();
-		}
-
-		$($files).each(function () {
-			let $a = $('<a>', {
-				href: this.dataset.cbMediaUrl,
-				class: "cb-participation-admin-thumb-link"
-			});
-			let $img = $('<img>', {
-				src: this.dataset.cbMediaUrl,
-				class: "cb-participation-admin-thumb"
-			});
-			$a.append($img);
-			$($thumbContainer).append($a);
-
-		});
-		$('.cb-participation-admin-thumb-link').eq(0).click();
-
-	});
-
-	$(document).on('click', '.cb-participation-admin-thumb-link', function (e) {
-		let $img;
-		let src = this.href;
-		request = src;
-		const $fileViewerThumbs = $('.cb-participation-admin-thumb-link');
-		e.preventDefault();
-		$fileViewerThumbs.removeClass('active');
-		$(this).addClass('active');
-
-		if (cache.hasOwnProperty(src)) {
-			if (cache[src].isLoading === false) {
-				crossfade(cache[src].$img)
-			}
-		} else {
-			$img = $('<img>');
-			cache[src] = {
-				$img: $img,
-				isLoading: true
-			};
-
-			$img.on('load', function () {
-				$img.hide();
-				$frame.removeClass('is-loading').append($img);
-				cache[src].isLoading = false;
-				if (request === src) {
-					crossfade($img);
-				}
-			});
-
-			$frame.addClass('is-loading');
-
-			$img.attr({
-				'src': src
-			});
-		}
-
-	});
-	
-
-	$('#cb-participation-file-view-close').on('click', function (e) {
-		e.preventDefault();
-		let $thumbContainer = $('#cb-participation-thumbnail-container');
-		$('#cb-participation-file-viewer-wrapper').removeClass('active');
-		$($thumbContainer).children().remove();
-		$frame.children().remove();
-		cache = {};
-	});
-*/
-	
 });

@@ -1,30 +1,30 @@
-<?php
+<?php 
 // Exit if accessed directly
 defined('ABSPATH') || exit;
 
-/**
+/** 
  * CB Core Template Functions
- *
+ * 
  * This file is going to store all of our core template functionality.
  * This includes locating and loading templates at specified locations,
  * typically on the confetti-bits dashboard page.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.0.0
  */
 
 /**
  * CB Member Locate Template Part
- *
- * Attempts to locate the specified template in the TeamCTG
+ * 
+ * Attempts to locate the specified template in the TeamCTG 
  * Child Theme, located at '/members/single/confetti-bits-hub/cb-{$template}.php'.
- *
+ * 
  * @param string $template The template to look for.
- *
+ * 
  * @return string The template, if found.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.0.0
  */
@@ -49,15 +49,15 @@ function cb_member_locate_template_part ( $template = '' ) {
 
 /**
  * CB Member Get Template Part
- *
+ * 
  * Loads a template part based on the template
  * that gets passed in.
- *
+ * 
  * @see cb_member_locate_template_part()
- *
+ * 
  * @return An array of the active templates.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.0.0
  */
@@ -79,12 +79,12 @@ function cb_member_get_template_part( $template = '' ) {
 
 /**
  * Confetti Bits Get Active Templates
- *
+ * 
  * Sets up the templates to show users based on permissions.
- *
+ * 
  * @return An array of the active templates.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.0.0
  */
@@ -161,15 +161,15 @@ function cb_get_active_templates() {
 
 /**
  * CB Member Template Part
- *
+ * 
  * Renders the member template part appropriate for the current page
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.0.0
  */
 function cb_member_template_part() {
-
+	
 	$templates = array_values( cb_get_active_templates() );
 
 	foreach ( $templates as $template ) {
@@ -181,12 +181,12 @@ function cb_member_template_part() {
 
 /**
  * CB Core Add Confetti Captain Badges
- *
+ * 
  * Adds Confetti Captain badges to the user's member profile page
  * as well as to the activity feed, if they are a Confetti Captain.
- *
- *
- * @package ConfettiBits
+ * 
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.2.0
  */
@@ -206,11 +206,11 @@ add_action('wp_enqueue_scripts', 'cb_core_add_confetti_captain_badges');
 
 /**
  * CB Core Confetti Captain Class
- *
+ * 
  * Adds our custom 'confetti-captain' class to the BuddyBoss user avatar
  * so that we can add a cute little sparkler icon using JS.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.2.0
  */
@@ -227,12 +227,12 @@ add_filter('bp_core_avatar_class', 'cb_core_confetti_captain_class', 10, 2);
 
 /**
  * CB Core Confetti Captain Profile Badge
- *
+ * 
  * Adds a cute litte sparkler badge on the profile page of users
  * who are designated as "Confetti Captains", which meand they are
  * part of the Confetti Captains group.
- *
- * @package ConfettiBits
+ * 
+ * @package Confetti_Bits
  * @subpackage Core
  * @since 1.2.0
  */

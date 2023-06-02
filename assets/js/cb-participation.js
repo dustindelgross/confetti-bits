@@ -14,6 +14,36 @@ jQuery( document ).ready( ( $ ) => {
 	let cbTotalEntries = 0;
 
 	/**
+	 * CB Get User Data
+	 *
+	 * Get user data from the BuddyBoss API
+	 *
+	 * @param {int} applicantId
+	 * @returns {object}
+	 * @async
+	 * @since 1.0.0
+	 *
+	 */
+	async function cbGetUserData(applicantId) {
+		let retval = {
+			username: '',
+			userDisplayName: ''
+		};
+		await $.get({
+			url: 'https://teamctg.com/wp-json/buddyboss/v1/members',
+			data: {
+				include: applicantId
+			}, success: function (text) {
+				retval = {
+					username: text[0].user_login,
+					userDisplayName: text[0].name
+				};
+			}
+		});
+		return retval;
+	}
+
+	/**
 	 * CB Get Total Entries
 	 *
 	 * @param {string} status
@@ -21,22 +51,30 @@ jQuery( document ).ready( ( $ ) => {
 	 * @returns {int}
 	 *
 	 */
-	const cbGetTotalEntries = async (status = '', eventType = '') => {
+	const cbGetTotalEntries = async () => {
 
-		if ('string' !== typeof (status)) {
-			status = 'new';
+		let status = $('.cb-participation-nav-item.active').attr('cb-participation-status-type');
+		let eventType = $('.cb-form-selector[name=cb_participation_event_type]').val();
+
+		let getData = {
+			applicant_id: cbApplicantId,
+			count: true,
+		}
+
+		if ('' !== status) {
+			getData.status = status;
+		}
+
+		if ( '' !== eventType ) {
+			getData.event_type = eventType;
 		}
 
 		let retval = await $.ajax({
 			method: "GET",
-			url: cb_participation.total,
-			data: {
-				status: status,
-				event_type: eventType,
-				applicant_id: cbApplicantId
-			},
+			url: cb_participation.get,
+			data: getData,
 			success: x => {
-				cbTotalEntries = parseInt(JSON.parse(JSON.parse(x)[0].total_count));
+				cbTotalEntries = parseInt(JSON.parse(x.text)[0].total_count);
 				return cbTotalEntries;
 			},
 			error: e => console.error(e)
@@ -158,9 +196,9 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {string} eventType
 	 * @returns {void}
 	 */
-	let cbPagination = async (page, status, eventType) => {
+	let cbPagination = async (page) => {
 
-		await cbGetTotalEntries(status, eventType);
+		await cbGetTotalEntries();
 		if (cbTotalEntries > 0) {
 
 			let last = Math.ceil(cbTotalEntries / 6);
@@ -213,10 +251,16 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {object} activePanel
 	 * @returns {void}
 	 */
-	function cbCreateEmptyParticipationNotice(response, activePanel) {
+	function cbCreateEmptyParticipationNotice() {
 
 		entryTable.children().remove();
-		let $emptyNotice = $(`<div class='cb-participation-empty-notice'><p style="margin-bottom: 0;">${response}</p></div>`);
+		let $emptyNotice = $(`
+<div class='cb-participation-empty-notice'>
+<p style="margin-bottom: 0;">
+Could not find any participation entries of specified type.
+</p>
+</div>
+`);
 		$emptyNotice.css({
 			width: '90%',
 			height: '90%',
@@ -282,7 +326,7 @@ jQuery( document ).ready( ( $ ) => {
 		let $entryModifiedDateContainer = $($entryDataContainer).clone();
 		let $entryEventNoteContainer = $($entryDataContainer).clone();
 		let $entryEventTypeContainer = $($entryDataContainer).clone();
-		
+
 		let $entryStatus = $('<p>', {
 			class: `cb-participation-entry-data cb-participation-status-${participation.status}`,
 			text: participation.status.charAt(0).toUpperCase() + participation.status.slice(1)
@@ -337,67 +381,42 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {string} eventFilter
 	 * @returns {void}
 	 */
-	function refreshTable(page, status, eventFilter) {
+	function refreshTable(page) {
 
-		let activePanel = $('.cb-participation-nav-item.active');
+		let status = $('.cb-participation-nav-item.active').attr('cb-participation-status-type');
+		let eventType = $('#cb_participation_event_type_filter').val();
+		let getData = {
+			status: status,
+			applicant_id: cbApplicantId,
+			page: page,
+			per_page: 6,
+		}
+
+		if ( '' !== eventType ) {
+			getData.event_type = eventType;
+		}
 
 		$.get({
-			url: cb_participation.paged,
-			data: {
-				status: status,
-				page: page,
-				per_page: 6,
-				event_type: eventFilter,
-				applicant_id: cbApplicantId,
-			},
-			success: function (data) {
-				cbPagination(page, status, eventFilter);
-				let response = $.parseJSON(data);
-
-				if (typeof (response) !== 'string') {
-					//					activePanel.children().remove();
+			url: cb_participation.get,
+			data: getData,
+			success: async (data) => {
+				await cbPagination(page);
+				if ( data.text !== false ) {
+					let entries = JSON.parse(data.text);
 					entryTable.children().remove();
-
 					formatHeaderRow();
-					for (let r of response) {
-						cbCreateParticipationEntry(r);
+					entries.sort( (a,b) => b.id - a.id );
+					for (let r of entries) {
+						await cbCreateParticipationEntry(r);
 					}
 				} else {
-					cbCreateEmptyParticipationNotice(response, activePanel);
+					cbCreateEmptyParticipationNotice();
 				}
 			}
 		});
 	}
 
-	/**
-	 * CB Get User Data
-	 *
-	 * Get user data from the BuddyBoss API
-	 *
-	 * @param {int} applicantId
-	 * @returns {object}
-	 * @async
-	 * @since 1.0.0
-	 *
-	 */
-	async function cbGetUserData(applicantId) {
-		let retval = {
-			username: '',
-			userDisplayName: ''
-		};
-		await $.get({
-			url: 'https://teamctg.com/wp-json/buddyboss/v1/members',
-			data: {
-				include: applicantId
-			}, success: function (text) {
-				retval = {
-					username: text[0].user_login,
-					userDisplayName: text[0].name
-				};
-			}
-		});
-		return retval;
-	}
+
 
 	/**
 	 * Handle Navigation
@@ -409,19 +428,12 @@ jQuery( document ).ready( ( $ ) => {
 	 */
 	function handleNavigation(el) {
 		let $this = $(el);
-		//		let activePanel = $($('.cb-participation-nav-item.active').find('a').attr('href'));
 		let activeItem = $('.cb-participation-nav-item.active');
-		//		let id = $this.attr('href');
-
-		//		activePanel.removeClass('active');
 		activeItem.removeClass('active');
-		//		activePanel = $(id);
 		$this.parent().addClass('active');
-		//		activePanel.addClass('active');
 		let status = $this.parent().attr('cb-participation-status-type');
-		let eventFilter = $('#cb_participation_event_type_filter').val();
 
-		refreshTable(1, status, eventFilter);
+		refreshTable(1);
 
 	}
 
@@ -443,35 +455,26 @@ jQuery( document ).ready( ( $ ) => {
 				page = 1;
 			}
 			let activePanel = $('.cb-participation-admin-panel.active');
-			let status = activePanel.attr('cb-participation-status-type');
-			let eventFilter = $('#cb_participation_event_type_filter').val();
-
-			refreshTable(page, status, eventFilter);
+			refreshTable(page);
 		}
 	);
-
 
 	$('.cb-participation-pagination').on('click', '.cb-participation-pagination-button', function (e) {
 
 		e.preventDefault();
 		let page = parseInt($(this).attr('data-cb-participation-page'));
-		let eventFilter = $('#cb_participation_event_type_filter').val();
-		let activePanel = $('.cb-participation-nav-item.active');
-		let status = activePanel.attr('cb-participation-status-type');
-
-		refreshTable(page, status, eventFilter);
+		refreshTable(page);
 
 	});
 
 	formatHeaderRow();
-	refreshTable(1, 'new', '');
+	refreshTable(1);
 
 	const participationEventSelector	= $('.cb-form-selector[name=cb_participation_event_type]');
 	const participationEventNote		= $('.cb-form-textbox[name=cb_participation_event_note]');
 	const participationEventDate		= $('.cb-form-datepicker[name=cb_participation_event_date]');
 	const eventNoteContainer			= participationEventNote.parents('ul.cb-form-page-section')[0];
 	const participationUploadForm		= $('#cb-participation-upload-form');
-	const mediaFilesContainer			= document.getElementById('cb-media-selection');
 	const applicantId					= $('input[name=cb_applicant_id]');
 	let substituteToggle = $('input[name=cb_participation_substitute]');
 	let substituteInput = $('#cb_participation_substitute_member');
@@ -494,7 +497,6 @@ jQuery( document ).ready( ( $ ) => {
 			this.container.slideUp( 400 );
 			this.element.text('');
 		});
-
 
 		this.setMessage = ( text, type ) => {
 			this.element.text(text);
@@ -570,14 +572,15 @@ jQuery( document ).ready( ( $ ) => {
 		let now		= new Date();
 		let month 	= now.getUTCMonth();
 		let prev	= now.getUTCMonth(now.setUTCMonth( month - 1 ));
+		let prev2	= now.getUTCMonth(now.setUTCMonth( month - 2) );
 		let inputMonth	= new Date( participationEventDate.val() ).getUTCMonth();
 
 		if ( ( undefined === typeof( participationEventSelector.val() ) || 
 			  '' === participationEventSelector.val() ) && 
 			( '' === participationEventNote.val() ) ) {
 			formMessage.setMessage( 'Empty or invalid event type.', 'error' );
-		} else if ( month !== inputMonth && prev !== inputMonth ){
-			formMessage.setMessage( 'Cannot submit participation from outside of current or previous month.', 'error' );
+		} else if ( prev2 > inputMonth ){
+			formMessage.setMessage( 'Cannot submit participation from outside of up to 2 months prior to event.', 'error' );
 		} else {
 			$.ajax({
 				type: 'POST',
@@ -590,7 +593,6 @@ jQuery( document ).ready( ( $ ) => {
 					'cb_participation_upload_nonce' : cb_participation.nonce
 				},
 				success: function ( text ) {
-					console.log(text)
 					let response = JSON.parse(text);
 					formMessage.setMessage( response.text, response.type );
 					participationEventSelector.val('');
@@ -605,7 +607,7 @@ jQuery( document ).ready( ( $ ) => {
 			});
 		}
 	});
-	
+
 	$(document).on( 'click', '.cb-participation-member-search-result', function () {
 		substituteInput.val( $(this).text() );
 		applicantId.val( $(this).data('cbParticipantId') );
