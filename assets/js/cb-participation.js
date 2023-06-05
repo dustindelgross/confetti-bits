@@ -390,6 +390,7 @@ Could not find any participation entries of specified type.
 			applicant_id: cbApplicantId,
 			page: page,
 			per_page: 6,
+			orderby: {column: "id", order: "DESC"},
 		}
 
 		if ( '' !== eventType ) {
@@ -399,7 +400,7 @@ Could not find any participation entries of specified type.
 		$.get({
 			url: cb_participation.get,
 			data: getData,
-			success: async (data) => {
+			success: async (data) => {	
 				await cbPagination(page);
 				if ( data.text !== false ) {
 					let entries = JSON.parse(data.text);
@@ -412,7 +413,8 @@ Could not find any participation entries of specified type.
 				} else {
 					cbCreateEmptyParticipationNotice();
 				}
-			}
+			},
+			error: e => console.log(e.responseText)
 		});
 	}
 
@@ -454,7 +456,6 @@ Could not find any participation entries of specified type.
 			if ( ! page ) {
 				page = 1;
 			}
-			let activePanel = $('.cb-participation-admin-panel.active');
 			refreshTable(page);
 		}
 	);

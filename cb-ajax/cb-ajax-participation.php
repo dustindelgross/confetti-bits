@@ -1,30 +1,39 @@
 <?php 
+// Exit if accessed directly.
+defined('ABSPATH') || exit;
+
 /** 
  * CB AJAX Participation Bulk Update
  * 
  * Processes bulk participation updates from an AJAX post request.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.2.0
  */
 function cb_ajax_update_participation() {
+
+	if ( !cb_is_patch_request() ) {
+		return;
+	}
+
+	$_PATCH = cb_get_patch_data();
+
 	if ( !isset( 
-		$_POST['admin_id'], 
-		$_POST['participation_id'],
-		$_POST['status'],
-		$_POST['transaction_id']
+		$_PATCH['admin_id'], 
+		$_PATCH['participation_id'],
+		$_PATCH['status'],
+		$_PATCH['transaction_id']
 	) ) {
 		return;
 	}
-	$feedback = array(
-		'text' => "",
-		'type' => 'error'
-	);
-	$participation_id = intval($_POST['participation_id']);
-	$admin_id = intval($_POST['admin_id']);
-	$status = $_POST['status'] === 'approved' ? 'approved' : 'denied';
+
+	$feedback = ['text' => '','type' => 'error'];
+	$participation_id = intval($_PATCH['participation_id']);
+	$admin_id = intval($_PATCH['admin_id']);
+	$status = strtolower($_PATCH['status']) === 'approved' ? 'approved' : 'denied';
+	
 	$participation = new CB_Participation_Participation($participation_id);
+	
 	if ( $participation->event_type === 'other' ) {
 		$feedback['text'] = "Update unsuccessful. Cannot process 'Other' category event types using the Confetti Bits API.";
 		echo json_encode($feedback);
@@ -34,17 +43,18 @@ function cb_ajax_update_participation() {
 	$update_args = array(
 		'status' => $status,
 		'admin_id' => $admin_id,
-		'date_modified' => current_time( 'mysql' ),
+		'date_modified' => cb_core_current_date(),
 	);
+
 	$where_args = array(
 		'id' => $participation_id
 	);
 
-	$transaction_id		= intval( $_POST['transaction_id'] );
-	$admin_log_entry	= sanitize_text_field( $_POST['log_entry'] );
-	$amount_override	= intval( $_POST['amount_override'] );
-	$admin_log_entry	= isset( $_POST['admin_log_entry'] ) 
-		? sanitize_text_field( $_POST['admin_log_entry'] )
+	$transaction_id		= intval( $_PATCH['transaction_id'] );
+	$admin_log_entry	= sanitize_text_field( $_PATCH['log_entry'] );
+	$amount_override	= intval( $_PATCH['amount_override'] );
+	$admin_log_entry	= isset( $_PATCH['admin_log_entry'] ) 
+		? sanitize_text_field( $_PATCH['admin_log_entry'] )
 		: "";
 	$amount = 0;
 	$log_entry = '';
@@ -112,15 +122,13 @@ function cb_ajax_update_participation() {
 	}
 
 }
-add_action( 'wp_ajax_cb_participation_update_participation', 'cb_ajax_update_participation' );
 
 /**
- * Confetti Bits Ajax New Participation
+ * CB Ajax New Participation
  * 
  * We'll use this to process the new participation entries sent via ajax.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.2.0
  */
 function cb_ajax_new_participation() {
@@ -175,121 +183,6 @@ function cb_ajax_new_participation() {
 
 	die();
 }
-add_action( 'wp_ajax_cb_participation_new_participation', 'cb_ajax_new_participation' );
-
-/**
- * CB Get Paged Participation
- * 
- * @param	string	$status	Status type to return. Default 'all'.
- * @param	int		$page	Page number to return. Default 0.
- * 
- * @return	array	Array of 6 paged participation entries.
- * 
- * @package Confetti_Bits
- * @subpackage Participation
- * @since 2.2.0
- */
-function cb_ajax_get_paged_participation() {
-
-	$participation = new CB_Participation_Participation();
-	$feedback = '';
-	$pagination = array(
-		'page' => ( empty( $_GET['page'] ) ) ? 0 : $_GET['page'],
-		'per_page' => ( empty( $_GET['per_page'] ) ) ? 6 : $_GET['per_page'],
-	);
-	$select =  isset( $_GET['count'] ) ? 'count(id) as total_count' : '*';
-	$status	= ( empty( $_GET['status'] ) ) ? 'all' : $_GET['status'];
-
-	$event_type = empty( $_GET['event_type'] ) ? '' : trim( $_GET['event_type'] );
-	$where = array(
-		'status'		=> $status,
-		'date_query'	=> array(
-			'column'	=> 'event_date',
-			'before'	=> date( 'Y-m-d' , strtotime("last day of this month")),
-			'after'		=> date( 'Y-m-d', strtotime("first day of last month")),
-			'inclusive'	=> true
-		)
-	);
-
-	if ( ! empty( $_GET['applicant_id'] ) ) {
-		$where['applicant_id'] = intval( $_GET['applicant_id'] );
-	}
-
-	if ( !empty($event_type) ) {
-		$where['event_type'] = $event_type;
-	}
-
-	$paged_participation = $participation->get_participation(
-		array(
-			'select'		=> $select,
-			'where'			=> $where,
-			'orderby'		=> 'date_modified',
-			'pagination'	=> $pagination
-		)
-	);
-
-	$feedback .= ( ! empty( $paged_participation ) ) ? json_encode( $paged_participation ) : json_encode('Could not find any participation entries of specified type.');
-
-	echo $feedback;
-
-	die();
-
-}
-add_action( 'wp_ajax_cb_participation_get_paged_participation', 'cb_ajax_get_paged_participation' );
-
-/**
- * Confetti Bits Get Total Participation
- * 
- * @return Total of all participation entries.
- * 
- * @package Confetti_Bits
- * @subpackage Participation
- * @since 2.2.0
- */
-function cb_ajax_get_total_participation() {
-
-	if ( ! cb_is_get_request() ) { 
-		return;	
-	}
-
-	$status = ( !empty( $_GET['status'] ) && is_string( $_GET['status'] ) ) ? $_GET['status'] : 'new';
-
-	$valid_statuses = array( 'new', 'all', 'approved', 'denied' );
-
-	$status = ( in_array( $status, $valid_statuses ) ) ? $status : 'new';
-	$participation = new CB_Participation_Participation();
-	$where = array(
-		'status'		=> $status,
-		'date_query'	=> array(
-			'column'	=> 'event_date',
-			'before'	=> date( 'Y-m-d' , strtotime("last day of this month")),
-			'after'		=> date( 'Y-m-d', strtotime("first day of last month")),
-			'inclusive'	=> true
-		)
-	);
-
-	if ( ! empty( $_GET['applicant_id'] ) ) {
-		$where['applicant_id'] = intval( $_GET['applicant_id'] );
-	}
-
-	if ( !empty( $_GET['event_type'] ) ) {
-		$where['event_type'] = trim($_GET['event_type']);
-	}
-
-
-	$all_participation = $participation->get_participation(
-		array(
-			'select' => 'count(id) as total_count',
-			'where' => $where
-		)
-	);
-
-	echo json_encode( $all_participation );
-
-	die();
-
-}
-add_action( 'wp_ajax_cb_participation_get_total_participation', 'cb_ajax_get_total_participation' );
 
 /**
  * CB AJAX Get Participation
@@ -297,8 +190,7 @@ add_action( 'wp_ajax_cb_participation_get_total_participation', 'cb_ajax_get_tot
  * Our REST API handler for the endpoint at 
  * "/wp-json/cb-ajax/v1/participation/get"
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.3.0
  */
 function cb_ajax_get_participation() {
@@ -331,9 +223,15 @@ function cb_ajax_get_participation() {
 	if ( !empty( $_GET['event_type'] ) ) {
 		$get_args['where']['event_type'] = trim( $_GET['event_type'] );
 	}
-	
+
 	if ( !empty( $_GET['status'] ) ) {
 		$get_args['where']['status'] = trim( $_GET['status'] );
+	}
+
+	if ( !empty( $_GET['orderby'] ) ) {
+
+		$get_args['orderby']['column'] = !empty($_GET['orderby']['column'] ) ? trim($_GET['orderby']['column']) : 'id';
+		$get_args['orderby']['order'] = !empty($_GET['orderby']['order'] ) ? trim($_GET['orderby']['order']) : 'DESC';
 	}
 
 	$results = $participation->get_participation($get_args);
@@ -350,27 +248,3 @@ function cb_ajax_get_participation() {
 	die();
 
 }
-
-/**
- * CB AJAX Update Participation
- * 
- * Our REEST API Endpoint for updating participation statuses
- * at "wp-json/cb-ajax/v1/participation/update"
- * 
- * @package Confetti_Bits
- * @subpackage Participation
- * @since 2.3.0
- */
-/*
-function cb_ajax_update_participation() {
-
-	if ( ! cb_is_patch_request() ) {
-		return;
-	}
-
-	http_response_code(200);	
-	echo json_encode("Anyone there?");
-	die();
-
-}
-*/

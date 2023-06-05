@@ -25,7 +25,7 @@ jQuery(document).ready(($) => {
 	let cbTotalEntries = 0;
 	let cbTotalTransactions = 0;
 	let transactionsTable = $('#cb_participation_admin_transactions_table');
-	
+
 	/**
 	 * CB Get User Data
 	 *
@@ -135,8 +135,9 @@ jQuery(document).ready(($) => {
 			method: "GET",
 			url: cb_core_admin.get_participation,
 			data: getData,
-			success: x => {
-				cbTotalEntries = parseInt(JSON.parse(x.text)[0].total_count);
+			success: data => {
+				let x = JSON.parse(data.text);
+				cbTotalEntries = parseInt(x[0].total_count);
 				return cbTotalEntries;
 			},
 			error: e => console.error(e)
@@ -145,7 +146,7 @@ jQuery(document).ready(($) => {
 		return retval;
 
 	}
-	
+
 	/**
 	 * CB Get Total Transactions
 	 *
@@ -157,7 +158,7 @@ jQuery(document).ready(($) => {
 	const cbGetTotalTransactions = async (userID) => {
 
 		let getData = {
-			
+
 			recipient_id: userID,
 			sender_id: userID,
 			or: true,
@@ -394,7 +395,10 @@ jQuery(document).ready(($) => {
 	 * @param {string} eventType
 	 * @returns {void}
 	 */
-	let cbPagination = async (page, status, eventType) => {
+	let cbPagination = async (page) => {
+
+		let status = $('.cb-participation-nav-item.active').attr('cb-participation-status-type');
+		let eventType = $('.cb-form-selector[name=cb_participation_event_type]').val();
 
 		await cbGetTotalEntries(status, eventType);
 		if (cbTotalEntries > 0) {
@@ -661,7 +665,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @async
 	 */
 	async function cbCreateTransactionEntry(transaction) {
-		
+
 		let senderData = await cbGetUserData(transaction.sender_id);
 		let recipientData = await cbGetUserData(transaction.recipient_id);
 		let dateSent = cbFormatDate(transaction.date_sent);
@@ -722,32 +726,37 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @param {string} eventFilter
 	 * @returns {void}
 	 */
-	function refreshTable(page, status, eventFilter) {
+	function refreshTable(page) {
+
+		let status = $('.cb-participation-nav-item.active').attr('cb-participation-status-type');
+		let eventType = $('.cb-form-selector[name=cb_participation_event_type]').val();
 
 		let activePanel = $('.cb-participation-admin-panel.active');
+		let getData = {
+			status: status,
+			page: page,
+			per_page: 6,
+			event_type: eventType,
+			orderby: { column: 'id', order: 'DESC' }
+		};
 
 		$.get({
-			url: cb_core_admin.paged,
-			data: {
-				status: status,
-				page: page,
-				per_page: 6,
-				event_type: eventFilter
-			},
+			url: cb_core_admin.get_participation,
+			data: getData,
 			success: function (data) {
-				cbPagination(page, status, eventFilter);
-				let response = $.parseJSON(data);
+				cbPagination(page, status);
 
-				if (typeof (response) !== 'string') {
+				if (data !== false) {
+					let entries = JSON.parse(data.text);
 					activePanel.children().remove();
 					entryTable.children().remove();
 
 					formatHeaderRow();
-					for (let r of response) {
+					for (let r of entries) {
 						cbCreateParticipationEntry(r);
 					}
 				} else {
-					cbCreateEmptyParticipationNotice(response, activePanel);
+					cbCreateEmptyParticipationNotice(data.text, activePanel);
 				}
 			}
 		});
@@ -812,10 +821,8 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		activePanel = $(id);
 		$this.parent().addClass('active');
 		activePanel.addClass('active');
-		let status = activePanel.attr('id').replace('cb-participation-', '');
-		let eventFilter = $('#cb_participation_admin_event_type_filter').val();
 
-		refreshTable(1, status, eventFilter);
+		refreshTable(1);
 
 	}
 
@@ -937,11 +944,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			if ( ! page ) {
 				page = 1;
 			}
-			let activePanel = $('.cb-participation-admin-panel.active');
-			let status = activePanel.attr('id').replace('cb-participation-', '');
-			let eventFilter = $('#cb_participation_admin_event_type_filter').val();
-
-			refreshTable(page, status, eventFilter);
+			refreshTable(page);
 		}
 	);
 
@@ -957,11 +960,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 
 		e.preventDefault();
 		let page = parseInt($(this).attr('data-cb-participation-admin-page'));
-		let eventFilter = $('#cb_participation_admin_event_type_filter').val();
-		let activePanel = $('.cb-participation-admin-nav-item.active');
-		let status = activePanel.data('cbParticipationAdminStatusType');
-
-		refreshTable(page, status, eventFilter);		
+		refreshTable(page);
 
 	});
 
@@ -1010,7 +1009,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 
 		});
 
-		await refreshTable( page, status, eventFilter );
+		await refreshTable( page );
 
 
 	});
@@ -1022,6 +1021,6 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	$(document).on('change','#cb_participation_admin_bulk_edit_toggle', handleHeaderCheckboxChange);
 
 	formatHeaderRow();
-	refreshTable(1, 'new', '');
+	refreshTable(1);
 
 });

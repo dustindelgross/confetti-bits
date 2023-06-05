@@ -23,18 +23,8 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_ajax_new_participation\u0028\u0029",
             "name": "cb_ajax_new_participation",
-            "summary": "Confetti\u0020Bits\u0020Ajax\u0020New\u0020Participation",
+            "summary": "CB\u0020Ajax\u0020New\u0020Participation",
             "url": "namespaces/default.html#function_cb_ajax_new_participation"
-        },                {
-            "fqsen": "\\cb_ajax_get_paged_participation\u0028\u0029",
-            "name": "cb_ajax_get_paged_participation",
-            "summary": "CB\u0020Get\u0020Paged\u0020Participation",
-            "url": "namespaces/default.html#function_cb_ajax_get_paged_participation"
-        },                {
-            "fqsen": "\\cb_ajax_get_total_participation\u0028\u0029",
-            "name": "cb_ajax_get_total_participation",
-            "summary": "Confetti\u0020Bits\u0020Get\u0020Total\u0020Participation",
-            "url": "namespaces/default.html#function_cb_ajax_get_total_participation"
         },                {
             "fqsen": "\\cb_ajax_get_participation\u0028\u0029",
             "name": "cb_ajax_get_participation",
@@ -55,6 +45,16 @@ Search.appendIndex(
             "name": "cb_ajax_send_bits",
             "summary": "CB\u0020AJAX\u0020Send\u0020Bits",
             "url": "namespaces/default.html#function_cb_ajax_send_bits"
+        },                {
+            "fqsen": "\\cb_ajax_get_transactions_by_id\u0028\u0029",
+            "name": "cb_ajax_get_transactions_by_id",
+            "summary": "",
+            "url": "namespaces/default.html#function_cb_ajax_get_transactions_by_id"
+        },                {
+            "fqsen": "\\cb_ajax_get_total_transactions\u0028\u0029",
+            "name": "cb_ajax_get_total_transactions",
+            "summary": "",
+            "url": "namespaces/default.html#function_cb_ajax_get_total_transactions"
         },                {
             "fqsen": "\\CONFETTI_BITS_AJAX_SLUG",
             "name": "CONFETTI_BITS_AJAX_SLUG",
@@ -1161,11 +1161,6 @@ Search.appendIndex(
             "summary": "CB\u0020Get\u0020Transaction",
             "url": "namespaces/default.html#function_cb_participation_get_transaction"
         },                {
-            "fqsen": "\\cb_get_upload_dir\u0028\u0029",
-            "name": "cb_get_upload_dir",
-            "summary": "CB\u0020Get\u0020Uploads\u0020Directory",
-            "url": "namespaces/default.html#function_cb_get_upload_dir"
-        },                {
             "fqsen": "\\cb_participation_new_notifications\u0028\u0029",
             "name": "cb_participation_new_notifications",
             "summary": "",
@@ -1706,16 +1701,6 @@ Search.appendIndex(
             "summary": "CB\u0020Setup\u0020Transactions",
             "url": "namespaces/default.html#function_cb_setup_transactions"
         },                {
-            "fqsen": "\\cb_ajax_get_transactions_by_id\u0028\u0029",
-            "name": "cb_ajax_get_transactions_by_id",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_ajax_get_transactions_by_id"
-        },                {
-            "fqsen": "\\cb_ajax_get_total_transactions\u0028\u0029",
-            "name": "cb_ajax_get_total_transactions",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_ajax_get_total_transactions"
-        },                {
             "fqsen": "\\cb_groups_activity_notifications\u0028\u0029",
             "name": "cb_groups_activity_notifications",
             "summary": "",
@@ -1918,12 +1903,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_transactions\u0028\u0029",
             "name": "get_transactions",
-            "summary": "",
+            "summary": "Gets\u0020transactions\u0020from\u0020the\u0020database.",
             "url": "classes/CB-Transactions-Transaction.html#method_get_transactions"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_orderby_sql\u0028\u0029",
             "name": "get_orderby_sql",
-            "summary": "Get\u0020Orderby\u0020SQL",
+            "summary": "Get\u0020Orderby\u0020SQL.",
             "url": "classes/CB-Transactions-Transaction.html#method_get_orderby_sql"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_paged_sql\u0028\u0029",
@@ -1988,73 +1973,63 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024last_inserted_id",
             "name": "last_inserted_id",
-            "summary": "",
+            "summary": "Last\u0020recorded\u0020Transaction\u0020ID\u0020in\u0020the\u0020database.",
             "url": "classes/CB-Transactions-Transaction.html#property_last_inserted_id"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024id",
             "name": "id",
-            "summary": "",
+            "summary": "The\u0020Transaction\u0020ID.",
             "url": "classes/CB-Transactions-Transaction.html#property_id"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024item_id",
             "name": "item_id",
-            "summary": "",
+            "summary": "The\u0020item\u0020ID\u0020of\u0020the\u0020Transaction.\u0020Used\u0020with\u0020the\nBuddyBoss\u0020Notifications\u0020API.",
             "url": "classes/CB-Transactions-Transaction.html#property_item_id"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024secondary_item_id",
             "name": "secondary_item_id",
-            "summary": "",
+            "summary": "The\u0020secondary\u0020item\u0020ID\u0020of\u0020the\u0020Transaction.\u0020Used\nwith\u0020the\u0020BuddyBoss\u0020Notifications\u0020API.",
             "url": "classes/CB-Transactions-Transaction.html#property_secondary_item_id"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024sender_id",
             "name": "sender_id",
-            "summary": "",
+            "summary": "The\u0020ID\u0020of\u0020the\u0020user\u0020sending\u0020the\u0020Confetti\u0020Bits.",
             "url": "classes/CB-Transactions-Transaction.html#property_sender_id"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024recipient_id",
             "name": "recipient_id",
-            "summary": "",
+            "summary": "The\u0020ID\u0020of\u0020the\u0020user\u0020receiving\u0020the\u0020Confetti\u0020Bits.",
             "url": "classes/CB-Transactions-Transaction.html#property_recipient_id"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024date_sent",
             "name": "date_sent",
-            "summary": "",
+            "summary": "The\u0020date\u0020of\u0020the\u0020Transaction.",
             "url": "classes/CB-Transactions-Transaction.html#property_date_sent"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024log_entry",
             "name": "log_entry",
-            "summary": "",
+            "summary": "A\u0020memo\u0020for\u0020the\u0020Transaction.",
             "url": "classes/CB-Transactions-Transaction.html#property_log_entry"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024component_name",
             "name": "component_name",
-            "summary": "",
+            "summary": "The\u0020component\u0020associated\u0020with\u0020the\u0020Transaction.",
             "url": "classes/CB-Transactions-Transaction.html#property_component_name"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024component_action",
             "name": "component_action",
-            "summary": "",
+            "summary": "The\u0020component\u0020action\u0020associate\u0020with\u0020the\u0020Transaction.",
             "url": "classes/CB-Transactions-Transaction.html#property_component_action"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024amount",
             "name": "amount",
-            "summary": "",
+            "summary": "The\u0020amount\u0020of\u0020Confetti\u0020Bits\u0020that\u0020were\u0020sent.",
             "url": "classes/CB-Transactions-Transaction.html#property_amount"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024event_id",
             "name": "event_id",
-            "summary": "",
+            "summary": "The\u0020ID\u0020of\u0020the\u0020event\u0020associated\u0020with\u0020the\u0020Transaction.",
             "url": "classes/CB-Transactions-Transaction.html#property_event_id"
-        },                {
-            "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024total_count",
-            "name": "total_count",
-            "summary": "",
-            "url": "classes/CB-Transactions-Transaction.html#property_total_count"
-        },                {
-            "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024total_pages",
-            "name": "total_pages",
-            "summary": "",
-            "url": "classes/CB-Transactions-Transaction.html#property_total_pages"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024error",
             "name": "error",
@@ -2280,6 +2255,11 @@ Search.appendIndex(
             "name": "cb_flush_rewrite_rules",
             "summary": "CB\u0020Flush\u0020Rewrite\u0020Rules",
             "url": "namespaces/default.html#function_cb_flush_rewrite_rules"
+        },                {
+            "fqsen": "\\cb_get_patch_data\u0028\u0029",
+            "name": "cb_get_patch_data",
+            "summary": "CB\u0020Get\u0020PATCH\u0020Data",
+            "url": "namespaces/default.html#function_cb_get_patch_data"
         },                {
             "fqsen": "\\",
             "name": "\\",

@@ -134,7 +134,7 @@ class CB_Participation_Participation {
 	 * 
 	 * @var array
 	 */
-	private $columns = [
+	public static $columns = [
 		'id', 
 		'item_id', 
 		'secondary_item_id', 
@@ -153,7 +153,6 @@ class CB_Participation_Participation {
 	 */
 	public function __construct( $id = 0 ) {
 
-		$this->errors	= new WP_Error();
 		$this->month	= date_format( date_create(), 'm' );
 		$this->year		= date_format( date_create(), 'Y' );
 
@@ -232,7 +231,7 @@ class CB_Participation_Participation {
 
 		$data_format = array( '%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d' );
 		$result = self::_insert( $data, $data_format );
-		if ( ! empty( $result ) && ! is_wp_error( $result ) ) {
+		if ( ! empty( $result ) ) {
 
 			global $wpdb;
 
@@ -244,8 +243,6 @@ class CB_Participation_Participation {
 
 			$retval = $this->id;
 
-		} else if ( is_wp_error( $result ) ) {
-			$retval = $result;
 		}
 
 		return $retval;
@@ -540,7 +537,7 @@ class CB_Participation_Participation {
 		$select_sql = "SELECT {$select}";
 		$from_sql = "FROM {$cb->participation->table_name}";
 		$where_sql = self::get_where_sql( $r['where']);
-		$orderby_sql = ( ! empty( $r['orderby'] ) ) ? self::get_orderby_sql($r['orderby']) : '';
+		$orderby_sql = ! empty( $r['orderby'] ) ? self::get_orderby_sql($r['orderby']) : '';
 		$group_sql = ( ! empty( $r['group'] ) ) ? "GROUP BY {$r['group']}" : '';
 		$pagination_sql = self::get_paged_sql( $r['pagination'] );
 
@@ -577,11 +574,11 @@ class CB_Participation_Participation {
 		global $wpdb;
 		$sql = '';
 
-		if ( empty($orderby) ) {
+		if ( empty($args) ) {
 			return $sql;
 		}
 
-		$valid_sql = array_merge( $this->columns, ['DESC', 'ASC'] );
+		$valid_sql = array_merge( self::$columns, ['DESC', 'ASC', 'calculated_total'] );
 
 		$r = wp_parse_args( $args, [
 			'column' => 'id',
@@ -596,9 +593,7 @@ class CB_Participation_Participation {
 			return $sql;
 		}
 
-		$sql = $wpdb->prepare(
-			"ORDER BY %s %s", [$r['column'], $r['order']]
-		);
+		$sql = sprintf("ORDER BY %s %s", $r['column'], $r['order']);
 
 		return $sql;
 	}

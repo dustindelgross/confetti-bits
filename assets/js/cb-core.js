@@ -275,14 +275,13 @@ jQuery( document ).ready( function( $ ) {
 		}
 
 		let retval = await $.get({
-			url: cb_core.transactions,
+			url: cb_core.get_transactions,
 			data: {
 				user_id: userID,
-				total: true
+				count: true
 			},
 			success: (x) => {
-				let response = JSON.parse(x);
-				cbTotalTransactions = parseInt(response.text[0].total_count);
+				cbTotalTransactions = parseInt(x.text[0].total_count);
 				return cbTotalTransactions;
 			},
 			error: (e) => {
@@ -544,28 +543,28 @@ jQuery( document ).ready( function( $ ) {
 	 * @returns {void}
 	 */
 	async function refreshTransactions(page, userID) {
-
-		await $.get({
-			url: cb_core.transactions,
-			data: {
-				user_id: userID,
+		
+		let getData = {
+				recipient_id: userID,
+				sender_id: userID,
+				or: true,
 				page: page,
 				per_page: 15,
-			},
-			success: (data) => {
+		};
 
+		await $.get({
+			url: cb_core.get_transactions,
+			data: getData,
+			success: async (data) => {
 				cbTransactionsPagination(page, userID);
-				let response = JSON.parse(data);
-
-				if (typeof (response) !== 'string') {
-
+				if ( data.text !== false ) {
 					transactionsTable.children().remove();
 					formatTransactionsHeaderRow();
-					for (let r of response.text) {
-						cbCreateTransactionEntry(r);
+					for (let r of data.text) {
+						await cbCreateTransactionEntry(r);
 					}
 				} else {
-					cbCreateEmptyTransactionNotice(response);
+					cbCreateEmptyTransactionNotice(data);
 				}
 			},
 			error: (e) => {
