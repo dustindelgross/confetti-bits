@@ -7,39 +7,97 @@ defined( 'ABSPATH' ) || exit;
  * 
  * A component that allows users to send bits.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.0.0
  */
 class CB_Transactions_Transaction {
 
+
+	/**
+	 * Last recorded Transaction ID in the database.
+	 * 
+	 * @var int
+	 */
 	public static $last_inserted_id; 
 
+	/**
+	 * The Transaction ID.
+	 * 
+	 * @var int
+	 */
 	public $id; 
 
+	/**
+	 * The item ID of the Transaction. Used with the 
+	 * BuddyBoss Notifications API.
+	 * 
+	 * @var int
+	 */
 	public $item_id;
 
+	/**
+	 * The secondary item ID of the Transaction. Used 
+	 * with the BuddyBoss Notifications API.
+	 * 
+	 * @var int
+	 */
 	public $secondary_item_id;
 
+	/**
+	 * The ID of the user sending the Confetti Bits.
+	 * 
+	 * @var int
+	 */
 	public $sender_id;
 
+	/**
+	 * The ID of the user receiving the Confetti Bits.
+	 * 
+	 * @var int
+	 */
 	public $recipient_id;
 
+	/**
+	 * The date of the Transaction.
+	 * 
+	 * @var int
+	 */
 	public $date_sent;
 
+	/**
+	 * A memo for the Transaction.
+	 * 
+	 * @var int
+	 */
 	public $log_entry;
 
+	/**
+	 * The component associated with the Transaction.
+	 * 
+	 * @var int
+	 */
 	public $component_name;
 
+	/**
+	 * The component action associate with the Transaction.
+	 * 
+	 * @var int
+	 */
 	public $component_action;
 
+	/**
+	 * The amount of Confetti Bits that were sent.
+	 * 
+	 * @var int
+	 */
 	public $amount;
 
+	/**
+	 * The ID of the event associated with the Transaction.
+	 * 
+	 * @var int
+	 */
 	public $event_id;
-
-	public $total_count;
-
-	public $total_pages;
 
 	public $error;
 
@@ -87,7 +145,7 @@ class CB_Transactions_Transaction {
 	public function send_bits() {
 
 		$retval = false;
-		do_action_ref_array( 'cb_transactions_before_send', array( &$this ) );
+		do_action( 'cb_transactions_before_send', array( &$this ) );
 		$data = array (
 			'item_id' => $this->item_id,
 			'secondary_item_id' => $this->secondary_item_id,
@@ -149,38 +207,74 @@ class CB_Transactions_Transaction {
 		return $wpdb->insert( Confetti_Bits()->transactions->table_name, $data, $data_format );
 	}
 
-	public function get_transactions( $args = array() ) {
+	/**
+	 * Gets transactions from the database.
+	 * 
+	 * Pieces together an SQL query based on the given 
+	 * arguments.
+	 * 
+	 * @global $wpdb The WordPress database global.
+	 * 
+	 * @param array $args { 
+	 *     Optional. An array of arguments that get 
+	 *     merged with some defaults.
+	 * 
+	 *     @type string|array $select Default '*'. Either a comma-separated list or array
+	 *                                of the columns to select.
+	 *     @type array $where Array of key => value pairs that get passed to an internal
+	 * 						  method. @see CB_Transactions_Transaction::get_where_sql()
+	 *     @type array $orderby Array of specific key => value pairs that determine
+	 * 							the ORDER BY clause. 
+	 * 							@see CB_Transactions_Transaction::get_orderby_sql()
+	 *     @type string $groupby A string that determines whether the query should be
+	 * 							 grouped by a specific column.
+	 *     @type array $pagination An array of specific key => value pairs that 
+	 * 							   determine the LIMIT clause.
+	 * }
+	 * 
+	 * @return array An associative array of transaction data.
+	 */
+	public function get_transactions( $args = [] ) {
 
 		global $wpdb;
-		$r = wp_parse_args( $args, array(
+		$r = wp_parse_args( $args, [
 			'select' => '*',
-			'where' => array(),
+			'where' => [],
 			'orderby' => [],
 			'groupby' => '',
 			'pagination' => []
-		));
+		]);
 
-		$select = "SELECT {$r['select']}";
+		$select = ( is_array( $r['select'] ) ) ? implode( ', ', $r['select'] ) : $r['select'];
+		$select_sql = "SELECT {$select}";
 		$from_sql = "FROM {$wpdb->prefix}confetti_bits_transactions";
 		$where_sql = self::get_where_sql( $r['where'] );
 		$limit_sql = self::get_paged_sql($r['pagination']);
-		$orderby_sql = ! empty( $r['orderby'] ) ? self::get_orderby_sql($r['orderby']) : '';
+		$orderby_sql = self::get_orderby_sql($r['orderby']);
 		$groupby_sql = ! empty( $r['groupby'] ) ? "GROUP BY {$r['groupby']}" : '';
 
-		$sql = "{$select} {$from_sql} {$where_sql} {$groupby_sql} {$orderby_sql} {$limit_sql}";
+		$sql = "{$select_sql} {$from_sql} {$where_sql} {$groupby_sql} {$orderby_sql} {$limit_sql}";
 
 		return $wpdb->get_results( $sql, "ARRAY_A" );
 
 	}
 
 	/**
-	 * Get Orderby SQL
+	 * Get Orderby SQL.
 	 * 
 	 * Checks against the columns available and order
 	 * arguments, then spits out usable SQL if everything
 	 * looks okay.
 	 * 
-	 * @return string The ORDER BY clause of an SQL query.
+	 * @param array $args { 
+	 *     Optional. An array of arguments.
+	 *     
+	 *     @type string $column Default 'id'. The column to order by.
+	 *     @type string $order Default 'DESC'. The order of the items.
+	 * }
+	 * 
+	 * @return string The ORDER BY clause of an SQL query, or 
+	 * 				  nothing if the args are empty or malformed.
 	 */
 	public static function get_orderby_sql( $args = [] ) {
 
@@ -201,7 +295,6 @@ class CB_Transactions_Transaction {
 		if ( !in_array(strtolower($r['column']), $valid_sql ) ) {
 			return $sql;
 		}
-
 
 		if ( !in_array( strtoupper($r['order']), $valid_sql ) ) {
 			return $sql;

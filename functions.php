@@ -132,29 +132,21 @@ add_action(
 				$user_id = intval(get_current_user_id());
 
 				$cb_core_params = array(
-					'transactions'=> admin_url( 'admin-ajax.php?action=cb_transactions_get_transactions' ),
+					'get_transactions' => home_url('/wp-json/cb-ajax/v1/transactions/get'),
 					'user_id'	=> $user_id,
 				);
 
 				$cb_core_admin_params = array(
 					'get_participation' => home_url('/wp-json/cb-ajax/v1/participation/get'),
 					'get_transactions' => home_url('/wp-json/cb-ajax/v1/transactions/get'),
-					'total'			=> admin_url( 'admin-ajax.php?action=cb_participation_get_total_participation' ),
-					'paged'			=> admin_url( 'admin-ajax.php?action=cb_participation_get_paged_participation' ),
-					'create'		=> admin_url( 'admin-ajax.php?action=cb_participation_create_participation' ),
-					'update'		=> admin_url( 'admin-ajax.php?action=cb_participation_update_participation' ),
-					'transactions'	=> admin_url( 'admin-ajax.php?action=cb_participation_get_transactions' ),
-					'total_transactions'	=> admin_url( 'admin-ajax.php?action=cb_participation_get_total_transactions' ),
+					'update'		=> home_url('/wp-json/cb-ajax/v1/participation/update'),
 					'nonce'			=> wp_create_nonce( 'cb_participation_post' ),
 				);
 
 				$cb_participation_params = array(
-					'total'			=> admin_url( 'admin-ajax.php?action=cb_participation_get_total_participation' ),
 					'get'			=> home_url('/wp-json/cb-ajax/v1/participation/get'),
-					'new'		=> admin_url( 'admin-ajax.php?action=cb_participation_new_participation' ),
-					'update'		=> admin_url( 'admin-ajax.php?action=cb_participation_update_participation' ),
-					'transactions'	=> admin_url( 'admin-ajax.php?action=cb_participation_get_transactions' ),
-					'total_transactions'	=> admin_url( 'admin-ajax.php?action=cb_participation_get_total_transactions' ),
+					'new'			=> home_url('/wp-json/cb-ajax/v1/participation/new'),
+					'update'		=> home_url('/wp-json/cb-ajax/v1/participation/update'),
 					'nonce'			=> wp_create_nonce( 'cb_participation_post' ),
 				);
 
@@ -396,3 +388,24 @@ function cb_flush_rewrite_rules() {
 	flush_rewrite_rules();
 }
 add_action( 'after_plugin_or_theme_update', 'cb_flush_rewrite_rules' );
+
+/**
+ * CB Get PATCH Data
+ * 
+ * Retrieves data from a PATCH request and returns it as an
+ * associative array.
+ * 
+ * @return array The PATCH request body as an associative array.
+ * 
+ * @package ConfettiBits
+ * @since 2.3.0
+ */
+function cb_get_patch_data() {
+
+	if ( !cb_is_patch_request() ) {
+		return;
+	}
+	
+	return json_decode(file_get_contents('php://input'), true);
+	
+}

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Confetti Bits
- * Plugin URI:  https://dustindelgross.com/
+ * Plugin URI:  https://github.com/dustindelgross/confetti-bits
  * Description: This is a plugin that works in tandem with the
  * TeamCTG child theme that allows users to register participation
  * at company events to receive points (Confetti Bits), which they
@@ -27,7 +27,6 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 *
 		 * @var bool
 		 */
-
 		public $do_autoload = true;
 
 		/**

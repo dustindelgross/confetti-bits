@@ -112,8 +112,7 @@ function cb_text_input( $args = array() ) {
  * 		Required.
  * 		@see cb_select_options()
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_get_select_input( $args = array() ) {
@@ -125,7 +124,7 @@ function cb_templates_get_select_input( $args = array() ) {
 			'label'				=> 'Select from the Following',
 			'placeholder'		=> '',
 			'required'			=> false,
-			'select_options'	=> array()
+			'select_options'	=> []
 		)
 	);
 
@@ -133,7 +132,7 @@ function cb_templates_get_select_input( $args = array() ) {
 
 	if ( ! empty($r['placeholder'] ) ) {
 		$r['select_options'] = array_merge( 
-			[$r['placeholder'] => ['disabled' => true, 'selected' => true]],
+			[$r['placeholder'] => ['selected' => true]],
 			$r['select_options']
 		);
 	}
@@ -167,14 +166,13 @@ function cb_templates_get_select_input( $args = array() ) {
  * 
  * @see cb_select_input()
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_get_select_options( $args = array() ) {
 
 	$markup = '';
-
+	
 	foreach ( $args as $label => $options ) {
 
 		if ( empty( $label ) ) {
@@ -204,8 +202,7 @@ function cb_templates_get_select_options( $args = array() ) {
  * 
  * @see cb_get_select_input()
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_select_input( $args = array() ) {

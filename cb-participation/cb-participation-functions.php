@@ -7,8 +7,7 @@ defined( 'ABSPATH' ) || exit;
  * These are going to be all of our CRUD functions for 
  * the participation component.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.2.0
  */
 
@@ -57,8 +56,7 @@ defined( 'ABSPATH' ) || exit;
  * 											media files submitted along with the entry.
  * }
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.2.0
  */
 function cb_participation_new_participation( array $args ) {
@@ -107,20 +105,12 @@ function cb_participation_new_participation( array $args ) {
 
 }
 
-
-
-
-
-
-
-
 /**
  * Confetti Bits Update Request Status
  * 
  * Update the request status for a participation entry.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.2.0
  */
 function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_modified = '', $status = '', $transaction_id = 0 ) {
@@ -160,8 +150,7 @@ function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_m
  * We're probably going to deprecate all over this bad boy as
  * we continue to transition everything to async.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.1.0
  */
 function cb_participation_update_handler() {
@@ -266,8 +255,6 @@ function cb_participation_update_handler() {
 }
 add_action( 'bp_actions', 'cb_participation_update_handler' );
 
-
-
 /**
  * Confetti Bits Participation New Transaction
  * 
@@ -288,8 +275,7 @@ add_action( 'bp_actions', 'cb_participation_update_handler' );
  * 
  * @return int|string Transaction ID on success, error on failure.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.1.0
  */
 function cb_participation_new_transaction( $args = array() ) {
@@ -373,8 +359,7 @@ function cb_participation_new_transaction( $args = array() ) {
  * 
  * @return int $amount The amount we extracted.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.1.0
  */
 function cb_participation_get_amount( $transaction_id, $event_type = '', $prestatus = '', $status = '', $override = 0 ) {
@@ -433,8 +418,7 @@ function cb_participation_get_amount( $transaction_id, $event_type = '', $presta
  * 
  * @return string	$log_entry The log entry we extracted.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.1.0
  */
 function cb_participation_get_log_entry( $participation_id = 0, $admin_log_entry = '' ) {
@@ -499,8 +483,7 @@ function cb_participation_get_log_entry( $participation_id = 0, $admin_log_entry
  * 
  * @return array|bool Transaction if the object exists, false if not or we get an error.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.1.0
  */
 function cb_participation_get_transaction( $transaction_id = 0 ) {
@@ -512,35 +495,6 @@ function cb_participation_get_transaction( $transaction_id = 0 ) {
 	$transaction = new CB_Transactions_Transaction( $transaction_id );
 
 	return ( ! empty( $transaction ) ) ? $transaction : false;
-
-}
-
-/**
- * CB Get Uploads Directory
- * 
- * NOTE: We're removing support for file uploads ASAP. No need for them.
- * 
- * We're going to use wp_mkdir_p() to create our media directory for the 
- * Confetti Bits Participation attachments. 
- * 
- * @return bool Whether the directory was made, already exists, or failed to create.
- * 
- * @todo: We'll store the names in the wp_confetti_bits_participation table under media_filepath.
- * We'll create a unique name for each file upload. This will be in a separate function.
- * 
- * @package Confetti_Bits
- * @subpackage Participation
- * @since 2.1.0
- */
-function cb_get_upload_dir() {
-
-	$cb = Confetti_Bits();
-	$upload_dir = wp_upload_dir();
-	$confetti_bits_uploads_dir = trailingslashit( $upload_dir['basedir'] ) . 'confetti-bits';
-	$cb->upload_dir = $confetti_bits_uploads_dir;
-	wp_mkdir_p( $confetti_bits_uploads_dir );
-
-	return $cb->upload_dir;
 
 }
 
@@ -616,8 +570,7 @@ add_action( 'cb_participation_after_save', 'cb_participation_new_notifications' 
  * This will notify a user after a participation entry 
  * has been updated to a new status.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.2.0
  */
 function cb_participation_update_notifications( $data = array() ) {
