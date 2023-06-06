@@ -54,7 +54,7 @@ jQuery( document ).ready( ( $ ) => {
 	const cbGetTotalEntries = async () => {
 
 		let status = $('.cb-participation-nav-item.active').attr('cb-participation-status-type');
-		let eventType = $('.cb-form-selector[name=cb_participation_event_type]').val();
+		let eventType = $('.cb-form-selector[name=cb_participation_event_type_filter]').val();
 
 		let getData = {
 			applicant_id: cbApplicantId,
@@ -429,11 +429,11 @@ Could not find any participation entries of specified type.
 	 * @since 1.0.0
 	 */
 	function handleNavigation(el) {
-		let $this = $(el);
+		
 		let activeItem = $('.cb-participation-nav-item.active');
+		
 		activeItem.removeClass('active');
-		$this.parent().addClass('active');
-		let status = $this.parent().attr('cb-participation-status-type');
+		$(el).parent().addClass('active');
 
 		refreshTable(1);
 
@@ -593,8 +593,7 @@ Could not find any participation entries of specified type.
 					'event_date'	: participationEventDate.val(),
 					'cb_participation_upload_nonce' : cb_participation.nonce
 				},
-				success: function ( text ) {
-					let response = JSON.parse(text);
+				success: function ( response ) {
 					formMessage.setMessage( response.text, response.type );
 					participationEventSelector.val('');
 					participationEventNote.val('');

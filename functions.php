@@ -409,3 +409,32 @@ function cb_get_patch_data() {
 	return json_decode(file_get_contents('php://input'), true);
 	
 }
+
+/**
+ * CB Core Get Missing Users
+ * 
+ * Get a list of users that are present in the 
+ * confetti_bits_transactions table, but not in the 
+ * wp_users table.
+ * 
+ * @return array An associative array of user IDs.
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
+function cb_core_get_missing_users() {
+	
+	global $wpdb;
+	$cb = Confetti_Bits();
+	$users = "{$wpdb->prefix}users";
+	$select = 'SELECT t.*';
+	$from = "FROM {$cb->transactions->table_name} t";
+	$left_join1 = "LEFT JOIN {$users} u1 ON t.sender_id = u1.id";
+	$left_join2 = "LEFT JOIN {$users} u2 ON t.recipient_id = u2.id";
+	$where = "WHERE u1.id IS NULL OR u2.id IS NULL";
+	
+	$sql = "{$select} {$from} {$left_join1} {$left_join2} {$where}";
+	
+	return $wpdb->get_results( $sql, "ARRAY_A" );
+	
+}

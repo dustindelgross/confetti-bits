@@ -5,7 +5,9 @@ defined('ABSPATH') || exit;
 /** 
  * CB AJAX Participation Bulk Update
  * 
- * Processes bulk participation updates from an AJAX post request.
+ * Processes bulk participation updates from an HTTP PATCH request.
+ * @see cb_get_patch_data() for more info on how we handle PATCH 
+ * requests.
  * 
  * @package ConfettiBits\Participation
  * @since 2.2.0
@@ -61,7 +63,7 @@ function cb_ajax_update_participation() {
 	$new_transaction = 0;
 
 	if ( $admin_id == $participation->applicant_id && ! cb_is_user_site_admin() ) {
-		$feedback['text'] = "Update unsuccessful. Cannot self-approve culture participation.";
+		$feedback['text'] = "Update unsuccessful. Cannot self-approve culture participation.{$admin_id}";
 		echo json_encode($feedback);
 		die();
 	} else if ( $status === $participation->status ) {

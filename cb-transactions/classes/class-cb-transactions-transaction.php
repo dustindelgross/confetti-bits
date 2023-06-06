@@ -208,6 +208,53 @@ class CB_Transactions_Transaction {
 	}
 
 	/**
+	 * Deletes a transaction entry from the database.
+	 * 
+	 * @param array $args An associative array of arguments that gets passed
+	 * 					  to self::get_query_clauses for formatting. Accepts
+	 * 					  any property of a CB_Transactions_Transaction object.
+	 * 					  For example: ['recipient_id' => 4, 'sender_id' => 16]
+	 * @since 2.3.0
+	 */
+	public function delete( $args = [] ) {
+		$where = self::get_query_clauses($args);
+		/**
+		 * Fires before the deletion of a transaction entry.
+		 *
+		 * @since 2.3.0
+		 */
+		do_action( 'cb_transactions_before_delete' );
+		
+		return self::_delete( $where['data'], $where['format'] );
+	}
+	
+	/**
+	 * Deletes a transaction entry.
+	 *
+	 * @see wpdb::delete() for further description of paramater formats.
+	 *
+	 * @param array $where        Array of WHERE clauses to filter by, passed to
+	 *                            {@link wpdb::delete()}. Accepts any property of a
+	 *                            CB_Transactions_Transaction object.
+	 * @param array $where_format See {@link wpdb::insert()}.
+	 * @return int|false The number of rows updated, or false on error.
+	 * 
+	 * @since 2.3.0
+	 */
+	protected static function _delete( $where = array(), $where_format = array() ) {
+
+		global $wpdb;
+		$cb = Confetti_Bits();
+
+		$where_sql = self::get_where_sql( $where );
+
+		$participation = $wpdb->get_results( "SELECT * FROM {$cb->transactions->table_name} {$where_sql}" );
+
+		return $wpdb->delete( $cb->transactions->table_name, $where, $where_format );
+
+	}
+
+	/**
 	 * Gets transactions from the database.
 	 * 
 	 * Pieces together an SQL query based on the given 
@@ -350,724 +397,6 @@ class CB_Transactions_Transaction {
 
 	}
 
-	/*/
-	 * The goal here is to dynamically populate whichever balance is necessary for the
-	 * module being used. So for the requests module, we need to check today's date against
-	 * the cycle reset dates.
-	 *
-	 * If the new cycle started but our spending cycle hasn't reset yet, we'll need to
-	 * use our previous cycle's balance. If we're clear of the spending cycle start date,
-	 * we'll use our current cycle's balance.
-	/*/
-	public function get_users_request_balance( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		if ( $this->current_date < $this->current_spending_cycle_start ) {
-			$total_standard	= $this->get_users_earnings_from_previous_cycle( $user_id );
-			$total_requests	= $this->get_users_requests_from_previous_cycle( $user_id );
-		} else if ( $this->current_date > $this->current_spending_cycle_start ) {
-			$total_standard	= $this->get_users_earnings_from_current_cycle( $user_id );
-			$total_requests	= $this->get_users_requests_from_current_cycle( $user_id );
-		}
-
-		$earned		= ( ! empty ( $total_standard ) ) ? $total_standard[0]['amount'] : 0;
-		$requests	= ( ! empty ( $total_requests ) ) ? $total_requests[0]['amount'] : 0;
-
-		return $earned + $requests;
-
-	}
-
-	public function get_users_transfer_balance( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		$earned_transactions	= $this->get_users_earnings_from_current_cycle( $user_id );
-		$request_transactions	= $this->get_users_requests_from_current_cycle( $user_id );
-
-		$earned		= ( ! empty( $earned_transactions ) ) ? $earned_transactions[0]['amount'] : 0;
-		$requests	= ( ! empty( $request_transactions ) ) ? $request_transactions[0]['amount'] : 0;
-		return $earned + $requests;
-
-	}
-
-	/**
-	 * Get all transactions from whichever cycle is currently in place,
-	 * except for transfers/requests. If the date is earlier
-	 * than the spending cycle reset, we're going to use all
-	 * the transactions from the previous cycle as our earnings.
-	 * If we're after the spending reset, we'll use
-	 * all the transactions from the current cycle as our earnings.
-	 */
-	public function get_users_earning_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		if ( $this->current_date < $this->current_spending_cycle_start ) {
-			$before = $this->previous_cycle_end;
-			$after = $this->previous_cycle_start;
-		} else {
-			$before = $this->current_cycle_end;
-			$after = $this->current_cycle_start;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT identifier, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $before,
-				'after'			=> $after,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'excluded_action'	=> array( 'cb_bits_request' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	/**
-	 * Get all cb_bits_request transactions from whichever cycle is currently in place.
-	 *
-	 * If today's date is earlier than the spending cycle reset,
-	 * we're going to use all the cb_bits_request transactions
-	 * from the previous cycle as the basis for our calculations.
-	 * If we're after the spending cycle reset, we'll use
-	 * all the transactions from the current spending cycle as our request pool.
-	 */
-	public function get_users_request_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		if ( $this->current_date < $this->current_spending_cycle_start  ) {
-			$before = $this->previous_spending_cycle_end;
-			$after = $this->previous_spending_cycle_start;
-		} else {
-			$before = $this->current_spending_cycle_end;
-			$after = $this->current_spending_cycle_start;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $before,
-				'after'			=> $after,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> array( 'cb_bits_request' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	/**
-	 * Get all cb_transfer_bits transactions from whichever cycle is currently in place.
-	 *
-	 * If today's date is earlier than the spending cycle reset,
-	 * we're going to use all the cb_transfer_bits transactions
-	 * from the previous cycle as the basis for our calculations.
-	 * If we're after the spending cycle reset, we'll use
-	 * all the transfers from the current spending cycle.
-	 *
-	 * Both positive and negative amounts are all based on the recipient_id,
-	 * whereas all negative amounts are based on sender_id.
-
-
-	public function get_users_transfer_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		if ( $this->current_date < $this->current_spending_cycle_start ) {
-			$before = $this->previous_cycle_end;
-			$after = $this->previous_cycle_start;
-		} else {
-			$before = $this->current_cycle_end;
-			$after = $this->current_cycle_start;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $before,
-				'after'			=> $after,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> array( 'cb_transfer_bits' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}	 */
-
-	/*
-
-	public function get_users_earnings_from_previous_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT identifier, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $this->previous_cycle_end,
-				'after'			=> $this->previous_cycle_start,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'excluded_action'	=> array( 'cb_bits_request' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	public function get_users_requests_from_previous_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $this->previous_spending_cycle_end,
-				'after'			=> $this->previous_spending_cycle_start,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> array( 'cb_bits_request' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	public function get_users_transfers_from_previous_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $this->previous_cycle_end,
-				'after'			=> $this->previous_cycle_start,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> array( 'cb_transfer_bits' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-
-
-	public function get_users_earnings_from_current_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $this->current_cycle_end,
-				'after'			=> $this->current_cycle_start,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'excluded_action'	=> array( 'cb_bits_request' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	public function get_users_requests_from_current_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $this->current_spending_cycle_end,
-				'after'			=> $this->current_spending_cycle_start,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> array( 'cb_bits_request' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	public function get_users_transfers_from_current_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $this->current_cycle_end,
-				'after'			=> $this->current_cycle_start,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> array( 'cb_transfer_bits' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-*/
-	/*
-	public function get_users_total_from_current_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		$earnings	= $this->get_users_earnings_from_current_cycle( $user_id );
-		$requests	= $this->get_users_requests_from_current_cycle( $user_id );
-
-		$total = $earnings[0]['amount'] + $requests[0]['amount'];
-
-		return $total;
-
-	}
-
-	public function get_leaderboard_totals_groupedby_identifier_from_current_cycle() {
-
-		global $wpdb;
-
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT identifier, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'component_name'	=> 'confetti_bits',
-			'excluded_action'	=> 'cb_bits_request',
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'before'		=> $this->current_cycle_end,
-				'after'			=> $this->current_cycle_start,
-				'inclusive'		=> true,
-			),
-		), $select_sql, $from_sql );
-		$group_sql = "GROUP BY identifier";
-		$order_sql = "ORDER BY amount DESC";
-		$pagination_sql = "LIMIT 0, 15";
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$order_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-	public function get_leaderboard_requests_groupedby_identifier_from_current_cycle() {
-
-		global $wpdb;
-
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT identifier, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_bits_request',
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'before'		=> $this->current_spending_cycle_end,
-				'after'			=> $this->current_spending_cycle_start,
-				'inclusive'		=> true,
-			),
-		), $select_sql, $from_sql );
-		$group_sql = "GROUP BY identifier";
-		$order_sql = "ORDER BY amount DESC";
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-	public function get_leaderboard_requests_groupedby_identifier_from_previous_cycle() {
-
-		global $wpdb;
-
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT identifier, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_bits_request',
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'before'		=> $this->previous_spending_cycle_end,
-				'after'			=> $this->previous_spending_cycle_start,
-				'inclusive'		=> true,
-			),
-		), $select_sql, $from_sql );
-		$group_sql = "GROUP BY identifier";
-		$order_sql = "ORDER BY amount DESC";
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-	public function get_leaderboard_totals_groupedby_identifier_from_previous_cycle() {
-
-		global $wpdb;
-
-		$cb = Confetti_Bits();
-		$select_sql = "SELECT identifier, recipient_name, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'component_name'	=> 'confetti_bits',
-			'excluded_action'	=> 'cb_bits_request',
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> date(
-					'Y-m-d H:i:s',
-					strtotime( bp_get_option('cb_reset_date') . ' - 1 year' ) ),
-				'after'			=> date(
-					'Y-m-d H:i:s',
-					strtotime( bp_get_option( 'cb_reset_date' ) . ' - 2 years' )
-				),
-				'inclusive'		=> true,
-			),
-		), $select_sql, $from_sql );
-		$group_sql = "GROUP BY identifier";
-		$order_sql = "ORDER BY amount DESC";
-		$pagination_sql = "LIMIT 0, 15";
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$order_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-	public function get_totals_groupedby_identifier_from_current_cycle() {
-
-		global $wpdb;
-
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT identifier, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'component_name'	=> 'confetti_bits',
-			'excluded_action'	=> 'cb_bits_request',
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'before'		=> $this->current_cycle_end,
-				'after'			=> $this->current_cycle_start,
-				'inclusive'		=> true,
-			),
-		), $select_sql, $from_sql );
-		$group_sql = "GROUP BY identifier";
-		$order_sql = "ORDER BY amount DESC";
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-	public function get_requests_groupedby_identifier_from_current_cycle() {
-
-		global $wpdb;
-
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT identifier, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_bits_request',
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'before'		=> $this->current_spending_cycle_end,
-				'after'			=> $this->current_spending_cycle_start,
-				'inclusive'		=> true,
-			),
-		), $select_sql, $from_sql );
-		$group_sql = "GROUP BY identifier";
-		$order_sql = "ORDER BY amount DESC";
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-
-
-	public function get_totals_groupedby_identifier_from_previous_cycle() {
-
-		global $wpdb;
-
-		$cb = Confetti_Bits();
-		$select_sql = "SELECT identifier, recipient_name, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'component_name'	=> 'confetti_bits',
-			'excluded_action'	=> 'cb_bits_request',
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $this->previous_cycle_end,
-				'after'			=> $this->previous_cycle_start,
-				'inclusive'		=> true,
-			),
-		), $select_sql, $from_sql );
-		$group_sql = "GROUP BY identifier";
-		$order_sql = "ORDER BY amount DESC";
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-	public function get_requests_groupedby_identifier_from_previous_cycle() {
-
-		global $wpdb;
-
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT identifier, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_bits_request',
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'before'		=> $this->previous_spending_cycle_end,
-				'after'			=> $this->previous_spending_cycle_start,
-				'inclusive'		=> true,
-			),
-		), $select_sql, $from_sql );
-		$group_sql = "GROUP BY identifier";
-		$order_sql = "ORDER BY amount DESC";
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-
-	public function get_activity_bits_transactions_for_today( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		global $wpdb;
-
-		$bp = buddypress();
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT user_id, date_sent, component_name, component_action, COUNT(user_id) as total_count";
-
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-
-		$where_sql = self::get_where_sql( array(
-			'user_id'			=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'IN',
-				'relation'		=> 'AND',
-				'day'			=> bp_core_current_time(false, 'd'),
-				'month'			=> bp_core_current_time(false, 'm'),
-				'year'			=> bp_core_current_time(false, 'Y'),
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_activity_bits',
-		), $select_sql, $from_sql );
-
-		$order_sql = "ORDER BY date_sent desc";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	public function get_activity_bits_transactions_from_current_cycle( $user_id = 0 ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		global $wpdb;
-
-		$bp = buddypress();
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT user_id, date_sent, component_name, component_action";
-
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-
-		$where_sql = self::get_where_sql( array(
-			'user_id'			=> $user_id,
-			'date_query'		=> array (
-				'column'		=> 'date_sent',
-				'compare'		=> 'IN',
-				'relation'		=> 'AND',
-				'before'		=> $this->current_cycle_end,
-				'after'			=> $this->current_cycle_start,
-				'inclusive'		=> true,
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_activity_bits',
-		), $select_sql, $from_sql );
-
-		$order_sql = "ORDER BY date_sent desc";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-*/
-
 	public function get_activity_posts_for_user( $user_id = 0 ) {
 
 		if ( $user_id === 0 ) {
@@ -1104,175 +433,6 @@ class CB_Transactions_Transaction {
 		$sql = "{$select_sql} {$from_sql} {$where_sql} {$order_sql}";
 
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	/*
-	public function get_send_bits_transactions_for_today( $user_id ) {
-
-		global $wpdb;
-
-		$bp = buddypress();
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-
-		$where_sql = self::get_where_sql( array(
-			'sender_id'			=> $user_id,
-			'date_query'		=> array (
-				'column'		=> 'date_sent',
-				'compare'		=> 'IN',
-				'relation'		=> 'AND',
-				'day'			=> bp_core_current_time(false, 'd'),
-				'month'			=> bp_core_current_time(false, 'm'),
-				'year'			=> bp_core_current_time(false, 'Y'),
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_send_bits',
-		), $select_sql, $from_sql );
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$order_sql = "ORDER BY date_sent desc";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$order_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	public function get_transfer_bits_transactions_for_today( $user_id ) {
-
-		global $wpdb;
-
-		$bp = buddypress();
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-
-		$where_sql = self::get_where_sql( array(
-			'sender_id'			=> $user_id,
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array (
-				'column'		=> 'date_sent',
-				'compare'		=> 'IN',
-				'relation'		=> 'AND',
-				'day'			=> bp_core_current_time(false, 'd'),
-				'month'			=> bp_core_current_time(false, 'm'),
-				'year'			=> bp_core_current_time(false, 'Y'),
-			),
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_transfer_bits',
-		), $select_sql, $from_sql );
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$order_sql = "ORDER BY date_sent desc";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$order_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	public function get_send_bits_transactions_for_recipient( $user_id ) {
-
-		global $wpdb;
-
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, item_id, secondary_item_id, user_id, sender_id, sender_name, recipient_id, recipient_name, identifier, date_sent, log_entry, component_name, component_action,  amount";
-
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_send_bits',
-		), $select_sql, $from_sql );
-
-		$order_sql = "ORDER BY date_sent desc";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$order_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-	}
-
-	public function get_users_total_earnings_from_previous_cycle( $user_id ) {
-
-		if ( $user_id === 0 ) {
-			return;
-		}
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$select_sql = "SELECT id, SUM(amount) as amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'date_query'		=> array(
-				'column'		=> 'date_sent',
-				'compare'		=> 'BETWEEN',
-				'relation'		=> 'AND',
-				'before'		=> $this->current_cycle_end,
-				'after'			=> $this->current_cycle_start,
-				'inclusive'		=> true,
-			),
-			'amount_comparison'	=> '>',
-			'amount'			=> 0,
-			'component_name'	=> 'confetti_bits',
-			'excluded_action'	=> array( 'cb_transfer_bits' ),
-		), $select_sql, $from_sql );
-
-		$group_sql = "GROUP BY identifier";
-
-		$pagination_sql = "LIMIT 0, 1";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
-	}
-
-	*/
-
-	public function get_paged_transactions_for_user( $user_id, $args = array() ) {
-		global $wpdb;
-		$bp = buddypress();
-		$cb = Confetti_Bits();
-		$defaults = array (
-			'page'		=> 1,
-			'per_page'	=> 7,
-		);
-		$r = bp_parse_args( $args, $defaults, 'cb_transactions_get_transactions_for_user' );
-		$select_sql = "SELECT id, date_sent, log_entry, amount";
-		$from_sql = "FROM {$cb->transactions->table_name} n ";
-		$where_sql = self::get_where_sql( array(
-			'recipient_id'		=> $user_id,
-			'component_name'	=> 'confetti_bits',
-		), $select_sql, $from_sql );
-
-		$prefetch_select_sql = "SELECT id, COUNT(id) AS total_rows";
-
-		$prefetch_sql = "{$prefetch_select_sql} {$from_sql} {$where_sql}";
-
-		$wpdb_prefetch_total = $wpdb->get_results( $prefetch_sql, 'ARRAY_A');
-
-		$this->total_pages = ceil($wpdb_prefetch_total[0]['total_rows']/$r['per_page']);
-
-		$page_val = ( $r['page'] - 1 ) * $r['per_page'];
-
-		/* * * * * * * * * * * v v v page v v v , v v # of rows v v * * */
-		$pagination_sql 	= "LIMIT {$page_val}, {$r['per_page']}";
-
-		$order_sql = "ORDER BY date_sent DESC";
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$order_sql} {$pagination_sql}";
-
-		return $wpdb->get_results( $sql, 'ARRAY_A' );
-
 	}
 
 	public static function get_date_query_sql( $date_query = array() ) {
@@ -1426,32 +586,112 @@ class CB_Transactions_Transaction {
 		return $where;
 
 	}
+	
+	/**
+	 * Assemble query clauses, based on arguments, to pass to $wpdb methods.
+	 *
+	 * The insert(), update(), and delete() methods of {@link wpdb} expect
+	 * arguments of the following forms:
+	 *
+	 * - associative arrays whose key/value pairs are column => value, to
+	 *   be used in WHERE, SET, or VALUES clauses.
+	 * - arrays of "formats", which tell $wpdb->prepare() which type of
+	 *   value to expect when sanitizing (eg, array( '%s', '%d' ))
+	 *
+	 * This utility method can be used to assemble both kinds of params,
+	 * out of a single set of associative array arguments, such as:
+	 *
+	 *     $args = array(
+	 *         'applicant_id' => 4,
+	 * 		   'component_action' => 'cb_participation_new'
+	 *     );
+	 *
+	 * This will be converted to:
+	 *
+	 *     array(
+	 *         'data' => array(
+	 *             'applicant_id' => 4,
+	 *             'component_action' => 'cb_participation_new',
+	 *         ),
+	 *         'format' => array(
+	 *             '%d',
+	 *             '%s',
+	 *         ),
+	 *     )
+	 *
+	 * which can easily be passed as arguments to the $wpdb methods.
+	 *
+	 *
+	 * @param array $args Associative array of filter arguments.
+	 *                    
+	 * @return array Associative array of 'data' and 'format' args.
+	 */
+	protected static function get_query_clauses( $args = array() ) {
+		$where_clauses = array(
+			'data'   => array(),
+			'format' => array(),
+		);
 
-	protected static function convert_orderby_to_order_by_term( $orderby ) {
-		$order_by_term = '';
-
-		switch ( $orderby ) {
-			case 'id':
-				$order_by_term = 'm.id';
-				break;
-			case 'sender_id':
-			case 'user_id':
-				$order_by_term = 'm.sender_id';
-				break;
-			case 'amount' :
-				$order_by_term = 'SUM( m.amount ) AS amount';
-				break;
-			case 'date_sent':
-			default:
-				$order_by_term = 'm.date_sent';
-				break;
+		if ( ! empty( $args['id'] ) ) {
+			$where_clauses['data']['id'] = absint( $args['id'] );
+			$where_clauses['format'][]   = '%d';
 		}
 
-		return $order_by_term;
+		if ( ! empty( $args['sender_id'] ) ) {
+			$where_clauses['data']['sender_id'] = absint( $args['sender_id'] );
+			$where_clauses['format'][]        = '%d';
+		}
+
+		if ( ! empty( $args['recipient_id'] ) ) {
+			$where_clauses['data']['recipient_id'] = absint( $args['recipient_id'] );
+			$where_clauses['format'][]        = '%d';
+		}
+
+		if ( ! empty( $args['item_id'] ) ) {
+			$where_clauses['data']['item_id'] = absint( $args['item_id'] );
+			$where_clauses['format'][]        = '%d';
+		}
+
+		if ( ! empty( $args['secondary_item_id'] ) ) {
+			$where_clauses['data']['secondary_item_id'] = absint( $args['secondary_item_id'] );
+			$where_clauses['format'][]                  = '%d';
+		}
+
+		if ( ! empty( $args['log_entry'] ) ) {
+			$where_clauses['data']['log_entry'] = $args['log_entry'];
+			$where_clauses['format'][]               = '%s';
+		}
+
+		if ( ! empty( $args['date_sent'] ) ) {
+			$where_clauses['data']['date_sent'] = $args['date_sent'];
+			$where_clauses['format'][]               = '%s';
+		}
+
+		if ( ! empty( $args['amount'] ) ) {
+			$where_clauses['data']['amount'] = $args['amount'];
+			$where_clauses['format'][]               = '%d';
+		}
+
+		if ( ! empty( $args['component_name'] ) ) {
+			$where_clauses['data']['component_name'] = $args['component_name'];
+			$where_clauses['format'][]               = '%s';
+		}
+
+		if ( ! empty( $args['component_action'] ) ) {
+			$where_clauses['data']['component_action'] = $args['component_action'];
+			$where_clauses['format'][]                 = '%s';
+		}
+		
+		if ( isset( $args['event_id'] ) ) {
+			$where_clauses['data']['event_id'] = $args['event_id'];
+			$where_clauses['format'][]       = '%d';
+		}
+
+		return $where_clauses;
 	}
 
-	protected static function strip_leading_and( $s ) {
-		return preg_replace( '/^\s*AND\s*/', '', $s );
-	}
+//	protected static function strip_leading_and( $s ) {
+//		return preg_replace( '/^\s*AND\s*/', '', $s );
+//	}
 
 }

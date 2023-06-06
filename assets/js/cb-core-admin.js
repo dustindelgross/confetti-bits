@@ -117,7 +117,7 @@ jQuery(document).ready(($) => {
 	const cbGetTotalEntries = async () => {
 
 		let status = $('.cb-participation-admin-nav-item.active').attr('cb-participation-admin-status-type');
-		let eventType = $('.cb-form-selector[name=cb_participation_admin_event_type]').val();
+		let eventType = $('.cb-form-selector[name=cb_participation_admin_event_type_filter]').val();
 
 		let getData = {
 			count: true,
@@ -728,8 +728,8 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 */
 	function refreshTable(page) {
 
-		let status = $('.cb-participation-nav-item.active').attr('cb-participation-status-type');
-		let eventType = $('.cb-form-selector[name=cb_participation_event_type]').val();
+		let status = $('.cb-participation-admin-nav-item.active').attr('cb-participation-admin-status-type');
+		let eventType = $('.cb-form-selector[name=cb_participation_admin_event_type]').val();
 
 		let activePanel = $('.cb-participation-admin-panel.active');
 		let getData = {
@@ -811,16 +811,11 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @since 1.0.0
 	 */
 	function handleNavigation(el) {
-		let $this = $(el);
-		let activePanel = $($('.cb-participation-admin-nav-item.active').find('a').attr('href'));
+		
 		let activeItem = $('.cb-participation-admin-nav-item.active');
-		let id = $this.attr('href');
-
-		activePanel.removeClass('active');
+		
 		activeItem.removeClass('active');
-		activePanel = $(id);
-		$this.parent().addClass('active');
-		activePanel.addClass('active');
+		$(el).parent().addClass('active');
 
 		refreshTable(1);
 

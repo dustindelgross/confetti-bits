@@ -310,16 +310,16 @@ class CB_Participation_Participation {
 	 * out of a single set of associative array arguments, such as:
 	 *
 	 *     $args = array(
-	 *         'user_id' => 4,
-	 *         'component_name' => 'groups',
+	 *         'applicant_id' => 4,
+	 * 		   'component_action' => 'cb_participation_new'
 	 *     );
 	 *
 	 * This will be converted to:
 	 *
 	 *     array(
 	 *         'data' => array(
-	 *             'user_id' => 4,
-	 *             'component_name' => 'groups',
+	 *             'applicant_id' => 4,
+	 *             'component_action' => 'cb_participation_new',
 	 *         ),
 	 *         'format' => array(
 	 *             '%d',
@@ -487,7 +487,7 @@ class CB_Participation_Participation {
 	 *
 	 * @param array $where        Array of WHERE clauses to filter by, passed to
 	 *                            {@link wpdb::delete()}. Accepts any property of a
-	 *                            BP_Notification_Notification object.
+	 *                            CB_Participation_Participation object.
 	 * @param array $where_format See {@link wpdb::insert()}.
 	 * @return int|false The number of rows updated, or false on error.
 	 */
