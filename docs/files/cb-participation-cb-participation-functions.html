@@ -90,6 +90,10 @@
                 <a href="packages/ConfettiBits-Transactions.html" class="">Transactions</a>
                 
             </li>
+                    <li>
+                <a href="packages/ConfettiBits-Core.html" class="">Core</a>
+                
+            </li>
             </ul>
 
                         </section>
@@ -227,7 +231,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -282,8 +286,6 @@ We'll use the applicant_id for this.
 										Helps the API know which notification format to use.
 	@type	string	$status				The status of the participation entry.
 										Common statuses include &quot;new&quot;, &quot;approved&quot;, &quot;denied&quot;, or &quot;pending&quot;.
-	@type	array	$media_filepath		An indexed array of filepaths to the
-										media files submitted along with the entry.
 </code></pre>
 <p>}</p>
 </section>
@@ -319,7 +321,7 @@ We'll use the applicant_id for this.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">116</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -411,6 +413,7 @@ We'll use the applicant_id for this.
 
         <section class="phpdocumentor-description"><p>We're probably going to deprecate all over this bad boy as
 we continue to transition everything to async.</p>
+<p>Update: we did indeed do that. B)</p>
 </section>
 
     
@@ -442,7 +445,7 @@ we continue to transition everything to async.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">281</span>
+    <span class="phpdocumentor-element-found-in__line">280</span>
 
     </aside>
 
@@ -514,7 +517,7 @@ for the participation entry.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">364</span>
 
     </aside>
 
@@ -610,7 +613,7 @@ for the participation entry.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">424</span>
+    <span class="phpdocumentor-element-found-in__line">423</span>
 
     </aside>
 
@@ -681,7 +684,7 @@ for the participation entry.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">489</span>
+    <span class="phpdocumentor-element-found-in__line">488</span>
 
     </aside>
 
@@ -744,7 +747,7 @@ and perform operations based on that result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">501</span>
+    <span class="phpdocumentor-element-found-in__line">500</span>
 
     </aside>
 
@@ -778,7 +781,7 @@ and perform operations based on that result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">576</span>
+    <span class="phpdocumentor-element-found-in__line">577</span>
 
     </aside>
 
@@ -811,6 +814,15 @@ has been updated to a new status.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">TODO:</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Add support for denied requests.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">

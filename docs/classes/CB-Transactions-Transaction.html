@@ -90,6 +90,10 @@
                 <a href="packages/ConfettiBits-Transactions.html" class="">Transactions</a>
                 
             </li>
+                    <li>
+                <a href="packages/ConfettiBits-Core.html" class="">Core</a>
+                
+            </li>
             </ul>
 
                         </section>
@@ -305,11 +309,17 @@ with the BuddyBoss Notifications API.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/CB-Transactions-Transaction.html#method_delete">delete()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Deletes a transaction entry from the database.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Transactions-Transaction.html#method_get_activity_posts_for_user">get_activity_posts_for_user()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Get all cb_transfer_bits transactions from whichever cycle is currently in place.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Transactions-Transaction.html#method_get_date_query_sql">get_date_query_sql()</a>
@@ -325,12 +335,6 @@ with the BuddyBoss Notifications API.</dd>
 <dd>Get Orderby SQL.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Transactions-Transaction.html#method_get_paged_transactions_for_user">get_paged_transactions_for_user()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Transactions-Transaction.html#method_get_transactions">get_transactions()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -339,35 +343,6 @@ with the BuddyBoss Notifications API.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Transactions-Transaction.html#method_get_users_balance">get_users_balance()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Transactions-Transaction.html#method_get_users_earning_cycle">get_users_earning_cycle()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>Get all transactions from whichever cycle is currently in place,
-except for transfers/requests. If the date is earlier
-than the spending cycle reset, we&#039;re going to use all
-the transactions from the previous cycle as our earnings.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Transactions-Transaction.html#method_get_users_request_balance">get_users_request_balance()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Transactions-Transaction.html#method_get_users_request_cycle">get_users_request_cycle()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>Get all cb_bits_request transactions from whichever cycle is currently in place.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Transactions-Transaction.html#method_get_users_transfer_balance">get_users_transfer_balance()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -385,13 +360,14 @@ the transactions from the previous cycle as our earnings.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/CB-Transactions-Transaction.html#method__insert">_insert()</a>
+    <a href="classes/CB-Transactions-Transaction.html#method__delete">_delete()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: int|false    </span>
 </dt>
+<dd>Deletes a transaction entry.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/CB-Transactions-Transaction.html#method_convert_orderby_to_order_by_term">convert_orderby_to_order_by_term()</a>
+    <a href="classes/CB-Transactions-Transaction.html#method__insert">_insert()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -404,13 +380,14 @@ the transactions from the previous cycle as our earnings.</dd>
 <dd>Assemble the LIMIT clause of a get() SQL statement.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/CB-Transactions-Transaction.html#method_get_where_sql">get_where_sql()</a>
+    <a href="classes/CB-Transactions-Transaction.html#method_get_query_clauses">get_query_clauses()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>Assemble query clauses, based on arguments, to pass to $wpdb methods.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/CB-Transactions-Transaction.html#method_strip_leading_and">strip_leading_and()</a>
+    <a href="classes/CB-Transactions-Transaction.html#method_get_where_sql">get_where_sql()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -993,6 +970,68 @@ with the BuddyBoss Notifications API.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_delete">
+        delete()
+        <a href="classes/CB-Transactions-Transaction.html#method_delete" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">219</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deletes a transaction entry from the database.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$args</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>An associative array of arguments that gets passed
+to self::get_query_clauses for formatting. Accepts
+any property of a CB_Transactions_Transaction object.
+For example: ['recipient_id' =&gt; 4, 'sender_id' =&gt; 16]</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Transactions-Transaction.html#method_delete#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_get_activity_posts_for_user">
         get_activity_posts_for_user()
         <a href="classes/CB-Transactions-Transaction.html#method_get_activity_posts_for_user" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1001,60 +1040,18 @@ with the BuddyBoss Notifications API.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1071</span>
+    <span class="phpdocumentor-element-found-in__line">400</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get all cb_transfer_bits transactions from whichever cycle is currently in place.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">get_activity_posts_for_user</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-        <section class="phpdocumentor-description"><p>If today's date is earlier than the spending cycle reset,
-we're going to use all the cb_transfer_bits transactions
-from the previous cycle as the basis for our calculations.
-If we're after the spending cycle reset, we'll use
-all the transfers from the current spending cycle.</p>
-<p>Both positive and negative amounts are all based on the recipient_id,
-whereas all negative amounts are based on sender_id.</p>
-<p>public function get_users_transfer_cycle( $user_id = 0 ) {</p>
-<p>if ( $user_id === 0 ) {
-return;
-}</p>
-<p>if ( $this-&gt;current_date &lt; $this-&gt;current_spending_cycle_start ) {
-$before = $this-&gt;previous_cycle_end;
-$after = $this-&gt;previous_cycle_start;
-} else {
-$before = $this-&gt;current_cycle_end;
-$after = $this-&gt;current_cycle_start;
-}</p>
-<p>global $wpdb;
-$cb = Confetti_Bits();</p>
-<p>$select_sql = &quot;SELECT id, SUM(amount) as amount&quot;;
-$from_sql = &quot;FROM {$cb-&gt;transactions-&gt;table_name} n &quot;;
-$where_sql = self::get_where_sql( array(
-'recipient_id'		=&gt; $user_id,
-'date_query'		=&gt; array(
-'column'		=&gt; 'date_sent',
-'compare'		=&gt; 'BETWEEN',
-'relation'		=&gt; 'AND',
-'before'		=&gt; $before,
-'after'			=&gt; $after,
-'inclusive'		=&gt; true,
-),
-'component_name'	=&gt; 'confetti_bits',
-'component_action'	=&gt; array( 'cb_transfer_bits' ),
-), $select_sql, $from_sql );</p>
-<p>$group_sql = &quot;GROUP BY identifier&quot;;</p>
-<p>$pagination_sql = &quot;LIMIT 0, 1&quot;;</p>
-<p>$sql = &quot;{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$pagination_sql}&quot;;</p>
-<p>return $wpdb-&gt;get_results( $sql, 'ARRAY_A' );
-}</p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1084,7 +1081,7 @@ $where_sql = self::get_where_sql( array(
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1278</span>
+    <span class="phpdocumentor-element-found-in__line">438</span>
 
     </aside>
 
@@ -1125,7 +1122,7 @@ $where_sql = self::get_where_sql( array(
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">279</span>
+    <span class="phpdocumentor-element-found-in__line">326</span>
 
     </aside>
 
@@ -1179,54 +1176,6 @@ nothing if the args are empty or malformed.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_get_paged_transactions_for_user">
-        get_paged_transactions_for_user()
-        <a href="classes/CB-Transactions-Transaction.html#method_get_paged_transactions_for_user" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">1241</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get_paged_transactions_for_user</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user_id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$args</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_get_transactions">
         get_transactions()
         <a href="classes/CB-Transactions-Transaction.html#method_get_transactions" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1235,7 +1184,7 @@ nothing if the args are empty or malformed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">237</span>
+    <span class="phpdocumentor-element-found-in__line">284</span>
 
     </aside>
 
@@ -1320,7 +1269,7 @@ determine the LIMIT clause.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">338</span>
+    <span class="phpdocumentor-element-found-in__line">385</span>
 
     </aside>
 
@@ -1328,184 +1277,6 @@ determine the LIMIT clause.
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">get_users_balance</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user_id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get_users_earning_cycle">
-        get_users_earning_cycle()
-        <a href="classes/CB-Transactions-Transaction.html#method_get_users_earning_cycle" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">406</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get all transactions from whichever cycle is currently in place,
-except for transfers/requests. If the date is earlier
-than the spending cycle reset, we&#039;re going to use all
-the transactions from the previous cycle as our earnings.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get_users_earning_cycle</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-        <section class="phpdocumentor-description"><p>If we're after the spending reset, we'll use
-all the transactions from the current cycle as our earnings.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user_id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get_users_request_balance">
-        get_users_request_balance()
-        <a href="classes/CB-Transactions-Transaction.html#method_get_users_request_balance" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">362</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get_users_request_balance</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user_id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get_users_request_cycle">
-        get_users_request_cycle()
-        <a href="classes/CB-Transactions-Transaction.html#method_get_users_request_cycle" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">457</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get all cb_bits_request transactions from whichever cycle is currently in place.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get_users_request_cycle</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-        <section class="phpdocumentor-description"><p>If today's date is earlier than the spending cycle reset,
-we're going to use all the cb_bits_request transactions
-from the previous cycle as the basis for our calculations.
-If we're after the spending cycle reset, we'll use
-all the transactions from the current spending cycle as our request pool.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user_id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get_users_transfer_balance">
-        get_users_transfer_balance()
-        <a href="classes/CB-Transactions-Transaction.html#method_get_users_transfer_balance" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">383</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get_users_transfer_balance</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1603,6 +1374,94 @@ all the transactions from the current spending cycle as our request pool.</p>
             -protected
                                     -static                    "
 >
+    <h4 class="phpdocumentor-element__name" id="method__delete">
+        _delete()
+        <a href="classes/CB-Transactions-Transaction.html#method__delete" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">244</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deletes a transaction entry.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">_delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where_format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|false</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$where</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Array of WHERE clauses to filter by, passed to
+<a href="wpdb::delete()"></a>. Accepts any property of a
+CB_Transactions_Transaction object.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$where_format</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>See <a href="wpdb::insert()"></a>.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Transactions-Transaction.html#method__delete#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\wpdb::delete()">wpdb::delete()</abbr></span>
+                                        
+                                                 <section class="phpdocumentor-description"><p>for further description of paramater formats.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">int|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The number of rows updated, or false on error.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                    -static                    "
+>
     <h4 class="phpdocumentor-element__name" id="method__insert">
         _insert()
         <a href="classes/CB-Transactions-Transaction.html#method__insert" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1651,47 +1510,6 @@ all the transactions from the current spending cycle as our request pool.</p>
             -protected
                                     -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_convert_orderby_to_order_by_term">
-        convert_orderby_to_order_by_term()
-        <a href="classes/CB-Transactions-Transaction.html#method_convert_orderby_to_order_by_term" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">1430</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">convert_orderby_to_order_by_term</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$orderby</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$orderby</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                    -static                    "
->
     <h4 class="phpdocumentor-element__name" id="method_get_paged_sql">
         get_paged_sql()
         <a href="classes/CB-Transactions-Transaction.html#method_get_paged_sql" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1700,7 +1518,7 @@ all the transactions from the current spending cycle as our request pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">323</span>
+    <span class="phpdocumentor-element-found-in__line">370</span>
 
     </aside>
 
@@ -1750,6 +1568,87 @@ the page number and items per page. {
             -protected
                                     -static                    "
 >
+    <h4 class="phpdocumentor-element__name" id="method_get_query_clauses">
+        get_query_clauses()
+        <a href="classes/CB-Transactions-Transaction.html#method_get_query_clauses" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">629</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Assemble query clauses, based on arguments, to pass to $wpdb methods.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_query_clauses</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+        <section class="phpdocumentor-description"><p>The insert(), update(), and delete() methods of <a href="wpdb"></a> expect
+arguments of the following forms:</p>
+<ul>
+<li>associative arrays whose key/value pairs are column =&gt; value, to
+be used in WHERE, SET, or VALUES clauses.</li>
+<li>arrays of &quot;formats&quot;, which tell $wpdb-&gt;prepare() which type of
+value to expect when sanitizing (eg, array( '%s', '%d' ))</li>
+</ul>
+<p>This utility method can be used to assemble both kinds of params,
+out of a single set of associative array arguments, such as:</p>
+<pre class="prettyprint"><code class="prettyprint">$args = array(
+    'applicant_id' =&gt; 4,
+	   'component_action' =&gt; 'cb_participation_new'
+);
+</code></pre>
+<p>This will be converted to:</p>
+<pre class="prettyprint"><code class="prettyprint">array(
+    'data' =&gt; array(
+        'applicant_id' =&gt; 4,
+        'component_action' =&gt; 'cb_participation_new',
+    ),
+    'format' =&gt; array(
+        '%d',
+        '%s',
+    ),
+)
+</code></pre>
+<p>which can easily be passed as arguments to the $wpdb methods.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$args</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Associative array of filter arguments.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Associative array of 'data' and 'format' args.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                    -static                    "
+>
     <h4 class="phpdocumentor-element__name" id="method_get_where_sql">
         get_where_sql()
         <a href="classes/CB-Transactions-Transaction.html#method_get_where_sql" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1758,7 +1657,7 @@ the page number and items per page. {
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1293</span>
+    <span class="phpdocumentor-element-found-in__line">453</span>
 
     </aside>
 
@@ -1776,47 +1675,6 @@ the page number and items per page. {
                 <span class="phpdocumentor-signature__argument__name">$args</span>
                 : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
                  = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_strip_leading_and">
-        strip_leading_and()
-        <a href="classes/CB-Transactions-Transaction.html#method_strip_leading_and" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">1453</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">strip_leading_and</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$s</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$s</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
@@ -1961,23 +1819,19 @@ the page number and items per page. {
             <li>
                 <ul class="phpdocumentor-list -clean">
                                             <li><a href="classes/CB-Transactions-Transaction.html#method___construct">__construct()</a></li>
+                                            <li><a href="classes/CB-Transactions-Transaction.html#method_delete">delete()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method_get_activity_posts_for_user">get_activity_posts_for_user()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method_get_date_query_sql">get_date_query_sql()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method_get_orderby_sql">get_orderby_sql()</a></li>
-                                            <li><a href="classes/CB-Transactions-Transaction.html#method_get_paged_transactions_for_user">get_paged_transactions_for_user()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method_get_transactions">get_transactions()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method_get_users_balance">get_users_balance()</a></li>
-                                            <li><a href="classes/CB-Transactions-Transaction.html#method_get_users_earning_cycle">get_users_earning_cycle()</a></li>
-                                            <li><a href="classes/CB-Transactions-Transaction.html#method_get_users_request_balance">get_users_request_balance()</a></li>
-                                            <li><a href="classes/CB-Transactions-Transaction.html#method_get_users_request_cycle">get_users_request_cycle()</a></li>
-                                            <li><a href="classes/CB-Transactions-Transaction.html#method_get_users_transfer_balance">get_users_transfer_balance()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method_populate">populate()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method_send_bits">send_bits()</a></li>
+                                            <li><a href="classes/CB-Transactions-Transaction.html#method__delete">_delete()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method__insert">_insert()</a></li>
-                                            <li><a href="classes/CB-Transactions-Transaction.html#method_convert_orderby_to_order_by_term">convert_orderby_to_order_by_term()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method_get_paged_sql">get_paged_sql()</a></li>
+                                            <li><a href="classes/CB-Transactions-Transaction.html#method_get_query_clauses">get_query_clauses()</a></li>
                                             <li><a href="classes/CB-Transactions-Transaction.html#method_get_where_sql">get_where_sql()</a></li>
-                                            <li><a href="classes/CB-Transactions-Transaction.html#method_strip_leading_and">strip_leading_and()</a></li>
                                     </ul>
             </li>
                     </ul>

@@ -90,6 +90,10 @@
                 <a href="packages/ConfettiBits-Transactions.html" class="">Transactions</a>
                 
             </li>
+                    <li>
+                <a href="packages/ConfettiBits-Core.html" class="">Core</a>
+                
+            </li>
             </ul>
 
                         </section>
@@ -1427,7 +1431,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_participation', ).</p>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Array of WHERE clauses to filter by, passed to
 <a href="wpdb::delete()"></a>. Accepts any property of a
-BP_Notification_Notification object.</p>
+CB_Participation_Participation object.</p>
 </section>
 
             </dd>
@@ -1725,22 +1729,22 @@ value to expect when sanitizing (eg, array( '%s', '%d' ))</li>
 <p>This utility method can be used to assemble both kinds of params,
 out of a single set of associative array arguments, such as:</p>
 <pre class="prettyprint"><code class="prettyprint">$args = array(
-    'user_id' =&gt; 4,
-    'component_name' =&gt; 'groups',
+    'applicant_id' =&gt; 4,
+	   'component_action' =&gt; 'cb_participation_new'
 );
 </code></pre>
 <p>This will be converted to:</p>
 <pre class="prettyprint"><code class="prettyprint">array(
     'data' =&gt; array(
-        'user_id' =&gt; 4,
-        'component_name' =&gt; 'groups',
-    ),
-    'format' =&gt; array(
-        '%d',
-        '%s',
-    ),
-)
+        'applicant_id' =&gt; 4,
 </code></pre>
+<p>            'component_action' =&gt; 'cb_participation_new',
+),
+'format' =&gt; array(
+'%d',
+'%s',
+),
+)</p>
 <p>which can easily be passed as arguments to the $wpdb methods.</p>
 </section>
 

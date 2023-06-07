@@ -90,6 +90,10 @@
                 <a href="packages/ConfettiBits-Transactions.html" class="">Transactions</a>
                 
             </li>
+                    <li>
+                <a href="packages/ConfettiBits-Core.html" class="">Core</a>
+                
+            </li>
             </ul>
 
                         </section>
@@ -216,6 +220,13 @@
 </dt>
 <dd>CB Participation Update Notifications</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_participation_event_type_filter">cb_participation_event_type_filter()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>CB Participation Event Type Filter</dd>
+
     </dl>
 
         
@@ -235,7 +246,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-participation.php"><a href="files/cb-ajax-cb-ajax-participation.html"><abbr title="cb-ajax/cb-ajax-participation.php">cb-ajax-participation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">15</span>
 
     </aside>
 
@@ -245,7 +256,7 @@
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">cb_ajax_update_participation</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"><p>Processes bulk participation updates from an AJAX post request.</p>
+        <section class="phpdocumentor-description"><p>Processes bulk participation updates from an HTTP PATCH request.</p>
 </section>
 
     
@@ -257,6 +268,17 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="namespaces/default.html#function_cb_get_patch_data"><abbr title="\cb_get_patch_data()">cb_get_patch_data()</abbr></a></span>
+                                        
+                                                 <section class="phpdocumentor-description"><p>for more info on how we handle PATCH
+requests.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -277,7 +299,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-participation.php"><a href="files/cb-ajax-cb-ajax-participation.html"><abbr title="cb-ajax/cb-ajax-participation.php">cb-ajax-participation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
@@ -319,7 +341,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-participation.php"><a href="files/cb-ajax-cb-ajax-participation.html"><abbr title="cb-ajax/cb-ajax-participation.php">cb-ajax-participation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">198</span>
 
     </aside>
 
@@ -362,7 +384,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -417,8 +439,6 @@ We'll use the applicant_id for this.
 										Helps the API know which notification format to use.
 	@type	string	$status				The status of the participation entry.
 										Common statuses include &quot;new&quot;, &quot;approved&quot;, &quot;denied&quot;, or &quot;pending&quot;.
-	@type	array	$media_filepath		An indexed array of filepaths to the
-										media files submitted along with the entry.
 </code></pre>
 <p>}</p>
 </section>
@@ -454,7 +474,7 @@ We'll use the applicant_id for this.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">116</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -546,6 +566,7 @@ We'll use the applicant_id for this.
 
         <section class="phpdocumentor-description"><p>We're probably going to deprecate all over this bad boy as
 we continue to transition everything to async.</p>
+<p>Update: we did indeed do that. B)</p>
 </section>
 
     
@@ -577,7 +598,7 @@ we continue to transition everything to async.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">281</span>
+    <span class="phpdocumentor-element-found-in__line">280</span>
 
     </aside>
 
@@ -649,7 +670,7 @@ for the participation entry.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">364</span>
 
     </aside>
 
@@ -745,7 +766,7 @@ for the participation entry.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">424</span>
+    <span class="phpdocumentor-element-found-in__line">423</span>
 
     </aside>
 
@@ -816,7 +837,7 @@ for the participation entry.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">489</span>
+    <span class="phpdocumentor-element-found-in__line">488</span>
 
     </aside>
 
@@ -879,7 +900,7 @@ and perform operations based on that result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">576</span>
+    <span class="phpdocumentor-element-found-in__line">577</span>
 
     </aside>
 
@@ -912,6 +933,81 @@ has been updated to a new status.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">TODO:</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Add support for denied requests.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_participation_event_type_filter">
+        cb_participation_event_type_filter()
+        <a href="namespaces/default.html#function_cb_participation_event_type_filter" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-template.php"><a href="files/cb-participation-cb-participation-template.html"><abbr title="cb-participation/cb-participation-template.php">cb-participation-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">20</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB Participation Event Type Filter</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_participation_event_type_filter</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$is_admin</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Outputs markup for a participation event type select input.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$is_admin</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Whether it's for an filter selection.
+There's probably a better way to do this,
+but we need a band-aid for now, because we're
+down to the wire on this update. :D</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_participation_event_type_filter#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">TODO:</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Find a better implementation for this!</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1039,6 +1135,7 @@ has been updated to a new status.</p>
                                                     <li><a href="namespaces/default.html#function_cb_ajax_get_participation">cb_ajax_get_participation()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_ajax_new_participation">cb_ajax_new_participation()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_ajax_update_participation">cb_ajax_update_participation()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_participation_event_type_filter">cb_participation_event_type_filter()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_get_amount">cb_participation_get_amount()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_get_log_entry">cb_participation_get_log_entry()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_get_transaction">cb_participation_get_transaction()</a></li>

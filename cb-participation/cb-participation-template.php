@@ -7,11 +7,17 @@ defined('ABSPATH') || exit;
  * 
  * Outputs markup for a participation event type select input.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @param bool $is_admin Whether it's for an filter selection.
+ * 						 There's probably a better way to do this,
+ * 						 but we need a band-aid for now, because we're
+ * 						 down to the wire on this update. :D
+ * 
+ * @TODO: Find a better implementation for this!
+ * 
+ * @package ConfettiBits\Participation
  * @since 2.2.0
  */
-function cb_participation_event_type_filter() {
+function cb_participation_event_type_filter( $is_admin = false ) {
 
 	$filter_options = array(
 		"Please select an option" => array('value' => ''),
@@ -25,10 +31,12 @@ function cb_participation_event_type_filter() {
 		'Contest' => array( 'value' => 'contest' ),
 		'Other' => array( 'value' => 'other' ),
 	);
+	
+	$action = $is_admin ? 'participation' : 'participation_admin';
 
 	return cb_select_input(
 		array(
-			'name'				=> 'cb_participation_event_type_filter',
+			'name'				=> "cb_{$action}_event_type_filter",
 			'label'				=> 'Filter By Event Type',
 			'required'			=> false,
 			'select_options'	=> $filter_options

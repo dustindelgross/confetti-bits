@@ -474,9 +474,11 @@ add_action('cb_transactions_after_send', 'cb_transactions_notifications');
  * Get the balance available to a user for the current spending
  * cycle. 
  * 
- * @since Confetti_Bits 1.3.0
  * @param int $user_id The ID for the user whose balance we want.
  * @return int The calculated balance available for requests.
+ * 
+ * @package ConfettiBits\Transactions
+ * @since 1.3.0
  */
 function cb_transactions_get_request_balance($user_id = 0)
 {
@@ -524,8 +526,7 @@ function cb_transactions_get_request_balance($user_id = 0)
  * @param int $user_id The ID for the user whose balance we want.
  * @return int The calculated balance available for transfers.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.3.0
  */
 function cb_transactions_get_transfer_balance($user_id = 0)
@@ -602,7 +603,7 @@ function cb_transactions_check_activity_bits($user_id = 0)
 
 	$transactions = cb_transactions_get_activity_transactions($user_id);
 	$activities = cb_transactions_get_activity_posts($user_id);
-	$missing_transactions = cb_calculate_activity_bits($activities, $transactions);
+	$missing_transactions = cb_transactions_calculate_activity_bits($activities, $transactions);
 
 	if (!empty($missing_transactions)) {
 		foreach ($missing_transactions as $date_sent => $id) {
@@ -634,7 +635,8 @@ function cb_transactions_check_activity_bits($user_id = 0)
  * 
  * @return array An array of activity posts, if any.
  * 
- * @since Confetti_Bits 1.3.0
+ * @package ConfettiBits\Transactions
+ * @since 1.3.0
  */
 function cb_transactions_get_activity_posts( $user_id = 0 ) {
 
@@ -658,8 +660,7 @@ function cb_transactions_get_activity_posts( $user_id = 0 ) {
  * 
  * @return array An array of transactions, if there are any.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.3.0
  */
 function cb_transactions_get_activity_transactions( $user_id = 0 ) {
@@ -689,7 +690,7 @@ function cb_transactions_get_activity_transactions( $user_id = 0 ) {
 }
 
 /**
- * CB Calculate Activity Bits
+ * CB Transactions Calculate Activity Bits
  * 
  * Calculates how many points a user should receive 
  * according to the number of unaccounted for activity
@@ -703,11 +704,10 @@ function cb_transactions_get_activity_transactions( $user_id = 0 ) {
  * @return array An array of activity posts that are 
  * missing an accompanying transaction on a given day.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.3.0
  */
-function cb_calculate_activity_bits($activities = array(), $transactions = array() )
+function cb_transactions_calculate_activity_bits($activities = array(), $transactions = array() )
 {
 
 	$activity_data = array();
@@ -751,16 +751,14 @@ function cb_calculate_activity_bits($activities = array(), $transactions = array
 
 }
 
-
 /**
- * Confetti Bits Multiarray Check
+ * CB Is Multiarray
  * 
  * Checks if the parameter is a multi-dimensional array.
  * 
  * @param array $arr The array to check.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Core
  * @since 1.3.0
  */
 function cb_is_multi_array(array $arr)
@@ -778,7 +776,6 @@ function cb_send_sitewide_notice()
 	) {
 		return;
 	}
-
 
 	$redirect_to = Confetti_Bits()->page;
 	$success = false;
@@ -807,10 +804,10 @@ function cb_send_sitewide_notice()
 	bp_core_redirect($redirect_to);
 
 }
-add_action('bp_actions', 'cb_send_sitewide_notice');
+add_action('cb_actions', 'cb_send_sitewide_notice');
 
 /**
- * CB Has Bits
+ * CB Transactions Has Bits
  * 
  * Checks whether the user has gotten 
  * Confetti Bits for a specific action this year.
@@ -821,11 +818,10 @@ add_action('bp_actions', 'cb_send_sitewide_notice');
  * @return bool Whether we found an entry for the given action
  *   within the past year.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.3.0
  */
-function cb_has_bits($action = '')
+function cb_transactions_has_bits($action = '')
 {
 
 	$user_id = get_current_user_id();
@@ -849,18 +845,17 @@ function cb_has_bits($action = '')
 }
 
 /**
- * CB Birthday Bits
+ * CB Transactions Birthday Bits
  * 
  * Gives the user Confetti Bits on their birthday.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.3.0
  */
-function cb_birthday_bits()
+function cb_transactions_birthday_bits()
 {
 
-	$birthday_bits = cb_has_bits('birthday');
+	$birthday_bits = cb_transactions_has_bits('birthday');
 
 	if (!empty($birthday_bits)) {
 		return;
@@ -889,17 +884,20 @@ function cb_birthday_bits()
 	}
 
 }
-add_action('bp_actions', 'cb_birthday_bits');
+add_action('cb_actions', 'cb_transactions_birthday_bits');
 
 /**
- * CB Anniversary Bits
+ * CB Transactions Anniversary Bits
  * 
  * Gives the user Confetti Bits on their anniversary.
+ * 
+ * @package ConfettiBits\Transactions
+ * @since 1.3.0
  */
-function cb_anniversary_bits()
+function cb_transactions_anniversary_bits()
 {
 
-	$anniversary_bits = cb_has_bits('anniversary');
+	$anniversary_bits = cb_transactions_has_bits('anniversary');
 
 	if (!empty($anniversary_bits)) {
 		return;
@@ -912,7 +910,7 @@ function cb_anniversary_bits()
 	if (date('m-d') >= $user_anniversary->format('m-d')) {
 
 
-		$amount = cb_get_amount_from_anniversary($user_anniversary);
+		$amount = cb_transactions_get_amount_from_anniversary($user_anniversary);
 
 		if ($amount === 0) {
 			return;
@@ -935,20 +933,19 @@ function cb_anniversary_bits()
 	}
 
 }
-add_action('bp_actions', 'cb_anniversary_bits');
+add_action('cb_actions', 'cb_transactions_anniversary_bits');
 
 /**
- * CB Get Amount From Anniversary
+ * CB Transactions Get Amount From Anniversary
  * 
  * @param DateTime $date
  * 
- * @return int $amount The transaction amount appropriate for the anniversary date
+ * @return int The transaction amount appropriate for the anniversary date
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.3.0
  */
-function cb_get_amount_from_anniversary($date)
+function cb_transactions_get_amount_from_anniversary($date)
 {
 
 	$amount = 0;
@@ -1000,8 +997,7 @@ function cb_get_amount_from_anniversary($date)
  * @return array $results The top 15 users by Confetti Bits balance,
  * or the top 15 users by Confetti Bits balance with the current user included
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.3.0
  */
 function cb_transactions_get_leaderboard( $limit = true, $previous = false ) {
@@ -1067,4 +1063,31 @@ function cb_transactions_get_leaderboard( $limit = true, $previous = false ) {
 
 	return $results;
 
+}
+
+/**
+ * CB Transactions Delete Transaction
+ * 
+ * Delete a transaction from the database. Do this at
+ * your own risk, you cannot undo this action.
+ * 
+ * @param array $args { 
+ *     An associative array of keys and values to check the
+ *     database for. Accepts any property of a 
+ *     CB_Transactions_Transaction object. 
+ *     Example: ['recipient_id' => 5, 'component_action' => 'cb_activity_bits']
+ *     Passing the above will delete all transactions where the
+ *     recipient_id is 5, and the component_action is cb_activity_bits.
+ * }
+ * 
+ * @return int The number of rows affected. @see $wpdb::delete()
+ * 
+ * @package ConfettiBits\Transactions
+ * @since 2.3.0
+ */
+function cb_transactions_delete_transaction( $args = [] ) {
+	
+	$transaction = new CB_Transactions_Transaction();
+	return $transaction->delete($args);
+	
 }

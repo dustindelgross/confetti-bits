@@ -1636,14 +1636,14 @@ Search.appendIndex(
             "summary": "CB\u0020Transactions\u0020Get\u0020Activity\u0020Transactions",
             "url": "namespaces/default.html#function_cb_transactions_get_activity_transactions"
         },                {
-            "fqsen": "\\cb_calculate_activity_bits\u0028\u0029",
-            "name": "cb_calculate_activity_bits",
-            "summary": "CB\u0020Calculate\u0020Activity\u0020Bits",
-            "url": "namespaces/default.html#function_cb_calculate_activity_bits"
+            "fqsen": "\\cb_transactions_calculate_activity_bits\u0028\u0029",
+            "name": "cb_transactions_calculate_activity_bits",
+            "summary": "CB\u0020Transactions\u0020Calculate\u0020Activity\u0020Bits",
+            "url": "namespaces/default.html#function_cb_transactions_calculate_activity_bits"
         },                {
             "fqsen": "\\cb_is_multi_array\u0028\u0029",
             "name": "cb_is_multi_array",
-            "summary": "Confetti\u0020Bits\u0020Multiarray\u0020Check",
+            "summary": "CB\u0020Is\u0020Multiarray",
             "url": "namespaces/default.html#function_cb_is_multi_array"
         },                {
             "fqsen": "\\cb_send_sitewide_notice\u0028\u0029",
@@ -1651,30 +1651,35 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html#function_cb_send_sitewide_notice"
         },                {
-            "fqsen": "\\cb_has_bits\u0028\u0029",
-            "name": "cb_has_bits",
-            "summary": "CB\u0020Has\u0020Bits",
-            "url": "namespaces/default.html#function_cb_has_bits"
+            "fqsen": "\\cb_transactions_has_bits\u0028\u0029",
+            "name": "cb_transactions_has_bits",
+            "summary": "CB\u0020Transactions\u0020Has\u0020Bits",
+            "url": "namespaces/default.html#function_cb_transactions_has_bits"
         },                {
-            "fqsen": "\\cb_birthday_bits\u0028\u0029",
-            "name": "cb_birthday_bits",
-            "summary": "CB\u0020Birthday\u0020Bits",
-            "url": "namespaces/default.html#function_cb_birthday_bits"
+            "fqsen": "\\cb_transactions_birthday_bits\u0028\u0029",
+            "name": "cb_transactions_birthday_bits",
+            "summary": "CB\u0020Transactions\u0020Birthday\u0020Bits",
+            "url": "namespaces/default.html#function_cb_transactions_birthday_bits"
         },                {
-            "fqsen": "\\cb_anniversary_bits\u0028\u0029",
-            "name": "cb_anniversary_bits",
-            "summary": "CB\u0020Anniversary\u0020Bits",
-            "url": "namespaces/default.html#function_cb_anniversary_bits"
+            "fqsen": "\\cb_transactions_anniversary_bits\u0028\u0029",
+            "name": "cb_transactions_anniversary_bits",
+            "summary": "CB\u0020Transactions\u0020Anniversary\u0020Bits",
+            "url": "namespaces/default.html#function_cb_transactions_anniversary_bits"
         },                {
-            "fqsen": "\\cb_get_amount_from_anniversary\u0028\u0029",
-            "name": "cb_get_amount_from_anniversary",
-            "summary": "CB\u0020Get\u0020Amount\u0020From\u0020Anniversary",
-            "url": "namespaces/default.html#function_cb_get_amount_from_anniversary"
+            "fqsen": "\\cb_transactions_get_amount_from_anniversary\u0028\u0029",
+            "name": "cb_transactions_get_amount_from_anniversary",
+            "summary": "CB\u0020Transactions\u0020Get\u0020Amount\u0020From\u0020Anniversary",
+            "url": "namespaces/default.html#function_cb_transactions_get_amount_from_anniversary"
         },                {
             "fqsen": "\\cb_transactions_get_leaderboard\u0028\u0029",
             "name": "cb_transactions_get_leaderboard",
             "summary": "CB\u0020Transactions\u0020Get\u0020Leaderboard",
             "url": "namespaces/default.html#function_cb_transactions_get_leaderboard"
+        },                {
+            "fqsen": "\\cb_transactions_delete_transaction\u0028\u0029",
+            "name": "cb_transactions_delete_transaction",
+            "summary": "CB\u0020Transactions\u0020Delete\u0020Transaction",
+            "url": "namespaces/default.html#function_cb_transactions_delete_transaction"
         },                {
             "fqsen": "\\cb_import_bits\u0028\u0029",
             "name": "cb_import_bits",
@@ -1901,6 +1906,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/CB-Transactions-Transaction.html#method__insert"
         },                {
+            "fqsen": "\\CB_Transactions_Transaction\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Deletes\u0020a\u0020transaction\u0020entry\u0020from\u0020the\u0020database.",
+            "url": "classes/CB-Transactions-Transaction.html#method_delete"
+        },                {
+            "fqsen": "\\CB_Transactions_Transaction\u003A\u003A_delete\u0028\u0029",
+            "name": "_delete",
+            "summary": "Deletes\u0020a\u0020transaction\u0020entry.",
+            "url": "classes/CB-Transactions-Transaction.html#method__delete"
+        },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_transactions\u0028\u0029",
             "name": "get_transactions",
             "summary": "Gets\u0020transactions\u0020from\u0020the\u0020database.",
@@ -1921,35 +1936,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/CB-Transactions-Transaction.html#method_get_users_balance"
         },                {
-            "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_users_request_balance\u0028\u0029",
-            "name": "get_users_request_balance",
-            "summary": "",
-            "url": "classes/CB-Transactions-Transaction.html#method_get_users_request_balance"
-        },                {
-            "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_users_transfer_balance\u0028\u0029",
-            "name": "get_users_transfer_balance",
-            "summary": "",
-            "url": "classes/CB-Transactions-Transaction.html#method_get_users_transfer_balance"
-        },                {
-            "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_users_earning_cycle\u0028\u0029",
-            "name": "get_users_earning_cycle",
-            "summary": "Get\u0020all\u0020transactions\u0020from\u0020whichever\u0020cycle\u0020is\u0020currently\u0020in\u0020place,\nexcept\u0020for\u0020transfers\/requests.\u0020If\u0020the\u0020date\u0020is\u0020earlier\nthan\u0020the\u0020spending\u0020cycle\u0020reset,\u0020we\u0027re\u0020going\u0020to\u0020use\u0020all\nthe\u0020transactions\u0020from\u0020the\u0020previous\u0020cycle\u0020as\u0020our\u0020earnings.",
-            "url": "classes/CB-Transactions-Transaction.html#method_get_users_earning_cycle"
-        },                {
-            "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_users_request_cycle\u0028\u0029",
-            "name": "get_users_request_cycle",
-            "summary": "Get\u0020all\u0020cb_bits_request\u0020transactions\u0020from\u0020whichever\u0020cycle\u0020is\u0020currently\u0020in\u0020place.",
-            "url": "classes/CB-Transactions-Transaction.html#method_get_users_request_cycle"
-        },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_activity_posts_for_user\u0028\u0029",
             "name": "get_activity_posts_for_user",
-            "summary": "Get\u0020all\u0020cb_transfer_bits\u0020transactions\u0020from\u0020whichever\u0020cycle\u0020is\u0020currently\u0020in\u0020place.",
-            "url": "classes/CB-Transactions-Transaction.html#method_get_activity_posts_for_user"
-        },                {
-            "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_paged_transactions_for_user\u0028\u0029",
-            "name": "get_paged_transactions_for_user",
             "summary": "",
-            "url": "classes/CB-Transactions-Transaction.html#method_get_paged_transactions_for_user"
+            "url": "classes/CB-Transactions-Transaction.html#method_get_activity_posts_for_user"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_date_query_sql\u0028\u0029",
             "name": "get_date_query_sql",
@@ -1961,15 +1951,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/CB-Transactions-Transaction.html#method_get_where_sql"
         },                {
-            "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aconvert_orderby_to_order_by_term\u0028\u0029",
-            "name": "convert_orderby_to_order_by_term",
-            "summary": "",
-            "url": "classes/CB-Transactions-Transaction.html#method_convert_orderby_to_order_by_term"
-        },                {
-            "fqsen": "\\CB_Transactions_Transaction\u003A\u003Astrip_leading_and\u0028\u0029",
-            "name": "strip_leading_and",
-            "summary": "",
-            "url": "classes/CB-Transactions-Transaction.html#method_strip_leading_and"
+            "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_query_clauses\u0028\u0029",
+            "name": "get_query_clauses",
+            "summary": "Assemble\u0020query\u0020clauses,\u0020based\u0020on\u0020arguments,\u0020to\u0020pass\u0020to\u0020\u0024wpdb\u0020methods.",
+            "url": "classes/CB-Transactions-Transaction.html#method_get_query_clauses"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024last_inserted_id",
             "name": "last_inserted_id",
@@ -2260,6 +2245,11 @@ Search.appendIndex(
             "name": "cb_get_patch_data",
             "summary": "CB\u0020Get\u0020PATCH\u0020Data",
             "url": "namespaces/default.html#function_cb_get_patch_data"
+        },                {
+            "fqsen": "\\cb_core_get_missing_users\u0028\u0029",
+            "name": "cb_core_get_missing_users",
+            "summary": "CB\u0020Core\u0020Get\u0020Missing\u0020Users",
+            "url": "namespaces/default.html#function_cb_core_get_missing_users"
         },                {
             "fqsen": "\\",
             "name": "\\",

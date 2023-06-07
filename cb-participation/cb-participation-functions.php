@@ -52,8 +52,6 @@ defined( 'ABSPATH' ) || exit;
  * 											Helps the API know which notification format to use.
  * 		@type	string	$status				The status of the participation entry.
  * 											Common statuses include "new", "approved", "denied", or "pending".
- * 		@type	array	$media_filepath		An indexed array of filepaths to the 
- * 											media files submitted along with the entry.
  * }
  * 
  * @package ConfettiBits\Participation
@@ -149,6 +147,8 @@ function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_m
  * 
  * We're probably going to deprecate all over this bad boy as
  * we continue to transition everything to async.
+ * 
+ * Update: we did indeed do that. B)
  * 
  * @package ConfettiBits\Participation
  * @since 2.1.0
@@ -253,7 +253,6 @@ function cb_participation_update_handler() {
 	}
 
 }
-add_action( 'bp_actions', 'cb_participation_update_handler' );
 
 /**
  * Confetti Bits Participation New Transaction
@@ -569,6 +568,8 @@ add_action( 'cb_participation_after_save', 'cb_participation_new_notifications' 
  * 
  * This will notify a user after a participation entry 
  * has been updated to a new status.
+ * 
+ * @TODO: Add support for denied requests.
  * 
  * @package ConfettiBits\Participation
  * @since 2.2.0
