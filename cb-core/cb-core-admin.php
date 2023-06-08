@@ -16,8 +16,7 @@
  * - bp_admin_setting_search_register_fields
  * We're going to have our own little box for these settings. 
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
  * @since 1.0.0
  */
 
@@ -31,8 +30,7 @@
  * `add_field` is a wordpress method that creates a field within the section we just made.
  * `bp_admin_setting_{ component }_register_fields` handles the rest.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
  * @since 1.0.0
  */
 function cb_core_admin_setting_general_register_fields( $setting ) {
@@ -100,9 +98,7 @@ function cb_core_admin_setting_general_register_fields( $setting ) {
 add_action( 'bp_admin_setting_general_register_fields', 'cb_core_admin_setting_general_register_fields' );
 
 
-function cb_core_admin_components_settings() { 
-	cb_core_admin_components_options();
-}
+
 
 function cb_admin_reset_date_options() {
 
@@ -198,7 +194,9 @@ function cb_core_admin_settings_handler() {
 }
 add_action( 'bp_admin_init', 'cb_core_admin_settings_handler' );
 
-
+function cb_core_admin_components_settings() { 
+	cb_admin_components_options();
+}
 
 function cb_admin_components_options() {
 
@@ -399,21 +397,71 @@ function cb_is_user_admin() {
 
 
 function cb_is_user_executive() {
-	return bp_current_user_can('cb_can_executive');
+	return current_user_can('cb_can_executive');
 }
 
 
 
 function cb_is_user_requests_fulfillment() {
-	return bp_current_user_can('cb_requests');
+	return current_user_can('cb_requests');
 }
 
-
+/**
+ * CB Is User Site Admin
+ * 
+ * Checks whether a user has administrative privileges.
+ * Also, @see cb_core_admin_is_user_site_admin(), because
+ * we're deprecating this for the sake of our API and 
+ * sanity (sorry besties).
+ * 
+ * @TODO: Figure out a better dev environment setup; this
+ * isn't particularly good to use as a feature-blocker.
+ * 
+ * @return bool Whether a user has administrative privileges.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
 function cb_is_user_site_admin() {
-	return current_user_can('administrator');
+	return cb_core_admin_is_user_site_admin();
 }
 
+/**
+ * CB Core Admin Is User Site Admin
+ * 
+ * Checks whether a user has administrative privileges.
+ * 
+ * @TODO: Figure out a better dev environment setup; this
+ * isn't particularly good to use as a feature-blocker.
+ * 
+ * @return bool Whether a user has administrative privileges.
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
+function cb_core_admin_is_user_site_admin( $user_id = 0 ) {
+	
+	if ( empty( $user_id ) ) {
+		return current_user_can('administrator');
+	}
+	
+	$user = new WP_User($user_id);
+	
+	return $user->has_cap('administrator');
+}
 
+/**
+ * CB Is User Participation Admin
+ * 
+ * Checks whether a user has administrative privileges over the 
+ * participation component. These privileges are granted by
+ * assigning a role on the Edit User admin page.
+ * 
+ * @return bool Whether a user is a participation admin.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
 function cb_is_user_participation_admin() {
 	return current_user_can('cb_participation_admin');
 }
@@ -544,12 +592,10 @@ function cb_core_get_roles( $type = '' ) {
 
 }
 
-/* 
+/** 
  * Let Editors manage users, and run this only once.
  * Version: 1.0.0
  */
-
-
 function editor_manage_users() {
 
 

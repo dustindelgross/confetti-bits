@@ -351,36 +351,39 @@ function cb_participation_new_transaction( $args = array() ) {
  * 
  * Attempt to extract a predetermined value from valid event types.
  * 
- * @param string $event_type	The event type to check against.
- * @param string $prestatus		The preexisting status to check against.
- * @param string $status		The status that we are changing into.
- * @param string $override		The amount override submitted in the form.
+ * @param int $transaction_id	The ID of the transaction (if any) associated
+ * 								with the participation entry.
+ * @param int $participation_id	The participation entry to check against
+ * @param string $status		The status that we are updating to.
+ * @param string $override		An amount override, typically submitted 
+ * 								via form submission or API request.
  * 
  * @return int $amount The amount we extracted.
  * 
  * @package ConfettiBits\Participation
  * @since 2.1.0
  */
-function cb_participation_get_amount( $transaction_id, $event_type = '', $prestatus = '', $status = '', $override = 0 ) {
+function cb_participation_get_amount( $transaction_id = 0, $participation_id = 0, $status = '', $override = 0 ) {
 
 	// Prevent redundant submissions.
-	if ( $event_type === '' || $prestatus === '' || $status === '' ) {
+	if ( empty( $participation_id ) || $status === '' ) {
 		return;
 	}
 
+	$participation = new CB_Participation_Participation( $participation_id );
 	$transaction = new CB_Transactions_Transaction( $transaction_id );
 	$amount = 0;
 
 	// If this is the first time we're updating the status...
 	// Only set an amount if it was approved
-	if ( $prestatus === 'new' && $status === 'approved' ) {
+	if ( $participation->status === 'new' && $status === 'approved' ) {
 
 		// If it's set in the override input, use that
 		if ( $override !== 0 ) {
 			return intval( $override );
 			// Otherwise, try to format the amount based on event type
 		} else {
-			switch ( $event_type ) {
+			switch ( $participation->event_type ) {
 				case 'holiday':
 				case 'dress_up':
 				case 'lunch':
@@ -399,7 +402,8 @@ function cb_participation_get_amount( $transaction_id, $event_type = '', $presta
 		}
 	}
 
-	if ( $prestatus === 'denied' || $prestatus === 'approved' ) {
+	// If we've updated the status before, reverse the amount in the transaction.
+	if ( $participation->status === 'denied' || $participation->status === 'approved' ) {
 		$amount = - $transaction->amount;
 	}
 

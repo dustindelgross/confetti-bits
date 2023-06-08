@@ -5,6 +5,7 @@ add_action( 'plugins_loaded', 'cb_loaded', 10 );
 add_action( 'init', 'cb_init', 1 );
 add_action( 'customize_register', 'cb_customize_register', 20 ); // After WP core.
 add_action( 'wp', 'cb_ready', 10 );
+
 add_action( 'set_current_user', 'cb_setup_current_user', 10 );
 add_action( 'setup_theme', 'cb_setup_theme', 10 );
 add_action( 'after_setup_theme', 'cb_after_setup_theme', 10 ); // After WP themes.
@@ -12,7 +13,9 @@ add_action( 'wp_enqueue_scripts', 'cb_enqueue_scripts', 5 );
 add_action( 'template_redirect', 'cb_template_redirect', 10 );
 add_action( 'generate_rewrite_rules', 'cb_generate_rewrite_rules', 10 );
 
+
 add_action( 'cb_loaded', 'cb_setup_components', 1 );
+add_action( 'cb_loaded', 'cb_core_secrets_manager_init', 2 );
 add_action( 'cb_loaded', 'cb_include', 3 );
 add_action( 'rest_api_init', 'cb_rest_api_init', 1 );
 

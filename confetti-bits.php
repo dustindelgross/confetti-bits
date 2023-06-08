@@ -96,7 +96,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 *
 		 * @return bool
 		 * 
-		 * @package Confetti_Bits
+		 * @package ConfettiBits
 		 * @since 2.3.0
 		 */
 		public function __isset( $key ) {
@@ -109,7 +109,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 *
 		 * @return mixed
 		 * 
-		 * @package Confetti_Bits
+		 * @package ConfettiBits
 		 * @since 2.3.0
 		 */
 		public function __get( $key ) {
@@ -132,7 +132,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 *
 		 * @param string $key Key to unset a value for.
 		 * 
-		 * @package Confetti_Bits
+		 * @package ConfettiBits
 		 * @since 2.3.0
 		 */
 		public function __unset( $key ) {
@@ -159,7 +159,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Define constants.
 		 *
-		 * @package Confetti_Bits
+		 * @package ConfettiBits
 		 * @since 1.0.0
 		 */
 		private function define_constants() {
@@ -187,6 +187,10 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			if ( ! defined( 'CONFETTI_BITS_PLUGIN_PATH' ) ) {
 				$this->define( 'CONFETTI_BITS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			}
+			
+			if ( !defined( 'CONFETTI_BITS_CONFIG_PATH' ) ) {
+				$this->define( 'CONFETTI_BITS_CONFIG_PATH', plugin_dir_path( __FILE__ ) . "cb-config.json" );
+			}
 
 			if ( ! defined( 'CONFETTI_BITS_PLUGIN_URL' ) ) {
 				$this->define( 'CONFETTI_BITS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -194,6 +198,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 
 			$this->plugin_dir = trailingslashit( constant( 'CONFETTI_BITS_PLUGIN_PATH' ) );
 			$this->plugin_url = trailingslashit( constant( 'CONFETTI_BITS_PLUGIN_URL' ) );
+			$this->config_path = constant( 'CONFETTI_BITS_CONFIG_PATH' );
+			
 		}
 
 		/**
@@ -208,7 +214,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Include required files.
 		 *
-		 * @package Confetti_Bits
+		 * @package ConfettiBits
 		 * @since 1.0.0
 		 */
 		public function includes() {
@@ -222,8 +228,10 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			require_once $this->plugin_dir . 'cb-core/cb-core-loader.php';
 			require_once $this->plugin_dir . 'cb-core/cb-core-install.php';
 			require_once $this->plugin_dir . 'cb-core/cb-core-template.php';
+			require_once $this->plugin_dir . 'cb-core/cb-core-secrets-manager.php';
 			require_once $this->plugin_dir . 'cb-templates/cb-templates-forms.php';
 			require_once $this->plugin_dir . 'cb-templates/cb-templates-functions.php';
+
 
 		}
 
@@ -232,7 +240,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 *
 		 * Globals are accessible via Confetti_Bits()->{$global_name}.
 		 *
-		 * @package Confetti_Bits
+		 * @package ConfettiBits
 		 * @since 1.0.0
 		 */
 		private function setup_globals() {
@@ -248,7 +256,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * This method is passed to spl_autoload_register to load classes on demand.
 		 *
-		 * @package Confetti_Bits
+		 * @package ConfettiBits
 		 * @since 1.0.0
 		 */
 		public function load_components( $class ) {
@@ -296,9 +304,10 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Get the plugin url.
 		 *
-		 * @since 1.0.0
-		 * @access public
 		 * @return string The plugin url.
+		 * 
+		 * @package ConfettiBits
+		 * @since 1.0.0
 		 */
 		public function plugin_url() {
 			return untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -307,9 +316,10 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Get the plugin path.
 		 *
-		 * @since 1.0.0
-		 * @access public
 		 * @return string The plugin path.
+		 * 
+		 * @package ConfettiBits
+		 * @since 1.0.0
 		 */
 		public function plugin_path() {
 			return untrailingslashit( plugin_dir_path( __FILE__ ) );
@@ -318,9 +328,10 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Load the plugin text domain for translation.
 		 *
-		 * @since 1.0.0
-		 * @access public
 		 * @return void
+		 * 
+		 * @package ConfettiBits
+		 * @since 1.0.0
 		 */
 		public function load_plugin_textdomain() {
 			$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
@@ -336,6 +347,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 	 * The main function responsible for returning the one true Confetti_Bits
 	 *
 	 * @return Confetti_Bits
+	 * 
+	 * @package ConfettiBits
 	 * @since 1.0.0
 	 */
 	function Confetti_Bits() {
@@ -372,8 +385,11 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 
 	/**
 	 * Init the plugin.
-	 * @since 1.0.0
+	 * 
 	 * @return void
+	 * 
+	 * @package ConfettiBits
+	 * @since 1.0.0
 	 */
 	function cb_plugin_init() {
 		if ( ! defined( 'BP_PLATFORM_VERSION' ) ) {

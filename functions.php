@@ -405,9 +405,9 @@ function cb_get_patch_data() {
 	if ( !cb_is_patch_request() ) {
 		return;
 	}
-	
+
 	return json_decode(file_get_contents('php://input'), true);
-	
+
 }
 
 /**
@@ -423,7 +423,7 @@ function cb_get_patch_data() {
  * @since 2.3.0
  */
 function cb_core_get_missing_users() {
-	
+
 	global $wpdb;
 	$cb = Confetti_Bits();
 	$users = "{$wpdb->prefix}users";
@@ -432,9 +432,9 @@ function cb_core_get_missing_users() {
 	$left_join1 = "LEFT JOIN {$users} u1 ON t.sender_id = u1.id";
 	$left_join2 = "LEFT JOIN {$users} u2 ON t.recipient_id = u2.id";
 	$where = "WHERE u1.id IS NULL OR u2.id IS NULL";
-	
+
 	$sql = "{$select} {$from} {$left_join1} {$left_join2} {$where}";
-	
+
 	return $wpdb->get_results( $sql, "ARRAY_A" );
-	
+
 }
