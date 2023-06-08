@@ -91,11 +91,6 @@ Search.appendIndex(
             "summary": "CB\u0020Core\u0020Admin\u0020Settings\u0020General\u0020Register\u0020Fields",
             "url": "namespaces/default.html#function_cb_core_admin_setting_general_register_fields"
         },                {
-            "fqsen": "\\cb_core_admin_components_settings\u0028\u0029",
-            "name": "cb_core_admin_components_settings",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_core_admin_components_settings"
-        },                {
             "fqsen": "\\cb_admin_reset_date_options\u0028\u0029",
             "name": "cb_admin_reset_date_options",
             "summary": "",
@@ -105,6 +100,11 @@ Search.appendIndex(
             "name": "cb_core_admin_settings_handler",
             "summary": "",
             "url": "namespaces/default.html#function_cb_core_admin_settings_handler"
+        },                {
+            "fqsen": "\\cb_core_admin_components_settings\u0028\u0029",
+            "name": "cb_core_admin_components_settings",
+            "summary": "",
+            "url": "namespaces/default.html#function_cb_core_admin_components_settings"
         },                {
             "fqsen": "\\cb_admin_components_options\u0028\u0029",
             "name": "cb_admin_components_options",
@@ -148,12 +148,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_is_user_site_admin\u0028\u0029",
             "name": "cb_is_user_site_admin",
-            "summary": "",
+            "summary": "CB\u0020Is\u0020User\u0020Site\u0020Admin",
             "url": "namespaces/default.html#function_cb_is_user_site_admin"
+        },                {
+            "fqsen": "\\cb_core_admin_is_user_site_admin\u0028\u0029",
+            "name": "cb_core_admin_is_user_site_admin",
+            "summary": "CB\u0020Core\u0020Admin\u0020Is\u0020User\u0020Site\u0020Admin",
+            "url": "namespaces/default.html#function_cb_core_admin_is_user_site_admin"
         },                {
             "fqsen": "\\cb_is_user_participation_admin\u0028\u0029",
             "name": "cb_is_user_participation_admin",
-            "summary": "",
+            "summary": "CB\u0020Is\u0020User\u0020Participation\u0020Admin",
             "url": "namespaces/default.html#function_cb_is_user_participation_admin"
         },                {
             "fqsen": "\\cb_is_user_events_admin\u0028\u0029",
@@ -178,7 +183,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\editor_manage_users\u0028\u0029",
             "name": "editor_manage_users",
-            "summary": "",
+            "summary": "Let\u0020Editors\u0020manage\u0020users,\u0020and\u0020run\u0020this\u0020only\u0020once.",
             "url": "namespaces/default.html#function_editor_manage_users"
         },                {
             "fqsen": "\\get_rid_of_the_menus\u0028\u0029",
@@ -423,38 +428,58 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_core_install_transactions\u0028\u0029",
             "name": "cb_core_install_transactions",
-            "summary": "",
+            "summary": "CB\u0020Core\u0020Install\u0020Transactions",
             "url": "namespaces/default.html#function_cb_core_install_transactions"
         },                {
             "fqsen": "\\cb_core_install_participation\u0028\u0029",
             "name": "cb_core_install_participation",
-            "summary": "",
+            "summary": "CB\u0020Core\u0020Install\u0020Participation",
             "url": "namespaces/default.html#function_cb_core_install_participation"
         },                {
             "fqsen": "\\cb_core_install_events\u0028\u0029",
             "name": "cb_core_install_events",
-            "summary": "",
+            "summary": "CB\u0020Core\u0020Install\u0020Events",
             "url": "namespaces/default.html#function_cb_core_install_events"
         },                {
             "fqsen": "\\cb_core_install_contests\u0028\u0029",
             "name": "cb_core_install_contests",
-            "summary": "",
+            "summary": "CB\u0020Core\u0020Install\u0020Contests",
             "url": "namespaces/default.html#function_cb_core_install_contests"
-        },                {
-            "fqsen": "\\cb_core_install_download_logs\u0028\u0029",
-            "name": "cb_core_install_download_logs",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_core_install_download_logs"
         },                {
             "fqsen": "\\cb_core_install\u0028\u0029",
             "name": "cb_core_install",
-            "summary": "",
+            "summary": "CB\u0020Core\u0020Install",
             "url": "namespaces/default.html#function_cb_core_install"
         },                {
             "fqsen": "\\cb_setup_core\u0028\u0029",
             "name": "cb_setup_core",
             "summary": "CB\u0020Setup\u0020Core",
             "url": "namespaces/default.html#function_cb_setup_core"
+        },                {
+            "fqsen": "\\cb_core_generate_uuid\u0028\u0029",
+            "name": "cb_core_generate_uuid",
+            "summary": "CB\u0020Core\u0020Generate\u0020UUID",
+            "url": "namespaces/default.html#function_cb_core_generate_uuid"
+        },                {
+            "fqsen": "\\cb_core_set_api_key\u0028\u0029",
+            "name": "cb_core_set_api_key",
+            "summary": "CB\u0020Core\u0020Set\u0020API\u0020Key",
+            "url": "namespaces/default.html#function_cb_core_set_api_key"
+        },                {
+            "fqsen": "\\cb_core_get_api_key\u0028\u0029",
+            "name": "cb_core_get_api_key",
+            "summary": "CB\u0020Core\u0020Get\u0020API\u0020Key",
+            "url": "namespaces/default.html#function_cb_core_get_api_key"
+        },                {
+            "fqsen": "\\cb_core_secrets_manager_init\u0028\u0029",
+            "name": "cb_core_secrets_manager_init",
+            "summary": "CB\u0020Core\u0020Secrets\u0020Manager\u0020Init",
+            "url": "namespaces/default.html#function_cb_core_secrets_manager_init"
+        },                {
+            "fqsen": "\\cb_core_update_api_key\u0028\u0029",
+            "name": "cb_core_update_api_key",
+            "summary": "CB\u0020Core\u0020Update\u0020API\u0020Key",
+            "url": "namespaces/default.html#function_cb_core_update_api_key"
         },                {
             "fqsen": "\\cb_member_locate_template_part\u0028\u0029",
             "name": "cb_member_locate_template_part",

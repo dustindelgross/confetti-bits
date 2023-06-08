@@ -1,6 +1,18 @@
 <?php 
+// Exit if accessed directly.
+defined('ABSPATH') || exit;
 
-
+/**
+ * CB Core Install Transactions
+ * 
+ * Installs our transactions table on the database.
+ * 
+ * @link https://developer.wordpress.org/reference/functions/dbdelta/ Uses dbDelta()
+ * @link https://developer.wordpress.org/reference/classes/wpdb/ Also uses $wpdb
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
 function cb_core_install_transactions() {
 
 	global $wpdb;
@@ -43,6 +55,17 @@ function cb_core_install_transactions() {
 
 }
 
+/**
+ * CB Core Install Participation
+ * 
+ * Installs our transactions table on the database.
+ * 
+ * @link https://developer.wordpress.org/reference/functions/dbdelta/ Uses dbDelta()
+ * @link https://developer.wordpress.org/reference/classes/wpdb/ Also uses $wpdb
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.1.0
+ */
 function cb_core_install_participation() {
 
 	global $wpdb;
@@ -85,6 +108,17 @@ function cb_core_install_participation() {
 
 }
 
+/**
+ * CB Core Install Events
+ * 
+ * Installs our events table on the database.
+ * 
+ * @link https://developer.wordpress.org/reference/functions/dbdelta/ Uses dbDelta()
+ * @link https://developer.wordpress.org/reference/classes/wpdb/ Also uses $wpdb
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
 function cb_core_install_events() {
 
 	global $wpdb;
@@ -116,6 +150,17 @@ function cb_core_install_events() {
 
 }
 
+/**
+ * CB Core Install Contests
+ * 
+ * Installs our contests table on the database.
+ * 
+ * @link https://developer.wordpress.org/reference/functions/dbdelta/ Uses dbDelta()
+ * @link https://developer.wordpress.org/reference/classes/wpdb/ Also uses $wpdb
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
 function cb_core_install_contests() {
 
 	global $wpdb;
@@ -143,35 +188,21 @@ function cb_core_install_contests() {
 
 }
 
-function cb_core_install_download_logs() {
-
-	$sql = array();
-
-	$bp_prefix      = bp_core_get_table_prefix();
-	$charset_collate = $GLOBALS['wpdb']->get_charset_collate();
-
-	$sql[] = "CREATE TABLE {$bp_prefix}confetti_bits_downloads (
-				id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				item_id bigint(20) NOT NULL,
-				secondary_item_id bigint(20) NOT NULL,
-				user_id bigint(20) NOT NULL,
-				user_name varchar(75) NOT NULL,
-				download_date datetime NOT NULL,
-				component_name varchar(75) NOT NULL,
-				component_action varchar(75) NOT NULL,
-				KEY item_id (item_id),
-				KEY secondary_item_id (secondary_item_id),
-				KEY user_id (user_id),
-				KEY user_name (user_name),
-				KEY download_date (download_date),
-				KEY component_name (component_name),
-				KEY component_action (component_action),
-			) {$charset_collate};";
-
-	dbDelta( $sql );
-
-}
-
+/**
+ * CB Core Install
+ * 
+ * Installs all our tables on the database.
+ * Also flushes the WordPress cache and rewrite rules
+ * so that our pages still show up after plugins get updated.
+ * 
+ * @see cb_core_install_transactions()
+ * @see cb_core_install_participation()
+ * @see cb_core_install_events()
+ * @see cb_core_install_contests()
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
 function cb_core_install( $active_components = array() ) {
 
 	cb_core_install_transactions();

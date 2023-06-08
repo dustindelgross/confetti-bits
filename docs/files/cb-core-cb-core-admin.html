@@ -79,6 +79,10 @@
                 
             </li>
                     <li>
+                <a href="packages/ConfettiBits-Core.html" class="">Core</a>
+                
+            </li>
+                    <li>
                 <a href="packages/ConfettiBits-Events.html" class="">Events</a>
                 
             </li>
@@ -88,10 +92,6 @@
             </li>
                     <li>
                 <a href="packages/ConfettiBits-Transactions.html" class="">Transactions</a>
-                
-            </li>
-                    <li>
-                <a href="packages/ConfettiBits-Core.html" class="">Core</a>
                 
             </li>
             </ul>
@@ -114,9 +114,8 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti.html">Confetti</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits.html">Bits</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits-Core.html">Core</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-Core.html">Core</a></li>
     </ul>
 
     <article class="phpdocumentor-element -file">
@@ -149,15 +148,6 @@ We're going to have our own little box for these settings.</li>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Core</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -206,12 +196,6 @@ We're going to have our own little box for these settings.</li>
 <dd>CB Core Admin Settings General Register Fields</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_admin_components_settings">cb_core_admin_components_settings()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_admin_reset_date_options">cb_admin_reset_date_options()</a>
     <span>
                                 &nbsp;: mixed    </span>
@@ -219,6 +203,12 @@ We're going to have our own little box for these settings.</li>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_core_admin_settings_handler">cb_core_admin_settings_handler()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_core_admin_components_settings">cb_core_admin_components_settings()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -274,14 +264,23 @@ We're going to have our own little box for these settings.</li>
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_user_site_admin">cb_is_user_site_admin()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: bool    </span>
 </dt>
+<dd>CB Is User Site Admin</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_core_admin_is_user_site_admin">cb_core_admin_is_user_site_admin()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>CB Core Admin Is User Site Admin</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_user_participation_admin">cb_is_user_participation_admin()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: bool    </span>
 </dt>
+<dd>CB Is User Participation Admin</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_user_events_admin">cb_is_user_events_admin()</a>
@@ -312,6 +311,7 @@ We're going to have our own little box for these settings.</li>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Let Editors manage users, and run this only once.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_get_rid_of_the_menus">get_rid_of_the_menus()</a>
@@ -340,7 +340,7 @@ We're going to have our own little box for these settings.</li>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -377,15 +377,6 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Core</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -398,30 +389,6 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_admin_components_settings">
-        cb_core_admin_components_settings()
-        <a href="namespaces/default.html#function_cb_core_admin_components_settings" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">103</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_admin_components_settings</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-    
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_admin_reset_date_options">
         cb_admin_reset_date_options()
         <a href="namespaces/default.html#function_cb_admin_reset_date_options" class="headerlink"><i class="fas fa-link"></i></a>
@@ -430,7 +397,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -454,7 +421,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -462,6 +429,30 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">cb_core_admin_settings_handler</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_admin_components_settings">
+        cb_core_admin_components_settings()
+        <a href="namespaces/default.html#function_cb_core_admin_components_settings" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">197</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_admin_components_settings</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
     
@@ -478,7 +469,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -502,7 +493,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">249</span>
 
     </aside>
 
@@ -526,7 +517,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">285</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
@@ -550,7 +541,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">302</span>
+    <span class="phpdocumentor-element-found-in__line">300</span>
 
     </aside>
 
@@ -574,7 +565,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">352</span>
+    <span class="phpdocumentor-element-found-in__line">350</span>
 
     </aside>
 
@@ -598,7 +589,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">386</span>
+    <span class="phpdocumentor-element-found-in__line">384</span>
 
     </aside>
 
@@ -622,7 +613,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">401</span>
+    <span class="phpdocumentor-element-found-in__line">399</span>
 
     </aside>
 
@@ -646,7 +637,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">407</span>
+    <span class="phpdocumentor-element-found-in__line">405</span>
 
     </aside>
 
@@ -670,20 +661,129 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">412</span>
+    <span class="phpdocumentor-element-found-in__line">425</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">CB Is User Site Admin</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_user_site_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_is_user_site_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>Checks whether a user has administrative privileges.
+Also, @see cb_core_admin_is_user_site_admin(), because
+we're deprecating this for the sake of our API and
+sanity (sorry besties).</p>
+</section>
 
     
     
-    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_user_site_admin#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">TODO:</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Figure out a better dev environment setup; this
+isn't particularly good to use as a feature-blocker.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether a user has administrative privileges.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_admin_is_user_site_admin">
+        cb_core_admin_is_user_site_admin()
+        <a href="namespaces/default.html#function_cb_core_admin_is_user_site_admin" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">442</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB Core Admin Is User Site Admin</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_admin_is_user_site_admin</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>Checks whether a user has administrative privileges.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_admin_is_user_site_admin#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">TODO:</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Figure out a better dev environment setup; this
+isn't particularly good to use as a feature-blocker.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether a user has administrative privileges.</p>
+</section>
+
+            </section>
+
 </article>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_is_user_participation_admin">
@@ -694,20 +794,48 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">417</span>
+    <span class="phpdocumentor-element-found-in__line">465</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">CB Is User Participation Admin</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_user_participation_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_is_user_participation_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>Checks whether a user has administrative privileges over the
+participation component. These privileges are granted by
+assigning a role on the Edit User admin page.</p>
+</section>
 
     
     
-    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_user_participation_admin#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
-    
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether a user is a participation admin.</p>
+</section>
+
+            </section>
+
 </article>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_is_user_events_admin">
@@ -718,7 +846,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">422</span>
+    <span class="phpdocumentor-element-found-in__line">470</span>
 
     </aside>
 
@@ -742,7 +870,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">426</span>
+    <span class="phpdocumentor-element-found-in__line">474</span>
 
     </aside>
 
@@ -783,7 +911,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">451</span>
+    <span class="phpdocumentor-element-found-in__line">499</span>
 
     </aside>
 
@@ -807,7 +935,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">502</span>
+    <span class="phpdocumentor-element-found-in__line">550</span>
 
     </aside>
 
@@ -841,16 +969,19 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">553</span>
+    <span class="phpdocumentor-element-found-in__line">599</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Let Editors manage users, and run this only once.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">editor_manage_users</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>Version: 1.0.0</p>
+</section>
+
     
     
 
@@ -865,7 +996,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">577</span>
+    <span class="phpdocumentor-element-found-in__line">623</span>
 
     </aside>
 
@@ -998,6 +1129,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
                                                     <li><a href="namespaces/default.html#function_cb_admin_reset_date_options">cb_admin_reset_date_options()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_components_settings">cb_core_admin_components_settings()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_get_active_components_from_submitted_settings">cb_core_admin_get_active_components_from_submitted_settings()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_admin_is_user_site_admin">cb_core_admin_is_user_site_admin()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_setting_general_register_fields">cb_core_admin_setting_general_register_fields()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_settings_handler">cb_core_admin_settings_handler()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_get_panels">cb_core_get_panels()</a></li>

@@ -79,6 +79,10 @@
                 
             </li>
                     <li>
+                <a href="packages/ConfettiBits-Core.html" class="">Core</a>
+                
+            </li>
+                    <li>
                 <a href="packages/ConfettiBits-Events.html" class="">Events</a>
                 
             </li>
@@ -88,10 +92,6 @@
             </li>
                     <li>
                 <a href="packages/ConfettiBits-Transactions.html" class="">Transactions</a>
-                
-            </li>
-                    <li>
-                <a href="packages/ConfettiBits-Core.html" class="">Core</a>
                 
             </li>
             </ul>
@@ -485,40 +485,11 @@ the canonical stack has been established.</dd>
 <dd>Fires the cb_allowed_themes action, where plugins can modify the allowed themes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_install_transactions">cb_core_install_transactions()</a>
+    <a href="namespaces/default.html#function_cb_core_set_api_key">cb_core_set_api_key()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: string    </span>
 </dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_install_participation">cb_core_install_participation()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_install_events">cb_core_install_events()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_install_contests">cb_core_install_contests()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_install_download_logs">cb_core_install_download_logs()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_install">cb_core_install()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
+<dd>CB Core Set API Key</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_ajax_get_event">cb_ajax_get_event()</a>
@@ -576,13 +547,6 @@ the canonical stack has been established.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_Confetti_Bits">Confetti_Bits()</a>
-    <span>
-                                &nbsp;: <a href="classes/Confetti-Bits.html"><abbr title="\Confetti_Bits">Confetti_Bits</abbr></a>    </span>
-</dt>
-<dd>The main function responsible for returning the one true Confetti_Bits</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_install_bb_platform_notice">cb_install_bb_platform_notice()</a>
     <span>
                                 &nbsp;: mixed    </span>
@@ -602,13 +566,6 @@ the canonical stack has been established.</dd>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Check if Confetti Bits is active.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_plugin_init">cb_plugin_init()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Init the plugin.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_get_request">cb_is_get_request()</a>
@@ -745,7 +702,7 @@ the canonical stack has been established.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-component.php"><a href="files/cb-transactions-classes-class-cb-transactions-component.html"><abbr title="cb-transactions/classes/class-cb-transactions-component.php">class-cb-transactions-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -1997,158 +1954,62 @@ the canonical stack has been established.</p>
     
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_install_transactions">
-        cb_core_install_transactions()
-        <a href="namespaces/default.html#function_cb_core_install_transactions" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_set_api_key">
+        cb_core_set_api_key()
+        <a href="namespaces/default.html#function_cb_core_set_api_key" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-install.php"><a href="files/cb-core-cb-core-install.html"><abbr title="cb-core/cb-core-install.php">cb-core-install.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-secrets-manager.php"><a href="files/cb-core-cb-core-secrets-manager.html"><abbr title="cb-core/cb-core-secrets-manager.php">cb-core-secrets-manager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">4</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">CB Core Set API Key</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_install_transactions</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_core_set_api_key</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-    
-    
-    
+        <section class="phpdocumentor-description"><p>Sets the encryption key that we use to encrypt and
+decrypt our API key in the database.</p>
+</section>
 
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_install_participation">
-        cb_core_install_participation()
-        <a href="namespaces/default.html#function_cb_core_install_participation" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-install.php"><a href="files/cb-core-cb-core-install.html"><abbr title="cb-core/cb-core-install.php">cb-core-install.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">46</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_install_participation</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-    
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_install_events">
-        cb_core_install_events()
-        <a href="namespaces/default.html#function_cb_core_install_events" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-install.php"><a href="files/cb-core-cb-core-install.html"><abbr title="cb-core/cb-core-install.php">cb-core-install.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">88</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_install_events</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-    
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_install_contests">
-        cb_core_install_contests()
-        <a href="namespaces/default.html#function_cb_core_install_contests" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-install.php"><a href="files/cb-core-cb-core-install.html"><abbr title="cb-core/cb-core-install.php">cb-core-install.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">119</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_install_contests</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-    
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_install_download_logs">
-        cb_core_install_download_logs()
-        <a href="namespaces/default.html#function_cb_core_install_download_logs" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-install.php"><a href="files/cb-core-cb-core-install.html"><abbr title="cb-core/cb-core-install.php">cb-core-install.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">146</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_install_download_logs</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-    
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_install">
-        cb_core_install()
-        <a href="namespaces/default.html#function_cb_core_install" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-install.php"><a href="files/cb-core-cb-core-install.html"><abbr title="cb-core/cb-core-install.php">cb-core-install.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">175</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_install</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$active_components</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$active_components</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                <span class="phpdocumentor-signature__argument__name">$args</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>{
+Array of arguments.</p>
+<p>@type string $Name 		Required. A name for the secret. We hang
+onto this and use it to pull the secret
+from our secrets manager.</p>
+<p>@type string $Description	Optional. A description for the secret.
+Nice to have if you want, but not
+entirely necessary.</p>
+<p>@type string $SecretString	Required. This is a secret! Handle
+with extreme care. Please.</p>
+<p>}</p>
+</section>
+
             </dd>
             </dl>
 
     
 
-    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Results of the createSecret method, or error message on failure.</p>
+</section>
+
+            </section>
+
 </article>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_ajax_get_event">
@@ -2186,7 +2047,7 @@ the canonical stack has been established.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-functions.php"><a href="files/cb-participation-cb-participation-functions.html"><abbr title="cb-participation/cb-participation-functions.php">cb-participation-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">500</span>
+    <span class="phpdocumentor-element-found-in__line">504</span>
 
     </aside>
 
@@ -2475,50 +2336,6 @@ the canonical stack has been established.</p>
     
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_Confetti_Bits">
-        Confetti_Bits()
-        <a href="namespaces/default.html#function_Confetti_Bits" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="confetti-bits.php"><a href="files/confetti-bits.html">confetti-bits.php</a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">341</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The main function responsible for returning the one true Confetti_Bits</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">Confetti_Bits</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Confetti-Bits.html"><abbr title="\Confetti_Bits">Confetti_Bits</abbr></a></span></code>
-
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_Confetti_Bits#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Confetti-Bits.html"><abbr title="\Confetti_Bits">Confetti_Bits</abbr></a></span>
-            </section>
-
-</article>
-                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_install_bb_platform_notice">
         cb_install_bb_platform_notice()
         <a href="namespaces/default.html#function_cb_install_bb_platform_notice" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2527,7 +2344,7 @@ the canonical stack has been established.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="confetti-bits.php"><a href="files/confetti-bits.html">confetti-bits.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">348</span>
+    <span class="phpdocumentor-element-found-in__line">361</span>
 
     </aside>
 
@@ -2552,7 +2369,7 @@ the canonical stack has been established.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="confetti-bits.php"><a href="files/confetti-bits.html">confetti-bits.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">357</span>
+    <span class="phpdocumentor-element-found-in__line">370</span>
 
     </aside>
 
@@ -2577,7 +2394,7 @@ the canonical stack has been established.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="confetti-bits.php"><a href="files/confetti-bits.html">confetti-bits.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">379</span>
 
     </aside>
 
@@ -2590,46 +2407,6 @@ the canonical stack has been established.</p>
     
     
     
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_plugin_init">
-        cb_plugin_init()
-        <a href="namespaces/default.html#function_cb_plugin_init" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="confetti-bits.php"><a href="files/confetti-bits.html">confetti-bits.php</a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">378</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Init the plugin.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_plugin_init</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_plugin_init#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
 
     
 </article>
@@ -2970,12 +2747,7 @@ the canonical stack has been established.</p>
                                                     <li><a href="namespaces/default.html#function_cb_bp_is_active">cb_bp_is_active()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_get_components">cb_core_admin_get_components()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_get_components">cb_core_get_components()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_install">cb_core_install()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_install_contests">cb_core_install_contests()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_install_download_logs">cb_core_install_download_logs()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_install_events">cb_core_install_events()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_install_participation">cb_core_install_participation()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_install_transactions">cb_core_install_transactions()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_set_api_key">cb_core_set_api_key()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_set_uri_globals">cb_core_set_uri_globals()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_current_component">cb_current_component()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_customize_register">cb_customize_register()</a></li>
@@ -2997,7 +2769,6 @@ the canonical stack has been established.</p>
                                                     <li><a href="namespaces/default.html#function_cb_loaded">cb_loaded()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_login_redirect">cb_login_redirect()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_new_notifications">cb_participation_new_notifications()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_plugin_init">cb_plugin_init()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_post_request">cb_post_request()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_ready">cb_ready()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_register_member_types">cb_register_member_types()</a></li>
@@ -3023,7 +2794,6 @@ the canonical stack has been established.</p>
                                                     <li><a href="namespaces/default.html#function_cb_update_bb_platform_notice">cb_update_bb_platform_notice()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_user_birthday_anniversary_fields">cb_user_birthday_anniversary_fields()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_widgets_init">cb_widgets_init()</a></li>
-                                                    <li><a href="namespaces/default.html#function_Confetti_Bits">Confetti_Bits()</a></li>
                                                     <li><a href="namespaces/default.html#function_confetti_bits_admin_enqueue_script">confetti_bits_admin_enqueue_script()</a></li>
                                             </ul>
                 </li>

@@ -5,8 +5,7 @@ jQuery(document).ready(($) => {
 	const $adminEditButton = $('.cb-participation-admin-edit-button');
 	const $adminEditForm = $('#cb-participation-admin-edit-form-wrapper');
 	const $adminEditFormClose = $('#cb-participation-admin-edit-form-close');
-	const $hubNav = $('.cb-hub-nav-container');
-	const $adminAmountOverride = $('#cb_participation_amount_override');
+	const $adminAmountOverride = $('#cb_participation_admin_amount_override');
 	const $adminEventTypeFilter = $('#cb_participation_admin_event_type_filter');
 	const $cbParticipationAll = $('a[href=#cb-participation-all]');
 	const $cbParticipationAllPanel = $('#cb-participation-all');
@@ -811,9 +810,9 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @since 1.0.0
 	 */
 	function handleNavigation(el) {
-		
+
 		let activeItem = $('.cb-participation-admin-nav-item.active');
-		
+
 		activeItem.removeClass('active');
 		$(el).parent().addClass('active');
 
@@ -886,25 +885,39 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	$(document).on('click', '.cb-participation-admin-edit-button', async function (e) {
 
 		let participationId = $(this).data('cbParticipationId');
-		let applicantId = $(this).data('cbApplicantId');
-		let eventType = $(this).data('cbEventType').replaceAll('_',' ');
-		let eventNote = $(this).data('cbEventNote').toString().replaceAll('\\', '');
-		let eventDate = $(this).data('cbEventDate');
-		let applicantName = $(this).data('cbApplicantName');
-		let transactionId = $(this).data('cbTransactionId');
+
+		let participationObject = await $.ajax({
+			method: "GET",
+			url: cb_core_admin.get_participation,
+			data: {
+				id: participationId
+			},
+			success: async e => e,
+			error: x => console.error(x)
+		});
+
+		let participation = JSON.parse(participationObject.text)[0];
+
+		let applicantId = parseInt(participation.applicant_id);
+		let applicant = await cbGetUserData(parseInt(applicantId));
+		let applicantName = applicant.userDisplayName;
+
+		let eventType = participation.event_type.replaceAll('_',' ');
+		let eventNote = participation.event_note.replaceAll('\\', '');
+		let eventDate = participation.event_date;
+		let transactionId = parseInt(participation.transaction_id);
 
 		refreshTransactions(1, applicantId);
 
 		$($adminEditForm).addClass('active');
-		$('input[name=cb_participation_id]').val(participationId);
-		$('input[name=cb_participation_applicant_id]').val(applicantId);
-		$('input[name=cb_participation_event_type]').val(eventType);
-		$('input[name=cb_participation_event_date]').val(eventDate);
+		$('input[name=cb_participation_admin_participation_id]').val(participationId);
+		$('input[name=cb_participation_admin_applicant_id]').val(applicantId);
+		$('input[name=cb_participation_admin_event_type]').val(eventType);
+		$('input[name=cb_participation_admin_event_date]').val(eventDate);
 		$('input[name=cb_participation_admin_log_entry]').val(eventNote);
-		$('input[name=cb_participation_transaction_id]').val(transactionId);
+		$('input[name=cb_participation_admin_transaction_id]').val(transactionId);
 		$('#cb-participation-admin-applicant-name').text(applicantName);
-
-		$('#cb-participation-admin-applicant-event').text(eventType.charAt(0).toUpperCase() + eventType.substr(1).toLowerCase().replace('\\', ''));
+		$('#cb-participation-admin-applicant-event').text(eventType);
 
 		if ((eventType === 'other' || eventType === 'contest' ) && transactionId === 0) {
 			$adminAmountOverride.addClass('override');
@@ -979,7 +992,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			let br = $('<br>');
 			await $.ajax({
 				url: cb_core_admin.update,
-				method: 'POST',
+				method: 'PATCH',
 				data: {
 					admin_id: adminId,
 					participation_id: item.value,
@@ -1007,6 +1020,33 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		await refreshTable( page );
 
 
+	});
+
+	$('#cb_participation_admin_form').on('submit', async function(e) {
+
+		e.preventDefault();
+		let values = $(this).serializeArray();
+		let obj = {};
+		
+		for ( let i of values ) {
+			let name = i.name.replace('cb_participation_admin_', '');
+			obj[name] = i.value;
+		}
+
+		console.log(obj);
+
+		/*
+		let response = await $.ajax({
+			method: "PATCH",
+			url: cb_core_admin.update,
+			data: JSON.stringify(obj),
+			contentType: "application/json",
+			success: e => e,
+			error: x => x
+		});
+		
+		console.log(response);
+		*/
 	});
 
 	// Add event listener to each row checkbox

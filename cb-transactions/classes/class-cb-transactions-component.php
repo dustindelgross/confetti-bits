@@ -36,9 +36,8 @@ class CB_Transactions_Component extends CB_Component {
 			'requests',
 			'exports',
 			'imports',
-			'leaderboard',
-			'transfers',
 			'sender',
+			'transfers',
 			'template',
 			'notifications',
 		);
