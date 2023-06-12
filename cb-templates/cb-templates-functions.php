@@ -173,7 +173,7 @@ function cb_templates_get_list_item( $args = array() ) {
 			}
 		}
 	}
-	
+
 	return "<li{$id}{$classes}{$custom_attrs}>{$content}</li>";
 
 }
@@ -198,7 +198,7 @@ function cb_templates_get_list_item( $args = array() ) {
  * @since 2.3.0
  */
 function cb_templates_get_link($args = array()) {
-	
+
 	$r = wp_parse_args( $args, array(
 		'classes' => array(),
 		'href' => '',
@@ -206,7 +206,7 @@ function cb_templates_get_link($args = array()) {
 		'content' => '',
 		'custom_attr' => array(),
 	));
-	
+
 	$id = '';
 	$classes = '';
 	$custom_attrs = '';
@@ -214,7 +214,7 @@ function cb_templates_get_link($args = array()) {
 	$content = trim( $r['content'] );
 	$url = ! empty($r['href']) ? esc_url( $r['href'] ) : '#';
 	$href = ' href ="' . $url . '"';
-	
+
 	$r['classes'] = array_merge( $r['classes'], $default_classes );
 
 	if ( !empty( $r['id'] ) ) {
@@ -230,9 +230,9 @@ function cb_templates_get_link($args = array()) {
 			$custom_attrs .= ' data-' . esc_attr($key) . '="' . esc_attr($val) . '"';
 		}
 	}
-	
+
 	return "<a{$href}{$id}{$classes}{$custom_attrs}>{$content}</a>";
-	
+
 }
 
 /**
@@ -242,6 +242,8 @@ function cb_templates_get_link($args = array()) {
  * used for displaying items from the database that are
  * fetched via AJAX. Optionally, a pagination bar can be
  * displayed above and below the table.
+ * 
+ * @TODO: Implement a "Go To Page" input.
  * 
  * @param array $args {
  *     @var string $component The component to display the table for.
@@ -264,10 +266,25 @@ function cb_templates_ajax_table( $component = '', $paginated = true ) {
 	$with_dashes = str_replace( '_', '-', $component );
 
 	if ( $paginated ) {
-		$pagination = cb_templates_container(array(
-			'classes' => array("cb-{$with_dashes}-pagination-container"),
-			'output'  => cb_templates_get_pagination($with_dashes)
-		));
+		
+		/*
+		$page_number_input = cb_templates_get_number_input([
+			'label' => 'Go To...',
+			'name' => "cb_{$component}_go_to_page"
+		]);
+		$go_to_page_button = cb_templates_get_button([
+			'name' => "cb_{$component}_go_to_page_button"
+		]);
+		$go_to_page = cb_templates_container([
+			'classes' => ["cb-{$with_dashes}-go-to-page-container"],
+			'output' => $page_number_input . $go_to_page_button
+		]);
+		*/
+		$pagination_buttons = cb_templates_get_pagination($with_dashes);
+		$pagination = cb_templates_container([
+			'classes' => ["cb-{$with_dashes}-pagination-container"],
+			'output'  => $pagination_buttons
+		]);
 	}
 
 	$table = cb_templates_container(array(
@@ -307,7 +324,7 @@ function cb_templates_get_pagination( $component = '' ) {
 		'next' => '›',
 		'last' => '»'
 	);
-	
+
 	$with_dashes = str_replace( '_', '-', $component );
 
 	foreach ( $button_args as $placement => $content ) {
@@ -441,7 +458,7 @@ function cb_templates_get_nav( $component = '', $items = array() ) {
 	if ( empty( $component ) || empty( $items ) ) {
 		return;
 	}
-	
+
 	$with_dashes = str_replace( '_', '-', $component );
 
 	return cb_templates_container(array(

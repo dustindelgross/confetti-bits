@@ -32,7 +32,7 @@ function cb_participation_event_type_filter( $is_admin = false ) {
 		'Other' => array( 'value' => 'other' ),
 	);
 	
-	$action = $is_admin ? 'participation' : 'participation_admin';
+	$action = $is_admin ? 'participation_admin' : 'participation';
 
 	return cb_select_input(
 		array(

@@ -59,24 +59,21 @@ defined( 'ABSPATH' ) || exit;
  */
 function cb_participation_new_participation( array $args ) {
 
-	$r = wp_parse_args(
-		$args,
-		array(
-			'item_id'			=> get_current_user_id(),
-			'secondary_item_id'	=> 0,
-			'applicant_id'		=> get_current_user_id(),
-			'admin_id'			=> 0,
-			'date_created'		=> current_time('mysql'),
-			'date_modified'		=> current_time('mysql'),
-			'event_date'		=> current_time('mysql'),
-			'event_type'		=> 'other',
-			'event_note'		=> '',
-			'component_name'	=> 'confetti_bits',
-			'component_action'	=> 'cb_participation',
-			'status'			=> 'new',
-			'transaction_id'	=> 0
-		)
-	);
+	$r = wp_parse_args( $args, [
+		'item_id'			=> get_current_user_id(),
+		'secondary_item_id'	=> 0,
+		'applicant_id'		=> get_current_user_id(),
+		'admin_id'			=> 0,
+		'date_created'		=> cb_core_current_date(),
+		'date_modified'		=> cb_core_current_date(),
+		'event_date'		=> cb_core_current_date(),
+		'event_type'		=> 'other',
+		'event_note'		=> '',
+		'component_name'	=> 'confetti_bits',
+		'component_action'	=> 'cb_participation',
+		'status'			=> 'new',
+		'transaction_id'	=> 0,
+	]);
 
 	$participation = new CB_Participation_Participation();
 	$participation->item_id				= $r['item_id'];
@@ -107,6 +104,8 @@ function cb_participation_new_participation( array $args ) {
  * Confetti Bits Update Request Status
  * 
  * Update the request status for a participation entry.
+ * 
+ * @TODO: Remove this?
  * 
  * @package ConfettiBits\Participation
  * @since 2.2.0
@@ -277,23 +276,18 @@ function cb_participation_update_handler() {
  * @package ConfettiBits\Participation
  * @since 2.1.0
  */
-function cb_participation_new_transaction( $args = array() ) {
+function cb_participation_new_transaction( $args = [] ) {
 
-	$r = wp_parse_args(
-		$args,
-		array(
-			'transaction_id'	=> 0,
-			'participation_id'	=> 0,
-			'admin_id'			=> 0,
-			'modified'			=> '',
-			'status'			=> '',
-			'amount'			=> 0,
-			'log_entry'			=> ''
-		)
-	);
+	$r = wp_parse_args( $args, [
+		'participation_id'	=> 0,
+		'admin_id'			=> 0,
+		'modified'			=> '',
+		'status'			=> '',
+		'amount'			=> 0,
+		'log_entry'			=> '',
+	]);
 
-	$success = false;
-	$feedback = '';
+	$feedback = ['type' => 'error', 'text' => ''];
 
 	if ( $r['participation_id'] === 0 || 
 		$r['modified'] === '' || 
@@ -301,13 +295,14 @@ function cb_participation_new_transaction( $args = array() ) {
 		$r['admin_id'] === 0 ||
 		$r['amount'] === 0
 	   ) {
-		$feedback = "One of the following parameters is missing: Participation ID, date modified, status, admin ID, amount.";
+		$feedback['text'] = "One of the following parameters is missing: Participation ID, date modified, status, admin ID, amount.";
+		return $feedback;
 	}
 
 	$participation = new CB_Participation_Participation( $r['participation_id'] );
-	$admin_name = bp_core_get_user_displayname( $r['admin_id'] );
+	$admin_name = cb_core_get_user_display_name( $r['admin_id'] );
 	$log_entry = $r['log_entry'];
-	$amount = $r['amount'];
+	$amount = intval( $r['amount'] );
 
 	if ( ! empty( $participation->event_date ) ) {
 		$event_date = date_format( date_create( $participation->event_date ), 'm/d/Y' );
@@ -316,34 +311,44 @@ function cb_participation_new_transaction( $args = array() ) {
 	}
 
 	if ( empty( $participation->event_type ) ) {
-		$feedback = 'Event type not found.';
-	} else if ( $r['amount'] === 0 ) {
-		$feedback = "Invalid or undefined amount.";
-	} else if ( $r['log_entry'] === '' ) {
-		$feedback = "Invalid or undefined log entry.";
+		$feedback['text'] = 'Event type not found.';
+		return $feedback;
+	} 
+	if ( $r['amount'] === 0 ) {
+		$feedback['text'] = "Invalid or undefined amount.";
+		return $feedback;
+	}
+
+	if ( $r['log_entry'] === '' ) {
+		$feedback['text'] = "Invalid or undefined log entry.";
+		return $feedback;
+	}
+
+	$log_entry .= " on {$event_date} - from {$admin_name}";
+
+	$transaction = new CB_Transactions_Transaction();
+
+	$transaction->item_id			= $participation->applicant_id;
+	$transaction->secondary_item_id	= $r['admin_id'];
+	$transaction->sender_id			= $r['admin_id'];
+	$transaction->recipient_id		= $participation->applicant_id;
+	$transaction->date_sent			= cb_core_current_date();
+	$transaction->log_entry			= $log_entry;
+	$transaction->component_name	= 'confetti_bits';
+	$transaction->component_action	= 'cb_participation_status_update';
+	$transaction->amount			= $amount;
+
+	$send = $transaction->send_bits();
+
+	if ( is_int( $send ) ) {
+		$feedback['text'] = $send;
+		$feedback['type'] = 'success';
 	} else {
-
-		$log_entry .= " on {$event_date} - from {$admin_name}";
-
-		$transaction = new CB_Transactions_Transaction();
-
-		$transaction->item_id			= $participation->applicant_id;
-		$transaction->secondary_item_id	= $r['admin_id'];
-		$transaction->sender_id			= $r['admin_id'];
-		$transaction->recipient_id		= $participation->applicant_id;
-		$transaction->date_sent			= $r['modified'];
-		$transaction->log_entry			= $log_entry;
-		$transaction->component_name	= 'confetti_bits';
-		$transaction->component_action	= 'cb_participation_status_update';
-		$transaction->amount			= $amount;
-
-		$send = $transaction->send_bits();
-		$success = is_int( $send );
-
-		$feedback = is_int( $send ) ? $send : "Processing Error 3060. Transaction failed.";
+		$feedback['text'] = "Processing Error 3060. Failed to create transaction.";	
 	}
 
 	return $feedback;
+
 }
 
 /**
@@ -363,48 +368,47 @@ function cb_participation_new_transaction( $args = array() ) {
  * @package ConfettiBits\Participation
  * @since 2.1.0
  */
-function cb_participation_get_amount( $transaction_id = 0, $participation_id = 0, $status = '', $override = 0 ) {
+function cb_participation_get_amount( $participation_id = 0, $status = '', $override = 0 ) {
 
 	// Prevent redundant submissions.
-	if ( empty( $participation_id ) || $status === '' ) {
+	if ( $participation_id === 0 || $status === '' ) {
 		return;
 	}
 
 	$participation = new CB_Participation_Participation( $participation_id );
-	$transaction = new CB_Transactions_Transaction( $transaction_id );
 	$amount = 0;
 
-	// If this is the first time we're updating the status...
+	// If we've updated the status before, reverse the amount in the transaction.
+	if ( intval( $participation->transaction_id ) !== 0 ) {
+		$transaction = new CB_Transactions_Transaction( $participation->transaction_id );
+		$amount = - $transaction->amount;
+		return $amount;
+	}
+
 	// Only set an amount if it was approved
-	if ( $participation->status === 'new' && $status === 'approved' ) {
+	if ( $participation->status !== 'approved' && $status === 'approved' ) {
 
 		// If it's set in the override input, use that
 		if ( $override !== 0 ) {
 			return intval( $override );
-			// Otherwise, try to format the amount based on event type
-		} else {
-			switch ( $participation->event_type ) {
-				case 'holiday':
-				case 'dress_up':
-				case 'lunch':
-				case 'awareness':
-				case 'meeting':
-				case 'activity':
-					$amount	= 5;
-					break;
-				case 'workshop':
-					$amount = 10;
-					break;
-				default:
-					$amount = 0;
-					break;
-			}
 		}
-	}
 
-	// If we've updated the status before, reverse the amount in the transaction.
-	if ( $participation->status === 'denied' || $participation->status === 'approved' ) {
-		$amount = - $transaction->amount;
+		$valid_types = [
+			'holiday' => 5,
+			'dress_up' => 5,
+			'lunch' => 5,
+			'awareness' => 5,
+			'meeting' => 5,
+			'activity' => 5,
+			'workshop' => 10,
+		];
+
+		if ( !array_key_exists( $participation->event_type, $valid_types ) ) {
+			return $amount;
+		}
+
+		// Otherwise, try to format the amount based on event type
+		return $valid_types[$participation->event_type];
 	}
 
 	return $amount;

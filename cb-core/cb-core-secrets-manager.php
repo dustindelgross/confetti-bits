@@ -114,9 +114,7 @@ function cb_core_set_api_key( $args = [] ) {
  * @package ConfettiBits\Core
  * @since 2.3.0
  */
-function cb_core_get_api_key() {
-
-	$secret = get_option( 'cb_core_api_key_safe_name' );
+function cb_core_get_api_key( $secret = '' ) {
 
 	if ( empty( $secret ) || ! $secret ) {
 		return;
@@ -195,5 +193,46 @@ function cb_core_update_api_key() {
 		'Description' => "An API Key for Confetti Bits.",
 		'SecretString' => $api_key,
 	]);
+	
+}
+
+/**
+ * Validates against a supplied API key safe name.
+ * 
+ * We work with safe names here. We store the safe name 
+ * in our DB, and that works as the current valid API key
+ * for the current website. If the safe name that gets supplied
+ * does not match our safe name, it will fail the test.
+ * If the supplied safe name matches, it will then search our
+ * secrets manager for a valid API key. If one is not found,
+ * or it is expired or invalid, it will also fail.
+ * 
+ * @param string $safe_name The safe name for our API key.
+ * 
+ * @return bool Whether the API key exists and is valid.
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
+function cb_core_validate_api_key( $safe_name = '' ) {
+	
+	if ( empty( $safe_name ) ) {
+		return false;
+	}
+	
+	$valid_safe_name = get_option( 'cb_core_api_key_safe_name' );
+	
+	if ( $safe_name !== $valid_safe_name ) {
+		return false;
+	}
+	
+	$valid_api_key = cb_core_get_api_key( $valid_safe_name );
+	$testing_api_key = cb_core_get_api_key( $safe_name );
+	
+	if ( $testing_api_key !== $valid_api_key ) {
+		return false;
+	}
+	
+	return true;
 	
 }

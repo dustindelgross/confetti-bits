@@ -3,9 +3,11 @@
 defined('ABSPATH') || exit;
 
 /** 
- * CB AJAX Participation Bulk Update
+ * Handles HTTP PATCH requests to update participation entries.
  * 
- * Processes bulk participation updates from an HTTP PATCH request.
+ * Processes standard and bulk participation updates from an 
+ * HTTP PATCH request.
+ * 
  * @see cb_get_patch_data() for more info on how we handle PATCH 
  * requests.
  * 
@@ -26,16 +28,22 @@ function cb_ajax_update_participation() {
 	if ( !isset( 
 		$_PATCH['admin_id'], 
 		$_PATCH['participation_id'],
-		$_PATCH['status']
+		$_PATCH['status'],
+		$_PATCH['api_key'],
 	) ) {
-		$feedback['text'] = "Missing admin ID, participation not found, or invalid status.";
+		$feedback['text'] = "Missing API key, admin ID, participation not found, or invalid status.";
+		echo json_encode($feedback);
+		die();
+	}
+
+	if ( !cb_core_validate_api_key( $_PATCH['api_key'] ) ) {
+		$feedback['text'] = "Invalid Confetti Bits API key. Contact your system administrator to renew the API key.";
 		echo json_encode($feedback);
 		die();
 	}
 
 	$participation_id = intval($_PATCH['participation_id']);
 	$admin_id = intval($_PATCH['admin_id']);
-	$transaction_id = !empty($_PATCH['transaction_id']) ? intval($_PATCH['transaction_id']) : 0;
 	$amount = !empty($_PATCH['amount']) ? intval($_PATCH['amount']) : 0;
 	$log_entry = !empty( $_PATCH['log_entry'] ) ? trim( $_PATCH['log_entry'] ) : "";
 	$status = strtolower($_PATCH['status']) === 'approved' ? 'approved' : 'denied';
@@ -43,14 +51,6 @@ function cb_ajax_update_participation() {
 
 	$participation = new CB_Participation_Participation($participation_id);
 
-
-	// Can't bulk approve special event types. This will change in the new update.
-	if ( $participation->event_type === 'other' && $amount === 0 ) {
-		$feedback['text'] = "Update unsuccessful. Cannot process 'Other' category event types using the Confetti Bits API.";
-		echo json_encode($feedback);
-		die();
-	}
-	
 	$is_admin = cb_core_admin_is_user_site_admin($admin_id);
 
 	if ( $admin_id == $participation->applicant_id && !$is_admin ) {
@@ -76,43 +76,54 @@ function cb_ajax_update_participation() {
 
 	// Attempt to extract an amount for a transaction
 	$amount = cb_participation_get_amount( 
-		$transaction_id, 
 		$participation_id,
 		$status, 
 		$amount
 	);
-
-	// Attempt to extract a log entry for a transaction
-	$log_entry = cb_participation_get_log_entry( $participation_id, $log_entry );
-
-	// Create a transaction if we can.
-	if ( $amount !== 0 && $log_entry !== '' ) {
-
-		$new_transaction = cb_participation_new_transaction( 
-			array(
-				'transaction_id'	=> $transaction_id,
-				'participation_id'	=> $participation_id,
-				'admin_id'			=> $admin_id,
-				'modified'			=> $modified,
-				'status'			=> $status,
-				'amount'			=> $amount,
-				'log_entry'			=> $log_entry
-			)
-		);
-
-		if ( is_int( $new_transaction ) ) {
-			$update_args['transaction_id'] = $new_transaction;
-			$feedback['text'] = "Update successful. Transaction ID: {$new_transaction}";
-			$feedback['type'] = "success";
-
-		} else {
-			$feedback['text'] = "Update failed. Processing error 3050. Error processing Confetti Bits transaction. {$new_transaction}";
+	
+	// Can't bulk approve special event types. This will change in the new update.
+	if ( $participation->event_type === 'other' || $participation->event_type === 'contest' ) {
+		if ( $amount === 0 && ( !empty( $participation->transaction_id ) || $status === 'approved') ) {
+			// Essentially, if the amount is 0, and it really shouldn't be, throw an error.
+			$feedback['text'] = "Update unsuccessful. 'Other' and 'Contest' event types must have an amount assigned to the participation submission.";
 			echo json_encode($feedback);
 			die();
 		}
 	}
 
-	$participation->update($update_args, $where_args);
+	// Attempt to extract a log entry for a transaction
+	$log_entry = cb_participation_get_log_entry( $participation_id, $log_entry );
+
+	// Create a transaction if we can.
+	if ( $amount !== 0 ) {
+
+		$new_transaction = cb_participation_new_transaction([
+			'participation_id'	=> $participation_id,
+			'admin_id'			=> $admin_id,
+			'modified'			=> $modified,
+			'status'			=> $status,
+			'amount'			=> $amount,
+			'log_entry'			=> $log_entry,
+		]);
+
+		if ( $new_transaction['type'] === 'success' ) {
+			$update_args['transaction_id'] = intval( $new_transaction['text'] );
+			$feedback['text'] = "Update successful. Transaction ID: {$new_transaction['text']}";
+			$feedback['type'] = "success";
+			$participation->update($update_args, $where_args);
+			echo json_encode($feedback);
+			die();
+		} else {
+			$feedback['text'] = "Update failed. Processing error 3050. Error processing Confetti Bits transaction. {$new_transaction['text']}";
+			echo json_encode($feedback);
+			die();
+		}
+	} else {
+		$participation->update($update_args, $where_args);
+		$user_name = cb_core_get_user_display_name( $participation->applicant_id );
+		$feedback['text'] = "{$user_name}'s participation submission for \"{$log_entry}\" has been {$status}.";
+		$feedback['type'] = "info";
+	}
 
 	echo json_encode($feedback);
 	die();
@@ -144,28 +155,26 @@ function cb_ajax_new_participation() {
 	$event_date		= $date->format( 'Y-m-d H:i:s' );
 	//|| ( $event_type === 'other' && empty( $event_note ) )
 	if ( empty( $event_type ) ) {
-		$feedback['text'] = "No events selected. Please select or input the event type you are attempting to register.{$event_type} {$event_note}" . print_r($_POST);
+		$feedback['text'] = "No events selected. Please select or input the event type you are attempting to register.";
 	} else if ( empty( $applicant_id ) )  {
 		$feedback['text'] = "Authentication error 1000. Failed to authenticate request.";
 	} else {
 
-		$send = cb_participation_new_participation(
-			array(
-				'item_id'			=> $applicant_id,
-				'secondary_item_id'	=> 0,
-				'applicant_id'		=> $applicant_id,
-				'admin_id'			=> 0,
-				'date_created'		=> current_time('mysql'),
-				'date_modified'		=> current_time('mysql'),
-				'event_type'		=> $event_type,
-				'event_date'		=> $event_date,
-				'event_note'		=> $event_note,
-				'component_name'	=> 'confetti_bits',
-				'component_action'	=> 'cb_participation_new',
-				'status'			=> 'new',
-				'transaction_id'	=> 0
-			)
-		);
+		$send = cb_participation_new_participation([
+			'item_id'			=> $applicant_id,
+			'secondary_item_id'	=> 0,
+			'applicant_id'		=> $applicant_id,
+			'admin_id'			=> 0,
+			'date_created'		=> current_time('mysql'),
+			'date_modified'		=> current_time('mysql'),
+			'event_type'		=> $event_type,
+			'event_date'		=> $event_date,
+			'event_note'		=> $event_note,
+			'component_name'	=> 'confetti_bits',
+			'component_action'	=> 'cb_participation_new',
+			'status'			=> 'new',
+			'transaction_id'	=> 0
+		]);
 
 		if ( false === is_int( $send ) ) {
 			$feedback['text'] = "Request processing error 2000.";
@@ -248,3 +257,95 @@ function cb_ajax_get_participation() {
 	die();
 
 }
+
+/**
+ * Adds 5 participation entries for testing purposes.
+ * 
+ * @package ConfettiBits\Participation
+ * @since 2.3.0
+ */
+function cb_participation_add_filler_data() {
+
+	$entries = [
+		[
+			'item_id'			=> 5,
+			'secondary_item_id'	=> 0,
+			'applicant_id'		=> 5,
+			'admin_id'			=> 0,
+			'date_created'		=> cb_core_current_date(),
+			'date_modified'		=> cb_core_current_date(),
+			'event_date'		=> cb_core_current_date(),
+			'event_type'		=> 'activity',
+			'event_note'		=> 'Test 1',
+			'component_name'	=> 'confetti_bits',
+			'component_action'	=> 'cb_participation',
+			'status'			=> 'new',
+			'transaction_id'	=> 0
+		],
+		[
+			'item_id'			=> 5,
+			'secondary_item_id'	=> 0,
+			'applicant_id'		=> 5,
+			'admin_id'			=> 0,
+			'date_created'		=> cb_core_current_date(),
+			'date_modified'		=> cb_core_current_date(),
+			'event_date'		=> cb_core_current_date(),
+			'event_type'		=> 'activity',
+			'event_note'		=> 'Test 2',
+			'component_name'	=> 'confetti_bits',
+			'component_action'	=> 'cb_participation',
+			'status'			=> 'new',
+			'transaction_id'	=> 0
+		],
+		[
+			'item_id'			=> 5,
+			'secondary_item_id'	=> 0,
+			'applicant_id'		=> 5,
+			'admin_id'			=> 0,
+			'date_created'		=> cb_core_current_date(),
+			'date_modified'		=> cb_core_current_date(),
+			'event_date'		=> cb_core_current_date(),
+			'event_type'		=> 'activity',
+			'event_note'		=> 'Test 3',
+			'component_name'	=> 'confetti_bits',
+			'component_action'	=> 'cb_participation',
+			'status'			=> 'new',
+			'transaction_id'	=> 0
+		],
+		[
+			'item_id'			=> 5,
+			'secondary_item_id'	=> 0,
+			'applicant_id'		=> 5,
+			'admin_id'			=> 0,
+			'date_created'		=> cb_core_current_date(),
+			'date_modified'		=> cb_core_current_date(),
+			'event_date'		=> cb_core_current_date(),
+			'event_type'		=> 'activity',
+			'event_note'		=> 'Test 4',
+			'component_name'	=> 'confetti_bits',
+			'component_action'	=> 'cb_participation',
+			'status'			=> 'new',
+			'transaction_id'	=> 0
+		],
+		[
+			'item_id'			=> 5,
+			'secondary_item_id'	=> 0,
+			'applicant_id'		=> 5,
+			'admin_id'			=> 0,
+			'date_created'		=> cb_core_current_date(),
+			'date_modified'		=> cb_core_current_date(),
+			'event_date'		=> cb_core_current_date(),
+			'event_type'		=> 'activity',
+			'event_note'		=> 'Test 5',
+			'component_name'	=> 'confetti_bits',
+			'component_action'	=> 'cb_participation',
+			'status'			=> 'new',
+			'transaction_id'	=> 0
+		],
+	];
+	foreach ( $entries as $entry ) {
+		cb_participation_new_participation($entry);	
+	}
+
+}
+//add_action( 'cb_actions', 'cb_add_a_few_participation' );
