@@ -310,8 +310,8 @@ Could not find any participation entries of specified type.
 	async function cbCreateParticipationEntry(participation) {
 
 		let participationApplicantId = parseInt(participation.applicant_id);
-		let eventType = participation.event_type.charAt(0).toUpperCase() + participation.event_type.slice(1).replace('_', ' ').replace('\\', '');
-		let eventNote = participation.event_note.replace('\\', '');
+		let eventType = participation.event_type.replaceAll('_', ' ');
+		let eventNote = participation.event_note.replaceAll('\\', '');
 		let eventDate = cbFormatDate(participation.event_date);
 		let transactionId = (null != participation.transaction_id) ? parseInt(participation.transaction_id) : 0;
 		let dateModified = cbFormatDate(participation.date_modified);
@@ -329,7 +329,7 @@ Could not find any participation entries of specified type.
 
 		let $entryStatus = $('<p>', {
 			class: `cb-participation-entry-data cb-participation-status-${participation.status}`,
-			text: participation.status.charAt(0).toUpperCase() + participation.status.slice(1)
+			text: participation.status
 		});
 		let $entryApplicantName = $('<a>', {
 			class: "cb-participation-entry-data cb-participation-entry-applicant-name",

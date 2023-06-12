@@ -247,14 +247,14 @@ function cb_templates_get_number_input( $args = array() ) {
 
 	$esc_name = esc_attr($r['name']);
 	$value = !empty( $r['value'] ) ? ' value="' . $r['value'] . '"' : '';
-	$placeholder	= empty( $r['placeholder'] ) ? '' : $r['placeholder'];
+	$placeholder	= empty( $r['placeholder'] ) ? '' : ' placeholder="' . $r['placeholder'] . '"';
 	$minmax	= '';
 
-	if ( $r['min'] === '' || ! is_int( $r['min'] ) ) {
+	if ( $r['min'] !== '' && is_int( $r['min'] ) ) {
 		$minmax .= ' min="' . $r['min'] . '"';
 	}
 
-	if ( $r['max'] === '' || ! is_int( $r['max'] ) ) {
+	if ( $r['max'] !== '' && is_int( $r['max'] ) ) {
 		$minmax .= ' max="' . $r['max'] . '"';	
 	}
 

@@ -18,7 +18,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_ajax_update_participation\u0028\u0029",
             "name": "cb_ajax_update_participation",
-            "summary": "CB\u0020AJAX\u0020Participation\u0020Bulk\u0020Update",
+            "summary": "Handles\u0020HTTP\u0020PATCH\u0020requests\u0020to\u0020update\u0020participation\u0020entries.",
             "url": "namespaces/default.html#function_cb_ajax_update_participation"
         },                {
             "fqsen": "\\cb_ajax_new_participation\u0028\u0029",
@@ -30,6 +30,11 @@ Search.appendIndex(
             "name": "cb_ajax_get_participation",
             "summary": "CB\u0020AJAX\u0020Get\u0020Participation",
             "url": "namespaces/default.html#function_cb_ajax_get_participation"
+        },                {
+            "fqsen": "\\cb_participation_add_filler_data\u0028\u0029",
+            "name": "cb_participation_add_filler_data",
+            "summary": "Adds\u00205\u0020participation\u0020entries\u0020for\u0020testing\u0020purposes.",
+            "url": "namespaces/default.html#function_cb_participation_add_filler_data"
         },                {
             "fqsen": "\\cb_ajax_get_transactions\u0028\u0029",
             "name": "cb_ajax_get_transactions",
@@ -480,6 +485,11 @@ Search.appendIndex(
             "name": "cb_core_update_api_key",
             "summary": "CB\u0020Core\u0020Update\u0020API\u0020Key",
             "url": "namespaces/default.html#function_cb_core_update_api_key"
+        },                {
+            "fqsen": "\\cb_core_validate_api_key\u0028\u0029",
+            "name": "cb_core_validate_api_key",
+            "summary": "Validates\u0020against\u0020a\u0020supplied\u0020API\u0020key\u0020safe\u0020name.",
+            "url": "namespaces/default.html#function_cb_core_validate_api_key"
         },                {
             "fqsen": "\\cb_member_locate_template_part\u0028\u0029",
             "name": "cb_member_locate_template_part",
@@ -2268,13 +2278,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_get_patch_data\u0028\u0029",
             "name": "cb_get_patch_data",
-            "summary": "CB\u0020Get\u0020PATCH\u0020Data",
+            "summary": "Gets\u0020PATCH\u0020data\u0020from\u0020an\u0020HTTP\u0020PATCH\u0020request.",
             "url": "namespaces/default.html#function_cb_get_patch_data"
         },                {
             "fqsen": "\\cb_core_get_missing_users\u0028\u0029",
             "name": "cb_core_get_missing_users",
-            "summary": "CB\u0020Core\u0020Get\u0020Missing\u0020Users",
+            "summary": "Gets\u0020a\u0020list\u0020of\u0020transactions\u0020for\u0020nonexistent\u0020users.",
             "url": "namespaces/default.html#function_cb_core_get_missing_users"
+        },                {
+            "fqsen": "\\cb_core_get_user_display_name\u0028\u0029",
+            "name": "cb_core_get_user_display_name",
+            "summary": "Gets\u0020the\u0020user\u0020display\u0020name.",
+            "url": "namespaces/default.html#function_cb_core_get_user_display_name"
         },                {
             "fqsen": "\\",
             "name": "\\",

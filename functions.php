@@ -104,6 +104,12 @@ add_action(
 						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-core-admin.js', 
 						array('jquery')
 					);
+					wp_enqueue_script( 
+						'cb_participation_admin', 
+						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-participation-admin.js', 
+						array('jquery') 
+					);
+
 				}
 
 				if ( cb_is_user_site_admin() ) {
@@ -149,6 +155,13 @@ add_action(
 					'update'		=> home_url('/wp-json/cb-ajax/v1/participation/update'),
 					'nonce'			=> wp_create_nonce( 'cb_participation_post' ),
 				);
+				
+				$cb_participation_admin_params = [
+					'get_participation'	=> home_url('/wp-json/cb-ajax/v1/participation/get'),
+					'get_transactions'	=> home_url('/wp-json/cb-ajax/v1/transactions/get'),
+					'update'			=> home_url('/wp-json/cb-ajax/v1/participation/update'),
+					'api_key'			=> get_option( 'cb_core_api_key_safe_name' ),
+				];
 
 				$cb_transactions_params = array(
 					'send'		=> admin_url( 'admin-ajax.php?action=cb_send_bits' )
@@ -158,6 +171,12 @@ add_action(
 					'cb_participation', 
 					'cb_participation', 
 					$cb_participation_params
+				);
+				
+				wp_localize_script( 
+					'cb_participation_admin', 
+					'cb_participation_admin', 
+					$cb_participation_admin_params
 				);
 
 				wp_localize_script( 
@@ -261,8 +280,7 @@ add_action( 'edit_user_created_user', 'cb_save_user_birthday_anniversary_fields'
  * We only need the dates that those cycles started, because 
  * they ended when the current cycles started.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
  * @since 2.3.0
  * 
  */
@@ -302,8 +320,7 @@ add_action( 'cb_setup_globals', 'cb_core_set_reset_date_globals' );
  * 
  * @return string The formatted datetime.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
  * @since 2.3.0
  */
 function cb_core_current_date( $offset = true, $format = "Y-m-d H:i:s" ) {
@@ -322,8 +339,7 @@ if (!function_exists('str_starts_with')) {
 	 * 
 	 * PHP 8 Polyfill for str_starts_with
 	 * 
-	 * @package Confetti_Bits
-	 * @subpackage Core
+	 * @package ConfettiBits\Core
 	 * @since 2.3.0
 	 * 
 	 * @param string $haystack The string to search.
@@ -341,8 +357,7 @@ if (!function_exists('str_ends_with')) {
 	 * 
 	 * PHP 8 Polyfill for str_ends_with
 	 * 
-	 * @package Confetti_Bits
-	 * @subpackage Core
+	 * @package ConfettiBits\Core
 	 * @since 2.3.0
 	 * 
 	 * @param string $haystack The string to search.
@@ -361,8 +376,7 @@ if (!function_exists('str_contains')) {
 	 * 
 	 * PHP 8 Polyfill for str_contains
 	 * 
-	 * @package Confetti_Bits
-	 * @subpackage Core
+	 * @package ConfettiBits\Core
 	 * @since 2.3.0
 	 * 
 	 * @param string $haystack The string to search.
@@ -381,7 +395,7 @@ if (!function_exists('str_contains')) {
  * Flushes the rewrite rules after we update a
  * plugin or theme, so our pages stop disappearing.
  * 
- * @package Confetti_Bits
+ * @package ConfettiBits\Core
  * @since 2.3.0
  */
 function cb_flush_rewrite_rules() {
@@ -390,14 +404,14 @@ function cb_flush_rewrite_rules() {
 add_action( 'after_plugin_or_theme_update', 'cb_flush_rewrite_rules' );
 
 /**
- * CB Get PATCH Data
+ * Gets PATCH data from an HTTP PATCH request.
  * 
  * Retrieves data from a PATCH request and returns it as an
  * associative array.
  * 
  * @return array The PATCH request body as an associative array.
  * 
- * @package ConfettiBits
+ * @package ConfettiBits\Core
  * @since 2.3.0
  */
 function cb_get_patch_data() {
@@ -411,13 +425,14 @@ function cb_get_patch_data() {
 }
 
 /**
- * CB Core Get Missing Users
+ * Gets a list of transactions for nonexistent users.
  * 
  * Get a list of users that are present in the 
  * confetti_bits_transactions table, but not in the 
- * wp_users table.
+ * wp_users table. Returns an array of transactions where
+ * the sender or recipient isn't on the platform anymore.
  * 
- * @return array An associative array of user IDs.
+ * @return array An associative array of transaction data.
  * 
  * @package ConfettiBits\Core
  * @since 2.3.0
@@ -436,5 +451,46 @@ function cb_core_get_missing_users() {
 	$sql = "{$select} {$from} {$left_join1} {$left_join2} {$where}";
 
 	return $wpdb->get_results( $sql, "ARRAY_A" );
+
+}
+
+/**
+ * Gets the user display name.
+ * 
+ * Attempts to get a display_name for the given user_id. If that
+ * comes up empty, searches for the first_name. If that also
+ * comes up empty, searches for the nickname. If there's no
+ * display name to be found, it gives us a lovely bunch of
+ * abject nothingness. 
+ * 
+ * @param int $user_id The ID for the user whose name we want.
+ * 					   Default current user_id.
+ * 
+ * @return string The display_name on success, empty on failure.
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
+function cb_core_get_user_display_name( $user_id = 0 ) {
+
+	if ( empty( $user_id ) ) {
+		$user_id = get_current_user_id();
+	}
+
+	$display_name = get_the_author_meta('display_name', $user_id );
+
+	if ( empty( $display_name ) ) {
+		$display_name = get_the_author_meta( 'first_name', $user_id );
+	}
+
+	if ( empty( $display_name ) ) {
+		$display_name = get_the_author_meta( 'nickname', $user_id );
+	}
+	
+	if ( empty( $display_name ) ) {
+		$display_name = "Unknown Member";
+	}
+
+	return $display_name;
 
 }
