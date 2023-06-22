@@ -30,6 +30,8 @@ class CB_Ajax_Component extends CB_Component {
 		$includes = array(
 			'transactions',
 			'participation',
+			'requests',
+			'request-items',
 			'functions',
 		);
 		

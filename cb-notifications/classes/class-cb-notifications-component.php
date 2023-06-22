@@ -694,7 +694,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 	public function format_notification( $content, $item_id, $secondary_item_id, $action_item_count, $component_action_name, $component_name, $notification_id, $screen ) {
 
 		$text = '';
-		$link = bp_loggedin_user_domain() . "confetti-bits";
+		$link = home_url("confetti-bits");
 
 		if ( ( 'confetti_bits' === $component_name && 'cb_send_bits' === $component_action_name ) 
 			|| ( 'confetti_bits' === $component_name && 'cb_transfer_bits' === $component_action_name ) ) {
@@ -764,10 +764,10 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 
 		if ( 'confetti_bits' === $component_name && 'cb_participation_status_update' === $component_action_name ) {
 
-			$applicant_name = bp_core_get_user_displayname( $item_id );
-			$admin_name = bp_core_get_user_displayname( $secondary_item_id );
+			$applicant_name = cb_core_get_user_display_name( $item_id );
+			$admin_name = cb_core_get_user_display_name( $secondary_item_id );
 			$text = esc_html__( "{$admin_name} just updated your participation status.", 'confetti-bits' );
-			$link = bp_core_get_user_domain( $item_id ) . 'confetti-bits/';
+			$link = home_url( 'confetti-bits' );
 			$content = array(
 				'title' => "Participation Update", 
 				'text' => $text,
@@ -779,7 +779,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 
 			$user_name = bp_core_get_user_displayname( $item_id );
 			$text = esc_html__( "Happy Birthday!", 'confetti-bits' );
-			$link = bp_core_get_user_domain( $item_id ) . 'confetti-bits/';
+			$link = home_url( 'confetti-bits' );
 			$content = array(
 				'title' => "Happy Birthday!", 
 				'text' => $text,

@@ -34,22 +34,17 @@ jQuery(document).ready(($) => {
 	 *
 	 */
 	async function cbGetUserData(applicantId) {
-		let retval = {
-			username: '',
-			userDisplayName: ''
-		};
+		let retval = '';
 		await $.get({
 			url: 'https://teamctg.com/wp-json/buddyboss/v1/members',
 			data: {
 				include: applicantId
-			}, success: function (text) {
-				retval = {
-					username: text[0].user_login,
-					userDisplayName: text[0].name
-				};
-			}, error: e => console.error(e)
+			}, success: text => retval = text[0].name, 
+			error: e => console.error(e)
 		});
+
 		return retval;
+
 	}
 
 	/**
@@ -63,7 +58,7 @@ jQuery(document).ready(($) => {
 	 * @since 2.0.0
 	 */
 	let formMessage = new function() {
-		
+
 		this.element = $('.cb-feedback-message');
 		this.p = $('<p class="cb-feedback-message">');
 		this.container = $('.cb-feedback');
@@ -78,13 +73,14 @@ jQuery(document).ready(($) => {
 
 		this.container.children('.cb-close').on('click', () => {
 			this.container.slideUp(400);
-			this.element.remove();
+			this.container.children("p").remove();
 		});
 
 		this.setMessage = (items) => {
-			
-			this.element.remove();
+
+			this.container.children("p").remove();
 			let itemsArray = Array.isArray(items) ? items : [items];
+
 			itemsArray.forEach((item) => {
 				if (Array.isArray(item.text)) {
 					item.text.forEach((text) => {
@@ -94,8 +90,8 @@ jQuery(document).ready(($) => {
 						}).text(text);
 						this.container.append(p);
 					});
-				} else if (typeof item.text === 'string') {
-					let p = this.p;
+				} else {
+					let p = this.p.clone();
 					p.css({
 						color: this.style[item.type]
 					}).text(item.text);
@@ -582,7 +578,7 @@ jQuery(document).ready(($) => {
 		let eventDate = cbFormatDate(participation.event_date);
 		let dateModified = cbFormatDate(participation.date_modified);
 
-		let { username, userDisplayName } = await cbGetUserData(applicantId);
+		let userDisplayName = await cbGetUserData(applicantId);
 
 		let $entryDataContainer = $('<td class="cb-participation-admin-entry-data-container">');
 		let $entryModule = $('<tr class="cb-participation-admin-entry">');
@@ -603,11 +599,11 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			text: participation.status
 		});
 
-		let $entryApplicantName = $('<a>', {
+		let $entryApplicantName = $('<p>', {
 			class: "cb-participation-admin-entry-data cb-participation-entry-applicant-name",
-			href: `https://teamctg.com/members/${username}/`,
 			text: userDisplayName
 		});
+
 		let $entryEventDate = $(
 			`<p class='cb-participation-admin-entry-data'><b>${eventDate}</b></p>`
 		);
@@ -655,9 +651,9 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	}
 
 	/**
-	 * CB Create Participation Entry
+	 * Adds transaction entries to the DOM.
 	 *
-	 * Creates a participation entry in the participation table
+	 * Triggered when the transactions table refreshes.
 	 *
 	 * @param {object} participation
 	 * @returns {void}
@@ -665,8 +661,8 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 */
 	async function cbCreateTransactionEntry(transaction) {
 
-		let senderData = await cbGetUserData(transaction.sender_id);
-		let recipientData = await cbGetUserData(transaction.recipient_id);
+		let senderName = await cbGetUserData(transaction.sender_id);
+		let recipientName = await cbGetUserData(transaction.recipient_id);
 		let dateSent = cbFormatDate(transaction.date_sent);
 		let amount = parseInt(transaction.amount);
 		let logEntry = transaction.log_entry.replaceAll('\\', ' ');
@@ -681,12 +677,14 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 
 		let transactionSender = $('<p>', {
 			class: `cb-transactions-entry-data cb-transactions-sender`,
-			text: senderData.userDisplayName
+			text: senderName
 		});
-		let transactionRecipient = $('<a>', {
+
+		let transactionRecipient = $('<p>', {
 			class:`cb-transactions-entry-data cb-transactions-recipient`,
-			text: recipientData.userDisplayName
+			text: recipientName
 		});
+
 		let transactionDateSent = $(
 			`<p class='cb-transactions-entry-data'><b>${dateSent}</b></p>`
 		);
@@ -736,7 +734,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			page: page,
 			per_page: 10,
 			event_type: eventType,
-			orderby: { column: 'id', order: 'DESC' }
+			orderby: { column: 'date_modified', order: 'DESC' }
 		};
 
 		$.get({
@@ -772,14 +770,14 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @returns {void}
 	 */
 	async function refreshTransactions(page, userID) {
-		
+
 		if ( page === transactionsUserCache.page && userID === transactionsUserCache.userID ) {
 			return;
 		}
-		
+
 		transactionsUserCache.page = page;
 		transactionsUserCache.userID = userID;
-		
+
 		let getData = {
 			select: 'sender_id, recipient_id, amount, log_entry, date_sent',
 			recipient_id: userID,
@@ -797,7 +795,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 				if ( data.text !== false ) {	
 					formatTransactionsHeaderRow();
 					for (let entry of data.text) {
-						await cbCreateTransactionEntry(entry);
+						cbCreateTransactionEntry(entry);
 					}
 				} else {
 					cbCreateEmptyTransactionNotice();
@@ -907,12 +905,10 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		let participation = JSON.parse(participationObject.text)[0];
 
 		let applicantId = parseInt(participation.applicant_id);
-		let applicant = await cbGetUserData(parseInt(applicantId));
-		let applicantName = applicant.userDisplayName;
-
+		let applicantName = await cbGetUserData(parseInt(applicantId));
 		let eventType = participation.event_type.replaceAll('_',' ');
 		let eventNote = participation.event_note.replaceAll('\\', '');
-		let eventDate = participation.event_date;
+		let eventDate = cbFormatDate(participation.event_date);
 		let transactionId = parseInt(participation.transaction_id);
 
 		refreshTransactions(1, applicantId);
@@ -926,6 +922,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		$('input[name=cb_participation_admin_transaction_id]').val(transactionId);
 		$('#cb-participation-admin-applicant-name').text(applicantName);
 		$('#cb-participation-admin-applicant-event').text(eventType);
+		$('#cb-participation-admin-event-date').text(eventDate);
 
 		if ((eventType === 'other' || eventType === 'contest' ) && transactionId === 0) {
 			$adminAmountOverride.addClass('override');
@@ -937,6 +934,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			$adminAmountOverride.siblings('label').removeClass('override');
 			$adminAmountOverride.prop('disabled', true);
 		}
+
 	});
 
 	$adminEditFormClose.on('click', function (e) {
@@ -1008,7 +1006,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			};
 
 			await $.ajax({
-				url: cb_participation_admin.update,
+				url: cb_participation_admin.update_participation,
 				method: 'PATCH',
 				data: JSON.stringify(obj),
 				success: e => retval = e,
@@ -1041,14 +1039,14 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 
 		let response = await $.ajax({
 			method: "PATCH",
-			url: cb_participation_admin.update,
+			url: cb_participation_admin.update_participation,
 			data: JSON.stringify(obj),
 			contentType: "application/json",
 			success: e => {
 				$adminEditFormClose.click();
 				formMessage.setMessage(e);
 			},
-			error: x => x
+			error: x => console.error(x)
 		});
 
 		refreshTable(1);

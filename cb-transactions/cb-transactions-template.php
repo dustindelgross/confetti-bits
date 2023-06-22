@@ -313,7 +313,7 @@ function cb_transactions_get_request_selection() {
 		"placeholder" => "--- Select an Option ---",
 		"select_options" => $options
 	]);
-	
+
 }
 
 /**
@@ -421,7 +421,7 @@ function cb_transactions_get_send_bits_module() {
 	if ( !cb_is_user_admin() || cb_is_user_site_admin() ) {
 		array_unshift($content, cb_transactions_get_transfer_balance_notice());
 	}
-	
+
 	$form = cb_templates_get_form([
 		'name' => 'cb_transactions_send_bits_form',
 		'autocomplete' => 'off',
@@ -433,7 +433,7 @@ function cb_transactions_get_send_bits_module() {
 		'classes' => ['cb-module'],
 		'output' => $form
 	]);
-	
+
 }
 
 /**
@@ -467,9 +467,9 @@ function cb_transactions_get_formatted_leaderboard() {
 	$placement_digit = 0;
 	$placement_suffix = '';
 	$formatted = '';
-	
+
 	$items = cb_transactions_get_leaderboard();
-	
+
 	foreach( $items as $item ) {
 		$dn = bp_core_get_user_displayname($item['recipient_id']);
 		if ( empty($dn) )
@@ -524,4 +524,39 @@ function cb_transactions_get_formatted_leaderboard() {
  */
 function cb_transactions_leaderboard() {
 	echo cb_transactions_get_formatted_leaderboard();
+}
+
+/**
+ * Formats the markup for the "Import Birthdays" module.
+ * 
+ * Uses a bunch of our new templating structure to clean up 
+ * some of the excess markup lying around here.
+ * 
+ * @return string The formatted markup.
+ * 
+ * @package ConfettiBits\Templates
+ * @since 2.3.0
+ */
+function cb_get_import_bda_module() {
+	$heading = cb_templates_get_heading("Import Birthdays and Anniversaries");
+	$file_input = cb_templates_get_file_input(['name' => 'cb_transactions_bda_import', 'label' => 'Please choose a .csv file from your computer', 'accepts' => ['.csv'] ]);
+	$submit = cb_templates_get_submit_input(['value' => "Import"]);
+	$form = cb_templates_get_form([
+		'name' => 'cb_bda_import_form',
+		'method' => 'post',
+		'output' => $file_input . $submit
+	]);
+
+	return cb_templates_container(['classes' => ['cb-module'], 'output' => "{$heading}{$form}" ]);
+
+}
+
+/**
+ * Outputs the "Import B-Days & Anniversaries" markup.
+ * 
+ * @package ConfettiBits\Templates
+ * @since 2.3.0
+ */
+function cb_import_bda_module() {
+	echo cb_get_import_bda_module();
 }

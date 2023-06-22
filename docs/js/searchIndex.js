@@ -11,6 +11,21 @@ Search.appendIndex(
             "summary": "CB\u0020AJAX\u0020Participation\u0020API\u0020Init",
             "url": "namespaces/default.html#function_cb_ajax_participation_api_init"
         },                {
+            "fqsen": "\\cb_ajax_requests_api_init\u0028\u0029",
+            "name": "cb_ajax_requests_api_init",
+            "summary": "Registers\u0020our\u0020REST\u0020API\u0020routes\u0020for\u0020all\u0020our\u0020requests\u0020data.",
+            "url": "namespaces/default.html#function_cb_ajax_requests_api_init"
+        },                {
+            "fqsen": "\\cb_ajax_request_items_api_init\u0028\u0029",
+            "name": "cb_ajax_request_items_api_init",
+            "summary": "Registers\u0020our\u0020REST\u0020API\u0020routes\u0020for\u0020all\u0020our\u0020request\u0020item\u0020data.",
+            "url": "namespaces/default.html#function_cb_ajax_request_items_api_init"
+        },                {
+            "fqsen": "\\cb_ajax_register_rest_route\u0028\u0029",
+            "name": "cb_ajax_register_rest_route",
+            "summary": "Dynamically\u0020registers\u0020a\u0020REST\u0020route.",
+            "url": "namespaces/default.html#function_cb_ajax_register_rest_route"
+        },                {
             "fqsen": "\\cb_setup_ajax\u0028\u0029",
             "name": "cb_setup_ajax",
             "summary": "CB\u0020Setup\u0020AJAX",
@@ -35,6 +50,51 @@ Search.appendIndex(
             "name": "cb_participation_add_filler_data",
             "summary": "Adds\u00205\u0020participation\u0020entries\u0020for\u0020testing\u0020purposes.",
             "url": "namespaces/default.html#function_cb_participation_add_filler_data"
+        },                {
+            "fqsen": "\\cb_ajax_update_request_items\u0028\u0029",
+            "name": "cb_ajax_update_request_items",
+            "summary": "Handles\u0020HTTP\u0020PATCH\u0020request_items\u0020to\u0020update\u0020request_items\u0020entries.",
+            "url": "namespaces/default.html#function_cb_ajax_update_request_items"
+        },                {
+            "fqsen": "\\cb_ajax_new_request_items\u0028\u0029",
+            "name": "cb_ajax_new_request_items",
+            "summary": "CB\u0020Ajax\u0020New\u0020Request\u0020Items",
+            "url": "namespaces/default.html#function_cb_ajax_new_request_items"
+        },                {
+            "fqsen": "\\cb_ajax_delete_request_items\u0028\u0029",
+            "name": "cb_ajax_delete_request_items",
+            "summary": "Deletes\u0020request\u0020items\u0020from\u0020the\u0020request\u0020items\u0020table.",
+            "url": "namespaces/default.html#function_cb_ajax_delete_request_items"
+        },                {
+            "fqsen": "\\cb_ajax_get_request_items\u0028\u0029",
+            "name": "cb_ajax_get_request_items",
+            "summary": "CB\u0020AJAX\u0020Get\u0020Request_items",
+            "url": "namespaces/default.html#function_cb_ajax_get_request_items"
+        },                {
+            "fqsen": "\\cb_request_items_add_filler_data\u0028\u0029",
+            "name": "cb_request_items_add_filler_data",
+            "summary": "Adds\u00205\u0020request_items\u0020entries\u0020for\u0020testing\u0020purposes.",
+            "url": "namespaces/default.html#function_cb_request_items_add_filler_data"
+        },                {
+            "fqsen": "\\cb_ajax_update_requests\u0028\u0029",
+            "name": "cb_ajax_update_requests",
+            "summary": "Handles\u0020HTTP\u0020PATCH\u0020requests\u0020to\u0020update\u0020requests\u0020entries.",
+            "url": "namespaces/default.html#function_cb_ajax_update_requests"
+        },                {
+            "fqsen": "\\cb_ajax_new_requests\u0028\u0029",
+            "name": "cb_ajax_new_requests",
+            "summary": "CB\u0020Ajax\u0020New\u0020Requests",
+            "url": "namespaces/default.html#function_cb_ajax_new_requests"
+        },                {
+            "fqsen": "\\cb_ajax_get_requests\u0028\u0029",
+            "name": "cb_ajax_get_requests",
+            "summary": "CB\u0020AJAX\u0020Get\u0020Requests",
+            "url": "namespaces/default.html#function_cb_ajax_get_requests"
+        },                {
+            "fqsen": "\\cb_ajax_delete_requests\u0028\u0029",
+            "name": "cb_ajax_delete_requests",
+            "summary": "Deletes\u0020requests\u0020from\u0020the\u0020requests\u0020table.",
+            "url": "namespaces/default.html#function_cb_ajax_delete_requests"
         },                {
             "fqsen": "\\cb_ajax_get_transactions\u0028\u0029",
             "name": "cb_ajax_get_transactions",
@@ -431,6 +491,11 @@ Search.appendIndex(
             "summary": "CB\u0020REST\u0020API\u0020Init",
             "url": "namespaces/default.html#function_cb_rest_api_init"
         },                {
+            "fqsen": "\\cb_core_install_events\u0028\u0029",
+            "name": "cb_core_install_events",
+            "summary": "CB\u0020Core\u0020Install\u0020Events",
+            "url": "namespaces/default.html#function_cb_core_install_events"
+        },                {
             "fqsen": "\\cb_core_install_transactions\u0028\u0029",
             "name": "cb_core_install_transactions",
             "summary": "CB\u0020Core\u0020Install\u0020Transactions",
@@ -441,15 +506,25 @@ Search.appendIndex(
             "summary": "CB\u0020Core\u0020Install\u0020Participation",
             "url": "namespaces/default.html#function_cb_core_install_participation"
         },                {
-            "fqsen": "\\cb_core_install_events\u0028\u0029",
-            "name": "cb_core_install_events",
-            "summary": "CB\u0020Core\u0020Install\u0020Events",
-            "url": "namespaces/default.html#function_cb_core_install_events"
-        },                {
             "fqsen": "\\cb_core_install_contests\u0028\u0029",
             "name": "cb_core_install_contests",
             "summary": "CB\u0020Core\u0020Install\u0020Contests",
             "url": "namespaces/default.html#function_cb_core_install_contests"
+        },                {
+            "fqsen": "\\cb_core_install_request_items\u0028\u0029",
+            "name": "cb_core_install_request_items",
+            "summary": "CB\u0020Core\u0020Install\u0020Request\u0020Items",
+            "url": "namespaces/default.html#function_cb_core_install_request_items"
+        },                {
+            "fqsen": "\\cb_core_install_requests\u0028\u0029",
+            "name": "cb_core_install_requests",
+            "summary": "CB\u0020Core\u0020Install\u0020Requests",
+            "url": "namespaces/default.html#function_cb_core_install_requests"
+        },                {
+            "fqsen": "\\cb_core_prepare_install\u0028\u0029",
+            "name": "cb_core_prepare_install",
+            "summary": "Put\u0020stuff\u0020here\u0020that\u0020you\u0020want\u0020to\u0020run\u0020before\u0020installation.",
+            "url": "namespaces/default.html#function_cb_core_prepare_install"
         },                {
             "fqsen": "\\cb_core_install\u0028\u0029",
             "name": "cb_core_install",
@@ -626,11 +701,6 @@ Search.appendIndex(
             "summary": "Generate\u0020any\u0020additional\u0020rewrite\u0020rules.",
             "url": "classes/CB-Component.html#method_generate_rewrite_rules"
         },                {
-            "fqsen": "\\CB_Component\u003A\u003Arest_api_init\u0028\u0029",
-            "name": "rest_api_init",
-            "summary": "Init\u0020the\u0020Confetti_Bits\u0020REST\u0020API.",
-            "url": "classes/CB-Component.html#method_rest_api_init"
-        },                {
             "fqsen": "\\CB_Component\u003A\u003A\u0024name",
             "name": "name",
             "summary": "Translatable\u0020name\u0020for\u0020the\u0020component.",
@@ -745,21 +815,6 @@ Search.appendIndex(
             "name": "load_components",
             "summary": "",
             "url": "classes/CB-Core.html#method_load_components"
-        },                {
-            "fqsen": "\\CB_Core\u003A\u003Aload_integrations\u0028\u0029",
-            "name": "load_integrations",
-            "summary": "",
-            "url": "classes/CB-Core.html#method_load_integrations"
-        },                {
-            "fqsen": "\\CB_Core\u003A\u003Aincludes\u0028\u0029",
-            "name": "includes",
-            "summary": "Include\u0020required\u0020files.",
-            "url": "classes/CB-Core.html#method_includes"
-        },                {
-            "fqsen": "\\CB_Core\u003A\u003Asetup_globals\u0028\u0029",
-            "name": "setup_globals",
-            "summary": "Set\u0020up\u0020component\u0020global\u0020variables.",
-            "url": "classes/CB-Core.html#method_setup_globals"
         },                {
             "fqsen": "\\Confetti_Bits_Core_App_Menus",
             "name": "Confetti_Bits_Core_App_Menus",
@@ -1166,16 +1221,6 @@ Search.appendIndex(
             "summary": "CB\u0020Participation\u0020Create\u0020Participation",
             "url": "namespaces/default.html#function_cb_participation_new_participation"
         },                {
-            "fqsen": "\\cb_participation_update_request_status\u0028\u0029",
-            "name": "cb_participation_update_request_status",
-            "summary": "Confetti\u0020Bits\u0020Update\u0020Request\u0020Status",
-            "url": "namespaces/default.html#function_cb_participation_update_request_status"
-        },                {
-            "fqsen": "\\cb_participation_update_handler\u0028\u0029",
-            "name": "cb_participation_update_handler",
-            "summary": "CB\u0020Participation\u0020Update\u0020Handler",
-            "url": "namespaces/default.html#function_cb_participation_update_handler"
-        },                {
             "fqsen": "\\cb_participation_new_transaction\u0028\u0029",
             "name": "cb_participation_new_transaction",
             "summary": "Confetti\u0020Bits\u0020Participation\u0020New\u0020Transaction",
@@ -1446,6 +1491,371 @@ Search.appendIndex(
             "summary": "The\u0020columns\u0020available\u0020in\u0020the\u0020database.\u0020Used\u0020to\u0020help\nbuild\u0020our\u0020orderby\u0020clause.",
             "url": "classes/CB-Participation-Participation.html#property_columns"
         },                {
+            "fqsen": "\\cb_requests_new_request\u0028\u0029",
+            "name": "cb_requests_new_request",
+            "summary": "CB\u0020Requests\u0020Create\u0020Requests",
+            "url": "namespaces/default.html#function_cb_requests_new_request"
+        },                {
+            "fqsen": "\\cb_requests_new_transaction\u0028\u0029",
+            "name": "cb_requests_new_transaction",
+            "summary": "CB\u0020Requests\u0020New\u0020Transaction",
+            "url": "namespaces/default.html#function_cb_requests_new_transaction"
+        },                {
+            "fqsen": "\\cb_requests_get_amount\u0028\u0029",
+            "name": "cb_requests_get_amount",
+            "summary": "Attempts\u0020to\u0020extract\u0020a\u0020predetermined\u0020value\u0020from\u0020a\u0020request\u0020item.",
+            "url": "namespaces/default.html#function_cb_requests_get_amount"
+        },                {
+            "fqsen": "\\cb_requests_get_item_name\u0028\u0029",
+            "name": "cb_requests_get_item_name",
+            "summary": "Gets\u0020the\u0020name\u0020of\u0020a\u0020request\u0020item.",
+            "url": "namespaces/default.html#function_cb_requests_get_item_name"
+        },                {
+            "fqsen": "\\cb_requests_get_request_items\u0028\u0029",
+            "name": "cb_requests_get_request_items",
+            "summary": "Lists\u0020all\u0020available\u0020request\u0020items.",
+            "url": "namespaces/default.html#function_cb_requests_get_request_items"
+        },                {
+            "fqsen": "\\cb_requests_get_transaction\u0028\u0029",
+            "name": "cb_requests_get_transaction",
+            "summary": "Gets\u0020a\u0020transaction\u0020object,\u0020if\u0020any\u0020are\u0020associated\u0020with\u0020a\u0020request.",
+            "url": "namespaces/default.html#function_cb_requests_get_transaction"
+        },                {
+            "fqsen": "\\cb_requests_new_notifications\u0028\u0029",
+            "name": "cb_requests_new_notifications",
+            "summary": "Sends\u0020a\u0020notification\u0020email\u0020when\u0020a\u0020request\u0020comes\u0020in.",
+            "url": "namespaces/default.html#function_cb_requests_new_notifications"
+        },                {
+            "fqsen": "\\cb_requests_update_notifications\u0028\u0029",
+            "name": "cb_requests_update_notifications",
+            "summary": "CB\u0020Requests\u0020Update\u0020Notifications",
+            "url": "namespaces/default.html#function_cb_requests_update_notifications"
+        },                {
+            "fqsen": "\\cb_setup_requests\u0028\u0029",
+            "name": "cb_setup_requests",
+            "summary": "CB\u0020Setup\u0020Requests",
+            "url": "namespaces/default.html#function_cb_setup_requests"
+        },                {
+            "fqsen": "\\cb_requests_nav\u0028\u0029",
+            "name": "cb_requests_nav",
+            "summary": "CB\u0020Requests\u0020Nav",
+            "url": "namespaces/default.html#function_cb_requests_nav"
+        },                {
+            "fqsen": "\\cb_requests_format_nav_data\u0028\u0029",
+            "name": "cb_requests_format_nav_data",
+            "summary": "CB\u0020Requests\u0020Format\u0020Nav\u0020Data",
+            "url": "namespaces/default.html#function_cb_requests_format_nav_data"
+        },                {
+            "fqsen": "\\cb_requests_get_nav\u0028\u0029",
+            "name": "cb_requests_get_nav",
+            "summary": "CB\u0020Requests\u0020Get\u0020Nav",
+            "url": "namespaces/default.html#function_cb_requests_get_nav"
+        },                {
+            "fqsen": "\\cb_requests_admin_nav\u0028\u0029",
+            "name": "cb_requests_admin_nav",
+            "summary": "CB\u0020Requests\u0020Admin\u0020Nav",
+            "url": "namespaces/default.html#function_cb_requests_admin_nav"
+        },                {
+            "fqsen": "\\cb_requests_admin_get_nav\u0028\u0029",
+            "name": "cb_requests_admin_get_nav",
+            "summary": "CB\u0020Requests\u0020Admin\u0020Get\u0020Nav",
+            "url": "namespaces/default.html#function_cb_requests_admin_get_nav"
+        },                {
+            "fqsen": "\\cb_requests_get_request_items_form\u0028\u0029",
+            "name": "cb_requests_get_request_items_form",
+            "summary": "Gets\u0020markup\u0020for\u0020the\u0020request\u0020items\u0020form.",
+            "url": "namespaces/default.html#function_cb_requests_get_request_items_form"
+        },                {
+            "fqsen": "\\cb_request_items_form\u0028\u0029",
+            "name": "cb_request_items_form",
+            "summary": "Outputs\u0020markup\u0020for\u0020request\u0020items\u0020form.",
+            "url": "namespaces/default.html#function_cb_request_items_form"
+        },                {
+            "fqsen": "\\cb_requests_get_requests_form\u0028\u0029",
+            "name": "cb_requests_get_requests_form",
+            "summary": "Gets\u0020markup\u0020for\u0020the\u0020request\u0020items\u0020form.",
+            "url": "namespaces/default.html#function_cb_requests_get_requests_form"
+        },                {
+            "fqsen": "\\cb_requests_form\u0028\u0029",
+            "name": "cb_requests_form",
+            "summary": "Outputs\u0020markup\u0020for\u0020request\u0020items\u0020form.",
+            "url": "namespaces/default.html#function_cb_requests_form"
+        },                {
+            "fqsen": "\\CONFETTI_BITS_REQUESTS_SLUG",
+            "name": "CONFETTI_BITS_REQUESTS_SLUG",
+            "summary": "",
+            "url": "namespaces/default.html#constant_CONFETTI_BITS_REQUESTS_SLUG"
+        },                {
+            "fqsen": "\\CONFETTI_BITS_REQUEST_ITEMS_SLUG",
+            "name": "CONFETTI_BITS_REQUEST_ITEMS_SLUG",
+            "summary": "",
+            "url": "namespaces/default.html#constant_CONFETTI_BITS_REQUEST_ITEMS_SLUG"
+        },                {
+            "fqsen": "\\CB_Requests_Component",
+            "name": "CB_Requests_Component",
+            "summary": "A\u0020component\u0020class\u0020that\u0020gives\u0020us\u0020access\u0020to\u0020important\u0020globals\u0020throughout\u0020the\u0020app.",
+            "url": "classes/CB-Requests-Component.html"
+        },                {
+            "fqsen": "\\CB_Requests_Component\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/CB-Requests-Component.html#method___construct"
+        },                {
+            "fqsen": "\\CB_Requests_Component\u003A\u003Aincludes\u0028\u0029",
+            "name": "includes",
+            "summary": "Include\u0020required\u0020files.",
+            "url": "classes/CB-Requests-Component.html#method_includes"
+        },                {
+            "fqsen": "\\CB_Requests_Component\u003A\u003Asetup_globals\u0028\u0029",
+            "name": "setup_globals",
+            "summary": "Set\u0020up\u0020component\u0020global\u0020variables.",
+            "url": "classes/CB-Requests-Component.html#method_setup_globals"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item",
+            "name": "CB_Requests_Request_Item",
+            "summary": "A\u0020component\u0020that\u0020allows\u0020users\u0020to\u0020submit\u0020requests\u0020to\u0020cash\u0020in\ntheir\u0020points.",
+            "url": "classes/CB-Requests-Request-Item.html"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructor.",
+            "url": "classes/CB-Requests-Request-Item.html#method___construct"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Apopulate\u0028\u0029",
+            "name": "populate",
+            "summary": "Populate",
+            "url": "classes/CB-Requests-Request-Item.html#method_populate"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Save",
+            "url": "classes/CB-Requests-Request-Item.html#method_save"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Aget_query_clauses\u0028\u0029",
+            "name": "get_query_clauses",
+            "summary": "Assemble\u0020query\u0020clauses,\u0020based\u0020on\u0020arguments,\u0020to\u0020pass\u0020to\u0020\u0024wpdb\u0020methods.",
+            "url": "classes/CB-Requests-Request-Item.html#method_get_query_clauses"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A_insert\u0028\u0029",
+            "name": "_insert",
+            "summary": "_insert",
+            "url": "classes/CB-Requests-Request-Item.html#method__insert"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A_update\u0028\u0029",
+            "name": "_update",
+            "summary": "Update\u0020requests\u0020entry.",
+            "url": "classes/CB-Requests-Request-Item.html#method__update"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Aupdate\u0028\u0029",
+            "name": "update",
+            "summary": "Update\u0020status\u0020entry.",
+            "url": "classes/CB-Requests-Request-Item.html#method_update"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A_delete\u0028\u0029",
+            "name": "_delete",
+            "summary": "Delete\u0020requests\u0020entry.",
+            "url": "classes/CB-Requests-Request-Item.html#method__delete"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Deletes\u0020rows\u0020from\u0020the\u0020database.",
+            "url": "classes/CB-Requests-Request-Item.html#method_delete"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Aget_request_items\u0028\u0029",
+            "name": "get_request_items",
+            "summary": "get_requests",
+            "url": "classes/CB-Requests-Request-Item.html#method_get_request_items"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Aget_date_query_sql\u0028\u0029",
+            "name": "get_date_query_sql",
+            "summary": "Assembles\u0020a\u0020date\u0020query\u0020into\u0020SQL\u0020for\u0020use\u0020in\u0020a\u0020WHERE\u0020clause.",
+            "url": "classes/CB-Requests-Request-Item.html#method_get_date_query_sql"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Aget_orderby_sql\u0028\u0029",
+            "name": "get_orderby_sql",
+            "summary": "Get\u0020Orderby\u0020SQL",
+            "url": "classes/CB-Requests-Request-Item.html#method_get_orderby_sql"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Aget_paged_sql\u0028\u0029",
+            "name": "get_paged_sql",
+            "summary": "Assemble\u0020the\u0020LIMIT\u0020clause\u0020of\u0020a\u0020get\u0028\u0029\u0020SQL\u0020statement.",
+            "url": "classes/CB-Requests-Request-Item.html#method_get_paged_sql"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003Aget_where_sql\u0028\u0029",
+            "name": "get_where_sql",
+            "summary": "Assemble\u0020the\u0020WHERE\u0020clause\u0020of\u0020a\u0020get\u0028\u0029\u0020SQL\u0020statement.",
+            "url": "classes/CB-Requests-Request-Item.html#method_get_where_sql"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "The\u0020ID\u0020of\u0020the\u0020requests\u0020entry.",
+            "url": "classes/CB-Requests-Request-Item.html#property_id"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A\u0024item_name",
+            "name": "item_name",
+            "summary": "The\u0020name\u0020of\u0020the\u0020item.",
+            "url": "classes/CB-Requests-Request-Item.html#property_item_name"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A\u0024item_desc",
+            "name": "item_desc",
+            "summary": "The\u0020description\u0020of\u0020the\u0020item.",
+            "url": "classes/CB-Requests-Request-Item.html#property_item_desc"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A\u0024date_created",
+            "name": "date_created",
+            "summary": "The\u0020date\u0020the\u0020entry\u0020was\u0020created.",
+            "url": "classes/CB-Requests-Request-Item.html#property_date_created"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A\u0024date_modified",
+            "name": "date_modified",
+            "summary": "The\u0020date\u0020of\u0020the\u0020last\u0020time\u0020the\u0020entry\u0020was\u0020modified.",
+            "url": "classes/CB-Requests-Request-Item.html#property_date_modified"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A\u0024amount",
+            "name": "amount",
+            "summary": "The\u0020value\u0020of\u0020the\u0020request\u0020item.",
+            "url": "classes/CB-Requests-Request-Item.html#property_amount"
+        },                {
+            "fqsen": "\\CB_Requests_Request_Item\u003A\u003A\u0024columns",
+            "name": "columns",
+            "summary": "The\u0020columns\u0020available\u0020in\u0020the\u0020database.\u0020Used\u0020to\u0020help\nbuild\u0020our\u0020orderby\u0020clause.",
+            "url": "classes/CB-Requests-Request-Item.html#property_columns"
+        },                {
+            "fqsen": "\\CB_Requests_Request",
+            "name": "CB_Requests_Request",
+            "summary": "A\u0020component\u0020that\u0020allows\u0020users\u0020to\u0020submit\u0020requests\u0020to\u0020cash\u0020in\ntheir\u0020points.",
+            "url": "classes/CB-Requests-Request.html"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructor.",
+            "url": "classes/CB-Requests-Request.html#method___construct"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Apopulate\u0028\u0029",
+            "name": "populate",
+            "summary": "Populate",
+            "url": "classes/CB-Requests-Request.html#method_populate"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Save",
+            "url": "classes/CB-Requests-Request.html#method_save"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Aget_query_clauses\u0028\u0029",
+            "name": "get_query_clauses",
+            "summary": "Assemble\u0020query\u0020clauses,\u0020based\u0020on\u0020arguments,\u0020to\u0020pass\u0020to\u0020\u0024wpdb\u0020methods.",
+            "url": "classes/CB-Requests-Request.html#method_get_query_clauses"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A_insert\u0028\u0029",
+            "name": "_insert",
+            "summary": "_insert",
+            "url": "classes/CB-Requests-Request.html#method__insert"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A_update\u0028\u0029",
+            "name": "_update",
+            "summary": "Update\u0020requests\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#method__update"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Aupdate\u0028\u0029",
+            "name": "update",
+            "summary": "Update\u0020status\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#method_update"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A_delete\u0028\u0029",
+            "name": "_delete",
+            "summary": "Delete\u0020requests\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#method__delete"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Deletes\u0020rows\u0020from\u0020the\u0020database.",
+            "url": "classes/CB-Requests-Request.html#method_delete"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Aget_requests\u0028\u0029",
+            "name": "get_requests",
+            "summary": "get_requests",
+            "url": "classes/CB-Requests-Request.html#method_get_requests"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Aget_date_query_sql\u0028\u0029",
+            "name": "get_date_query_sql",
+            "summary": "Assembles\u0020a\u0020date\u0020query\u0020into\u0020SQL\u0020for\u0020use\u0020in\u0020a\u0020WHERE\u0020clause.",
+            "url": "classes/CB-Requests-Request.html#method_get_date_query_sql"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Aget_orderby_sql\u0028\u0029",
+            "name": "get_orderby_sql",
+            "summary": "Get\u0020Orderby\u0020SQL",
+            "url": "classes/CB-Requests-Request.html#method_get_orderby_sql"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Aget_paged_sql\u0028\u0029",
+            "name": "get_paged_sql",
+            "summary": "Assemble\u0020the\u0020LIMIT\u0020clause\u0020of\u0020a\u0020get\u0028\u0029\u0020SQL\u0020statement.",
+            "url": "classes/CB-Requests-Request.html#method_get_paged_sql"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003Aget_where_sql\u0028\u0029",
+            "name": "get_where_sql",
+            "summary": "Assemble\u0020the\u0020WHERE\u0020clause\u0020of\u0020a\u0020get\u0028\u0029\u0020SQL\u0020statement.",
+            "url": "classes/CB-Requests-Request.html#method_get_where_sql"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "The\u0020ID\u0020of\u0020the\u0020requests\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#property_id"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024item_id",
+            "name": "item_id",
+            "summary": "The\u0020ID\u0020of\u0020the\u0020main\u0020item\u0020or\u0020user\u0020associated\u0020with\u0020the\u0020requests\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#property_item_id"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024secondary_item_id",
+            "name": "secondary_item_id",
+            "summary": "The\u0020ID\u0020of\u0020the\u0020secondary\u0020item\u0020associated\u0020with\u0020the\u0020requests\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#property_secondary_item_id"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024applicant_id",
+            "name": "applicant_id",
+            "summary": "The\u0020ID\u0020of\u0020the\u0020user\u0020associated\u0020with\u0020the\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#property_applicant_id"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024admin_id",
+            "name": "admin_id",
+            "summary": "The\u0020ID\u0020of\u0020the\u0020admin\u0020associated\u0020with\u0020the\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#property_admin_id"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024date_created",
+            "name": "date_created",
+            "summary": "The\u0020date\u0020the\u0020entry\u0020was\u0020created.",
+            "url": "classes/CB-Requests-Request.html#property_date_created"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024date_modified",
+            "name": "date_modified",
+            "summary": "The\u0020date\u0020of\u0020the\u0020last\u0020time\u0020the\u0020entry\u0020was\u0020modified.",
+            "url": "classes/CB-Requests-Request.html#property_date_modified"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024component_name",
+            "name": "component_name",
+            "summary": "The\u0020component\u0020associated\u0020with\u0020the\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#property_component_name"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024component_action",
+            "name": "component_action",
+            "summary": "The\u0020component\u0020action\u0020associated\u0020with\u0020the\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#property_component_action"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024status",
+            "name": "status",
+            "summary": "The\u0020last\u0020updated\u0020status\u0020of\u0020the\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#property_status"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024request_item_id",
+            "name": "request_item_id",
+            "summary": "The\u0020request_item_id\u0020assigned\u0020to\u0020the\u0020the\u0020entry.",
+            "url": "classes/CB-Requests-Request.html#property_request_item_id"
+        },                {
+            "fqsen": "\\CB_Requests_Request\u003A\u003A\u0024columns",
+            "name": "columns",
+            "summary": "The\u0020columns\u0020available\u0020in\u0020the\u0020database.\u0020Used\u0020to\u0020help\nbuild\u0020our\u0020orderby\u0020clause.",
+            "url": "classes/CB-Requests-Request.html#property_columns"
+        },                {
             "fqsen": "\\cb_templates_get_text_input\u0028\u0029",
             "name": "cb_templates_get_text_input",
             "summary": "CB\u0020Templates\u0020Get\u0020Text\u0020Input",
@@ -1481,10 +1891,10 @@ Search.appendIndex(
             "summary": "CB\u0020Number\u0020Input",
             "url": "namespaces/default.html#function_cb_number_input"
         },                {
-            "fqsen": "\\cb_format_file_input\u0028\u0029",
-            "name": "cb_format_file_input",
+            "fqsen": "\\cb_templates_get_file_input\u0028\u0029",
+            "name": "cb_templates_get_file_input",
             "summary": "Confetti\u0020Bits\u0020Get\u0020File\u0020Input.",
-            "url": "namespaces/default.html#function_cb_format_file_input"
+            "url": "namespaces/default.html#function_cb_templates_get_file_input"
         },                {
             "fqsen": "\\cb_file_input\u0028\u0029",
             "name": "cb_file_input",
@@ -1546,6 +1956,26 @@ Search.appendIndex(
             "summary": "CB\u0020Templates\u0020Get\u0020Form",
             "url": "namespaces/default.html#function_cb_templates_get_form"
         },                {
+            "fqsen": "\\cb_form\u0028\u0029",
+            "name": "cb_form",
+            "summary": "Outputs\u0020the\u0020markup\u0020for\u0020a\u0020form\u0020element.",
+            "url": "namespaces/default.html#function_cb_form"
+        },                {
+            "fqsen": "\\cb_templates_get_form_module\u0028\u0029",
+            "name": "cb_templates_get_form_module",
+            "summary": "Gets\u0020the\u0020markup\u0020for\u0020a\u0020form\u0020module.",
+            "url": "namespaces/default.html#function_cb_templates_get_form_module"
+        },                {
+            "fqsen": "\\cb_form_module\u0028\u0029",
+            "name": "cb_form_module",
+            "summary": "Outputs\u0020the\u0020form\u0020module\u0027s\u0020markup.",
+            "url": "namespaces/default.html#function_cb_form_module"
+        },                {
+            "fqsen": "\\cb_templates_get_form_output\u0028\u0029",
+            "name": "cb_templates_get_form_output",
+            "summary": "Dynamically\u0020populates\u0020markup\u0020and\u0020input\u0020elements\u0020for\u0020a\u0020form.",
+            "url": "namespaces/default.html#function_cb_templates_get_form_output"
+        },                {
             "fqsen": "\\cb_templates_container\u0028\u0029",
             "name": "cb_templates_container",
             "summary": "CB\u0020Templates\u0020Container",
@@ -1566,9 +1996,14 @@ Search.appendIndex(
             "summary": "CB\u0020Templates\u0020Get\u0020Link",
             "url": "namespaces/default.html#function_cb_templates_get_link"
         },                {
+            "fqsen": "\\cb_templates_get_ajax_table\u0028\u0029",
+            "name": "cb_templates_get_ajax_table",
+            "summary": "CB\u0020Templates\u0020AJAX\u0020Table",
+            "url": "namespaces/default.html#function_cb_templates_get_ajax_table"
+        },                {
             "fqsen": "\\cb_templates_ajax_table\u0028\u0029",
             "name": "cb_templates_ajax_table",
-            "summary": "CB\u0020Templates\u0020AJAX\u0020Table",
+            "summary": "Outputs\u0020markup\u0020for\u0020an\u0020AJAX\u0020table.",
             "url": "namespaces/default.html#function_cb_templates_ajax_table"
         },                {
             "fqsen": "\\cb_templates_get_pagination\u0028\u0029",
@@ -1578,7 +2013,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_templates_get_heading\u0028\u0029",
             "name": "cb_templates_get_heading",
-            "summary": "CB\u0020Templates\u0020Format\u0020Heading",
+            "summary": "Formats\u0020the\u0020markup\u0020for\u0020a\u0020heading\u0020element.",
             "url": "namespaces/default.html#function_cb_templates_get_heading"
         },                {
             "fqsen": "\\cb_templates_heading\u0028\u0029",
@@ -1866,6 +2301,16 @@ Search.appendIndex(
             "summary": "CB\u0020Transactions\u0020Leaderboard",
             "url": "namespaces/default.html#function_cb_transactions_leaderboard"
         },                {
+            "fqsen": "\\cb_get_import_bda_module\u0028\u0029",
+            "name": "cb_get_import_bda_module",
+            "summary": "Formats\u0020the\u0020markup\u0020for\u0020the\u0020\u0022Import\u0020Birthdays\u0022\u0020module.",
+            "url": "namespaces/default.html#function_cb_get_import_bda_module"
+        },                {
+            "fqsen": "\\cb_import_bda_module\u0028\u0029",
+            "name": "cb_import_bda_module",
+            "summary": "Outputs\u0020the\u0020\u0022Import\u0020B\u002DDays\u0020\u0026\u0020Anniversaries\u0022\u0020markup.",
+            "url": "namespaces/default.html#function_cb_import_bda_module"
+        },                {
             "fqsen": "\\CONFETTI_BITS_TRANSACTIONS_SLUG",
             "name": "CONFETTI_BITS_TRANSACTIONS_SLUG",
             "summary": "",
@@ -1873,7 +2318,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Transactions_Component",
             "name": "CB_Transactions_Component",
-            "summary": "CB\u0020Transactions\u0020Component",
+            "summary": "Adds\u0020component\u0020globals\u0020and\u0020includes\u0020related\u0020files.",
             "url": "classes/CB-Transactions-Component.html"
         },                {
             "fqsen": "\\CB_Transactions_Component\u003A\u003A__construct\u0028\u0029",
@@ -1895,26 +2340,6 @@ Search.appendIndex(
             "name": "setup_globals",
             "summary": "Set\u0020up\u0020component\u0020global\u0020variables.",
             "url": "classes/CB-Transactions-Component.html#method_setup_globals"
-        },                {
-            "fqsen": "\\CB_Transactions_Component\u003A\u003Asetup_nav\u0028\u0029",
-            "name": "setup_nav",
-            "summary": "Set\u0020up\u0020component\u0020navigation.",
-            "url": "classes/CB-Transactions-Component.html#method_setup_nav"
-        },                {
-            "fqsen": "\\CB_Transactions_Component\u003A\u003Asetup_admin_bar\u0028\u0029",
-            "name": "setup_admin_bar",
-            "summary": "Set\u0020up\u0020the\u0020component\u0020entries\u0020in\u0020the\u0020WordPress\u0020Admin\u0020Bar.",
-            "url": "classes/CB-Transactions-Component.html#method_setup_admin_bar"
-        },                {
-            "fqsen": "\\CB_Transactions_Component\u003A\u003Asetup_title\u0028\u0029",
-            "name": "setup_title",
-            "summary": "Set\u0020up\u0020the\u0020component\u0020title.",
-            "url": "classes/CB-Transactions-Component.html#method_setup_title"
-        },                {
-            "fqsen": "\\CB_Transactions_Component\u003A\u003Asetup_cache_groups\u0028\u0029",
-            "name": "setup_cache_groups",
-            "summary": "Setup\u0020component\u002Dspecific\u0020cache\u0020groups.",
-            "url": "classes/CB-Transactions-Component.html#method_setup_cache_groups"
         },                {
             "fqsen": "\\CB_Transactions_Transaction",
             "name": "CB_Transactions_Transaction",
@@ -2003,12 +2428,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024item_id",
             "name": "item_id",
-            "summary": "The\u0020item\u0020ID\u0020of\u0020the\u0020Transaction.\u0020Used\u0020with\u0020the\nBuddyBoss\u0020Notifications\u0020API.",
+            "summary": "The\u0020item\u0020ID\u0020of\u0020the\u0020Transaction.\u0020Used\u0020with\u0020the\nBuddyBoss\u0020Notifications\u0020API.\u0020We\u0027ll\u0020use\u0020the\nsender_id.",
             "url": "classes/CB-Transactions-Transaction.html#property_item_id"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024secondary_item_id",
             "name": "secondary_item_id",
-            "summary": "The\u0020secondary\u0020item\u0020ID\u0020of\u0020the\u0020Transaction.\u0020Used\nwith\u0020the\u0020BuddyBoss\u0020Notifications\u0020API.",
+            "summary": "The\u0020secondary\u0020item\u0020ID\u0020of\u0020the\u0020Transaction.\u0020Used\nwith\u0020the\u0020BuddyBoss\u0020Notifications\u0020API.\u0020We\u0027ll\u0020use\nthe\u0020recipient_id.",
             "url": "classes/CB-Transactions-Transaction.html#property_secondary_item_id"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003A\u0024sender_id",
@@ -2236,6 +2661,16 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html#function_confetti_bits_admin_enqueue_script"
         },                {
+            "fqsen": "\\cb_core_notifications_init\u0028\u0029",
+            "name": "cb_core_notifications_init",
+            "summary": "Initializes\u0020our\u0020notifications\u0020class.",
+            "url": "namespaces/default.html#function_cb_core_notifications_init"
+        },                {
+            "fqsen": "\\cb_core_enqueue_scripts\u0028\u0029",
+            "name": "cb_core_enqueue_scripts",
+            "summary": "Enqueues\u0020all\u0020of\u0020our\u0020scripts\u0020in\u0020a\u0020clean\u0020fashion.",
+            "url": "namespaces/default.html#function_cb_core_enqueue_scripts"
+        },                {
             "fqsen": "\\cb_user_birthday_anniversary_fields\u0028\u0029",
             "name": "cb_user_birthday_anniversary_fields",
             "summary": "",
@@ -2280,6 +2715,11 @@ Search.appendIndex(
             "name": "cb_get_patch_data",
             "summary": "Gets\u0020PATCH\u0020data\u0020from\u0020an\u0020HTTP\u0020PATCH\u0020request.",
             "url": "namespaces/default.html#function_cb_get_patch_data"
+        },                {
+            "fqsen": "\\cb_get_delete_data\u0028\u0029",
+            "name": "cb_get_delete_data",
+            "summary": "Gets\u0020DELETE\u0020data\u0020from\u0020an\u0020HTTP\u0020DELETE\u0020request.",
+            "url": "namespaces/default.html#function_cb_get_delete_data"
         },                {
             "fqsen": "\\cb_core_get_missing_users\u0028\u0029",
             "name": "cb_core_get_missing_users",

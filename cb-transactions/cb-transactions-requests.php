@@ -90,7 +90,7 @@ function cb_requests() {
 	}
 
 }
-add_action('bp_actions', 'cb_requests');
+//add_action('bp_actions', 'cb_requests');
 
 function cb_send_request($args = '') {
 
