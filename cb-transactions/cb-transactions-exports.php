@@ -1,26 +1,6 @@
 <?php
 // Exit if accessed directly
 defined('ABSPATH') || exit;
-/*
-function cb_export_leadership_history( $user_id = 0, $export_type = '' ) {
-
-	if ( $user_id === 0 || $export_type === '' ) {
-		return;
-	}
-
-	$transaction  = new CB_Transactions_Transaction();
-
-	$user_transactions = $transaction->get_transactions(array(
-		'select'	=> 'id, component_action, sender_id, recipient_id, date_sent, log_entry, amount',
-		'where'		=> array(
-			'component_action' => 'cb_send_bits'
-		)
-	));
-
-	cb_generate_csv( $user_transactions, $export_type );
-
-}
-*/
 
 /**
  * CB Transactions Get History for User
@@ -29,8 +9,7 @@ function cb_export_leadership_history( $user_id = 0, $export_type = '' ) {
  * 
  * @todo: Fix this tomfoolery. And type check your variables for the love of god
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.0.0
  */
 function cb_transactions_get_history_for_user( $user_id = 0, $export_type = '' ) {
@@ -106,8 +85,7 @@ function cb_transactions_get_history_for_user( $user_id = 0, $export_type = '' )
  * csv reaches an end user, and to ensure safe passage for
  * our noble data wizards.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.0.0
  */
 function cb_csv_send_headers( $file_name = '' ) {
@@ -134,8 +112,7 @@ function cb_csv_send_headers( $file_name = '' ) {
  * @param array $user_transactions A 2D array of transactions
  * @param string $export_type The type of export the user requested.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.0.0
  */
 function cb_generate_csv( $user_transactions = array(), $export_type = '' ) {
@@ -231,8 +208,7 @@ function cb_generate_csv( $user_transactions = array(), $export_type = '' ) {
  * Checks to see if export parameters are set on a POST request,
  * exports transactions from the database based on parameters.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.0.0
  */
 function cb_export() {

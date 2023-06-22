@@ -109,7 +109,7 @@ function cb_participation_new_participation( array $args ) {
  * 
  * @package ConfettiBits\Participation
  * @since 2.2.0
- */
+ *//*
 function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_modified = '', $status = '', $transaction_id = 0 ) {
 
 	if ( $id === 0 || $admin_id === 0 || $date_modified === '' || $status === '' ) {
@@ -140,7 +140,7 @@ function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_m
 		);
 	}
 }
-
+*/
 /**
  * CB Participation Update Handler
  * 
@@ -151,7 +151,7 @@ function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_m
  * 
  * @package ConfettiBits\Participation
  * @since 2.1.0
- */
+ *//*
 function cb_participation_update_handler() {
 
 	if ( ! cb_is_post_request() || 
@@ -200,11 +200,12 @@ function cb_participation_update_handler() {
 			);
 
 			$log_entry = cb_participation_get_log_entry( $participation_id, $admin_log_entry );
+			*/
 			/*
 			if ( $log_entry !== $participation->event_note ) {
 				$log_entry += " | {$participation->event_note}";
 			}
-*/
+*//*
 			// Create a transaction if we can.
 			if ( $amount !== 0 && $log_entry !== '' ) {
 
@@ -253,6 +254,8 @@ function cb_participation_update_handler() {
 
 }
 
+*/
+	
 /**
  * Confetti Bits Participation New Transaction
  * 
@@ -582,47 +585,28 @@ add_action( 'cb_participation_after_save', 'cb_participation_new_notifications' 
  * @package ConfettiBits\Participation
  * @since 2.2.0
  */
-function cb_participation_update_notifications( $data = array() ) {
-
-	$r = wp_parse_args(
-		$data,
-		array(
-			'applicant_id'			=> 0,
-			'admin_id'				=> 0,
-			'component_action'		=> '',
-			'event_note'			=> '',
-			'status'				=> '',
-			'event_type'			=> ''
-		)
-	);
-
-	if ( 
-		empty( $data ) ||
-		empty( $r['applicant_id'] ) ||
-		empty( $r['admin_id'] ) ||
-		empty( $r['status'] ) ||
-		empty( $r['component_action'] )
-	) {
+function cb_participation_update_notifications( $participation_id = 0 ) {	
+	
+	if (  $participation_id === 0 ) {
 		return;
 	}
-
-	$item_id = 0;
-	$secondary_item_id = 0;
-	$event_type = ucwords( str_replace( '_', ' ', $r['event_type'] ) );
+	
+	$participation = new CB_Participation_Participation($participation_id);
 	$event_note = '';
-
-	if ( ! empty( $r['event_note'] ) ) {
-		$event_note = ucwords( str_replace( '_', ' ', $r['event_note'] ) );
+	
+	if ( !empty($participation->transaction_id ) ) {
+		$transaction = new CB_Transactions_Transaction($participation->transaction_id);
+		$event_note = $transaction->log_entry;
 	} else {
-		$event_note = $event_type;
+		$event_note = $participation->event_note;
 	}
 
-	switch ( $r['component_action'] ) {
+	switch ( $participation->component_action ) {
 
 		case ( 'cb_participation_status_update' ) : 
 
-			$item_id = $r['applicant_id'];
-			$secondary_item_id = $r['admin_id'];
+			$item_id = $participation->applicant_id;
+			$secondary_item_id = $participation->admin_id;
 
 
 			/*
@@ -653,8 +637,8 @@ function cb_participation_update_notifications( $data = array() ) {
 
 			$email_args = array(
 				'tokens' => array(
-					'admin.name' => bp_core_get_user_displayname( $secondary_item_id ),
-					'participation.status' => ucfirst( $r['status'] ),
+					'admin.name' => cb_core_get_user_display_name( $secondary_item_id ),
+					'participation.status' => ucfirst( $participation->status ),
 					'participation.note' => $event_note,
 					'unsubscribe' => esc_url( bp_email_get_unsubscribe_link( $unsubscribe_args ) ),
 				),
@@ -673,12 +657,12 @@ function cb_participation_update_notifications( $data = array() ) {
 			'item_id'           => $item_id,
 			'secondary_item_id' => $secondary_item_id,
 			'component_name'    => 'confetti_bits',
-			'component_action'  => $r['component_action'],
-			'date_notified'     => current_time( 'mysql', true ),
+			'component_action'  => $participation->component_action,
+			'date_notified'     => cb_core_current_date(),
 			'is_new'            => 1,
 			'allow_duplicate'	=> false,
 		)
 	);
 
 }
-add_action( 'cb_participation_after_update', 'cb_participation_update_notifications' );
+add_action( 'cb_participation_after_update', 'cb_participation_update_notifications', 10, 1 );

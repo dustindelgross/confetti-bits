@@ -24,8 +24,7 @@ defined('ABSPATH') || exit;
  * 
  * @return string The template, if found.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
  * @since 1.0.0
  */
 function cb_member_locate_template_part ( $template = '' ) {
@@ -35,7 +34,7 @@ function cb_member_locate_template_part ( $template = '' ) {
 	}
 
 	$cb_template_parts = array(
-		'members/single/confetti-bits-hub/cb-%s.php',
+		'cb-template-parts/cb-%s.php',
 	);
 
 	$templates = array();
@@ -57,8 +56,7 @@ function cb_member_locate_template_part ( $template = '' ) {
  * 
  * @return An array of the active templates.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
  * @since 1.0.0
  */
 function cb_member_get_template_part( $template = '' ) {
@@ -84,8 +82,7 @@ function cb_member_get_template_part( $template = '' ) {
  * 
  * @return An array of the active templates.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
  * @since 1.0.0
  */
 function cb_get_active_templates() {
@@ -112,6 +109,7 @@ function cb_get_active_templates() {
 				'Participation'			=> 'participation',
 				'My Transactions'	=> 'transactions',
 				"Requests"			=> 'requests',
+				"Requests Admin"	=> 'requests-admin',
 			);
 			break;
 

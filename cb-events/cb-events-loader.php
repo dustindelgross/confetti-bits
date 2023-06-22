@@ -7,8 +7,7 @@ defined('ABSPATH') || exit;
  * 
  * Loads our Events component to give us easy access to global values.
  * 
- * @package Confetti_Bits
- * @subpackage Events
+ * @package ConfettiBits\Events
  * @since 2.3.0
  */
 function cb_setup_events() {

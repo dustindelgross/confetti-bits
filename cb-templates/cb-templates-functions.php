@@ -15,8 +15,7 @@
  * }
  * @return string The HTML markup to output.
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_container( $args = array() ) {
@@ -75,8 +74,7 @@ function cb_templates_container( $args = array() ) {
  * }
  * @return string The formatted button element
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_get_button( $args = array() ) {
@@ -135,8 +133,7 @@ function cb_templates_get_button( $args = array() ) {
  * }
  * @return string The formatted button element
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_get_list_item( $args = array() ) {
@@ -193,8 +190,7 @@ function cb_templates_get_list_item( $args = array() ) {
  * 
  * @return string The formatted anchor markup.
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_get_link($args = array()) {
@@ -251,11 +247,10 @@ function cb_templates_get_link($args = array()) {
  * }
  * @return string|void The HTML for the table or nothing if the component is empty.
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
-function cb_templates_ajax_table( $component = '', $paginated = true ) {
+function cb_templates_get_ajax_table( $component = '', $heading = '', $paginated = true ) {
 
 	if ( empty( $component ) ) {
 		return;
@@ -280,20 +275,41 @@ function cb_templates_ajax_table( $component = '', $paginated = true ) {
 			'output' => $page_number_input . $go_to_page_button
 		]);
 		*/
+		
+		if ( $heading !== '' ) {
+			$heading = cb_templates_get_heading($heading);
+		}
 		$pagination_buttons = cb_templates_get_pagination($with_dashes);
 		$pagination = cb_templates_container([
-			'classes' => ["cb-{$with_dashes}-pagination-container"],
+			'classes' => ["cb-{$with_dashes}-pagination-container", "cb-pagination-container"],
 			'output'  => $pagination_buttons
 		]);
 	}
 
-	$table = cb_templates_container(array(
-		"classes" => array("cb-data-table-container"),
+	$table = cb_templates_container([
+		"classes" => ["cb-data-table-container"],
 		"output" => sprintf( '%1$s<table class="cb-data-table" id="cb_%2$s_table"></table>', $pagination, $component )
-	));
+	]);
 
-	return printf("%s", $table);
+	return cb_templates_container([ 
+		'classes' => ['cb-module', 'cb-module-full'],
+		'output' => sprintf( "%s%s", $heading, $table )
+	]);
 
+}
+
+/**
+ * Outputs markup for an AJAX table.
+ * 
+ * @param string $component The component that gets used in a pile of CSS selectors.
+ * @param string $heading A heading to use for the module. Default empty.
+ * @param bool $paginated Whether the table should be paginated.
+ * 
+ * @package ConfettiBits\Templates
+ * @since 3.0.0
+ */
+function cb_templates_ajax_table( $component = '', $heading = '', $paginated = true ) {
+	echo cb_templates_get_ajax_table( $component, $heading, $paginated );
 }
 
 /**
@@ -307,8 +323,7 @@ function cb_templates_ajax_table( $component = '', $paginated = true ) {
  * @return string|void The HTML for the pagination bar or nothing 
  * if the component is empty.
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_get_pagination( $component = '' ) {
@@ -330,14 +345,18 @@ function cb_templates_get_pagination( $component = '' ) {
 	foreach ( $button_args as $placement => $content ) {
 		$attr_val = $placement === 'first' ? 1 : '';
 		$pagination_buttons .= cb_templates_get_button(array(
-			'classes' => array( "cb-{$with_dashes}-pagination-{$placement}", "cb-{$with_dashes}-pagination-button" ),
+			'classes' => array( 
+				"cb-{$with_dashes}-pagination-{$placement}", 
+				"cb-{$with_dashes}-pagination-button",
+				"cb-pagination-button"
+			),
 			'content' => $content,
 			'custom_attr' => array("cb-{$with_dashes}-page" => $attr_val )
 		));
 	}
 
 	$pagination = cb_templates_container(array(
-		'classes' => array("cb-{$with_dashes}-pagination"),
+		'classes' => array("cb-{$with_dashes}-pagination", "cb-pagination"),
 		'output'            => $pagination_buttons,
 	));
 
@@ -346,17 +365,14 @@ function cb_templates_get_pagination( $component = '' ) {
 }
 
 /**
- * CB Templates Format Heading
- * 
- * Format the markup for a heading element.
+ * Formats the markup for a heading element.
  * 
  * @param string $content The content for the heading element. Default empty.
  * @param int $level The level for the heading element. Default 4.
  * 
  * @return string the formatted heading.
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_get_heading( $content = '', $level = 4 ) {
@@ -371,8 +387,7 @@ function cb_templates_get_heading( $content = '', $level = 4 ) {
  * @param string $content The content for the heading element. Default empty.
  * @param int $level The level for the heading element. Default 4.
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_heading( $content = '', $level = 4 ) {
@@ -397,8 +412,7 @@ function cb_templates_heading( $content = '', $level = 4 ) {
  * 
  * @return string The markup of all the collective nav items.
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_get_nav_items( $component = '', $items = array() ) {
@@ -449,8 +463,7 @@ function cb_templates_get_nav_items( $component = '', $items = array() ) {
  * 
  * @return string The nav markup.
  * 
- * @package Confetti_Bits
- * @subpackage Templates
+ * @package ConfettiBits\Templates
  * @since 2.3.0
  */
 function cb_templates_get_nav( $component = '', $items = array() ) {

@@ -2,12 +2,7 @@
 /**
  * Plugin Name: Confetti Bits
  * Plugin URI:  https://github.com/dustindelgross/confetti-bits
- * Description: This is a plugin that works in tandem with the
- * TeamCTG child theme that allows users to register participation
- * at company events to receive points (Confetti Bits), which they
- * can then either redeem for certain items or save up
- * for a chance to win a spot in a company-sponsored retreat.
- * 
+ * Description: This plugin gamifies company culture events.
  * Author:      Dustin Delgross
  * Author URI:  https://dustindelgross.com/
  * Version:     2.3.0
@@ -188,17 +183,12 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 				$this->define( 'CONFETTI_BITS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			}
 			
-			if ( !defined( 'CONFETTI_BITS_CONFIG_PATH' ) ) {
-				$this->define( 'CONFETTI_BITS_CONFIG_PATH', plugin_dir_path( __FILE__ ) . "cb-config.json" );
-			}
-
 			if ( ! defined( 'CONFETTI_BITS_PLUGIN_URL' ) ) {
 				$this->define( 'CONFETTI_BITS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 			}
 
 			$this->plugin_dir = trailingslashit( constant( 'CONFETTI_BITS_PLUGIN_PATH' ) );
 			$this->plugin_url = trailingslashit( constant( 'CONFETTI_BITS_PLUGIN_URL' ) );
-			$this->config_path = constant( 'CONFETTI_BITS_CONFIG_PATH' );
 			
 		}
 
@@ -273,11 +263,14 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 				'ajax',
 				'notifications',
 				'transactions',
+				'requests',
 				'participation',
-				
 			);
 
-			$irregular_map = array('CB_Component' => 'core');
+			$irregular_map = [
+				'CB_Component' => 'core',
+				'CB_Requests_Request_Item' => 'requests',
+			];
 
 			$component = null;
 
@@ -286,7 +279,6 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			} else if ( in_array( $class_parts[1], $components, true ) ) {
 				$component = $class_parts[1];
 			} else if ( in_array( $class_parts[2], $components, true ) ) {
-
 				$component = $class_parts[2];
 			}
 

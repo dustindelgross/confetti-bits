@@ -95,7 +95,7 @@ function cb_core_admin_setting_general_register_fields( $setting ) {
 		}
 	}
 }
-add_action( 'bp_admin_setting_general_register_fields', 'cb_core_admin_setting_general_register_fields' );
+//add_action( 'bp_admin_setting_general_register_fields', 'cb_core_admin_setting_general_register_fields' );
 
 
 
@@ -103,7 +103,7 @@ add_action( 'bp_admin_setting_general_register_fields', 'cb_core_admin_setting_g
 function cb_admin_reset_date_options() {
 
 	$cb_reset_date =  get_option('cb_reset_date');
-	$page      = bp_core_do_network_admin() ? 'admin.php' : 'admin.php';
+//	$page      = bp_core_do_network_admin() ? 'admin.php' : 'admin.php';
 
 ?>
 <input id="<?php echo esc_attr( "cb_reset_date" ) ?>" 
@@ -130,7 +130,7 @@ function cb_core_admin_settings_handler() {
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		$reset_date = date( 'Y-m-d H:i:s', strtotime( $_POST['cb_reset_date'] ) );
 
-		bp_update_option( 'cb_reset_date', $reset_date );
+		update_option( 'cb_reset_date', $reset_date );
 
 		$base_url = bp_get_admin_url(
 			add_query_arg(
@@ -159,7 +159,7 @@ function cb_core_admin_settings_handler() {
 			}
 		}
 
-		bp_update_option( 'cb_active_components', $new_active_components );
+		update_option( 'cb_active_components', $new_active_components );
 		$cb->active_components = $new_active_components;
 		cb_core_install( $cb->active_components );
 		$current_action = 'success';
@@ -187,12 +187,12 @@ function cb_core_admin_settings_handler() {
 			}
 		}
 		$cb->active_panels = $new_active_panels;
-		bp_update_option( "cb_active_panels", $new_active_panels );
+		update_option( "cb_active_panels", $new_active_panels );
 		wp_safe_redirect( $base_url );
 		die();
 	}
 }
-add_action( 'bp_admin_init', 'cb_core_admin_settings_handler' );
+//add_action( 'bp_admin_init', 'cb_core_admin_settings_handler' );
 
 function cb_core_admin_components_settings() { 
 	cb_admin_components_options();

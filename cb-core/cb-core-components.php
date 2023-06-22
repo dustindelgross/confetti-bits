@@ -124,7 +124,6 @@ function cb_is_current_component( $component = '' ) {
 	}
 
 	$cb = Confetti_Bits();
-	$bp = buddypress();
 
 	if ( ! empty( $cb->current_component ) ) {
 

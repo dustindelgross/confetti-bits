@@ -80,7 +80,7 @@ function cb_ajax_update_participation() {
 		$status, 
 		$amount
 	);
-	
+
 	// Can't bulk approve special event types. This will change in the new update.
 	if ( $participation->event_type === 'other' || $participation->event_type === 'contest' ) {
 		if ( $amount === 0 && ( !empty( $participation->transaction_id ) || $status === 'approved') ) {
@@ -119,6 +119,7 @@ function cb_ajax_update_participation() {
 			die();
 		}
 	} else {
+
 		$participation->update($update_args, $where_args);
 		$user_name = cb_core_get_user_display_name( $participation->applicant_id );
 		$feedback['text'] = "{$user_name}'s participation submission for \"{$log_entry}\" has been {$status}.";

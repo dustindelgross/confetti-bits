@@ -7,7 +7,7 @@ jQuery( document ).ready( ( $ ) => {
 	const cbParticipationPagePrev = $('.cb-participation-pagination-previous');
 	const cbParticipationPageFirst = $('.cb-participation-pagination-first');
 
-	const cbApplicantId = $('input[name=cb_applicant_id]').val();
+	const cbApplicantIdInput = $('input[name=cb_applicant_id]');
 	const entryTable = $('#cb_participation_table');
 	const entryTableHeaderRow = $('#cb_participation_table tr')[0];
 	let currentPage = $('.cb-participation-pagination-button.active').attr('data-cb-participation-page');
@@ -57,7 +57,7 @@ jQuery( document ).ready( ( $ ) => {
 		let eventType = $('.cb-form-selector[name=cb_participation_event_type_filter]').val();
 
 		let getData = {
-			applicant_id: cbApplicantId,
+			applicant_id: cb_participation.user_id,
 			count: true,
 		}
 
@@ -71,7 +71,7 @@ jQuery( document ).ready( ( $ ) => {
 
 		let retval = await $.ajax({
 			method: "GET",
-			url: cb_participation.get,
+			url: cb_participation.get_participation,
 			data: getData,
 			success: x => {
 				cbTotalEntries = parseInt(JSON.parse(x.text)[0].total_count);
@@ -387,7 +387,7 @@ Could not find any participation entries of specified type.
 		let eventType = $('#cb_participation_event_type_filter').val();
 		let getData = {
 			status: status,
-			applicant_id: cbApplicantId,
+			applicant_id: cb_participation.user_id,
 			page: page,
 			per_page: 6,
 			orderby: {column: "id", order: "DESC"},
@@ -398,7 +398,7 @@ Could not find any participation entries of specified type.
 		}
 
 		$.get({
-			url: cb_participation.get,
+			url: cb_participation.get_participation,
 			data: getData,
 			success: async (data) => {	
 				await cbPagination(page);
@@ -476,13 +476,14 @@ Could not find any participation entries of specified type.
 	const participationEventDate		= $('.cb-form-datepicker[name=cb_participation_event_date]');
 	const eventNoteContainer			= participationEventNote.parents('ul.cb-form-page-section')[0];
 	const participationUploadForm		= $('#cb-participation-upload-form');
-	const applicantId					= $('input[name=cb_applicant_id]');
+	let applicantId					= $('input[name=cb_applicant_id]');
 	let substituteToggle = $('input[name=cb_participation_substitute]');
 	let substituteInput = $('#cb_participation_substitute_member');
 	let substituteContainer = $('.cb-participation-substitute-member-container');
 	let closeButton = $('.cb-close');
 
 	let formMessage = new function () {
+		this.p = $('<p class="cb-feedback-message">');
 		this.element	= $('.cb-feedback-message');
 		this.container	= $('.cb-feedback');
 		this.position = this.element.offset().top;
@@ -496,12 +497,15 @@ Could not find any participation entries of specified type.
 
 		this.container.children('.cb-close').on( 'click', () => {
 			this.container.slideUp( 400 );
-			this.element.text('');
+			this.container.children("p").remove();
 		});
 
 		this.setMessage = ( text, type ) => {
-			this.element.text(text);
-			this.element.css('color', this.style[type] );
+			this.container.children("p").remove();
+			let p = this.p.clone();
+			p.text(text);
+			p.css('color', this.style[type] );
+			this.container.append(p);
 			this.container.css({ 
 				display: 'flex',
 				border: '1px solid #dbb778',
@@ -509,7 +513,7 @@ Could not find any participation entries of specified type.
 				margin: '1rem auto'
 			});
 
-			window.scrollTo({top: this.element.offset().top - 135, behavior: 'smooth'})
+			window.scrollTo({top: this.element.offset().top - 135, behavior: 'smooth'});
 		}
 
 	};
@@ -520,6 +524,8 @@ Could not find any participation entries of specified type.
 			substituteInput.prop( 'disabled', false );
 		} else {
 			substituteContainer.hide(300);
+			substituteInput.val('');
+			applicantId.val(cb_participation.user_id);
 			substituteInput.prop( 'disabled', true );
 		}
 	});
@@ -570,6 +576,7 @@ Could not find any participation entries of specified type.
 
 		e.preventDefault();
 		e.stopPropagation();
+		
 		let now		= new Date();
 		let month 	= now.getUTCMonth();
 		let prev	= now.getUTCMonth(now.setUTCMonth( month - 1 ));
@@ -585,7 +592,7 @@ Could not find any participation entries of specified type.
 		} else {
 			$.ajax({
 				type: 'POST',
-				url: cb_participation.new,
+				url: cb_participation.new_participation,
 				data: {
 					'applicant_id': applicantId.val(),
 					'event_type'	: participationEventSelector.val(),

@@ -127,7 +127,7 @@ class CB_Participation_Participation {
 	 * @var int
 	 */
 	public $transaction_id;
-	
+
 	/**
 	 * The columns available in the database. Used to help 
 	 * build our orderby clause.
@@ -404,7 +404,7 @@ class CB_Participation_Participation {
 			$where_clauses['data']['transaction_id'] = $args['transaction_id'];
 			$where_clauses['format'][]       = '%d';
 		}
-		
+
 		if ( isset( $args['event_id'] ) ) {
 			$where_clauses['data']['event_id'] = $args['event_id'];
 			$where_clauses['format'][]       = '%d';
@@ -451,8 +451,10 @@ class CB_Participation_Participation {
 			$data_format, $where_format 
 		);
 
-		do_action( 'cb_participation_after_update', $data );
+		do_action( 'cb_participation_after_update', $where['id'] );
+
 		return $retval;
+		
 	}
 
 	/**

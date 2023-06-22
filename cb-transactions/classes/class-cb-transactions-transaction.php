@@ -29,7 +29,8 @@ class CB_Transactions_Transaction {
 
 	/**
 	 * The item ID of the Transaction. Used with the 
-	 * BuddyBoss Notifications API.
+	 * BuddyBoss Notifications API. We'll use the
+	 * sender_id.
 	 * 
 	 * @var int
 	 */
@@ -37,7 +38,8 @@ class CB_Transactions_Transaction {
 
 	/**
 	 * The secondary item ID of the Transaction. Used 
-	 * with the BuddyBoss Notifications API.
+	 * with the BuddyBoss Notifications API. We'll use
+	 * the recipient_id.
 	 * 
 	 * @var int
 	 */

@@ -37,19 +37,19 @@ function cb_ajax_get_transactions() {
 			'orderby' => ['column' => 'id','order' => 'DESC']
 		];
 	}
-	
+
 	if ( ! empty( $_GET['recipient_id'] ) ) {
 		$get_args['where']['recipient_id'] = intval( $_GET['recipient_id'] );
 	}
-	
+
 	if ( !empty( $_GET['sender_id'] ) ) {
 		$get_args['where']['sender_id'] = intval( $_GET['sender_id'] );
 	}
-	
+
 	if ( !empty( $_GET['or'] ) ) {
 		$get_args['where']['or'] = true;
 	}
-	
+
 	$get = $transactions->get_transactions($get_args);
 
 	if ( $get ) {
@@ -95,6 +95,23 @@ function cb_ajax_new_transactions() {
 		"type"	=> "error"
 	);
 
+	if ( !isset( 
+		$_POST['sender_id'],
+		$_POST['recipient_id'],
+		$_POST['amount'],
+		$_POST['api_key'],
+	)) {
+		$feedback['text'] = "Failed to authenticate request. Missing one of the following: sender ID, recipient ID, amount, or API key.";
+		echo json_encode($feedback);
+		die();
+	}
+
+	if ( !cb_core_validate_api_key( $_POST['api_key'] ) ) {
+		$feedback['text'] = "Invalid Confetti Bits API key. Contact your system administrator to renew the API key.";
+		echo json_encode($feedback);
+		die();
+	}
+
 	if ( empty( $_POST['sender_id'] ) || !is_numeric( $_POST['sender_id'] ) ) {
 		$feedback["text"] = "Invalid or empty Sender ID. Please try again.";
 		$feedback["type"] = "error";
@@ -107,7 +124,7 @@ function cb_ajax_new_transactions() {
 
 	if ( empty( $_POST['recipient_id'] ) || !is_numeric( $_POST['recipient_id'] ) ) {
 		$feedback["text"] = "Invalid or empty Recipient ID. Please select a recipient.";
-		http_response_code(400);
+		http_response_code(401);
 		$feedback["type"] = "error";
 		echo json_encode($feedback);
 		die();
@@ -115,10 +132,8 @@ function cb_ajax_new_transactions() {
 		$recipient_id = intval( $_POST['recipient_id'] );
 	}
 
-	$sender_name = bp_core_get_user_displayname( $sender_id );
-	$recipient_name = bp_core_get_user_displayname( $recipient_id );
-	$sender_link = bp_core_get_userlink( $sender_id );
-	$recipient_link = bp_core_get_userlink( $recipient_id );
+	$sender_name = cb_core_get_user_display_name( $sender_id );
+	$recipient_name = cb_core_get_user_display_name( $recipient_id );
 	$log_entry = "";
 	$amount = 0;
 	$add_activity = isset( $_POST['add_activity'] );
@@ -156,7 +171,7 @@ function cb_ajax_new_transactions() {
 
 	if ( $amount + cb_transactions_get_total_sent_today() > 20 ) {
 		http_response_code(403);
-		$feedback["text"] = "This will put you over the 20 Confetti Bits per day limit. Your counter will reset tomorrow!";
+		$feedback["text"] = "Transaction not sent. This would put you over the 20 Confetti Bits per diem limit. Your counter will reset tomorrow!";
 		$feedback["type"] = "warning";
 		echo json_encode($feedback);
 		die();
@@ -187,6 +202,8 @@ function cb_ajax_new_transactions() {
 	);
 
 	if ( $add_activity ) {
+		$sender_link = bp_core_get_userlink( $sender_id );
+		$recipient_link = bp_core_get_userlink( $recipient_id );
 		$activity_args = array(
 			"action"	=> "<p>{$sender_link} just sent leadership bits to {$recipient_link} for:</p>",
 			"content"	=> "<p style='margin:1.25rem;'>\"{$log_entry}\"</p>",
@@ -216,8 +233,7 @@ function cb_ajax_new_transactions() {
 					'log_entry'    		=> "Sent Bits to {$recipient_name}",
 					'component_name'    => 'confetti_bits',
 					'component_action'  => "cb_{$action}_bits",
-					'amount'    		=> -$amount,
-					'error_type' 		=> 'wp_error',
+					'amount'    		=> -$amount
 				)
 			);
 

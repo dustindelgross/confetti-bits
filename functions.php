@@ -64,149 +64,140 @@ if ( ! function_exists( 'confetti_bits_admin_enqueue_script' ) ) {
 	add_action( 'admin_enqueue_scripts', 'confetti_bits_admin_enqueue_script' );
 }
 
-add_action(
-	'bp_init',
-	function () {
-		if ( class_exists( 'CB_Notifications_Component' ) ) {
-			CB_Notifications_Component::instance();
-		}
-	},
-	10
-);
+/**
+ * Initializes our notifications class.
+ * 
+ * So we can get those sweet, sweet noties.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.3.0
+ */
+function cb_core_notifications_init() {
+	if ( class_exists( 'CB_Notifications_Component' ) ) {
+		CB_Notifications_Component::instance();
+	}
+}
+add_action( 'bp_init', 'cb_core_notifications_init', 10 );
 
-add_action( 
-	'cb_enqueue_scripts', 
-	function () {
-		if ( function_exists( 'cb_is_confetti_bits_component' ) ) {
-			if ( cb_is_confetti_bits_component() ) {
+/**
+ * Enqueues all of our scripts in a clean fashion.
+ * 
+ * From each according to their capability, to each
+ * according to their need.
+ * Scripts are enqueued and localized using the following
+ * nested array structure: [ 
+ *     $unique_name_for_script => [ 
+ *         $name_of_api_component_to_use => [ $http_method1, $http_method2, ... ],
+ *         'dependencies' => [ $dependency1, $dependency2, ... ]
+ *     ]
+ * ]
+ * This structure is then picked apart to dynamically 
+ * enqueue and localize scripts. This gives us granular
+ * control over who gets access to what API endpoints,
+ * and can perform which actions, based on ability.
+ * The scripts will be enqueued as: "cb_{$unique_name_for_script}", 
+ * and will load a corresponding file, with the underscores
+ * replaced with dashes, like so: "cb-{$unique-name-for-script}.js".
+ * This will also load any dependencies found in the
+ * 'dependencies' array.
+ * Scripts will then be localized using the same
+ * "cb_{$unique_name_for_script}" identifier, which will 
+ * become the global name that is usable within the file.
+ * All API endpoints are localized as: 
+ * "{$endpoint}_{$name_of_api_component}". 
+ * So, for example: "cb_participation.get_participation" 
+ * will return the API endpoint for getting participation
+ * entries; "cb_core.new_transactions" will return the
+ * API endpoint for creating a new transaction, and so forth.
+ * To access the API key, use: "{$unique_name_for_script}.api_key
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
+function cb_core_enqueue_scripts() {
 
-				wp_enqueue_script( 
-					'cb_participation', 
-					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-participation.js', 
-					array('jquery') 
-				);
+	if ( function_exists( 'cb_is_confetti_bits_component' ) ) {
+		if ( cb_is_confetti_bits_component() ) {
 
-				wp_enqueue_script( 
-					'cb_core', 
-					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-core.js',
-					array('jquery')
-				);
+			$cache_bust = 'v1.1';
+			$user_id = intval(get_current_user_id());
+			$api_key_safe_name = get_option( 'cb_core_api_key_safe_name' );
 
-				wp_enqueue_script( 
-					'cb_transactions', 
-					CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-transactions.js', 
-					array('jquery') 
-				);
+			$components = [
+				'core' => [ 
+					'transactions' => ['get'], 
+					'dependencies' => ['jquery'],
+				],
+				'participation' => [ 
+					'participation' => ['get', 'new', 'update'],
+					'dependencies' => ['jquery'],
+				],
+				'transactions' => [
+					'transactions' => ['new'],
+					'dependencies' => ['jquery'],
+				]
+			];
 
-				if ( cb_is_user_participation_admin() ) {
-					wp_enqueue_script( 
-						'cb_core_admin', 
-						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-core-admin.js', 
-						array('jquery')
-					);
-					wp_enqueue_script( 
-						'cb_participation_admin', 
-						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-participation-admin.js', 
-						array('jquery') 
-					);
-
-				}
-
-				if ( cb_is_user_site_admin() ) {
-					wp_enqueue_script( 
-						'cb_events', 
-						CONFETTI_BITS_PLUGIN_URL . 'assets/js/cb-events.js', 
-						array('jquery', 'jquery-ui-datepicker')
-					);
-				}
-
-				// @TODO: Standardize this - find a good naming convention
-				// and figure out a way to dynamically set all these
-
-				$params = array(
-					'core'		=> array(
-						'transactions' => '',
-						'user_id' => '',
-					),
-					'events'	=> array(),
-				);
-
-				$cb_events_params = array(
-
-				);
-
-				$user_id = intval(get_current_user_id());
-
-				$cb_core_params = array(
-					'get_transactions' => home_url('/wp-json/cb-ajax/v1/transactions/get'),
-					'user_id'	=> $user_id,
-				);
-
-				$cb_core_admin_params = array(
-					'get_participation' => home_url('/wp-json/cb-ajax/v1/participation/get'),
-					'get_transactions' => home_url('/wp-json/cb-ajax/v1/transactions/get'),
-					'update'		=> home_url('/wp-json/cb-ajax/v1/participation/update'),
-					'nonce'			=> wp_create_nonce( 'cb_participation_post' ),
-				);
-
-				$cb_participation_params = array(
-					'get'			=> home_url('/wp-json/cb-ajax/v1/participation/get'),
-					'new'			=> home_url('/wp-json/cb-ajax/v1/participation/new'),
-					'update'		=> home_url('/wp-json/cb-ajax/v1/participation/update'),
-					'nonce'			=> wp_create_nonce( 'cb_participation_post' ),
-				);
-				
-				$cb_participation_admin_params = [
-					'get_participation'	=> home_url('/wp-json/cb-ajax/v1/participation/get'),
-					'get_transactions'	=> home_url('/wp-json/cb-ajax/v1/transactions/get'),
-					'update'			=> home_url('/wp-json/cb-ajax/v1/participation/update'),
-					'api_key'			=> get_option( 'cb_core_api_key_safe_name' ),
+			if ( cb_is_user_participation_admin() ) {
+				$components['core_admin'] = [ 
+					'participation' => ['get', 'update'], 
+					'transactions' => ['get'],
+					'dependencies' => ['jquery'],
 				];
+				$components['participation_admin'] = [ 
+					'participation' => ['get', 'update'], 
+					'transactions' => ['get'],
+					'dependencies' => ['jquery'],
+				];
+			}
 
-				$cb_transactions_params = array(
-					'send'		=> admin_url( 'admin-ajax.php?action=cb_send_bits' )
-				);
+			if ( cb_is_user_site_admin() ) {
+				$components['requests'] = [
+					'requests' => ['new', 'get', 'update', 'delete' ],
+					'request_items' => ['new', 'get', 'update', 'delete' ],
+					'dependencies' => ['jquery'],
+				];
+				$components['requests_admin'] = [
+					'requests' => ['get', 'update', 'delete' ],
+					'request_items' => ['new', 'get', 'update', 'delete' ],
+					'dependencies' => ['jquery'],
+				];
+			}
 
-				wp_localize_script( 
-					'cb_participation', 
-					'cb_participation', 
-					$cb_participation_params
-				);
-				
-				wp_localize_script( 
-					'cb_participation_admin', 
-					'cb_participation_admin', 
-					$cb_participation_admin_params
-				);
+			foreach( $components as $component => $params ) {
 
-				wp_localize_script( 
-					'cb_core', 
-					'cb_core', 
-					$cb_core_params
-				);
+				$localize_params = [];
+				$with_dashes = str_replace( '_', '-', $component );
 
-				wp_localize_script( 
-					'cb_core_admin', 
-					'cb_core_admin', 
-					$cb_core_admin_params
-				);
-
-				wp_localize_script( 
-					'cb_transactions', 
-					'cb_transactions',
-					$cb_transactions_params
+				wp_enqueue_script( 
+					"cb_{$component}", 
+					CONFETTI_BITS_PLUGIN_URL . "assets/js/cb-{$with_dashes}.js", 
+					$params['dependencies'],
+					$cache_bust,
+					true
 				);
 
-				wp_localize_script( 
-					'cb_events', 
-					'cb_events', 
-					$cb_events_params
-				);
+				unset( $params['dependencies'] );
+
+				foreach ( $params as $api => $endpoints ) {
+					$api_with_dashes = str_replace( '_', '-', $api );
+					foreach ( $endpoints as $endpoint ) {
+						$localize_params["{$endpoint}_{$api}"] = home_url("wp-json/cb-ajax/v1/{$api_with_dashes}/{$endpoint}");
+					}
+
+					$localize_params['api_key'] = $api_key_safe_name;
+					$localize_params['user_id'] = $user_id;
+
+				}
+
+				wp_localize_script( "cb_{$component}", "cb_{$component}", $localize_params );
 
 			}
 		}
 	}
-);
+}
+
+add_action( 'cb_enqueue_scripts', 'cb_core_enqueue_scripts'	);
 
 function cb_user_birthday_anniversary_fields( $user ) {
 	if( !current_user_can('add_users') ) {
@@ -339,7 +330,7 @@ if (!function_exists('str_starts_with')) {
 	 * 
 	 * PHP 8 Polyfill for str_starts_with
 	 * 
-	 * @package ConfettiBits\Core
+	 * @package ConfettiBits
 	 * @since 2.3.0
 	 * 
 	 * @param string $haystack The string to search.
@@ -357,7 +348,7 @@ if (!function_exists('str_ends_with')) {
 	 * 
 	 * PHP 8 Polyfill for str_ends_with
 	 * 
-	 * @package ConfettiBits\Core
+	 * @package ConfettiBits
 	 * @since 2.3.0
 	 * 
 	 * @param string $haystack The string to search.
@@ -376,7 +367,7 @@ if (!function_exists('str_contains')) {
 	 * 
 	 * PHP 8 Polyfill for str_contains
 	 * 
-	 * @package ConfettiBits\Core
+	 * @package ConfettiBits
 	 * @since 2.3.0
 	 * 
 	 * @param string $haystack The string to search.
@@ -395,7 +386,7 @@ if (!function_exists('str_contains')) {
  * Flushes the rewrite rules after we update a
  * plugin or theme, so our pages stop disappearing.
  * 
- * @package ConfettiBits\Core
+ * @package ConfettiBits
  * @since 2.3.0
  */
 function cb_flush_rewrite_rules() {
@@ -411,12 +402,33 @@ add_action( 'after_plugin_or_theme_update', 'cb_flush_rewrite_rules' );
  * 
  * @return array The PATCH request body as an associative array.
  * 
- * @package ConfettiBits\Core
+ * @package ConfettiBits
  * @since 2.3.0
  */
 function cb_get_patch_data() {
 
 	if ( !cb_is_patch_request() ) {
+		return;
+	}
+
+	return json_decode(file_get_contents('php://input'), true);
+
+}
+
+/**
+ * Gets DELETE data from an HTTP DELETE request.
+ * 
+ * Retrieves data from a DELETE request and returns it as an
+ * associative array.
+ * 
+ * @return array The DELETE request body as an associative array.
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
+function cb_get_delete_data() {
+
+	if ( !cb_is_delete_request() ) {
 		return;
 	}
 
@@ -486,7 +498,7 @@ function cb_core_get_user_display_name( $user_id = 0 ) {
 	if ( empty( $display_name ) ) {
 		$display_name = get_the_author_meta( 'nickname', $user_id );
 	}
-	
+
 	if ( empty( $display_name ) ) {
 		$display_name = "Unknown Member";
 	}
