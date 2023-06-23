@@ -7,8 +7,7 @@ defined('ABSPATH') || exit;
  *
  * Sets up our transactions component, so we have easy access to component globals.
  *
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 1.0.0
  */
 function cb_setup_transactions() {

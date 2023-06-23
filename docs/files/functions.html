@@ -577,7 +577,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -599,22 +599,24 @@ $name_of_api_component_to_use =&gt; [ $http_method1, $http_method2, ... ],
 This structure is then picked apart to dynamically
 enqueue and localize scripts. This gives us granular
 control over who gets access to what API endpoints,
-and can perform which actions, based on ability.
-The scripts will be enqueued as: &quot;cb_{$unique_name_for_script}&quot;,
+and can perform which actions, based on capability.</p>
+<p>The scripts will be enqueued as: &quot;cb_{$unique_name_for_script}&quot;,
 and will load a corresponding file, with the underscores
 replaced with dashes, like so: &quot;cb-{$unique-name-for-script}.js&quot;.
 This will also load any dependencies found in the
-'dependencies' array.
-Scripts will then be localized using the same
+'dependencies' array.</p>
+<p>Scripts will then be localized using the same
 &quot;cb_{$unique_name_for_script}&quot; identifier, which will
 become the global name that is usable within the file.
 All API endpoints are localized as:
-&quot;{$endpoint}_{$name_of_api_component}&quot;.
-So, for example: &quot;cb_participation.get_participation&quot;
-will return the API endpoint for getting participation
-entries; &quot;cb_core.new_transactions&quot; will return the
-API endpoint for creating a new transaction, and so forth.
-To access the API key, use: &quot;{$unique_name_for_script}.api_key</p>
+&quot;{$endpoint}_{$name_of_api_component}&quot;.</p>
+<p>So, for example:
+- &quot;cb_participation.get_participation&quot; will return the
+API endpoint for getting participation entries.
+- &quot;cb_core.new_transactions&quot; will return the API endpoint
+for creating a new transaction.</p>
+<p>To access the API key, use &quot;{$unique_name_for_script}.api_key&quot;
+in the {$unique-name-for-script}.js file.</p>
 </section>
 
     
@@ -646,7 +648,7 @@ To access the API key, use: &quot;{$unique_name_for_script}.api_key</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">208</span>
 
     </aside>
 
@@ -680,7 +682,7 @@ To access the API key, use: &quot;{$unique_name_for_script}.api_key</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">229</span>
+    <span class="phpdocumentor-element-found-in__line">235</span>
 
     </aside>
 
@@ -721,7 +723,7 @@ To access the API key, use: &quot;{$unique_name_for_script}.api_key</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">284</span>
 
     </aside>
 
@@ -793,7 +795,7 @@ they ended when the current cycles started.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">317</span>
+    <span class="phpdocumentor-element-found-in__line">323</span>
 
     </aside>
 
@@ -868,7 +870,7 @@ Default MySQL - 'Y-m-d H:i:s'</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">341</span>
+    <span class="phpdocumentor-element-found-in__line">347</span>
 
     </aside>
 
@@ -939,7 +941,7 @@ Default MySQL - 'Y-m-d H:i:s'</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">359</span>
+    <span class="phpdocumentor-element-found-in__line">365</span>
 
     </aside>
 
@@ -1010,7 +1012,7 @@ Default MySQL - 'Y-m-d H:i:s'</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">378</span>
+    <span class="phpdocumentor-element-found-in__line">384</span>
 
     </aside>
 
@@ -1081,7 +1083,7 @@ Default MySQL - 'Y-m-d H:i:s'</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">392</span>
+    <span class="phpdocumentor-element-found-in__line">398</span>
 
     </aside>
 
@@ -1124,7 +1126,7 @@ plugin or theme, so our pages stop disappearing.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">408</span>
+    <span class="phpdocumentor-element-found-in__line">414</span>
 
     </aside>
 
@@ -1175,7 +1177,7 @@ associative array.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">429</span>
+    <span class="phpdocumentor-element-found-in__line">435</span>
 
     </aside>
 
@@ -1226,7 +1228,7 @@ associative array.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">452</span>
+    <span class="phpdocumentor-element-found-in__line">458</span>
 
     </aside>
 
@@ -1279,7 +1281,7 @@ the sender or recipient isn't on the platform anymore.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">486</span>
+    <span class="phpdocumentor-element-found-in__line">492</span>
 
     </aside>
 

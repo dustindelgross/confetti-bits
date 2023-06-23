@@ -771,8 +771,8 @@ function cb_send_sitewide_notice()
 {
 	if (
 		!cb_is_confetti_bits_component() ||
-		!cb_is_post_request() ||
-		!wp_verify_nonce($_POST['cb_sitewide_notice_nonce'], 'cb_sitewide_notice_post')
+		!cb_is_post_request() // ||
+//		!wp_verify_nonce($_POST['cb_sitewide_notice_nonce'], 'cb_sitewide_notice_post')
 	) {
 		return;
 	}
@@ -781,7 +781,7 @@ function cb_send_sitewide_notice()
 	$success = false;
 	$feedback = '';
 
-	$username = bp_core_get_user_displayname(intval($_POST['cb_sitewide_notice_user_id']));
+	$username = cb_core_get_user_display_name(intval($_POST['cb_sitewide_notice_user_id']));
 	$subject = !empty($_POST['cb_sitewide_notice_heading']) ? 
 		trim($_POST['cb_sitewide_notice_heading']) : '';
 	$message = !empty($_POST['cb_sitewide_notice_body']) ? 
@@ -804,7 +804,7 @@ function cb_send_sitewide_notice()
 	bp_core_redirect($redirect_to);
 
 }
-add_action('cb_actions', 'cb_send_sitewide_notice');
+// add_action('cb_actions', 'cb_send_sitewide_notice');
 
 /**
  * CB Transactions Has Bits

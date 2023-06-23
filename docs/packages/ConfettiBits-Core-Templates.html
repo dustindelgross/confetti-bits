@@ -126,27 +126,17 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-Core.html">Core</a></li>
     </ul>
 
-    <article class="phpdocumentor-element -file">
-        <h2 class="phpdocumentor-content__title">cb-core-components.php</h2>
+    <article class="phpdocumentor-element -package">
+        <h2 class="phpdocumentor-content__title">Templates</h2>
 
-            <p class="phpdocumentor-summary">Confetti Bits Core Components</p>
-
-    <section class="phpdocumentor-description"><p>This is where we house all of our component-related functions.
-These functions are typically used to determine what component
-a user is interacting with, which resources are being requested,
-and determining access levels for certain features within the app.</p>
-</section>
-
-
-
-
-
+        
 <h3 id="toc">
     Table of Contents
-    <a href="files/cb-core-cb-core-components.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="packages/ConfettiBits-Core-Templates.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -162,152 +152,93 @@ and determining access levels for certain features within the app.</p>
 
 <h4 id="toc-functions">
     Functions
-    <a href="files/cb-core-cb-core-components.html#toc-functions" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="packages/ConfettiBits-Core-Templates.html#toc-functions" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_set_uri_globals">cb_core_set_uri_globals()</a>
+    <a href="namespaces/default.html#function_cb_member_locate_template_part">cb_member_locate_template_part()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>CB Member Locate Template Part</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_member_get_template_part">cb_member_get_template_part()</a>
+    <span>
+                                &nbsp;: <abbr title="\An">An</abbr>    </span>
+</dt>
+<dd>CB Member Get Template Part</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_get_active_templates">cb_get_active_templates()</a>
+    <span>
+                                &nbsp;: <abbr title="\An">An</abbr>    </span>
+</dt>
+<dd>Confetti Bits Get Active Templates</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_core_add_confetti_captain_badges">cb_core_add_confetti_captain_badges()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Sets a global based on the current URI.</dd>
+<dd>CB Core Add Confetti Captain Badges</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_is_current_component">cb_is_current_component()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Does an entire song and dance to see if this is the component you want.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_is_confetti_bits_component">cb_is_confetti_bits_component()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Ask the wizard if we could have some porridge.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_is_user">cb_is_user()</a>
+    <a href="namespaces/default.html#function_cb_core_confetti_captain_class">cb_core_confetti_captain_class()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Checks whether there is a currently logged-in user.</dd>
+<dd>CB Core Confetti Captain Class</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_is_user_confetti_bits">cb_is_user_confetti_bits()</a>
+    <a href="namespaces/default.html#function_cb_core_confetti_captain_profile_badge">cb_core_confetti_captain_profile_badge()</a>
     <span>
-                                &nbsp;: bool    </span>
+                                &nbsp;: mixed    </span>
 </dt>
-<dd>Checks to see if we&#039;re in the land of wonder.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_get_active_components">cb_core_get_active_components()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
-</dt>
-<dd>Gives us an array of all active components.</dd>
+<dd>CB Core Confetti Captain Profile Badge</dd>
 
     </dl>
-
-
 
         
 
             <section class="phpdocumentor-functions">
         <h3 class="phpdocumentor-elements__header" id="functions">
             Functions
-            <a href="files/cb-core-cb-core-components.html#functions" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="packages/ConfettiBits-Core-Templates.html#functions" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_set_uri_globals">
-        cb_core_set_uri_globals()
-        <a href="namespaces/default.html#function_cb_core_set_uri_globals" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_cb_member_locate_template_part">
+        cb_member_locate_template_part()
+        <a href="namespaces/default.html#function_cb_member_locate_template_part" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Sets a global based on the current URI.</p>
+        <p class="phpdocumentor-summary">CB Member Locate Template Part</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_set_uri_globals</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_member_locate_template_part</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$template</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-        <section class="phpdocumentor-description"><p>The goal here at one point was to have each component
-dynamically registered through the URI and accessible
-via a stacking path, like this:</p>
-<p>https://{{domain}}/{{component}}/{{action}}/{{item}}</p>
-<p>This is no easy feat. It would also require some
-significant shenanigans on our end to make that happen.
-So we've opted to using REST API endpoints, and just
-checking whether $cb-&gt;current_component exists, and
-is indeed === 'confetti-bits'.</p>
-</section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_core_set_uri_globals#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_is_current_component">
-        cb_is_current_component()
-        <a href="namespaces/default.html#function_cb_is_current_component" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">156</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Does an entire song and dance to see if this is the component you want.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_current_component</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$component</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-        <section class="phpdocumentor-description"><ol>
-<li>Checks to see if the current component is the same as the supplied
-component.</li>
-<li>Checks to see if the supplied component has a slug that matches.</li>
-<li>Checks to see if the supplied component is in the array of active
-components.</li>
-<li>Checks one last time to see if any of the active components has a
-slug that matches the supplied component.</li>
-</ol>
+        <section class="phpdocumentor-description"><p>Attempts to locate the specified template in the TeamCTG
+Child Theme, located at '/cb-template-parts/cb-{$template}.php'.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$component</span>
+                <span class="phpdocumentor-signature__argument__name">$template</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The component to check for.</p>
+                    <section class="phpdocumentor-description"><p>The template to look for.</p>
 </section>
 
             </dd>
@@ -316,11 +247,20 @@ slug that matches the supplied component.</li>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="namespaces/default.html#function_cb_is_current_component#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="namespaces/default.html#function_cb_member_locate_template_part#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">subpackage</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Templates</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -332,87 +272,52 @@ slug that matches the supplied component.</li>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
+        <span class="phpdocumentor-signature__response_type">string</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>True if it's one of ours, false in any other scenario.</p>
+                <section class="phpdocumentor-description"><p>The template, if found.</p>
 </section>
 
             </section>
 
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_is_confetti_bits_component">
-        cb_is_confetti_bits_component()
-        <a href="namespaces/default.html#function_cb_is_confetti_bits_component" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_cb_member_get_template_part">
+        cb_member_get_template_part()
+        <a href="namespaces/default.html#function_cb_member_get_template_part" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">206</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Ask the wizard if we could have some porridge.</p>
+        <p class="phpdocumentor-summary">CB Member Get Template Part</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_confetti_bits_component</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">cb_member_get_template_part</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$template</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\An">An</abbr></span></code>
 
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_is_confetti_bits_component#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>Whether we may have some porridge.</p>
+        <section class="phpdocumentor-description"><p>Loads a template part based on the template
+that gets passed in.</p>
 </section>
 
-            </section>
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$template</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
 
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_is_user">
-        cb_is_user()
-        <a href="namespaces/default.html#function_cb_is_user" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">219</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Checks whether there is a currently logged-in user.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_user</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-    
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="namespaces/default.html#function_cb_is_user#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="namespaces/default.html#function_cb_member_get_template_part#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -420,58 +325,20 @@ slug that matches the supplied component.</li>
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\is_user_logged_in()">is_user_logged_in()</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="namespaces/default.html#function_cb_member_locate_template_part"><abbr title="\cb_member_locate_template_part()">cb_member_locate_template_part()</abbr></a></span>
                                         
                                              
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
+                    <span class="phpdocumentor-tag__name">subpackage</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/functions/is_user_logged_in/"> https://developer.wordpress.org/reference/functions/is_user_logged_in/ </a>
-                    
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Templates</p>
+</section>
+
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">3.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_is_user_confetti_bits">
-        cb_is_user_confetti_bits()
-        <a href="namespaces/default.html#function_cb_is_user_confetti_bits" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">231</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Checks to see if we&#039;re in the land of wonder.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_user_confetti_bits</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_is_user_confetti_bits#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -483,47 +350,58 @@ slug that matches the supplied component.</li>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\An">An</abbr></span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>Whether we're in the land of wonder.</p>
+                <section class="phpdocumentor-description"><p>array of the active templates.</p>
 </section>
 
             </section>
 
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_get_active_components">
-        cb_core_get_active_components()
-        <a href="namespaces/default.html#function_cb_core_get_active_components" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_cb_get_active_templates">
+        cb_get_active_templates()
+        <a href="namespaces/default.html#function_cb_get_active_templates" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">243</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Gives us an array of all active components.</p>
+        <p class="phpdocumentor-summary">Confetti Bits Get Active Templates</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_get_active_components</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">cb_get_active_templates</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\An">An</abbr></span></code>
 
-    
+        <section class="phpdocumentor-description"><p>Sets up the templates to show users based on permissions.</p>
+</section>
+
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="namespaces/default.html#function_cb_core_get_active_components#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="namespaces/default.html#function_cb_get_active_templates#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">subpackage</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Templates</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -531,13 +409,187 @@ slug that matches the supplied component.</li>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\An">An</abbr></span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>Active components.</p>
+                <section class="phpdocumentor-description"><p>array of the active templates.</p>
 </section>
 
             </section>
 
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_add_confetti_captain_badges">
+        cb_core_add_confetti_captain_badges()
+        <a href="namespaces/default.html#function_cb_core_add_confetti_captain_badges" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">158</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB Core Add Confetti Captain Badges</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_add_confetti_captain_badges</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Adds Confetti Captain badges to the user's member profile page
+as well as to the activity feed, if they are a Confetti Captain.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_add_confetti_captain_badges#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">subpackage</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Templates</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_confetti_captain_class">
+        cb_core_confetti_captain_class()
+        <a href="namespaces/default.html#function_cb_core_confetti_captain_class" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">182</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB Core Confetti Captain Class</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_confetti_captain_class</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$item_id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Adds our custom 'confetti-captain' class to the BuddyBoss user avatar
+so that we can add a cute little sparkler icon using JS.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$class</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$item_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_confetti_captain_class#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">subpackage</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Templates</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_confetti_captain_profile_badge">
+        cb_core_confetti_captain_profile_badge()
+        <a href="namespaces/default.html#function_cb_core_confetti_captain_profile_badge" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">204</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB Core Confetti Captain Profile Badge</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_confetti_captain_profile_badge</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Adds a cute litte sparkler badge on the profile page of users
+who are designated as &quot;Confetti Captains&quot;, which meand they are
+part of the Confetti Captains group.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_confetti_captain_profile_badge#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">subpackage</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Templates</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
 </article>
             </section>
 
@@ -545,7 +597,7 @@ slug that matches the supplied component.</li>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/cb-core/cb-core-components.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -644,7 +696,7 @@ slug that matches the supplied component.</li>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                                                                                                                        <li><a href="files/cb-core-cb-core-components.html#toc-functions">Functions</a></li>
+                                                                                                                                                                                        <li><a href="packages/ConfettiBits-Core-Templates.html#toc-functions">Functions</a></li>
                                     </ul>
             </li>
 
@@ -652,12 +704,12 @@ slug that matches the supplied component.</li>
                             <li class="phpdocumentor-on-this-page-section__title">Functions</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="namespaces/default.html#function_cb_core_get_active_components">cb_core_get_active_components()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_set_uri_globals">cb_core_set_uri_globals()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_is_confetti_bits_component">cb_is_confetti_bits_component()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_is_current_component">cb_is_current_component()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_is_user">cb_is_user()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_is_user_confetti_bits">cb_is_user_confetti_bits()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_add_confetti_captain_badges">cb_core_add_confetti_captain_badges()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_confetti_captain_class">cb_core_confetti_captain_class()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_confetti_captain_profile_badge">cb_core_confetti_captain_profile_badge()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_get_active_templates">cb_get_active_templates()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_member_get_template_part">cb_member_get_template_part()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_member_locate_template_part">cb_member_locate_template_part()</a></li>
                                             </ul>
                 </li>
                     </ul>
@@ -677,7 +729,7 @@ slug that matches the supplied component.</li>
     </section>
 </section>
         </div>
-        <a href="files/cb-core-cb-core-components.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="packages/ConfettiBits-Core-Templates.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

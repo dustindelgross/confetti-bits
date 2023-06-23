@@ -139,6 +139,14 @@
 
 </h3>
 
+<h4 id="packages">
+    Packages
+    <a href="packages/ConfettiBits-Core.html#packages" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -package"><a href="packages/ConfettiBits-Core-Templates.html"><abbr title="\ConfettiBits\Core\Templates">Templates</abbr></a></dt>
+    </dl>
 
 
 
@@ -148,7 +156,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/TeamCTG-User-Caps.html"><abbr title="\TeamCTG_User_Caps">TeamCTG_User_Caps</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Component.html"><abbr title="\CB_Component">CB_Component</abbr></a></dt><dd>CB Component</dd>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/TeamCTG-User-Caps.html"><abbr title="\TeamCTG_User_Caps">TeamCTG_User_Caps</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Component.html"><abbr title="\CB_Component">CB_Component</abbr></a></dt><dd>CB Component</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Core-Role-Manager.html"><abbr title="\CB_Core_Role_Manager">CB_Core_Role_Manager</abbr></a></dt><dd>CB Core Roles Component</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Core-Role.html"><abbr title="\CB_Core_Role">CB_Core_Role</abbr></a></dt><dd>CB Core Roles Component</dd>    </dl>
 
 
 
@@ -194,53 +202,53 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_create_executive">cb_create_executive()</a>
+    <a href="namespaces/default.html#function_cb_core_set_role_globals">cb_core_set_role_globals()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Sets some useful globals for specialized roles for later use.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_create_leadership">cb_create_leadership()</a>
+    <a href="namespaces/default.html#function_cb_core_add_admin_caps">cb_core_add_admin_caps()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Grants all capabilities to administrator users.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_create_participation_admin">cb_create_participation_admin()</a>
+    <a href="namespaces/default.html#function_cb_core_current_user_can">cb_core_current_user_can()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: bool    </span>
 </dt>
+<dd>An alias for current_user_can()</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_create_requests_fulfillment">cb_create_requests_fulfillment()</a>
+    <a href="namespaces/default.html#function_cb_core_is_component_admin">cb_core_is_component_admin()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: bool    </span>
 </dt>
+<dd>Checks whether a user is an admin of the given component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_user_admin">cb_is_user_admin()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: bool    </span>
 </dt>
+<dd>Checks whether user has certain administrative privileges.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_user_executive">cb_is_user_executive()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_is_user_requests_fulfillment">cb_is_user_requests_fulfillment()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
+<dd>Checks to see if the user is an executive user.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_user_site_admin">cb_is_user_site_admin()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>CB Is User Site Admin</dd>
+<dd>Checks if the user has site admin privileges.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_core_admin_is_user_site_admin">cb_core_admin_is_user_site_admin()</a>
@@ -254,31 +262,21 @@
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>CB Is User Participation Admin</dd>
+<dd>Checks to see if the user is a participation admin.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_is_user_requests_admin">cb_is_user_requests_admin()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Checks to see if the user is a requests admin.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_user_events_admin">cb_is_user_events_admin()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: bool    </span>
 </dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_admin_get_active_components_from_submitted_settings">cb_core_admin_get_active_components_from_submitted_settings()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_get_panels">cb_core_get_panels()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_get_roles">cb_core_get_roles()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
+<dd>Checks to see if the user is an events admin.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_editor_manage_users">editor_manage_users()</a>
@@ -292,6 +290,49 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Remove privileged menus from the admin area.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_core_set_uri_globals">cb_core_set_uri_globals()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Sets a global based on the current URI.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_is_current_component">cb_is_current_component()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Does an entire song and dance to see if this is the component you want.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_is_confetti_bits_component">cb_is_confetti_bits_component()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Ask the wizard if we could have some porridge.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_is_user">cb_is_user()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Checks whether there is a currently logged-in user.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_is_user_confetti_bits">cb_is_user_confetti_bits()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Checks to see if we&#039;re in the land of wonder.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_core_get_active_components">cb_core_get_active_components()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Gives us an array of all active components.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_core_install_events">cb_core_install_events()</a>
@@ -383,27 +424,6 @@
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Validates against a supplied API key safe name.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_member_locate_template_part">cb_member_locate_template_part()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>CB Member Locate Template Part</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_member_get_template_part">cb_member_get_template_part()</a>
-    <span>
-                                &nbsp;: <abbr title="\An">An</abbr>    </span>
-</dt>
-<dd>CB Member Get Template Part</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_get_active_templates">cb_get_active_templates()</a>
-    <span>
-                                &nbsp;: <abbr title="\An">An</abbr>    </span>
-</dt>
-<dd>Confetti Bits Get Active Templates</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_multi_array">cb_is_multi_array()</a>
@@ -537,7 +557,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
@@ -561,7 +581,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -585,7 +605,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">197</span>
+    <span class="phpdocumentor-element-found-in__line">199</span>
 
     </aside>
 
@@ -609,7 +629,7 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">201</span>
+    <span class="phpdocumentor-element-found-in__line">203</span>
 
     </aside>
 
@@ -625,100 +645,208 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_create_executive">
-        cb_create_executive()
-        <a href="namespaces/default.html#function_cb_create_executive" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_set_role_globals">
+        cb_core_set_role_globals()
+        <a href="namespaces/default.html#function_cb_core_set_role_globals" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">249</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Sets some useful globals for specialized roles for later use.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_create_executive</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_core_set_role_globals</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>The idea here is that once these globals are set, we can access
+them to grant certain permissions to certain roles, which will
+help us determine who can see what in our template loop.</p>
+</section>
 
     
     
-    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_set_role_globals#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_create_leadership">
-        cb_create_leadership()
-        <a href="namespaces/default.html#function_cb_create_leadership" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_add_admin_caps">
+        cb_core_add_admin_caps()
+        <a href="namespaces/default.html#function_cb_core_add_admin_caps" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">283</span>
+    <span class="phpdocumentor-element-found-in__line">348</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Grants all capabilities to administrator users.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_create_leadership</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_core_add_admin_caps</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_add_admin_caps#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_create_participation_admin">
-        cb_create_participation_admin()
-        <a href="namespaces/default.html#function_cb_create_participation_admin" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_current_user_can">
+        cb_core_current_user_can()
+        <a href="namespaces/default.html#function_cb_core_current_user_can" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">300</span>
+    <span class="phpdocumentor-element-found-in__line">385</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">An alias for current_user_can()</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_create_participation_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_core_current_user_can</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$cap</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
-    
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$cap</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The capability to check for.</p>
+</section>
+
+            </dd>
+            </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_current_user_can#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether the user has the capability.</p>
+</section>
+
+            </section>
+
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_create_requests_fulfillment">
-        cb_create_requests_fulfillment()
-        <a href="namespaces/default.html#function_cb_create_requests_fulfillment" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_is_component_admin">
+        cb_core_is_component_admin()
+        <a href="namespaces/default.html#function_cb_core_is_component_admin" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">350</span>
+    <span class="phpdocumentor-element-found-in__line">399</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Checks whether a user is an admin of the given component.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_create_requests_fulfillment</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_core_is_component_admin</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$component</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
-    
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$component</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The component to check for.</p>
+</section>
+
+            </dd>
+            </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_is_component_admin#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether the user is an admin for the component.</p>
+</section>
+
+            </section>
+
 </article>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_is_user_admin">
@@ -729,20 +857,54 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">384</span>
+    <span class="phpdocumentor-element-found-in__line">422</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Checks whether user has certain administrative privileges.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_user_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_is_user_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>These include:
+- cb_participation_admin
+- cb_events_admin
+- cb_requests_admin</p>
+<p>It's important to note that the cb_admin capability
+is shared by both the cb_leadership role as well as
+the cb_executive role, so checking for this capability
+will return true for both of those roles, along with
+users that have the 'administrator' capability.</p>
+</section>
 
     
     
-    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_user_admin#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
-    
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether the current user is a cb_admin.</p>
+</section>
+
+            </section>
+
 </article>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_is_user_executive">
@@ -753,42 +915,38 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">399</span>
+    <span class="phpdocumentor-element-found-in__line">436</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Checks to see if the user is an executive user.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">cb_is_user_executive</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-    
-    
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_is_user_requests_fulfillment">
-        cb_is_user_requests_fulfillment()
-        <a href="namespaces/default.html#function_cb_is_user_requests_fulfillment" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">405</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_user_requests_fulfillment</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+        <section class="phpdocumentor-description"><p>This role carries specific, high-level privileges
+in certain areas of the application, so it exists
+as its own separate capability.</p>
+</section>
 
     
     
-    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_user_executive#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -801,11 +959,11 @@ Key part of this is the &quot;bp_admin_setting_{ component }_register_fields&quo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">425</span>
+    <span class="phpdocumentor-element-found-in__line">456</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">CB Is User Site Admin</p>
+        <p class="phpdocumentor-summary">Checks if the user has site admin privileges.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
@@ -864,7 +1022,7 @@ isn't particularly good to use as a feature-blocker.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">442</span>
+    <span class="phpdocumentor-element-found-in__line">473</span>
 
     </aside>
 
@@ -934,11 +1092,11 @@ isn't particularly good to use as a feature-blocker.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">465</span>
+    <span class="phpdocumentor-element-found-in__line">496</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">CB Is User Participation Admin</p>
+        <p class="phpdocumentor-summary">Checks to see if the user is a participation admin.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
@@ -978,6 +1136,58 @@ assigning a role on the Edit User admin page.</p>
 
 </article>
                     <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_is_user_requests_admin">
+        cb_is_user_requests_admin()
+        <a href="namespaces/default.html#function_cb_is_user_requests_admin" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">512</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks to see if the user is a requests admin.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_is_user_requests_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>Checks whether a user has administrative privileges over the
+requests component. These privileges are granted by
+assigning a role on the Edit User admin page.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_user_requests_admin#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether a user is a requests admin.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_is_user_events_admin">
         cb_is_user_events_admin()
         <a href="namespaces/default.html#function_cb_is_user_events_admin" class="headerlink"><i class="fas fa-link"></i></a>
@@ -986,119 +1196,48 @@ assigning a role on the Edit User admin page.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">470</span>
+    <span class="phpdocumentor-element-found-in__line">528</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Checks to see if the user is an events admin.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_user_events_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">cb_is_user_events_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>Checks whether a user has administrative privileges over the
+events component. These privileges are granted by
+assigning a role on the Edit User admin page.</p>
+</section>
 
     
     
-    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_user_events_admin#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_admin_get_active_components_from_submitted_settings">
-        cb_core_admin_get_active_components_from_submitted_settings()
-        <a href="namespaces/default.html#function_cb_core_admin_get_active_components_from_submitted_settings" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">474</span>
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether a user is an events admin.</p>
+</section>
 
-    </aside>
+            </section>
 
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_admin_get_active_components_from_submitted_settings</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$submitted</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$action</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;all&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$submitted</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$action</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;all&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_get_panels">
-        cb_core_get_panels()
-        <a href="namespaces/default.html#function_cb_core_get_panels" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">499</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_get_panels</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-    
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_get_roles">
-        cb_core_get_roles()
-        <a href="namespaces/default.html#function_cb_core_get_roles" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">550</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_get_roles</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$type</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
 </article>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_editor_manage_users">
@@ -1109,7 +1248,7 @@ assigning a role on the Edit User admin page.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">599</span>
+    <span class="phpdocumentor-element-found-in__line">536</span>
 
     </aside>
 
@@ -1136,11 +1275,12 @@ assigning a role on the Edit User admin page.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">623</span>
+    <span class="phpdocumentor-element-found-in__line">565</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Remove privileged menus from the admin area.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">get_rid_of_the_menus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -1148,8 +1288,342 @@ assigning a role on the Edit User admin page.</p>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_get_rid_of_the_menus#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_set_uri_globals">
+        cb_core_set_uri_globals()
+        <a href="namespaces/default.html#function_cb_core_set_uri_globals" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">39</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets a global based on the current URI.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_set_uri_globals</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>The goal here at one point was to have each component
+dynamically registered through the URI and accessible
+via a stacking path, like this:</p>
+<p>https://{{domain}}/{{component}}/{{action}}/{{item}}</p>
+<p>This is no easy feat. It would also require some
+significant shenanigans on our end to make that happen.
+So we've opted to using REST API endpoints, and just
+checking whether $cb-&gt;current_component exists, and
+is indeed === 'confetti-bits'.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_set_uri_globals#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_is_current_component">
+        cb_is_current_component()
+        <a href="namespaces/default.html#function_cb_is_current_component" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">156</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Does an entire song and dance to see if this is the component you want.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_is_current_component</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$component</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><ol>
+<li>Checks to see if the current component is the same as the supplied
+component.</li>
+<li>Checks to see if the supplied component has a slug that matches.</li>
+<li>Checks to see if the supplied component is in the array of active
+components.</li>
+<li>Checks one last time to see if any of the active components has a
+slug that matches the supplied component.</li>
+</ol>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$component</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The component to check for.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_current_component#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True if it's one of ours, false in any other scenario.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_is_confetti_bits_component">
+        cb_is_confetti_bits_component()
+        <a href="namespaces/default.html#function_cb_is_confetti_bits_component" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">206</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Ask the wizard if we could have some porridge.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_is_confetti_bits_component</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_confetti_bits_component#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether we may have some porridge.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_is_user">
+        cb_is_user()
+        <a href="namespaces/default.html#function_cb_is_user" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">219</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks whether there is a currently logged-in user.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_is_user</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_user#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\is_user_logged_in()">is_user_logged_in()</abbr></span>
+                                        
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://developer.wordpress.org/reference/functions/is_user_logged_in/"> https://developer.wordpress.org/reference/functions/is_user_logged_in/ </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_is_user_confetti_bits">
+        cb_is_user_confetti_bits()
+        <a href="namespaces/default.html#function_cb_is_user_confetti_bits" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">231</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks to see if we&#039;re in the land of wonder.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_is_user_confetti_bits</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_is_user_confetti_bits#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether we're in the land of wonder.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_get_active_components">
+        cb_core_get_active_components()
+        <a href="namespaces/default.html#function_cb_core_get_active_components" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-components.php"><a href="files/cb-core-cb-core-components.html"><abbr title="cb-core/cb-core-components.php">cb-core-components.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">243</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gives us an array of all active components.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_get_active_components</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_get_active_components#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Active components.</p>
+</section>
+
+            </section>
+
 </article>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_core_install_events">
@@ -1931,188 +2405,6 @@ or it is expired or invalid, it will also fail.</p>
 
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_member_locate_template_part">
-        cb_member_locate_template_part()
-        <a href="namespaces/default.html#function_cb_member_locate_template_part" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">30</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">CB Member Locate Template Part</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_member_locate_template_part</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$template</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-        <section class="phpdocumentor-description"><p>Attempts to locate the specified template in the TeamCTG
-Child Theme, located at '/members/single/confetti-bits-hub/cb-{$template}.php'.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$template</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The template to look for.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_member_locate_template_part#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The template, if found.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_member_get_template_part">
-        cb_member_get_template_part()
-        <a href="namespaces/default.html#function_cb_member_get_template_part" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">62</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">CB Member Get Template Part</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_member_get_template_part</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$template</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\An">An</abbr></span></code>
-
-        <section class="phpdocumentor-description"><p>Loads a template part based on the template
-that gets passed in.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$template</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_member_get_template_part#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="namespaces/default.html#function_cb_member_locate_template_part"><abbr title="\cb_member_locate_template_part()">cb_member_locate_template_part()</abbr></a></span>
-                                        
-                                             
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\An">An</abbr></span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>array of the active templates.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_get_active_templates">
-        cb_get_active_templates()
-        <a href="namespaces/default.html#function_cb_get_active_templates" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">88</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Confetti Bits Get Active Templates</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_get_active_templates</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\An">An</abbr></span></code>
-
-        <section class="phpdocumentor-description"><p>Sets up the templates to show users based on permissions.</p>
-</section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_get_active_templates#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\An">An</abbr></span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>array of the active templates.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_is_multi_array">
         cb_is_multi_array()
         <a href="namespaces/default.html#function_cb_is_multi_array" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2217,7 +2509,7 @@ that gets passed in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -2239,22 +2531,24 @@ $name_of_api_component_to_use =&gt; [ $http_method1, $http_method2, ... ],
 This structure is then picked apart to dynamically
 enqueue and localize scripts. This gives us granular
 control over who gets access to what API endpoints,
-and can perform which actions, based on ability.
-The scripts will be enqueued as: &quot;cb_{$unique_name_for_script}&quot;,
+and can perform which actions, based on capability.</p>
+<p>The scripts will be enqueued as: &quot;cb_{$unique_name_for_script}&quot;,
 and will load a corresponding file, with the underscores
 replaced with dashes, like so: &quot;cb-{$unique-name-for-script}.js&quot;.
 This will also load any dependencies found in the
-'dependencies' array.
-Scripts will then be localized using the same
+'dependencies' array.</p>
+<p>Scripts will then be localized using the same
 &quot;cb_{$unique_name_for_script}&quot; identifier, which will
 become the global name that is usable within the file.
 All API endpoints are localized as:
-&quot;{$endpoint}_{$name_of_api_component}&quot;.
-So, for example: &quot;cb_participation.get_participation&quot;
-will return the API endpoint for getting participation
-entries; &quot;cb_core.new_transactions&quot; will return the
-API endpoint for creating a new transaction, and so forth.
-To access the API key, use: &quot;{$unique_name_for_script}.api_key</p>
+&quot;{$endpoint}_{$name_of_api_component}&quot;.</p>
+<p>So, for example:
+- &quot;cb_participation.get_participation&quot; will return the
+API endpoint for getting participation entries.
+- &quot;cb_core.new_transactions&quot; will return the API endpoint
+for creating a new transaction.</p>
+<p>To access the API key, use &quot;{$unique_name_for_script}.api_key&quot;
+in the {$unique-name-for-script}.js file.</p>
 </section>
 
     
@@ -2286,7 +2580,7 @@ To access the API key, use: &quot;{$unique_name_for_script}.api_key</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">284</span>
 
     </aside>
 
@@ -2358,7 +2652,7 @@ they ended when the current cycles started.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">317</span>
+    <span class="phpdocumentor-element-found-in__line">323</span>
 
     </aside>
 
@@ -2433,7 +2727,7 @@ Default MySQL - 'Y-m-d H:i:s'</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">429</span>
+    <span class="phpdocumentor-element-found-in__line">435</span>
 
     </aside>
 
@@ -2484,7 +2778,7 @@ associative array.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">452</span>
+    <span class="phpdocumentor-element-found-in__line">458</span>
 
     </aside>
 
@@ -2537,7 +2831,7 @@ the sender or recipient isn't on the platform anymore.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">486</span>
+    <span class="phpdocumentor-element-found-in__line">492</span>
 
     </aside>
 
@@ -2711,18 +3005,18 @@ Default current user_id.</p>
                     <ul class="phpdocumentor-list -clean">
                                                     <li><a href="namespaces/default.html#function_cb_admin_components_options">cb_admin_components_options()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_admin_reset_date_options">cb_admin_reset_date_options()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_add_admin_caps">cb_core_add_admin_caps()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_components_settings">cb_core_admin_components_settings()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_admin_get_active_components_from_submitted_settings">cb_core_admin_get_active_components_from_submitted_settings()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_is_user_site_admin">cb_core_admin_is_user_site_admin()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_setting_general_register_fields">cb_core_admin_setting_general_register_fields()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_settings_handler">cb_core_admin_settings_handler()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_current_date">cb_core_current_date()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_current_user_can">cb_core_current_user_can()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_enqueue_scripts">cb_core_enqueue_scripts()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_generate_uuid">cb_core_generate_uuid()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_get_active_components">cb_core_get_active_components()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_get_api_key">cb_core_get_api_key()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_get_missing_users">cb_core_get_missing_users()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_get_panels">cb_core_get_panels()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_get_roles">cb_core_get_roles()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_get_user_display_name">cb_core_get_user_display_name()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_install">cb_core_install()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_install_contests">cb_core_install_contests()</a></li>
@@ -2731,27 +3025,27 @@ Default current user_id.</p>
                                                     <li><a href="namespaces/default.html#function_cb_core_install_request_items">cb_core_install_request_items()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_install_requests">cb_core_install_requests()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_install_transactions">cb_core_install_transactions()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_is_component_admin">cb_core_is_component_admin()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_notifications_init">cb_core_notifications_init()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_prepare_install">cb_core_prepare_install()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_secrets_manager_init">cb_core_secrets_manager_init()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_set_reset_date_globals">cb_core_set_reset_date_globals()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_set_role_globals">cb_core_set_role_globals()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_set_uri_globals">cb_core_set_uri_globals()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_update_api_key">cb_core_update_api_key()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_validate_api_key">cb_core_validate_api_key()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_create_executive">cb_create_executive()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_create_leadership">cb_create_leadership()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_create_participation_admin">cb_create_participation_admin()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_create_requests_fulfillment">cb_create_requests_fulfillment()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_get_active_templates">cb_get_active_templates()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_get_delete_data">cb_get_delete_data()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_is_confetti_bits_component">cb_is_confetti_bits_component()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_is_current_component">cb_is_current_component()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_is_multi_array">cb_is_multi_array()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_is_user">cb_is_user()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_is_user_admin">cb_is_user_admin()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_is_user_confetti_bits">cb_is_user_confetti_bits()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_is_user_events_admin">cb_is_user_events_admin()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_is_user_executive">cb_is_user_executive()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_is_user_participation_admin">cb_is_user_participation_admin()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_is_user_requests_fulfillment">cb_is_user_requests_fulfillment()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_is_user_requests_admin">cb_is_user_requests_admin()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_is_user_site_admin">cb_is_user_site_admin()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_member_get_template_part">cb_member_get_template_part()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_member_locate_template_part">cb_member_locate_template_part()</a></li>
                                                     <li><a href="namespaces/default.html#function_editor_manage_users">editor_manage_users()</a></li>
                                                     <li><a href="namespaces/default.html#function_get_rid_of_the_menus">get_rid_of_the_menus()</a></li>
                                             </ul>

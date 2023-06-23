@@ -434,8 +434,7 @@ if ( ! class_exists( 'CB_Component' ) ) :
 		/**
 		 * Set up the actions.
 		 *
-		 * @package Confetti_Bits
-		 * @subpackage Core
+		 * @package ConfettiBits\Core
 		 * @since 1.0.0
 		 */
 		public function setup_actions() {

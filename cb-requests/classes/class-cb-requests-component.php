@@ -22,7 +22,6 @@ class CB_Requests_Component extends CB_Component {
 				'adminbar_myaccount_order' => 50,
 			)
 		);
-
 	}
 
 	public function includes( $includes = array() ) {

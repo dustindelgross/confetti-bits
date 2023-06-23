@@ -1,7 +1,4 @@
 <?php 
-// Exit if accessed directly
-defined('ABSPATH') || exit;
-
 /** 
  * CB Core Template Functions
  * 
@@ -9,22 +6,25 @@ defined('ABSPATH') || exit;
  * This includes locating and loading templates at specified locations,
  * typically on the confetti-bits dashboard page.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
+ * @subpackage Templates
  * @since 1.0.0
  */
+// Exit if accessed directly
+defined('ABSPATH') || exit;
 
 /**
  * CB Member Locate Template Part
  * 
  * Attempts to locate the specified template in the TeamCTG 
- * Child Theme, located at '/members/single/confetti-bits-hub/cb-{$template}.php'.
+ * Child Theme, located at '/cb-template-parts/cb-{$template}.php'.
  * 
  * @param string $template The template to look for.
  * 
  * @return string The template, if found.
  * 
  * @package ConfettiBits\Core
+ * @subpackage Templates
  * @since 1.0.0
  */
 function cb_member_locate_template_part ( $template = '' ) {
@@ -57,6 +57,7 @@ function cb_member_locate_template_part ( $template = '' ) {
  * @return An array of the active templates.
  * 
  * @package ConfettiBits\Core
+ * @subpackage Templates
  * @since 1.0.0
  */
 function cb_member_get_template_part( $template = '' ) {
@@ -83,65 +84,30 @@ function cb_member_get_template_part( $template = '' ) {
  * @return An array of the active templates.
  * 
  * @package ConfettiBits\Core
+ * @subpackage Templates
  * @since 1.0.0
  */
 function cb_get_active_templates() {
 
 	$debug = isset( $_GET['cb_debug'] ) ? $_GET['cb_debug'] : false;
-	$templates = array();
-
-	switch ( true ) {
-
-		case ( cb_is_confetti_bits_component() && cb_is_user_admin() && ! cb_is_user_site_admin() && ! cb_is_user_executive()  && ! cb_is_user_participation_admin() ) :
-			$templates = array (
-				'Dashboard Header'	=> 'dashboard-header',
-				'Dashboard'			=> 'dashboard',
-				'Participation'		=> 'participation',
-				'My Transactions'	=> 'transactions',
-			);
-			break;
-
-		case ( cb_is_confetti_bits_component() && cb_is_user_site_admin() ) :
-			$templates = array (
-				'Dashboard Header'		=> 'dashboard-header',
-				'Dashboard'				=> 'dashboard',
-				'Culture Admin'			=> 'participation-admin',
-				'Participation'			=> 'participation',
-				'My Transactions'	=> 'transactions',
-				"Requests"			=> 'requests',
-				"Requests Admin"	=> 'requests-admin',
-			);
-			break;
-
-		case ( cb_is_confetti_bits_component() && cb_is_user_executive() && ! cb_is_user_site_admin() ) :
-			$templates = array (
-				'Dashboard Header'	=> 'dashboard-header',
-				'Dashboard'			=> 'dashboard',
-				'Culture Admin'		=> 'participation-admin',
-				'Participation'		=> 'participation',
-				'My Transactions'	=> 'transactions',
-			);
-			break;
-
-		case ( cb_is_confetti_bits_component() && cb_is_user_participation_admin() && ! cb_is_user_site_admin() && ! cb_is_user_executive() ) :
-			$templates = array (
-				'Dashboard Header'	=> 'dashboard-header',
-				'Dashboard'			=> 'dashboard',
-				'Culture Admin'		=> 'participation-admin',
-				'Participation'		=> 'participation',
-				'My Transactions'	=> 'transactions',
-			);
-			break;
-
-		case ( cb_is_confetti_bits_component() ) :
-		default :
-			$templates = array(
-				'Dashboard Header'	=> 'dashboard-header',
-				'Dashboard'			=> 'dashboard',
-				'Participation'		=> 'participation',
-				'My Transactions'	=> 'transactions',
-			);
-			break;
+	$templates = [
+		'Dashboard Header'	=> 'dashboard-header',
+		'Dashboard'			=> 'dashboard',
+		'My Participation'	=> 'participation',
+		'My Transactions'	=> 'transactions',
+		'My Requests'		=> 'requests',
+	];
+	
+	if ( cb_is_user_participation_admin() ) {
+		$templates['Participation Admin'] = 'participation-admin';
+	}
+	
+	if ( cb_is_user_requests_admin() ) {
+		$templates['Requests Admin'] = 'requests-admin';
+	}
+	
+	if ( cb_is_user_events_admin() ) {
+		
 	}
 
 	if ( 1 == $debug ) {
@@ -150,6 +116,7 @@ function cb_get_active_templates() {
 
 	if ( cb_is_user_site_admin() ) {
 		$templates['Events'] = 'events';
+//		$templates['Events Admin'] = 'events-admin';
 	}
 
 	return $templates;
@@ -167,7 +134,7 @@ function cb_get_active_templates() {
  * @since 1.0.0
  */
 function cb_member_template_part() {
-	
+
 	$templates = array_values( cb_get_active_templates() );
 
 	foreach ( $templates as $template ) {
@@ -184,8 +151,8 @@ function cb_member_template_part() {
  * as well as to the activity feed, if they are a Confetti Captain.
  * 
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
+ * @subpackage Templates
  * @since 1.2.0
  */
 function cb_core_add_confetti_captain_badges()
@@ -208,8 +175,8 @@ add_action('wp_enqueue_scripts', 'cb_core_add_confetti_captain_badges');
  * Adds our custom 'confetti-captain' class to the BuddyBoss user avatar
  * so that we can add a cute little sparkler icon using JS.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
+ * @subpackage Templates
  * @since 1.2.0
  */
 function cb_core_confetti_captain_class($class, $item_id)
@@ -230,8 +197,8 @@ add_filter('bp_core_avatar_class', 'cb_core_confetti_captain_class', 10, 2);
  * who are designated as "Confetti Captains", which meand they are
  * part of the Confetti Captains group.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
+ * @subpackage Templates
  * @since 1.2.0
  */
 function cb_core_confetti_captain_profile_badge()
@@ -246,4 +213,3 @@ function cb_core_confetti_captain_profile_badge()
 	echo $badge;
 }
 add_filter('bp_before_member_in_header_meta', 'cb_core_confetti_captain_profile_badge');
-

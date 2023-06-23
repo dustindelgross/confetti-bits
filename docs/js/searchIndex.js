@@ -176,44 +176,39 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html#function_cb_admin_components_options"
         },                {
-            "fqsen": "\\cb_create_executive\u0028\u0029",
-            "name": "cb_create_executive",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_create_executive"
+            "fqsen": "\\cb_core_set_role_globals\u0028\u0029",
+            "name": "cb_core_set_role_globals",
+            "summary": "Sets\u0020some\u0020useful\u0020globals\u0020for\u0020specialized\u0020roles\u0020for\u0020later\u0020use.",
+            "url": "namespaces/default.html#function_cb_core_set_role_globals"
         },                {
-            "fqsen": "\\cb_create_leadership\u0028\u0029",
-            "name": "cb_create_leadership",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_create_leadership"
+            "fqsen": "\\cb_core_add_admin_caps\u0028\u0029",
+            "name": "cb_core_add_admin_caps",
+            "summary": "Grants\u0020all\u0020capabilities\u0020to\u0020administrator\u0020users.",
+            "url": "namespaces/default.html#function_cb_core_add_admin_caps"
         },                {
-            "fqsen": "\\cb_create_participation_admin\u0028\u0029",
-            "name": "cb_create_participation_admin",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_create_participation_admin"
+            "fqsen": "\\cb_core_current_user_can\u0028\u0029",
+            "name": "cb_core_current_user_can",
+            "summary": "An\u0020alias\u0020for\u0020current_user_can\u0028\u0029",
+            "url": "namespaces/default.html#function_cb_core_current_user_can"
         },                {
-            "fqsen": "\\cb_create_requests_fulfillment\u0028\u0029",
-            "name": "cb_create_requests_fulfillment",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_create_requests_fulfillment"
+            "fqsen": "\\cb_core_is_component_admin\u0028\u0029",
+            "name": "cb_core_is_component_admin",
+            "summary": "Checks\u0020whether\u0020a\u0020user\u0020is\u0020an\u0020admin\u0020of\u0020the\u0020given\u0020component.",
+            "url": "namespaces/default.html#function_cb_core_is_component_admin"
         },                {
             "fqsen": "\\cb_is_user_admin\u0028\u0029",
             "name": "cb_is_user_admin",
-            "summary": "",
+            "summary": "Checks\u0020whether\u0020user\u0020has\u0020certain\u0020administrative\u0020privileges.",
             "url": "namespaces/default.html#function_cb_is_user_admin"
         },                {
             "fqsen": "\\cb_is_user_executive\u0028\u0029",
             "name": "cb_is_user_executive",
-            "summary": "",
+            "summary": "Checks\u0020to\u0020see\u0020if\u0020the\u0020user\u0020is\u0020an\u0020executive\u0020user.",
             "url": "namespaces/default.html#function_cb_is_user_executive"
-        },                {
-            "fqsen": "\\cb_is_user_requests_fulfillment\u0028\u0029",
-            "name": "cb_is_user_requests_fulfillment",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_is_user_requests_fulfillment"
         },                {
             "fqsen": "\\cb_is_user_site_admin\u0028\u0029",
             "name": "cb_is_user_site_admin",
-            "summary": "CB\u0020Is\u0020User\u0020Site\u0020Admin",
+            "summary": "Checks\u0020if\u0020the\u0020user\u0020has\u0020site\u0020admin\u0020privileges.",
             "url": "namespaces/default.html#function_cb_is_user_site_admin"
         },                {
             "fqsen": "\\cb_core_admin_is_user_site_admin\u0028\u0029",
@@ -223,28 +218,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_is_user_participation_admin\u0028\u0029",
             "name": "cb_is_user_participation_admin",
-            "summary": "CB\u0020Is\u0020User\u0020Participation\u0020Admin",
+            "summary": "Checks\u0020to\u0020see\u0020if\u0020the\u0020user\u0020is\u0020a\u0020participation\u0020admin.",
             "url": "namespaces/default.html#function_cb_is_user_participation_admin"
+        },                {
+            "fqsen": "\\cb_is_user_requests_admin\u0028\u0029",
+            "name": "cb_is_user_requests_admin",
+            "summary": "Checks\u0020to\u0020see\u0020if\u0020the\u0020user\u0020is\u0020a\u0020requests\u0020admin.",
+            "url": "namespaces/default.html#function_cb_is_user_requests_admin"
         },                {
             "fqsen": "\\cb_is_user_events_admin\u0028\u0029",
             "name": "cb_is_user_events_admin",
-            "summary": "",
+            "summary": "Checks\u0020to\u0020see\u0020if\u0020the\u0020user\u0020is\u0020an\u0020events\u0020admin.",
             "url": "namespaces/default.html#function_cb_is_user_events_admin"
-        },                {
-            "fqsen": "\\cb_core_admin_get_active_components_from_submitted_settings\u0028\u0029",
-            "name": "cb_core_admin_get_active_components_from_submitted_settings",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_core_admin_get_active_components_from_submitted_settings"
-        },                {
-            "fqsen": "\\cb_core_get_panels\u0028\u0029",
-            "name": "cb_core_get_panels",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_core_get_panels"
-        },                {
-            "fqsen": "\\cb_core_get_roles\u0028\u0029",
-            "name": "cb_core_get_roles",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_core_get_roles"
         },                {
             "fqsen": "\\editor_manage_users\u0028\u0029",
             "name": "editor_manage_users",
@@ -253,7 +238,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\get_rid_of_the_menus\u0028\u0029",
             "name": "get_rid_of_the_menus",
-            "summary": "",
+            "summary": "Remove\u0020privileged\u0020menus\u0020from\u0020the\u0020admin\u0020area.",
             "url": "namespaces/default.html#function_get_rid_of_the_menus"
         },                {
             "fqsen": "\\TeamCTG_User_Caps",
@@ -276,45 +261,35 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/TeamCTG-User-Caps.html#method_map_meta_cap"
         },                {
-            "fqsen": "\\cb_core_admin_get_components\u0028\u0029",
-            "name": "cb_core_admin_get_components",
-            "summary": "Confetti\u0020Bits\u0020Core\u0020Components",
-            "url": "namespaces/default.html#function_cb_core_admin_get_components"
-        },                {
             "fqsen": "\\cb_core_set_uri_globals\u0028\u0029",
             "name": "cb_core_set_uri_globals",
-            "summary": "",
+            "summary": "Sets\u0020a\u0020global\u0020based\u0020on\u0020the\u0020current\u0020URI.",
             "url": "namespaces/default.html#function_cb_core_set_uri_globals"
-        },                {
-            "fqsen": "\\cb_core_get_components\u0028\u0029",
-            "name": "cb_core_get_components",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_core_get_components"
-        },                {
-            "fqsen": "\\cb_current_component\u0028\u0029",
-            "name": "cb_current_component",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_current_component"
-        },                {
-            "fqsen": "\\cb_is_active\u0028\u0029",
-            "name": "cb_is_active",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_is_active"
         },                {
             "fqsen": "\\cb_is_current_component\u0028\u0029",
             "name": "cb_is_current_component",
-            "summary": "",
+            "summary": "Does\u0020an\u0020entire\u0020song\u0020and\u0020dance\u0020to\u0020see\u0020if\u0020this\u0020is\u0020the\u0020component\u0020you\u0020want.",
             "url": "namespaces/default.html#function_cb_is_current_component"
         },                {
             "fqsen": "\\cb_is_confetti_bits_component\u0028\u0029",
             "name": "cb_is_confetti_bits_component",
-            "summary": "",
+            "summary": "Ask\u0020the\u0020wizard\u0020if\u0020we\u0020could\u0020have\u0020some\u0020porridge.",
             "url": "namespaces/default.html#function_cb_is_confetti_bits_component"
+        },                {
+            "fqsen": "\\cb_is_user\u0028\u0029",
+            "name": "cb_is_user",
+            "summary": "Checks\u0020whether\u0020there\u0020is\u0020a\u0020currently\u0020logged\u002Din\u0020user.",
+            "url": "namespaces/default.html#function_cb_is_user"
         },                {
             "fqsen": "\\cb_is_user_confetti_bits\u0028\u0029",
             "name": "cb_is_user_confetti_bits",
-            "summary": "",
+            "summary": "Checks\u0020to\u0020see\u0020if\u0020we\u0027re\u0020in\u0020the\u0020land\u0020of\u0020wonder.",
             "url": "namespaces/default.html#function_cb_is_user_confetti_bits"
+        },                {
+            "fqsen": "\\cb_core_get_active_components\u0028\u0029",
+            "name": "cb_core_get_active_components",
+            "summary": "Gives\u0020us\u0020an\u0020array\u0020of\u0020all\u0020active\u0020components.",
+            "url": "namespaces/default.html#function_cb_core_get_active_components"
         },                {
             "fqsen": "\\cb_admin_enqueue_scripts\u0028\u0029",
             "name": "cb_admin_enqueue_scripts",
@@ -795,6 +770,91 @@ Search.appendIndex(
             "name": "column",
             "summary": "The\u0020column\u0020to\u0020query\u0020against.\u0020Can\u0020be\u0020changed\u0020via\u0020the\u0020query\u0020arguments.",
             "url": "classes/CB-Core-Date-Query.html#property_column"
+        },                {
+            "fqsen": "\\CB_Core_Role_Manager",
+            "name": "CB_Core_Role_Manager",
+            "summary": "CB\u0020Core\u0020Roles\u0020Component",
+            "url": "classes/CB-Core-Role-Manager.html"
+        },                {
+            "fqsen": "\\CB_Core_Role_Manager\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Construct\u0020the\u0020role\u0020manager.",
+            "url": "classes/CB-Core-Role-Manager.html#method___construct"
+        },                {
+            "fqsen": "\\CB_Core_Role_Manager\u003A\u003A__get\u0028\u0029",
+            "name": "__get",
+            "summary": "Magic\u0020method\u0020for\u0020getting\u0020ConfettiBits\u0020variables.",
+            "url": "classes/CB-Core-Role-Manager.html#method___get"
+        },                {
+            "fqsen": "\\CB_Core_Role_Manager\u003A\u003A__set\u0028\u0029",
+            "name": "__set",
+            "summary": "Magic\u0020method\u0020for\u0020setting\u0020ConfettiBits\u0020variables.",
+            "url": "classes/CB-Core-Role-Manager.html#method___set"
+        },                {
+            "fqsen": "\\CB_Core_Role_Manager\u003A\u003Asetup_actions\u0028\u0029",
+            "name": "setup_actions",
+            "summary": "Adds\u0020an\u0020action\u0020to\u0020setup\u0020global\u0020values\u0020for\u0020roles.",
+            "url": "classes/CB-Core-Role-Manager.html#method_setup_actions"
+        },                {
+            "fqsen": "\\CB_Core_Role_Manager\u003A\u003Asetup_globals\u0028\u0029",
+            "name": "setup_globals",
+            "summary": "Sets\u0020up\u0020global\u0020values\u0020based\u0020on\u0020provided\u0020data.",
+            "url": "classes/CB-Core-Role-Manager.html#method_setup_globals"
+        },                {
+            "fqsen": "\\CB_Core_Role_Manager\u003A\u003A\u0024data",
+            "name": "data",
+            "summary": "It\u0027s\u0020a\u0020secret.",
+            "url": "classes/CB-Core-Role-Manager.html#property_data"
+        },                {
+            "fqsen": "\\CB_Core_Role",
+            "name": "CB_Core_Role",
+            "summary": "CB\u0020Core\u0020Roles\u0020Component",
+            "url": "classes/CB-Core-Role.html"
+        },                {
+            "fqsen": "\\CB_Core_Role\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Construct\u0020a\u0020role.",
+            "url": "classes/CB-Core-Role.html#method___construct"
+        },                {
+            "fqsen": "\\CB_Core_Role\u003A\u003Asetup_actions\u0028\u0029",
+            "name": "setup_actions",
+            "summary": "Adds\u0020an\u0020action\u0020to\u0020setup\u0020global\u0020values\u0020for\u0020roles.",
+            "url": "classes/CB-Core-Role.html#method_setup_actions"
+        },                {
+            "fqsen": "\\CB_Core_Role\u003A\u003Asetup_globals\u0028\u0029",
+            "name": "setup_globals",
+            "summary": "Maybe\u0020setup\u0020globals\u0020here\u003F",
+            "url": "classes/CB-Core-Role.html#method_setup_globals"
+        },                {
+            "fqsen": "\\CB_Core_Role\u003A\u003Acheck_for_updates\u0028\u0029",
+            "name": "check_for_updates",
+            "summary": "Checks\u0020against\u0020WP\u0020roles\u0020to\u0020see\u0020if\u0020they\u0020need\u0020to\u0020be\u0020changed.",
+            "url": "classes/CB-Core-Role.html#method_check_for_updates"
+        },                {
+            "fqsen": "\\CB_Core_Role\u003A\u003Aadd_caps\u0028\u0029",
+            "name": "add_caps",
+            "summary": "Adds\u0020the\u0020given\u0020capabilities\u0020to\u0020the\u0020WP\u0020role.",
+            "url": "classes/CB-Core-Role.html#method_add_caps"
+        },                {
+            "fqsen": "\\CB_Core_Role\u003A\u003Aremove_caps\u0028\u0029",
+            "name": "remove_caps",
+            "summary": "Removes\u0020the\u0020given\u0020capabilities\u0020from\u0020the\u0020WP\u0020role.",
+            "url": "classes/CB-Core-Role.html#method_remove_caps"
+        },                {
+            "fqsen": "\\CB_Core_Role\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "The\u0020role\u0027s\u0020id.",
+            "url": "classes/CB-Core-Role.html#property_id"
+        },                {
+            "fqsen": "\\CB_Core_Role\u003A\u003A\u0024label",
+            "name": "label",
+            "summary": "The\u0020role\u0027s\u0020label.",
+            "url": "classes/CB-Core-Role.html#property_label"
+        },                {
+            "fqsen": "\\CB_Core_Role\u003A\u003A\u0024caps",
+            "name": "caps",
+            "summary": "The\u0020capabilities\u0020of\u0020the\u0020role.",
+            "url": "classes/CB-Core-Role.html#property_caps"
         },                {
             "fqsen": "\\CB_Core",
             "name": "CB_Core",
@@ -2533,17 +2593,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Confetti_Bits\u003A\u003A__get\u0028\u0029",
             "name": "__get",
-            "summary": "Magic\u0020method\u0020for\u0020getting\u0020Confetti_Bits\u0020variables.",
+            "summary": "Magic\u0020method\u0020for\u0020getting\u0020ConfettiBits\u0020variables.",
             "url": "classes/Confetti-Bits.html#method___get"
         },                {
             "fqsen": "\\Confetti_Bits\u003A\u003A__set\u0028\u0029",
             "name": "__set",
-            "summary": "Magic\u0020method\u0020for\u0020setting\u0020Confetti_Bits\u0020variables.",
+            "summary": "Magic\u0020method\u0020for\u0020setting\u0020ConfettiBits\u0020variables.",
             "url": "classes/Confetti-Bits.html#method___set"
         },                {
             "fqsen": "\\Confetti_Bits\u003A\u003A__unset\u0028\u0029",
             "name": "__unset",
-            "summary": "Magic\u0020method\u0020for\u0020unsetting\u0020Confetti_Bits\u0020variables.",
+            "summary": "Magic\u0020method\u0020for\u0020unsetting\u0020ConfettiBits\u0020variables.",
             "url": "classes/Confetti-Bits.html#method___unset"
         },                {
             "fqsen": "\\Confetti_Bits\u003A\u003A__clone\u0028\u0029",

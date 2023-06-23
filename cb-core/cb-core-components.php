@@ -8,7 +8,7 @@
  * and determining access levels for certain features within the app.
  */
 
-
+/*
 function cb_core_admin_get_components( $type = 'all' ) {
 
 	$components = cb_core_get_components( $type );
@@ -16,14 +16,30 @@ function cb_core_admin_get_components( $type = 'all' ) {
 	return apply_filters( 'cb_core_admin_get_components', $components, $type );
 
 }
+*/
 
-
+/**
+ * Sets a global based on the current URI.
+ * 
+ * The goal here at one point was to have each component
+ * dynamically registered through the URI and accessible 
+ * via a stacking path, like this: 
+ * 
+ * https://{{domain}}/{{component}}/{{action}}/{{item}}
+ * 
+ * This is no easy feat. It would also require some 
+ * significant shenanigans on our end to make that happen.
+ * So we've opted to using REST API endpoints, and just
+ * checking whether $cb->current_component exists, and
+ * is indeed === 'confetti-bits'.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
 function cb_core_set_uri_globals() {
 
 	$cb = Confetti_Bits();
-	$user = wp_get_current_user();
 
-	// Remove GET params
 	$path = strtok( esc_url( $_SERVER["REQUEST_URI"] ), "?" );
 	$parts = explode( "/", $path );
 	foreach ( (array) $parts as $key => $uri_chunk ) {
@@ -31,12 +47,15 @@ function cb_core_set_uri_globals() {
 			unset( $parts[$key] );
 		}
 	}
+
 	$parts = array_merge( array(), $parts );
-	$cb->current_component = isset( $parts[0] ) ? $parts[0] : "";
+	if ( isset($parts[0] ) ) {
+		$cb->current_component = $parts[0] === 'confetti-bits' ? $parts[0] : "";	
+	}
 
 }
 
-
+/*
 function cb_core_get_components( $type = 'all' ) {
 
 	$required_components = array(
@@ -96,6 +115,7 @@ function cb_current_component() {
 }
 
 function cb_is_active( $component = '' ) {
+
 	$retval = false;
 
 	if ( empty( $component ) ) {
@@ -113,11 +133,27 @@ function cb_is_active( $component = '' ) {
 
 	return apply_filters( 'cb_is_active', $retval, $component );
 }
+*/
 
-
+/**
+ * Does an entire song and dance to see if this is the component you want.
+ * 
+ * 1. Checks to see if the current component is the same as the supplied
+ * component. 
+ * 2. Checks to see if the supplied component has a slug that matches.
+ * 3. Checks to see if the supplied component is in the array of active 
+ * components.
+ * 4. Checks one last time to see if any of the active components has a
+ * slug that matches the supplied component.
+ * 
+ * @param string $component The component to check for.
+ * 
+ * @return bool True if it's one of ours, false in any other scenario.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
 function cb_is_current_component( $component = '' ) {
-
-	$is_current_component = false;
 
 	if ( empty( $component ) ) {
 		return false;
@@ -125,47 +161,85 @@ function cb_is_current_component( $component = '' ) {
 
 	$cb = Confetti_Bits();
 
-	if ( ! empty( $cb->current_component ) ) {
-
-		if ( $cb->current_component == $component ) {
-			$is_current_component = true;
-		} elseif ( isset( $cb->{$component}->root_slug ) && $cb->{$component}->root_slug == $cb->current_component ) {
-			$is_current_component = true;
-		} elseif ( isset( $cb->{$component}->slug ) && $cb->{$component}->slug == $cb->current_component ) {
-			$is_current_component = true;
-		} elseif ( $key = array_search( $component, $cb->active_components ) ) {
-			if ( strstr( $cb->current_component, $key ) ) {
-				$is_current_component = true;
-			}
-
-		} else {
-
-			foreach ( $cb->active_components as $id ) {
-
-				if ( empty( $cb->{$id}->slug ) || $cb->{$id}->slug != $cb->current_component ) {
-					continue;
-				}
-
-				if ( $id == $component ) {
-					$is_current_component = true;
-					break;
-				}
-			}
-		}
+	if ( empty( $cb->current_component ) ) {
+		return false;
 	}
 
-	return apply_filters( 'cb_is_current_component', $is_current_component, $component );
+	if ( $cb->current_component == $component ) {
+		return true;
+	} 
+
+	if ( isset( $cb->{$component}->slug ) && $cb->{$component}->slug == $cb->current_component ) {
+		return true;
+	}
+
+	if ( $key = array_search( $component, $cb->active_components ) ) {
+		if ( strstr( $cb->current_component, $key ) ) {
+			return true;
+		}
+
+	}
+
+	foreach ( $cb->active_components as $id ) {
+
+		if ( empty( $cb->{$id}->slug ) || $cb->{$id}->slug != $cb->current_component ) {
+			continue;
+		}
+
+		if ( $id == $component ) {
+			return true;
+		}
+	}
+	
+	return false;
 
 }
 
+/**
+ * Ask the wizard if we could have some porridge.
+ * 
+ * @return bool Whether we may have some porridge.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
 function cb_is_confetti_bits_component() {
-
-	return (bool) cb_is_current_component( 'confetti-bits' );
-
+	return cb_is_current_component( 'confetti-bits' );
 }
 
+/**
+ * Checks whether there is a currently logged-in user.
+ * 
+ * @see is_user_logged_in()
+ * @link https://developer.wordpress.org/reference/functions/is_user_logged_in/
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_is_user() {
+	return is_user_logged_in();
+}
+
+/**
+ * Checks to see if we're in the land of wonder.
+ * 
+ * @return bool Whether we're in the land of wonder.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
 function cb_is_user_confetti_bits() {
+	return (bool) ( cb_is_user() && cb_is_confetti_bits_component() );
+}
 
-	return (bool) ( bp_is_user() && cb_is_confetti_bits_component() );
-
+/**
+ * Gives us an array of all active components.
+ * 
+ * @return array Active components.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_get_active_components() {
+	return Confetti_Bits()->active_components;
 }

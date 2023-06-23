@@ -1,12 +1,12 @@
 jQuery( document ).ready( ( $ ) => {
-
+/*
 	const $hubNav = $('.cb-hub-nav-container');
 	// const $adminAmountOverride = $('#cb_participation_amount_override');
 	const $eventTypeFilter = $('#cb_participation_event_type_filter');
-	/*
+
 	const $cbParticipationAll = $('a[href=#cb-participation-all]');
 	const $cbParticipationAllPanel = $('#cb-participation-all');
-	*/
+
 	const cbParticipationPageNext = $('.cb-participation-pagination-next');
 	const cbParticipationPageLast = $('.cb-participation-pagination-last');
 	const cbParticipationPagePrev = $('.cb-participation-pagination-previous');
@@ -26,7 +26,7 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {string} eventType
 	 * @returns {int}
 	 *
-	 */
+
 	const cbGetTotalEntries = async (status = '', eventType = '') => {
 
 		if ('string' !== typeof (status)) {
@@ -60,7 +60,7 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {int} page
 	 * @param {int} last
 	 * @returns {void}
-	 */
+
 	function cbCreatePaginationDigits(page, last) {
 
 		let k;
@@ -90,7 +90,7 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {int} last
 	 * @param {array} currentButtons
 	 * @returns {void}
-	 */
+
 	function cbRefactorPaginationDigits(page = 1, last = 0, currentButtons = []) {
 
 		let k = (page >= last - 2) && ((last - 2) > 0) ? last - 2 : page;
@@ -113,7 +113,7 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {int} page
 	 * @param {int} last
 	 * @returns {void}
-	 */
+
 	function cbSetupPaginationDigits(page = 1, last = 0) {
 
 		let currentButtons = $('.cb-participation-pagination-numbered');
@@ -145,7 +145,7 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {int} next
 	 * @param {int} last
 	 * @returns {void}
-	 */
+
 	function cbSetupPaginationEnds(page = 1, prev = 0, next = 2, last = 0) {
 
 		cbParticipationPagePrev.attr('data-cb-participation-page', prev);
@@ -165,7 +165,7 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {string} status
 	 * @param {string} eventType
 	 * @returns {void}
-	 */
+
 	let cbPagination = async (page, status, eventType) => {
 
 		await cbGetTotalEntries(status, eventType);
@@ -194,7 +194,7 @@ jQuery( document ).ready( ( $ ) => {
 	 *
 	 * @param {string} date
 	 * @returns {string}
-	 */
+
 	function cbFormatDate(date) {
 
 		date = new Date(date);
@@ -220,7 +220,7 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {string} response
 	 * @param {object} activePanel
 	 * @returns {void}
-	 */
+
 	function cbCreateEmptyParticipationNotice(response, activePanel) {
 
 		entryTable.children().remove();
@@ -244,7 +244,7 @@ jQuery( document ).ready( ( $ ) => {
 	 * Format Header Row
 	 *
 	 * @returns {void}
-	 */
+
 	function formatHeaderRow() {
 		let headers = ['Status', 'Applicant', 'Event Date', 'Modified', 'Type', 'Notes'];
 		let headerRow = $('<tr>');
@@ -270,7 +270,7 @@ jQuery( document ).ready( ( $ ) => {
 	 * @param {object} participation
 	 * @returns {void}
 	 * @async
-	 */
+
 	async function cbCreateParticipationEntry(participation) {
 
 		let participationApplicantId = parseInt(participation.applicant_id);
@@ -292,7 +292,7 @@ jQuery( document ).ready( ( $ ) => {
 		let $entryEventNoteContainer = $($entryDataContainer).clone();
 		let $entryEventTypeContainer = $($entryDataContainer).clone();
 		let $viewAttachmentsDataContainer = $entryDataContainer.clone();
-		/* let $entryEditDataContainer = $($entryDataContainer).clone(); 
+		let $entryEditDataContainer = $($entryDataContainer).clone(); 
 		let $viewAttachmentsContainer = $(
 			"<div>",
 			{ class: `cb-participation-view-attachments-container
@@ -311,7 +311,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 
 
 		let mediaFiles = participation.media_filepath.split(', ');
-		*/
+
 		let $entryStatus = $('<p>', {
 			class: `cb-participation-entry-data cb-participation-status-${participation.status}`,
 			text: participation.status.charAt(0).toUpperCase() + participation.status.slice(1)
@@ -335,7 +335,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			class: 'cb-participation-entry-data cb-participation-entry-event-note',
 			text: `${eventNote}`
 		});
-		/*
+
 		let $viewAttachmentsLink = $("<a class='cb-participation-view-attachments-link' href='#cb-participation-file-viewer-wrapper'>View Attachments</a>");
 
 		for (let file of mediaFiles) {
@@ -357,7 +357,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			'data-cb-transaction-id': transactionId,
 			text: "Edit"
 		});
-*/
+
 		$entryStatusContainer.addClass("cb-participation-entry-status");
 
 		//		$entryCheckboxContainer.append($entryCheckbox);
@@ -368,11 +368,11 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		$entryModifiedDateContainer.append($entryModifiedDate);
 		$entryEventTypeContainer.append($entryEventType);
 		$entryEventNoteContainer.append($entryEventNote);
-		/*
+
 		$viewAttachmentsContainer.append($viewAttachmentsLink);
 		$viewAttachmentsDataContainer.append($viewAttachmentsContainer);
 		$entryEditDataContainer.append($entryEditButton);
-		*/
+
 		//		$entryModule.append($entryCheckboxContainer);
 		$entryModule.append($entryStatusContainer);
 		$entryModule.append($entryApplicantNameContainer);
@@ -383,7 +383,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		/*
 		$entryModule.append($viewAttachmentsDataContainer);
 		$entryModule.append($entryEditDataContainer);
-		*/
+
 
 		entryTable.append($entryModule);
 
@@ -398,7 +398,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @param {string} status
 	 * @param {string} eventFilter
 	 * @returns {void}
-	 */
+
 	function refreshTable(page, status, eventFilter) {
 
 		let activePanel = $('.cb-participation-nav-item.active');
@@ -441,7 +441,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @async
 	 * @since 1.0.0
 	 *
-	 */
+
 	async function cbGetUserData(applicantId) {
 		let retval = {
 			username: '',
@@ -468,7 +468,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 *
 	 * @param {object} el
 	 * @since 1.0.0
-	 */
+
 	function handleNavigation(el) {
 		let $this = $(el);
 		//		let activePanel = $($('.cb-participation-nav-item.active').find('a').attr('href'));
@@ -486,7 +486,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		refreshTable(1, status, eventFilter);
 
 	}
-	/*
+	
 	function handleRowCheckboxChange() {
 
 		const headerCheckbox = $('#cb_participation_admin_bulk_edit_toggle');
@@ -540,7 +540,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			headerCheckbox.prop('indeterminate', false);
 		}
 	}
-	*/
+
 
 	$('.cb-participation-nav').on(
 		'click',
@@ -580,13 +580,13 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 
 	});
 
-	/*	
+	
     // Add event listener to each row checkbox
 	$(document).on('change', '.cb-participation-admin-entry-selection', handleRowCheckboxChange);
 
 	// Add event listener to the header checkbox
 	$(document).on('change','#cb_participation_admin_bulk_edit_toggle', handleHeaderCheckboxChange);
-	*/
+	
 
 	formatHeaderRow();
 	refreshTable(1, 'new', '');
@@ -635,7 +635,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		}
 
 	};
-/*
+
 	if ( parseInt(cbApplicantId) !== 5 ) {
 		let cbDropzone = new Dropzone("div#cb-dropzone", { 
 			url: cb_upload.upload,
@@ -693,7 +693,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			cbDropzone.removeAllFiles();
 		});
 	}
-*/
+*//*
 	substituteToggle.on('click', () => {
 		if ( substituteToggle.is(':checked') ) {
 			substituteContainer.show(300);
@@ -761,13 +761,13 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			formMessage.setMessage( 'Empty or invalid event type.', 'error' );
 		} else if ( month !== inputMonth && prev !== inputMonth ){
 			formMessage.setMessage( 'Cannot submit participation from outside of current or previous month.', 'error' );
-		} /* else if ( parseInt(cbApplicantId) !== 5 ) {
+		}  else if ( parseInt(cbApplicantId) !== 5 ) {
 			if ( cbDropzone.files.length < 1 ) {
 				formMessage.setMessage( 'No files selected.', 'error' );	
 			} else {
 				await cbDropzone.processQueue();	
 			}
-		} */ else {
+		}  else {
 			$.ajax({
 				type: 'POST',
 				url: cb_upload.create,
@@ -792,11 +792,12 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			});
 		}
 	});
+
 	$(document).on( 'click', '.cb-participation-member-search-result', function () {
 		substituteInput.val( $(this).text() );
 		applicantId.val( $(this).data('cbParticipantId') );
 		$('.cb-participation-member-search-results').remove();
 	});
 
-
+*/
 });
