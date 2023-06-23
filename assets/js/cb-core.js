@@ -120,7 +120,7 @@ jQuery( document ).ready( function( $ ) {
 			return false;
 		});
 	});
-
+/*
 	requestSubmitConfirm.submit( function() {
 
 		if ( confirm("Are you sure you want to spend " + sendToAmount.value + " Confetti Bits? They will be deducted from your total balance and will no longer count toward future purchases.") ) {
@@ -134,7 +134,7 @@ jQuery( document ).ready( function( $ ) {
 		}
 
 	});	
-
+*/
 	submitMessage.ready().fadeIn();
 
 	function unReadNotifications () {
@@ -612,5 +612,9 @@ jQuery( document ).ready( function( $ ) {
 
 	refreshTransactions(1, userID );
 	formatTransactionsHeaderRow();
+	
+	$(document).on('change', '.cb-file-input', function (e) {
+		console.log(this.value);
+	});
 
 });

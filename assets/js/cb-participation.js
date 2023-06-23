@@ -589,6 +589,8 @@ Could not find any participation entries of specified type.
 			formMessage.setMessage( 'Empty or invalid event type.', 'error' );
 		} else if ( prev2 > inputMonth ){
 			formMessage.setMessage( 'Cannot submit participation from outside of up to 2 months prior to event.', 'error' );
+		} else if ( inputMonth > now ) {
+			formMessage.setMessage( 'Cannot submit participation before event occurs.', 'error' );
 		} else {
 			$.ajax({
 				type: 'POST',

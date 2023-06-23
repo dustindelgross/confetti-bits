@@ -77,7 +77,7 @@ function cb_core_notifications_init() {
 		CB_Notifications_Component::instance();
 	}
 }
-add_action( 'bp_init', 'cb_core_notifications_init', 10 );
+add_action( 'cb_init', 'cb_core_notifications_init', 10 );
 
 /**
  * Enqueues all of our scripts in a clean fashion.
@@ -94,22 +94,28 @@ add_action( 'bp_init', 'cb_core_notifications_init', 10 );
  * This structure is then picked apart to dynamically 
  * enqueue and localize scripts. This gives us granular
  * control over who gets access to what API endpoints,
- * and can perform which actions, based on ability.
+ * and can perform which actions, based on capability.
+ * 
  * The scripts will be enqueued as: "cb_{$unique_name_for_script}", 
  * and will load a corresponding file, with the underscores
  * replaced with dashes, like so: "cb-{$unique-name-for-script}.js".
  * This will also load any dependencies found in the
  * 'dependencies' array.
+ * 
  * Scripts will then be localized using the same
  * "cb_{$unique_name_for_script}" identifier, which will 
  * become the global name that is usable within the file.
  * All API endpoints are localized as: 
  * "{$endpoint}_{$name_of_api_component}". 
- * So, for example: "cb_participation.get_participation" 
- * will return the API endpoint for getting participation
- * entries; "cb_core.new_transactions" will return the
- * API endpoint for creating a new transaction, and so forth.
- * To access the API key, use: "{$unique_name_for_script}.api_key
+ * 
+ * So, for example:
+ *     - "cb_participation.get_participation" will return the 
+ *       API endpoint for getting participation entries.
+ *     - "cb_core.new_transactions" will return the API endpoint 
+ *       for creating a new transaction.
+ * 
+ * To access the API key, use "{$unique_name_for_script}.api_key"
+ * in the {$unique-name-for-script}.js file.
  * 
  * @package ConfettiBits\Core
  * @since 2.3.0
@@ -135,7 +141,12 @@ function cb_core_enqueue_scripts() {
 				'transactions' => [
 					'transactions' => ['new'],
 					'dependencies' => ['jquery'],
-				]
+				],
+				'requests' => [
+					'requests' => ['new', 'get', 'update', 'delete' ],
+					'request_items' => ['get'],
+					'dependencies' => ['jquery'],
+				],
 			];
 
 			if ( cb_is_user_participation_admin() ) {
@@ -151,12 +162,7 @@ function cb_core_enqueue_scripts() {
 				];
 			}
 
-			if ( cb_is_user_site_admin() ) {
-				$components['requests'] = [
-					'requests' => ['new', 'get', 'update', 'delete' ],
-					'request_items' => ['new', 'get', 'update', 'delete' ],
-					'dependencies' => ['jquery'],
-				];
+			if ( cb_is_user_requests_admin() ) {
 				$components['requests_admin'] = [
 					'requests' => ['get', 'update', 'delete' ],
 					'request_items' => ['new', 'get', 'update', 'delete' ],

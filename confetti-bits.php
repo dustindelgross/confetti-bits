@@ -29,35 +29,35 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 *
 		 * @var array
 		 */
-		public $active_components = array();
+		public $active_components = [];
 
 		/**
 		 * Array of active panels.
 		 *
 		 * @var array
 		 */
-		public $active_panels = array();
+		public $active_panels = [];
 
 		/**
 		 * Array of required components.
 		 *
 		 * @var array
 		 */
-		public $required_components = array();
+		public $required_components = [];
 
 		/**
 		 * Array of loaded components.
 		 *
 		 * @var array
 		 */
-		public $loaded_components = array();
+		public $loaded_components = [];
 
 		/**
 		 * Array of optional components.
 		 *
 		 * @var array
 		 */
-		public $optional_components = array();
+		public $optional_components = [];
 
 		/**
 		 * Class data.
@@ -69,7 +69,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		/**
 		 * Retrieves the singleton instance of this class.
 		 *
-		 * @return Confetti_Bits Singleton instance of this class.
+		 * @return ConfettiBits Singleton instance of this class.
 		 */
 		public static function instance() {
 
@@ -98,7 +98,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			return isset( $this->data[ $key ] ); }
 
 		/**
-		 * Magic method for getting Confetti_Bits variables.
+		 * Magic method for getting ConfettiBits variables.
 		 *
 		 * @param string $key Key to return the value for.
 		 *
@@ -108,22 +108,24 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 		 * @since 2.3.0
 		 */
 		public function __get( $key ) {
-			return isset( $this->data[ $key ] ) ? $this->data[ $key ] : null; }
+			return isset( $this->data[ $key ] ) ? $this->data[ $key ] : null; 
+		}
 
 		/**
-		 * Magic method for setting Confetti_Bits variables.
+		 * Magic method for setting ConfettiBits variables.
 		 *
 		 * @param string $key   Key to set a value for.
 		 * @param mixed  $value Value to set.
 		 * 
-		 * @package Confetti_Bits
+		 * @package ConfettiBits
 		 * @since 2.3.0
 		 */
 		public function __set( $key, $value ) {
-			$this->data[ $key ] = $value; }
+			$this->data[ $key ] = $value; 
+		}
 
 		/**
-		 * Magic method for unsetting Confetti_Bits variables.
+		 * Magic method for unsetting ConfettiBits variables.
 		 *
 		 * @param string $key Key to unset a value for.
 		 * 
@@ -240,6 +242,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			$this->current_component = '';
 			$this->table_prefix = $wpdb->prefix;
 			$this->page = trailingslashit(site_url()) . "confetti-bits";
+			$this->roles = new stdClass;
 
 		}
 
@@ -269,6 +272,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 
 			$irregular_map = [
 				'CB_Component' => 'core',
+				'CB_Core_Role' => 'core',
 				'CB_Requests_Request_Item' => 'requests',
 			];
 

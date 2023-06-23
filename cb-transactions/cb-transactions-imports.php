@@ -162,7 +162,11 @@ function cb_import_bits($args = '') {
 function cb_importer()
 {
 
-	if (!cb_is_post_request() || !cb_is_confetti_bits_component() || !isset($_POST['cb_transactions_import'])) {
+	if ( !cb_is_post_request() || !cb_is_confetti_bits_component() || !cb_is_user_site_admin() ) {
+		return;
+	}
+	
+	if ( empty( $_FILES['cb_transactions_import'] ) ) {
 		return;
 	}
 
@@ -180,7 +184,6 @@ function cb_importer()
 		require_once(ABSPATH . 'wp-admin/includes/file.php');
 	}
 
-
 	// Redirect variables
 	$redirect_to = trailingslashit('confetti-bits');
 
@@ -191,32 +194,30 @@ function cb_importer()
 	$row_number = 2;
 	$skip_list = array();
 	$skipped_users = '';
-
+	$success = false;
 
 	// File handling variables
 	$max_upload_size = apply_filters('import_upload_size_limit', wp_max_upload_size());
 	$max_upload_display_text = size_format($max_upload_size);
 	$upload_dir = wp_upload_dir();
-
+	
+	$_FILES['import'] = $_FILES['cb_transactions_import']; 
+	
 	// start the actual business
 	$file = wp_import_handle_upload();
 
 	// pretty much everything hinges on there not being a fundamental problem with the file upload
 	if (!empty($file['error']) || empty($file['id'])) {
-
-		$success = false;
 		$feedback = $file['error'];
 	}
 
 	if (!cb_is_user_site_admin()) {
-		$success = false;
 		$feedback = __('Sorry, you don\'t have permission to import Confetti Bits. Call Dustin!', 'confetti-bits');
 	} else {
 
 		$attached_file = get_attached_file($file['id']);
 
 		if (!is_file($attached_file)) {
-
 			$success = false;
 			$feedback = __('The file does not exist or could not be read.', 'confetti-bits');
 		}
@@ -309,7 +310,7 @@ function cb_importer()
 				continue;
 			}
 
-			if ($amount < 0 && abs($amount) > cb_get_users_request_balance($recipient_id)) {
+			if ($amount < 0 && abs($amount) > cb_transactions_get_request_balance($recipient_id)) {
 
 				$skip_list[] = $fname . ' ' . $lname .
 					' in row ' . $row_number .
@@ -370,20 +371,17 @@ function cb_importer()
 
 			if (!$row_error && !empty($log_entry) && !empty($recipient_id) && !empty($amount)) {
 
-				$send = cb_import_bits(
-					$args = array(
-						'item_id' => $recipient_id,
-						'secondary_item_id' => $amount,
-						'sender_id' => $sender_id,
-						'recipient_id' => $recipient_id,
-						'date_sent' => $date_sent,
-						'log_entry' => $log_entry,
-						'component_name' => 'confetti_bits',
-						'component_action' => 'cb_import_bits',
-						'amount' => $amount,
-						'error_type' => 'wp_error',
-					)
-				);
+				$send = cb_import_bits([
+					'item_id' => $recipient_id,
+					'secondary_item_id' => $sender_id,
+					'sender_id' => $sender_id,
+					'recipient_id' => $recipient_id,
+					'date_sent' => $date_sent,
+					'log_entry' => $log_entry,
+					'component_name' => 'confetti_bits',
+					'component_action' => 'cb_import_bits',
+					'amount' => $amount
+				]);
 			}
 
 			$row_loop++;
@@ -399,24 +397,21 @@ function cb_importer()
 		$feedback = $imported === 1 ? 
 			__('Not a problem in sight, we successfully imported ' . $imported . ' row!.', 'confetti-bits')
 			: __('Not a problem in sight, we successfully imported ' . $imported . ' rows!.', 'confetti-bits');
-		
+
 	}
 
 	if (!empty($skip_list) && $ran = true) {
 		$type = 'success';
 		$feedback = '
 		<span>Successfully imported: ' . $imported . '. These oopsies came up: </span>
-				<strong>' . implode(
-			' <br> ',
-			$skip_list
-		) . '</strong>';
+				<strong>' . implode(' <br> ', $skip_list ) . '</strong>';
 	}
 
 	if (!empty($feedback)) {
 
 		$type = (true === $success) ? 'success' : 'error';
 		bp_core_add_message($feedback, $type);
-		
+
 	}
 
 	if (!empty($redirect_to)) {
@@ -654,4 +649,4 @@ function cb_bda_importer()
 		);
 	}
 }
-add_action('bp_actions', 'cb_bda_importer');
+// add_action('cb_actions', 'cb_bda_importer');

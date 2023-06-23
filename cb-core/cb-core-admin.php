@@ -35,21 +35,23 @@
  */
 function cb_core_admin_setting_general_register_fields( $setting ) {
 
-	$active_components = get_option('cb_active_components');
+	$active_components = $cb->active_components;
+	/*
 	$default_components  = cb_core_admin_get_components( 'default' );
 	$optional_components = cb_core_admin_get_components( 'optional' );
 	$required_components = cb_core_admin_get_components( 'required' );
 	$all_components = $required_components + $optional_components;
-	$roles	= cb_core_get_roles();
-	$panels	= cb_core_get_panels();
-	$active_panels = bp_get_option( "cb_active_panels" );
+	*/
+	//	$roles	= cb_core_get_roles();
+	//	$panels	= cb_core_get_panels();
+	//	$active_panels = bp_get_option( "cb_active_panels" );
 
 	if ( empty( $active_components ) ) {
-		$active_components = $default_components;
+		return;
 	}
 
-	$inactive_components = array_diff( array_keys( $all_components ), array_keys( $active_components ) );
-	$current_components = $all_components;
+	//	$inactive_components = array_diff( array_keys( $all_components ), array_keys( $active_components ) );
+	//	$current_components = $all_components;
 
 	// Main General Settings Section
 	$setting->add_section( 'confetti_bits_general', __( 'Confetti Bits Settings', 'confetti-bits' ) );
@@ -103,7 +105,7 @@ function cb_core_admin_setting_general_register_fields( $setting ) {
 function cb_admin_reset_date_options() {
 
 	$cb_reset_date =  get_option('cb_reset_date');
-//	$page      = bp_core_do_network_admin() ? 'admin.php' : 'admin.php';
+	//	$page      = bp_core_do_network_admin() ? 'admin.php' : 'admin.php';
 
 ?>
 <input id="<?php echo esc_attr( "cb_reset_date" ) ?>" 
@@ -245,169 +247,198 @@ function cb_admin_components_options() {
 <?php endif;
 }
 
+/**
+ * Sets some useful globals for specialized roles for later use.
+ * 
+ * The idea here is that once these globals are set, we can access
+ * them to grant certain permissions to certain roles, which will
+ * help us determine who can see what in our template loop.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_set_role_globals() {
 
-function cb_create_executive() {
+	$cb = Confetti_Bits();
 
-	if ( get_option( 'cb_create_executives' ) != 'done' ) {
-		add_role( 
-			'cb_executive',
-			'Confetti Bits Executive',
-			array(
-				'manage_options'	=> true,
-				'edit_users'		=> true,
-				'list_users'		=> true,
-				'promote_users'		=> true,
-				'create_users'		=> true,
-				'add_users'			=> true,
-				'delete_users'		=> true,
-				'edit_courses'		=> true,
-				'edit_groups'		=> true,
-				'edit_assignments'	=> true,
-			)
-		);
-
-		$cb_executive_role = get_role( 'cb_executive' );
-		$cb_site_admin = get_role( 'administrator' );
-		$cb_site_admin->add_cap('cb_can_executive');
-		$cb_executive_role->add_cap( 'cb_can_executive' );
-		$cb_executive_role->add_cap( 'cb_participation_admin' );
-		$cb_executive_role->add_cap( 'cb_admin' );
-
-		update_option( 'cb_create_executives', 'done' );
-
-	}
-}
-
-add_action( 'init', 'cb_create_executive' );
-
-function cb_create_leadership() {
-	if ( get_option( 'cb_create_leaders' ) != 'done' ) {
-		add_role( 
-			'cb_leadership',
-			'Confetti Bits Leadership',
-			array(
-				'read'				=> true,
-				'cb_admin'			=> true,
-			)
-		);
-		update_option( 'cb_create_leaders', 'done' );
-	}
-}
-
-add_action( 'init', 'cb_create_leadership' );
-
-
-function cb_create_participation_admin() {
-
-	if ( get_option( 'cb_create_participation_admins' ) != 'done' ) {
-		add_role( 
-			'cb_participation_admin',
-			'Confetti Bits Participation Admin',
-			array(
+	$roles = [
+		'executive' => [
+			'label' => 'Confetti Bits Executive',
+			'caps' => [
+				'manage_options' => true,
+				'edit_users' => true,
+				'list_users' => true,
+				'promote_users' => true,
+				'create_users' => true,
+				'add_users' => true,
+				'delete_users' => true,
+				'edit_courses' => true,
+				'edit_groups' => true,
+				'edit_assignments' => true,
+				'cb_executive' => true,
+				'cb_participation_admin' => true,
+				'cb_requests_admin' => true,
+				'cb_events_admin' => true,
+				'cb_staffing_admin' => true,
+				'cb_admin' => true,
+			]
+		],
+		'leadership' => [
+			'label' => 'Confetti Bits Leadership',
+			'caps' => [
 				'read' => true,
 				'cb_participation_admin' => true,
-			)
-		);
-		/*/
-			delete_others_pages
-				delete_others_posts
-				delete_private_pages
-				delete_private_posts
-				delete_published_pages
-				delete_published_posts
-				delete Reusable Blocks
-				edit_others_pages
-				edit_others_posts
+				'cb_requests_admin' => true,
+				'cb_events_admin' => true,
+				'cb_admin' => true,
+			]
+		],
+		'requests_admin' => [
+			'label' => 'Confetti Bits Requests Admin',
+			'caps' => [
+				'read' => true,
+				'cb_requests_admin' => true
+			]
+		],
+		'participation_admin' => [
+			'label' => 'Confetti Bits Participation Admin',
+			'caps' => [
+				'read' => true,
+				'cb_participation_admin' => true
+			]
+		],
+		'events_admin' => [
+			'label' => 'Confetti Bits Events Admin',
+			'caps' => [
+				'read' => true,
+				'cb_events_admin' => true,
+			]
+		],
+		'staffing_admin' => [
+			'label' => 'Confetti Bits Staffing Admin',
+			'caps' => [
+				'read' => true,
+				'cb_staffing_admin' => true,
+				'edit_users' => true,
+				'list_users' => true,
+				'promote_users' => true,
+				'create_users' => true,
+				'add_users' => true,
+				'delete_users' => true,
+				'edit_courses' => true,
+				'edit_groups' => true,
+				'edit_assignments' => true
+			]
+		],
+	];
 
-				edit_private_pages
-				edit_private_posts
-				edit_published_pages
-				edit_published_posts
-				create Reusable Blocks
-				edit Reusable Blocks
-				manage_categories
-				manage_links
-				moderate_comments
-				read_private_pages
-				read_private_posts
-				unfiltered_html (not with Multisite)
-/*/
-
-		$cb_participation_admin_role = get_role( 'cb_participation_admin' );
-		$cb_site_admin = get_role( 'administrator' );
-		$cb_site_admin->add_cap('cb_participation_admin');
-		$cb_participation_admin_role->add_cap( 'cb_admin' );
-
-		update_option( 'cb_create_participation_admins', 'done' );
-
-	}
-}
-
-add_action( 'init', 'cb_create_participation_admin' );
-
-
-
-function cb_create_requests_fulfillment() {
-
-	if ( get_option( 'cb_create_requests_fulfillment' ) != 'complete' ) {
-		add_role( 
-			'cb_requests_fulfillment',
-			'Confetti Bits Requests Fulfillment',
-			array(
-				'read'					=> true,
-				'level_0'				=> true,
-				'spectate'				=> true,
-				'participate'			=> true,
-				'read_private_forums'	=> true,
-				'publish_topics'		=> true,
-				'edit_topics'			=> true,
-				'edit_replies'			=> true,
-				'assign_topic_tags'		=> true,
-				'subscriber'			=> true,
-				'bbp_participant'		=> true,
-			)
-		);
-
-		$cb_requests_role = get_role( 'cb_requests_fulfillment' );
-		$cb_site_admin = get_role( 'administrator' );
-		$cb_site_admin->add_cap('cb_requests');
-		$cb_requests_role->add_cap( 'cb_requests' );
-
-		update_option( 'cb_create_requests_fulfillment', 'complete' );
-
-	}
-}
-
-add_action( 'init', 'cb_create_requests_fulfillment' );
-
-
-function cb_is_user_admin() {
-
-	$cb_admin = current_user_can( 'cb_admin' );
-
-	$current_user_id = get_current_user_id();
-	$not_admins = array( 76, 9 );
-
-	if( !in_array( $current_user_id, $not_admins ) && $cb_admin ) {
-		return true;
+	foreach ( $roles as $id => $args ) {
+		$cb->roles->{$id} = new CB_Core_Role( $id, $args['label'], $args['caps'] );
 	}
 
 }
 
 
+/**
+ * Grants all capabilities to administrator users.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_add_admin_caps() {
 
-function cb_is_user_executive() {
-	return current_user_can('cb_can_executive');
-}
+	$admin_role = get_role( 'administrator' );
+	$cb = Confetti_Bits();
 
+	$roles = [
+		'executive',
+		'leadership',
+		'requests_admin',
+		'participation_admin',
+		'events_admin',
+	];
 
+	foreach ( $roles as $role ) {
 
-function cb_is_user_requests_fulfillment() {
-	return current_user_can('cb_requests');
+		$capabilities = [];
+
+		if ( isset($cb->roles->{$role} ) ) {
+			$capabilities = $cb->roles->{$role}->caps;
+		}
+
+		foreach ( $capabilities as $capability => $value ) {
+			$admin_role->add_cap( $capability, $value );
+		}
+	}
 }
 
 /**
- * CB Is User Site Admin
+ * An alias for current_user_can()
+ * 
+ * @param string $cap The capability to check for.
+ * 
+ * @return bool Whether the user has the capability.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_current_user_can( $cap = '' ) {
+	return current_user_can($cap);
+}
+
+/**
+ * Checks whether a user is an admin of the given component.
+ * 
+ * @param string $component The component to check for.
+ * 
+ * @return bool Whether the user is an admin for the component.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_is_component_admin( $component = '' ) {
+	return current_user_can( "cb_{$component}_admin" );
+}
+
+/**
+ * Checks whether user has certain administrative privileges.
+ * 
+ * These include:
+ * 		- cb_participation_admin
+ * 		- cb_events_admin
+ * 		- cb_requests_admin
+ * 
+ * It's important to note that the cb_admin capability
+ * is shared by both the cb_leadership role as well as
+ * the cb_executive role, so checking for this capability
+ * will return true for both of those roles, along with
+ * users that have the 'administrator' capability.
+ * 
+ * @return bool Whether the current user is a cb_admin.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
+function cb_is_user_admin() {
+	return current_user_can( 'cb_admin' );
+}
+
+/**
+ * Checks to see if the user is an executive user.
+ * 
+ * This role carries specific, high-level privileges
+ * in certain areas of the application, so it exists
+ * as its own separate capability.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.3.0
+ */
+function cb_is_user_executive() {
+	return current_user_can('cb_executive');
+}
+
+/**
+ * Checks if the user has site admin privileges.
  * 
  * Checks whether a user has administrative privileges.
  * Also, @see cb_core_admin_is_user_site_admin(), because
@@ -440,18 +471,18 @@ function cb_is_user_site_admin() {
  * @since 2.3.0
  */
 function cb_core_admin_is_user_site_admin( $user_id = 0 ) {
-	
+
 	if ( empty( $user_id ) ) {
 		return current_user_can('administrator');
 	}
-	
+
 	$user = new WP_User($user_id);
-	
+
 	return $user->has_cap('administrator');
 }
 
 /**
- * CB Is User Participation Admin
+ * Checks to see if the user is a participation admin.
  * 
  * Checks whether a user has administrative privileges over the 
  * participation component. These privileges are granted by
@@ -463,133 +494,39 @@ function cb_core_admin_is_user_site_admin( $user_id = 0 ) {
  * @since 1.0.0
  */
 function cb_is_user_participation_admin() {
-	return current_user_can('cb_participation_admin');
+	return cb_core_is_component_admin('participation');
 }
 
+/**
+ * Checks to see if the user is a requests admin.
+ * 
+ * Checks whether a user has administrative privileges over the 
+ * requests component. These privileges are granted by
+ * assigning a role on the Edit User admin page.
+ * 
+ * @return bool Whether a user is a requests admin.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_is_user_requests_admin() {
+	return cb_core_is_component_admin('requests');
+}
 
+/**
+ * Checks to see if the user is an events admin.
+ * 
+ * Checks whether a user has administrative privileges over the 
+ * events component. These privileges are granted by
+ * assigning a role on the Edit User admin page.
+ * 
+ * @return bool Whether a user is an events admin.
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
 function cb_is_user_events_admin() {
-	return current_user_can('cb_is_user_events_admin');
-}
-
-function cb_core_admin_get_active_components_from_submitted_settings( $submitted, $action = 'all' ) {
-	$current_action = $action;
-
-	if ( isset( $_GET['cb_action'] ) && in_array( $_GET['cb_action'], array( 'active', 'inactive' ) ) ) {
-		$current_action = $_GET['cb_action'];
-	}
-
-	$current_components = Confetti_Bits()->active_components;
-
-	switch ( $current_action ) {
-		case 'inactive' :
-			$components = array_merge( $submitted, $current_components );
-			break;
-
-		case 'all' :
-		case 'active' :
-		default :
-			$components = $submitted;
-			break;
-	}
-
-	return $components;
-}
-
-
-function cb_core_get_panels() {
-
-	$panels	= array(
-
-		'imports' => array(
-			'title'       => __( 'Confetti Bits Imports', 'confetti-bits' ),
-			'description' => __( 'Allow site admins to mass import Confetti Bits.', 'confetti-bits' ),
-		),
-
-		'exports' => array(
-			'title'       => __( 'Confetti Bits Exports', 'confetti-bits' ),
-			'description' => __( 'Allow users to export Confetti Bits Transactions data.', 'confetti-bits' ),
-		),
-
-		'requests' => array(
-			'title'       => __( 'Confetti Bits Requests', 'confetti-bits' ),
-			'description' => __( 'Allow users to send in Confetti Bits Requests.', 'confetti-bits' ),
-		),
-
-		'leaderboard' => array(
-			'title'       => __( 'Confetti Bits Dashboard', 'confetti-bits' ),
-			'description' => __( 'Display the Confetti Bits Leaderboard.', 'confetti-bits' ),
-		),
-
-		'logs' => array(
-			'title'       => __( 'Confetti Bits Logs', 'confetti-bits' ),
-			'description' => __( 'Allow users to page through their Confetti Bits Transaction history.', 'confetti-bits' ),
-		),
-
-		'transfers' => array(
-			'title'       => __( 'Confetti Bits Transfers', 'confetti-bits' ),
-			'description' => __( 'Allow users to send Confetti Bits to each other.', 'confetti-bits' ),
-		),
-
-		'imports' => array(
-			'title'       => __( 'Confetti Bits Imports', 'confetti-bits' ),
-			'description' => __( 'Allow site admins to mass import Confetti Bits.', 'confetti-bits' ),
-		),
-
-		'debug' => array(
-			'title'       => __( 'Confetti Bits Debug', 'confetti-bits' ),
-			'description' => __( 'Allow site admins to debug the Confetti Bits plugin.', 'confetti-bits' ),
-		),
-
-	);
-
-	return $panels;
-
-}
-
-
-function cb_core_get_roles( $type = '' ) {
-
-	$roles	= array(
-		/*
-			'executive' => array(
-				'title'       => __( 'Confetti Bits Executives', 'confetti-bits' ),
-				'description' => __( 'Configure panels for Confetti Bits Executives.', 'confetti-bits' ),
-			),
-
-			'requests' => array(
-				'title'       => __( 'Confetti Bits Requests Fulfillment', 'confetti-bits' ),
-				'description' => __( 'Configure panels for Confetti Bits Requests Fulfillment.', 'confetti-bits' ),
-			),
-
-			'editor' => array(
-				'title'       => __( 'Wordpress Editors', 'confetti-bits' ),
-				'description' => __( 'Configure panels for the WP Editor role.', 'confetti-bits' ),
-			),
-
-			'subscriber' => array(
-				'title'       => __( 'Standard Users', 'confetti-bits' ),
-				'description' => __( 'Configure panels for standard users.', 'confetti-bits' ),
-			),
-			*/
-
-	);
-
-	if ( empty( $type ) || $type === 'all' ) {
-		$retval = $roles;
-	} else {
-		if ( is_array( $type )  ) {
-			foreach( $type as $key ) {
-				if ( isset( $roles[$key] ) ) {
-					$retval[$key] = $roles[$key];
-				}
-			}
-		} else if ( isset( $roles[$type] ) ) {
-			$retval = array( $type => $roles[$type] );
-		}
-	}
-
-	return $retval;
-
+	return cb_core_is_component_admin('events');
 }
 
 /** 
@@ -619,12 +556,17 @@ function editor_manage_users() {
 }
 add_action( 'init', 'editor_manage_users' );
 
-
+/**
+ * Remove privileged menus from the admin area.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.2.0
+ */
 function get_rid_of_the_menus() {
 	if ( is_user_logged_in() ) {
 		$this_user = wp_get_current_user();
 		if ( $this_user->has_cap('manage_options') && ( ! cb_is_user_site_admin() ) ) {
-			wp_enqueue_script('hide_the_menus', get_stylesheet_directory_uri() . '/assets/js/hide-it.js', 'jquery');
+			wp_enqueue_script('hide_the_menus', get_stylesheet_directory_uri() . '/assets/js/hide-it.js', ['jquery']);
 		}
 	}
 }

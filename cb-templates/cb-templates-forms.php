@@ -327,39 +327,29 @@ function cb_templates_get_file_input( $args = array() ) {
 	$disabled	= $r['disabled'] ? 'disabled' : '';
 	$multiple	= $r['multiple'] ? 'multiple' : '';
 	$capture	= $r['capture'] ? $r['capture'] : '';
+	$accepts = "";
+	$markup = "";
 
-	if ( empty( $r['accepts'] ) || ! is_array( $r['accepts'] ) ) {
+	if ( empty( $r['accepts'] ) ) {
 		return;
 	}
-
-	foreach ( $r['accepts'] as $accept ) {
-		if ( ! preg_match( '/[a-zA-Z]{2,5}\/[a-zA-Z]{2,5}/i', $accept ) && ! preg_match( '/\.[a-zA-Z]{2,5}/i', $accept ) ) {
-			return;
-		}
+	
+	if ( !empty( $r['accepts'] ) ) {
+		$accepts = is_array($r['accepts']) ? ' accept="' . implode( ', ', $r['accepts'] ) . '"' : ' accept="' . trim(esc_attr($r['accepts'])) . '"';
 	}
+	
+	$container_id = ! empty( $r['container_id'] ) ? " id='{$r['container_id']}'" : '';
+	
+	$label = sprintf('<label for="%s"><span>%s</span></label>', $r['name'], $r['label'] );
+	$input = sprintf(
+		'<input placeholder="" class="cb-file-input" type="file" 
+		name="%s" id="%s" %s %s %s %s %s />', 
+		$r['name'], $r['name'], $required, $accepts, $multiple, $capture, $disabled 
+	);
 
-	$container_id = ! empty( $r['container_id'] ) ? "id='{$r['container_id']}'" : '';
-
-	$accepts	= !empty($r['accepts']) ? 'accept="' . implode( ', ', $r['accepts'] ) . '"' : '';	
-
-	$markup = "<ul class='cb-form-page-section'>
-	<li class='cb-form-line'>
-	<div class='cb-file-input-container' {$container_id}>
-	<label for='{$r['name']}'>";
-
-	$markup .= "<input 
-	placeholder=''
-	class='cb-file-input'
-	type='file' 
-	name='{$r['name']}' 
-	id='{$r['name']}' 
-	{$required} 
-	{$accepts} 
-	{$multiple} 
-	{$capture} 
-	{$disabled} />";
-
-	$markup .= "</label><span>{$r['label']}</span></div></li></ul>";
+	$markup = sprintf('<ul class="cb-form-page-section">
+	<li class="cb-form-line">
+	<div class="cb-file-input-container"%s>%s%s</div></li></ul>', $container_id, $label, $input );
 
 	return $markup;
 
@@ -886,18 +876,18 @@ function cb_form_module( $args = [] ) {
  * }
  */
 function cb_templates_get_form_output( $args = [] ) {
-	
+
 	$r = wp_parse_args( $args, [
 		'component' => '',
 		'heading' => '',
 		'content' => [],
 		'inputs' => []
 	]);
-	
+
 	if ( $r['component'] === '' ) {
 		return;
 	}
-	
+
 	$content = $r['heading'] !== '' ? cb_templates_get_heading($r['heading']) : '';
 	if ( !empty( $r['content'] ) ) {
 		$content .= is_array($r['content']) ? sprintf( "<p class='cb-form-content'>%s</p>", $r['content'] ) : "<p class='cb-form-content'>{$r['content']}</p>";
@@ -909,7 +899,7 @@ function cb_templates_get_form_output( $args = [] ) {
 			$content .= call_user_func( "cb_templates_get_{$input['type']}_input", $input['args'] );
 		}
 	}
-	
+
 	return $content;
-	
+
 }
