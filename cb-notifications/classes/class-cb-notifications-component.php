@@ -1,4 +1,46 @@
 <?php
+/**
+ * Registers all Confetti Bits Notifications
+ * 
+ * There are a few methods in here that are inherited 
+ * from the parent class, where we can't really include
+ * doc blocks without potentially breaking something 
+ * by overriding those methods. 
+ * 
+ * So we're going to document what you need for those here.
+ * See BuddyBoss docs for more info. ({@link https://www.buddyboss.com/resources/dev-docs/web-development/migrating-custom-notifications-to-modern-notifications-api/})
+ * 
+ * 
+ * 
+ * For $this::register_notification_group():
+ * 
+ * @param string $group_key         Group key.
+ * @param string $group_label       Group label.
+ * @param string $group_admin_label Group admin label.
+ * @param int    $priority          Priority of the group. Optional.
+ * 
+ * 
+ * For $this::register_notification_type():
+ * 
+ * @param string $notification_type        Notification Type key.
+ * @param string $notification_label       Notification label.
+ * @param string $notification_admin_label Notification admin label.
+ * @param string $notification_group       Notification group.
+ * @param bool   $default                  Default status for enabled/disabled. Optional.
+ * 
+ * For $this::register_notification():
+ * 
+ * @param string $component         Component name.
+ * @param string $component_action  Component action.
+ * @param string $notification_type Notification Type key.
+ * @param string $icon_class        Notification Small Icon.
+
+ * For $this::register_email_type():
+ * 
+ * @param string $email_type        Type of email being sent.
+ * @param array  $args              Email arguments.
+ * @param string $notification_type Notification Type key.
+ */
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
@@ -7,23 +49,26 @@ if ( ! class_exists( 'BP_Core_Notification_Abstract' ) ) {
 }
 
 /**
- * CB Notifications Component
- *
- * Establishes the Confetti Bits Notifications component.
+ * Formats Confetti Bits Notifications.
  * 
- * We use this in tandem with BuddyBoss platform to give us 
+ * We use this in tandem with BuddyBoss Platform to give us 
  * email, web, and push notifications. An absolute godsend,
  * this makes it a million times easier to do that stuff, so 
  * we can focus on the actual functionality.
  * 
- * @package Confetti_Bits
- * @subpackage Notifications
+ * @package ConfettiBits\Notifications
  * @since 2.0.0
  */
 class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 
+	/**
+	 * Set up singleton instance.
+	 */
 	private static $instance = null;
 
+	/**
+	 * Return the instance kiddos.
+	 */
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
@@ -32,100 +77,294 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		return self::$instance;
 	}
 
+	/**
+	 * Constructor function.
+	 * 
+	 * Start your engines. We're gonna be so notified.
+	 * 
+	 * @see CB_Notifications_Component::start()
+	 */
 	public function __construct() {
 		$this->start();
 	}
 
+	/**
+	 * Registers notification formats.
+	 * 
+	 * What's the difference between this and start(), you may ask?
+	 * Don't. Don't ask me, at least. Best guess? Start() calls load(),
+	 * and load() actually registers notifications.
+	 * 
+	 * @UPDATE: I was mostly right. $this::start() calls $this::load(), 
+	 * 			and also adds a bunch of filter hooks that dynamically
+	 * 			update notification configurations based on the
+	 * 			what is supplied to the inherited class methods.
+	 * 			$this::load() is an abstract method that just calls
+	 * 			whatever is inside of it.
+	 * 
+	 * Regardless, here we are. It works, doesn't it?
+	 * 
+	 * To be a little clearer: 
+	 * 
+	 *     1. The *notification group* is the one true group for all our
+	 * 		  notifications. Everything we have will be registered under
+	 * 		  the confetti_bits group (unless I change my mind later 
+	 * 		  lmao).
+	 * 
+	 *     2. Notification *types* are going to be for our different 
+	 * 		  components. So, cb_transactions, cb_requests, 
+	 * 		  cb_participation, are all going to get their own types.
+	 * 		  The type created by $this->register_notification_type()
+	 * 		  is used to add a settings field for a user to control
+	 * 		  their notification options. This is a little different
+	 * 		  from how BuddyBoss does things, because their notification 
+	 * 		  *groups* are based on their components, whereas we're 
+	 * 		  putting all our components into the main 'confetti_bits' 
+	 * 		  group. Ipso facto, our notification *types* are going to be 
+	 * 		  component-based. It'll make sense eventually. Maybe.
+	 * 
+	 *     3. The notifications created by $this->register_notification() 
+	 * 		  are going to distinguish which notification
+	 * 		  should be sent, based on a user's action. So this would
+	 * 		  be where the component_action comes in, like 
+	 * 		  cb_send_bits, cb_anniversary_bits, cb_import_bits, etc.
+	 * 		  The notifications are sent out in a function that's
+	 * 		  typically defined in a cb-{$component}-notifications.php
+	 * 		  file. If that file doesn't exist... why does it not?
+	 * 		  Make one. That file needs to exist.
+	 * 
+	 *     4. Notification content is formatted in 
+	 * 		  $this->format_notification(). The tokens are usually 
+	 * 		  added in the same function talked about in part 3.
+	 * 
+	 */
 	public function load() {
 
-		/**
-		 * Register Notification Group.
-		 *
-		 * @param string $group_key         Group key.
-		 * @param string $group_label       Group label.
-		 * @param string $group_admin_label Group admin label.
-		 * @param int    $priority          Priority of the group.
-		 */
 		$this->register_notification_group(
 			'confetti_bits',
-
 			esc_html__( 'Confetti Bits Notifications', 'confetti-bits' ), 
-			esc_html__( 'Confetti Bits Notifications Admin', 'confetti-bits' ),
+			esc_html__( 'Confetti Bits Notifications', 'confetti-bits' ),
 		);
 
-		$this->register_confetti_bits_send_notifications();
+		// Register transactions notifications.
+		$this->register_cb_transactions_notifications();
 
-		$this->register_confetti_bits_transfer_notifications();
+		// Register notifications for leadership bits.
+		//		$this->register_confetti_bits_send_notifications();
 
-		$this->register_confetti_bits_import_notifications();
+		// Register notifications for transfers.
+		//		$this->register_confetti_bits_transfer_notifications();
 
-		$this->register_confetti_bits_request_fulfillment_notifications();
+		// Register notifications for when ya boi imports a bunch.
+		//		$this->register_confetti_bits_import_notifications();
 
-		$this->register_confetti_bits_request_sender_notifications();
+		// @TODO: Redo this, because the structure for this is different.
+		//		$this->register_confetti_bits_request_fulfillment_notifications();
 
-		$this->register_confetti_bits_activity_notifications();
+		// @TODO: This was never actually implemented, so let's do that.
+		//		$this->register_confetti_bits_request_sender_notifications();
 
+		// Register notifications for activity posts.
+		$this->register_cb_activity_notifications();
+
+		// Register notifications for group posts.
 		$this->register_group_activity_notifications();
 
+		// Register notifications for participation updates.
 		$this->register_participation_notifications();
 
+		// Register notifications for birthday bits.
 		$this->register_birthday_notifications();
 
+		// Register notifications for anniversary bits.
 		$this->register_anniversary_notifications();
-
-		/**
-		 * Register Notification Filter.
-		 *
-		 * @param string $notification_label    Notification label.
-		 * @param array  $notification_types    Notification types.
-		 * @param int    $notification_position Notification position.
-		 */
 
 	}
 
+	/**
+	 * Registers all our notifications for the transactions component.
+	 */
+	public function register_cb_transactions_notifications() {
 
-
-	public function register_confetti_bits_send_notifications() {
-
-		/**
-		 * Register Notification Type.
-		 *
-		 * @param string $notification_type        Notification Type key.
-		 * @param string $notification_label       Notification label.
-		 * @param string $notification_admin_label Notification admin label.
-		 * @param string $notification_group       Notification group.
-		 * @param bool   $default                  Default status for enabled/disabled.
-		 */
+		// Register the leadership transactions notification type.
 		$this->register_notification_type(
 			'cb_transactions_send_bits',
-			esc_html__( 'Someone sends you Confetti Bits', 'confetti-bits' ),
-			esc_html__( 'Someone sends you Confetti Bits', 'confetti-bits' ),
+			esc_html__( 'A company leader sends you Confetti Bits', 'confetti-bits' ),
+			esc_html__( 'A company leader sends you Confetti Bits', 'confetti-bits' ),
+			'confetti_bits',
+			true
+		);
+		// Register the leadership transactions notification.
+		$this->register_notification( 'confetti_bits', 'cb_send_bits', 'cb_transactions_send_bits' );
+
+		// Register the transfer transactions notification type.
+		$this->register_notification_type(
+			'cb_transactions_transfer_bits',
+			esc_html__( 'A team member sends you Confetti Bits', 'confetti-bits' ),
+			esc_html__( 'A team member sends you Confetti Bits', 'confetti-bits' ),
+			'confetti_bits',
+			true
+		);
+
+		// Register the transfer transactions notification.
+		$this->register_notification( 'confetti_bits', 'cb_send_bits', 'cb_transactions_send_bits' );
+
+		// Registers the email schema for when a leader sends someone Confetti Bits.
+		$this->register_email_type(
+			'cb-send-bits-email',
+			array(
+				'email_title'         => "{{transaction.sender_name}} Sent Confetti Bits!",
+				'email_content'       => "<h4>{{transaction.sender_name}} just sent you {{transaction.amount}} Confetti Bits!<h4><p>They said: {{transaction.log_entry}}</p>",
+				'email_plain_content' => "{{transaction.sender_name}} just sent you {{transaction.amount}} Confetti Bits! They said: {{transaction.log_entry}}",
+				'situation_label'     => __( 'Someone sends Confetti Bits', 'confetti-bits' ),
+				'unsubscribe_text'    => __( 'You will no longer receive emails when someone sends you Confetti Bits.', 'confetti-bits' ),
+			),
+			'cb_transactions_send_bits'
+		);
+
+		// Registers the email schema for when a team member sends someone Confetti Bits.
+		$this->register_email_type(
+			'cb-transfer-bits-email',
+			array(
+				'email_title'         => "{{transaction.sender_name}} Sent Confetti Bits!",
+				'email_content'       => "<h4>{{transaction.sender_name}} just sent you {{transaction.amount}} Confetti Bits!<h4><p>They said: {{transaction.log_entry}}</p>",
+				'email_plain_content' => "{{transaction.sender_name}} just sent you {{transaction.amount}} Confetti Bits! They said: {{transaction.log_entry}}",
+				'situation_label'     => __( 'Someone sends Confetti Bits', 'confetti-bits' ),
+				'unsubscribe_text'    => __( 'You will no longer receive emails when someone sends you Confetti Bits.', 'confetti-bits' ),
+			),
+			'cb_transactions_transfer_bits'
+		);
+
+		$this->register_notification_type(
+			'cb_transactions_import_bits',
+			esc_html__( 'Someone performs a Confetti Bits import', 'confetti-bits' ),
+			esc_html__( 'Someone performs a Confetti Bits import', 'confetti-bits' ),
+			'confetti_bits'
+		);
+
+		$this->register_notification(
+			'confetti_bits',
+			'cb_transactions_import_bits',
+			'cb_transactions_import_bits'
+		);
+
+		$this->register_email_type(
+			'cb-transactions-import-bits-email',
+			array(
+				'email_title'         => __( 'Confetti Bits Imported', 'confetti-bits' ),
+				'email_content'       => __( "Confetti Bits were just imported!", 'confetti-bits' ),
+				'email_plain_content' => __( "Confetti Bits were just imported!", 'confetti-bits' ),
+				'situation_label'     => __( "Confetti Bits are imported", 'confetti-bits' ),
+				'unsubscribe_text'    => __( 'You will no longer receive emails when Confetti Bits are imported.', 'confetti-bits' ),
+			),
+			'cb_transactions_import_bits'
+		);
+
+	}
+
+	/**
+	 * Registers notifications for activity posts.
+	 */
+	public function register_cb_activity_notifications() {
+
+		$this->register_notification_type(
+			'cb_transactions_activity_bits',
+			esc_html__( 'You get Confetti Bits for posting', 'confetti-bits' ),
+			esc_html__( 'You get Confetti Bits for posting', 'confetti-bits' ),
 			'confetti_bits',
 		);
 
+		$this->register_notification(
+			'confetti_bits',
+			'cb_activity_bits',
+			'cb_transactions_activity_bits'
+		);
 
+		$this->register_email_type(
+			'cb-transactions-activity-bits-email',
+			array(
+				'email_title'         => __( 'Nice!', 'confetti-bits' ),
+				'email_content'       => __( 'You just got Confetti Bits for posting on TeamCTG!', 'confetti-bits' ),
+				'email_plain_content' => __( 'You just got Confetti Bits for posting on TeamCTG!', 'confetti-bits' ),
+				'situation_label'     => __( 'You get Confetti Bits for posting', 'confetti-bits' ),
+				'unsubscribe_text'    => __( 'You will no longer receive emails when you receive Confetti Bits for posting.', 'confetti-bits' ),
+			),
+			'cb_transactions_activity_bits'
+		);
 
-		/**
-		 * Register notification.
-		 *
-		 * @param string $component         Component name.
-		 * @param string $component_action  Component action.
-		 * @param string $notification_type Notification Type key.
-		 * @param string $icon_class        Notification Small Icon.
-		 */
+	}
+
+	/**
+	 * Registers notifications for the requests component.
+	 */
+	public function register_cb_requests_notifications() {
+
+		$this->register_notification_type(
+			'cb_requests_new_request',
+			esc_html__( 'You send in a Confetti Bits request', 'confetti-bits' ),
+			esc_html__( 'You send in a Confetti Bits request', 'confetti-bits' ),
+			'confetti_bits'
+		);
+
+		$this->register_notification_type(
+			'cb_requests_admin_new_request',
+			esc_html__( 'Someone sends in a Confetti Bits request', 'confetti-bits' ),
+			esc_html__( 'Someone sends in a Confetti Bits request', 'confetti-bits' ),
+			'confetti_bits'
+		);
+
+		$this->register_notification(
+			'confetti_bits',
+			'cb_requests_new_request',
+			'cb_requests_new_request'
+		);
+
+		$this->register_notification(
+			'confetti_bits',
+			'cb_requests_new_request',
+			'cb_requests_admin_new_request'
+		);
+
+		$this->register_email_type(
+			'cb-requests-new-request-email', [
+				'email_title'         => __( 'Your Confetti Bits Request', 'confetti-bits' ),
+				'email_content'       =>  '<h4>You requested {{request.item}} for {{request.amount}} Confetti Bits</h4><p>Please allow 4-6 weeks for your request to be fulfilled. Someone will reach out to you within that time frame and discuss further steps to fulfill your request!</p><p style="font-size:10px;"><b>Also please note that {{request.amount}} Confetti Bits will be deducted from your total balance once the request is fulfilled, and will not count toward additional request items or other company-sponsored rewards based on Confetti Bits balance.</b></p>',
+				'email_plain_content' => "You successfully requested {{request.item}} for {{request.amount}} Confetti Bits. Please allow 4-6 weeks for your request to be fulfilled. Someone will reach out to you within that time frame and discuss further steps to fulfill your request! Also please note that {{request.amount}} Confetti Bits will be deducted from your total balance once the request is fulfilled, and will not count toward additional request items or other company-sponsored rewards based on Confetti Bits balance.",
+				'situation_label'     => __( "You put in a Confetti Bits Request", 'confetti-bits' ),
+				'unsubscribe_text'    => __( 'You will no longer receive emails when you send in Confetti Bits Requests', 'confetti-bits' ),
+			],
+			'cb_requests_new_request'
+		);
+
+		$this->register_email_type(
+			'cb-requests-admin-new-request-email', [
+				'email_title'         => 'New Confetti Bits Request from {{applicant.name}}',
+				'email_content'       => "A new Confetti Bits Request came in! {{applicant.name}} requested: {{request.item}}.",
+				'email_plain_content' => "A new Confetti Bits Request came in! {{applicant.name}} requested: {{request.item}}.",
+				'situation_label'     => "A new Confetti Bits Request comes in",
+				'unsubscribe_text'    => 'You will no longer receive emails when Confetti Bits requests are sent.',
+			],
+			'cb_requests_admin_new_request'
+		);
+
+	}
+
+	/*
+	public function register_confetti_bits_send_notifications() {
+
+		$this->register_notification_type(
+			'cb_transactions_send_bits',
+			esc_html__( 'A company leader sends you Confetti Bits', 'confetti-bits' ),
+			esc_html__( 'A company leader sends you Confetti Bits', 'confetti-bits' ),
+			'confetti_bits',
+		);
+
 		$this->register_notification(
 			'confetti_bits',
 			'cb_send_bits',
 			'cb_transactions_send_bits'
 		);
 
-		/**
-		 * Add email schema.
-		 *
-		 * @param string $email_type        Type of email being sent.
-		 * @param array  $args              Email arguments.
-		 * @param string $notification_type Notification Type key.
-		 */
 		$this->register_email_type(
 			'cb-send-bits-email',
 			array(
@@ -138,28 +377,10 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			'cb_transactions_send_bits'
 		);
 
-		$this->register_notification_filter(
-			__( 'Leadership Confetti Bits Notifications', 'confetti-bitts' ),
-			array( 'cb_transactions_send_bits' ),
-			5
-		);
-
-
-		//		add_filter( 'cb_transactions_send_bits', array( $this, 'format_notification' ), 10, 7 );	
-
 	}
 
 	public function register_confetti_bits_transfer_notifications() {
 
-		/**
-		 * Register Notification Type.
-		 *
-		 * @param string $notification_type        Notification Type key.
-		 * @param string $notification_label       Notification label.
-		 * @param string $notification_admin_label Notification admin label.
-		 * @param string $notification_group       Notification group.
-		 * @param bool   $default                  Default status for enabled/disabled.
-		 */
 		$this->register_notification_type(
 			'cb_transactions_transfer_bits',
 			esc_html__( 'Someone sends you Confetti Bits', 'confetti-bits' ),
@@ -167,27 +388,12 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			'confetti_bits',
 		);
 
-		/**
-		 * Register notification.
-		 *
-		 * @param string $component         Component name.
-		 * @param string $component_action  Component action.
-		 * @param string $notification_type Notification Type key.
-		 * @param string $icon_class        Notification Small Icon.
-		 */
 		$this->register_notification(
 			'confetti_bits',
 			'cb_transfer_bits',
 			'cb_transactions_transfer_bits'
 		);
 
-		/**
-		 * Add email schema.
-		 *
-		 * @param string $email_type        Type of email being sent.
-		 * @param array  $args              Email arguments.
-		 * @param string $notification_type Notification Type key.
-		 */
 		$this->register_email_type(
 			'cb-transfer-bits-email',
 			array(
@@ -206,105 +412,13 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			5
 		);
 
-
-		//		add_filter( 'cb_transactions_send_bits', array( $this, 'format_notification' ), 10, 7 );	
-
 	}
 
-	public function register_confetti_bits_activity_notifications() {
 
-		/**
-		 * Register Notification Type.
-		 *
-		 * @param string $notification_type        Notification Type key.
-		 * @param string $notification_label       Notification label.
-		 * @param string $notification_admin_label Notification admin label.
-		 * @param string $notification_group       Notification group.
-		 * @param bool   $default                  Default status for enabled/disabled.
-		 */
-		$this->register_notification_type(
-			'cb_transactions_activity_bits',
-			esc_html__( 'You get Confetti Bits for posting', 'confetti-bits' ),
-			esc_html__( 'You get Confetti Bits for posting', 'confetti-bits' ),
-			'confetti_bits',
-		);
-
-		/**
-		 * Register notification.
-		 *
-		 * @param string $component         Component name.
-		 * @param string $component_action  Component action.
-		 * @param string $notification_type Notification Type key.
-		 * @param string $icon_class        Notification Small Icon.
-		 */
-		$this->register_notification(
-			'confetti_bits',
-			'cb_activity_bits',
-			'cb_transactions_activity_bits'
-		);
-
-		/**
-		 * Add email schema.
-		 *
-		 * @param string $email_type        Type of email being sent.
-		 * @param array  $args              Email arguments.
-		 * @param string $notification_type Notification Type key.
-		 */
-		$this->register_email_type(
-			'cb-send-bits-email',
-			array(
-				'email_title'         => __( 'Nice!', 'confetti-bits' ),
-				'email_content'       => __( 'You just got Confetti Bits for posting on TeamCTG!', 'confetti-bits' ),
-				'email_plain_content' => __( 'You just got Confetti Bits for posting on TeamCTG!', 'confetti-bits' ),
-				'situation_label'     => __( 'You get Confetti Bits for posting', 'confetti-bits' ),
-				'unsubscribe_text'    => __( 'You will no longer receive emails when you receive Confetti Bits for posting.', 'confetti-bits' ),
-			),
-			'cb_transactions_activity_bits'
-		);
-
-		$this->register_notification_filter(
-			__( 'Confetti Bits Activity Notifications', 'confetti-bitts' ),
-			array( 'cb_transactions_activity_bits' ),
-			5
-		);
-
-
-		//		add_filter( 'cb_transactions_send_bits', array( $this, 'format_notification' ), 10, 7 );	
-
-	}
 
 	public function register_confetti_bits_import_notifications() {
 
-		$this->register_notification_type(
-			'cb_transactions_import_bits',
-			esc_html__( 'Someone performs a Confetti Bits import', 'confetti-bits' ),
-			esc_html__( 'Someone performs a Confetti Bits import', 'confetti-bits' ),
-			'confetti_bits'
-		);
 
-		$this->register_notification(
-			'confetti_bits',
-			'cb_import_bits',
-			'cb_transactions_import_bits'
-		);
-
-		$this->register_email_type(
-			'cb-import-bits-email',
-			array(
-				'email_title'         => __( 'Confetti Bits Imported', 'confetti-bits' ),
-				'email_content'       => __( "Confetti Bits were just imported!", 'confetti-bits' ),
-				'email_plain_content' => __( "Confetti Bits were just imported!", 'confetti-bits' ),
-				'situation_label'     => __( "Confetti Bits are imported.", 'buddyboss' ),
-				'unsubscribe_text'    => __( 'You will no longer receive emails when Confetti Bits are imported.', 'confetti-bits' ),
-			),
-			'cb_transactions_import_bits'
-		);
-		$this->register_notification_filter(
-			__( 'Confetti Bits Import Notifications', 'confetti-bits' ),
-			array( 'cb_transactions_import_bits' ),
-			5
-		);
-		//		add_filter( 'cb_transactions_import_bits', array( $this, 'format_notification' ), 10, 7 );
 
 	}
 
@@ -382,18 +496,9 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		//		add_filter( 'cb_transactions_request_bits', array( $this, 'format_notification' ), 10, 7 );
 
 	}
-
+*/
 	public function register_participation_notifications() {
 
-		/**
-		 * Register Notification Type.
-		 *
-		 * @param string $notification_type        Notification Type key.
-		 * @param string $notification_label       Notification label.
-		 * @param string $notification_admin_label Notification admin label.
-		 * @param string $notification_group       Notification group.
-		 * @param bool   $default                  Default status for enabled/disabled.
-		 */
 		$this->register_notification_type(
 			'cb_participation_status_update',
 			esc_html__( 'Someone updates your participation status', 'confetti-bits' ),
@@ -408,14 +513,6 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			'confetti_bits'
 		);
 
-		/**
-		 * Register notification.
-		 *
-		 * @param string $component         Component name.
-		 * @param string $component_action  Component action.
-		 * @param string $notification_type Notification Type key.
-		 * @param string $icon_class        Notification Small Icon.
-		 */
 		$this->register_notification(
 			'confetti_bits',
 			'cb_participation_status_update',
@@ -428,13 +525,6 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			'cb_participation_new'
 		);
 
-		/**
-		 * Add email schema.
-		 *
-		 * @param string $email_type        Type of email being sent.
-		 * @param array  $args              Email arguments.
-		 * @param string $notification_type Notification Type key.
-		 */
 		$this->register_email_type(
 			'cb-participation-status-update',
 			array(
@@ -568,7 +658,6 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		 * @param string $notification_group       Notification group.
 		 * @param bool   $default                  Default status for enabled/disabled.
 		 */
-
 		$this->register_notification_type(
 			'cb_transactions_birthday_bits',
 			esc_html__( "Birthday Notifications", 'confetti-bits' ),
@@ -626,16 +715,6 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 
 	public function register_anniversary_notifications() {
 
-		/**
-		 * Register Notification Type.
-		 *
-		 * @param string $notification_type        Notification Type key.
-		 * @param string $notification_label       Notification label.
-		 * @param string $notification_admin_label Notification admin label.
-		 * @param string $notification_group       Notification group.
-		 * @param bool   $default                  Default status for enabled/disabled.
-		 */
-
 		$this->register_notification_type(
 			'cb_transactions_anniversary_bits',
 			esc_html__( "Work Anniversary Notifications", 'confetti-bits' ),
@@ -643,14 +722,6 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			'confetti_bits'
 		);
 
-		/**
-		 * Register notification.
-		 *
-		 * @param string $component         Component name.
-		 * @param string $component_action  Component action.
-		 * @param string $notification_type Notification Type key.
-		 * @param string $icon_class        Notification Small Icon.
-		 */
 		$this->register_notification(
 			'confetti_bits',
 			'cb_anniversary_bits',
@@ -699,7 +770,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		if ( ( 'confetti_bits' === $component_name && 'cb_send_bits' === $component_action_name ) 
 			|| ( 'confetti_bits' === $component_name && 'cb_transfer_bits' === $component_action_name ) ) {
 
-			$text = esc_html__( bp_core_get_user_displayname( $item_id ) . ' just sent you bits!', 'confetti-bits' );
+			$text = esc_html__( cb_core_get_user_display_name( $item_id ) . ' just sent you bits!', 'confetti-bits' );
 
 			$content = array(
 				'title' => "Someone just sent Confetti Bits!", 
@@ -729,7 +800,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 
 		if ( 'confetti_bits' === $component_name && 'cb_import_bits' === $component_action_name ) {
 
-			$text = esc_html__( bp_core_get_user_displayname( $item_id ) . ' just imported bits!', 'confetti-bits' );
+			$text = esc_html__( cb_core_get_user_display_name( $item_id ) . ' just imported bits!', 'confetti-bits' );
 
 			$content = array(
 				'title' => "Someone just imported Confetti Bits!", 
@@ -740,7 +811,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 
 		if ( 'confetti_bits' === $component_name && 'cb_bits_request' === $component_action_name ) {
 
-			$text = bp_core_get_user_displayname( $secondary_item_id ) . ' just sent in a new Confetti Bits Request!';
+			$text = cb_core_get_user_display_name( $secondary_item_id ) . ' just sent in a new Confetti Bits Request!';
 
 			$content = array(
 				'title' => "New Confetti Bits Request!", 

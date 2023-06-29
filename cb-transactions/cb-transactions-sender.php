@@ -383,8 +383,7 @@ function cb_transactions_send_bits($args = array()) {
  * the DB? This program doesn't need analytics based
  * on that type of stuff, just delete from the DB.
  * 
- * @package Confetti_Bits
- * @subpackage Transactions
+ * @package ConfettiBits\Transactions
  * @since 2.3.0
  */
 function cb_transactions_remove_bits( $id, $reassign, $user ) {

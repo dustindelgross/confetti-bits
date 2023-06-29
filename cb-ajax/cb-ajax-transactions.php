@@ -11,8 +11,7 @@ defined('ABSPATH') || exit;
  * 		'type': string (success or error)
  * }
  * 
- * @package Confetti_Bits
- * @subpackage AJAX
+ * @package ConfettiBits\AJAX
  * @since 2.3.0
  */
 function cb_ajax_get_transactions() {
@@ -63,8 +62,6 @@ function cb_ajax_get_transactions() {
 	die();
 
 }
-add_action( 'wp_ajax_cb_transactions_get_transactions', 'cb_ajax_get_transactions' );
-
 
 /**
  * CB AJAX New Transactions
@@ -80,8 +77,7 @@ add_action( 'wp_ajax_cb_transactions_get_transactions', 'cb_ajax_get_transaction
  * - amount (int) - The amount of bits to send.
  * - log_entry (string) - The log entry to record for this transaction.
  * 
- * @package Confetti_Bits
- * @subpackage AJAX
+ * @package ConfettiBits\AJAX
  * @since 2.3.0
  */
 function cb_ajax_new_transactions() {
@@ -169,7 +165,7 @@ function cb_ajax_new_transactions() {
 		die();
 	}
 
-	if ( $amount + cb_transactions_get_total_sent_today() > 20 ) {
+	if ( $amount + cb_transactions_get_total_sent_today() > 20 ) {		
 		http_response_code(403);
 		$feedback["text"] = "Transaction not sent. This would put you over the 20 Confetti Bits per diem limit. Your counter will reset tomorrow!";
 		$feedback["type"] = "warning";
@@ -187,19 +183,17 @@ function cb_ajax_new_transactions() {
 
 	$action = $is_admin ? "send" : "transfer";
 
-	$send = cb_transactions_send_bits(
-		array(
-			'item_id'			=> $recipient_id,
-			'secondary_item_id'	=> $sender_id,
-			'sender_id'			=> $sender_id,
-			'recipient_id' 		=> $recipient_id,
-			'date_sent'			=> cb_core_current_date(),
-			'log_entry'    		=> "{$log_entry} - from {$sender_name}",
-			'component_name'    => 'confetti_bits',
-			'component_action'  => "cb_{$action}_bits",
-			'amount'    		=> $amount
-		)
-	);
+	$send = cb_transactions_new_transaction([
+		'item_id'			=> $recipient_id,
+		'secondary_item_id'	=> $sender_id,
+		'sender_id'			=> $sender_id,
+		'recipient_id' 		=> $recipient_id,
+		'date_sent'			=> cb_core_current_date(),
+		'log_entry'    		=> "{$log_entry} - from {$sender_name}",
+		'component_name'    => 'confetti_bits',
+		'component_action'  => "cb_{$action}_bits",
+		'amount'    		=> $amount
+	]);
 
 	if ( $add_activity ) {
 		$sender_link = bp_core_get_userlink( $sender_id );
@@ -223,19 +217,17 @@ function cb_ajax_new_transactions() {
 			echo json_encode($feedback);
 			die();
 		} else {
-			$subtract = cb_transactions_send_bits(
-				array(
-					'item_id'			=> $sender_id,
-					'secondary_item_id'	=> $sender_id,
-					'sender_id'			=> $sender_id,
-					'recipient_id' 		=> $sender_id,
-					'date_sent'			=> cb_core_current_date(),
-					'log_entry'    		=> "Sent Bits to {$recipient_name}",
-					'component_name'    => 'confetti_bits',
-					'component_action'  => "cb_{$action}_bits",
-					'amount'    		=> -$amount
-				)
-			);
+			$subtract = cb_transactions_new_transaction([
+				'item_id'			=> $sender_id,
+				'secondary_item_id'	=> $sender_id,
+				'sender_id'			=> $sender_id,
+				'recipient_id' 		=> $sender_id,
+				'date_sent'			=> cb_core_current_date(),
+				'log_entry'    		=> "Sent Bits to {$recipient_name}",
+				'component_name'    => 'confetti_bits',
+				'component_action'  => "cb_{$action}_bits",
+				'amount'    		=> -$amount
+			]);
 
 			if ( true === is_int($subtract) ) {
 				http_response_code(200);
@@ -276,10 +268,9 @@ function cb_ajax_new_transactions() {
  * - amount (int) - The amount of bits to send.
  * - log_entry (string) - The log entry to record for this transaction.
  * 
- * @package Confetti_Bits
- * @subpackage AJAX
+ * @package ConfettiBits\AJAX
  * @since 2.1.1
- */
+
 function cb_ajax_send_bits() {
 
 	if ( ! cb_is_post_request() ) {
@@ -442,7 +433,7 @@ function cb_ajax_send_bits() {
 	}
 
 }
-add_action('wp_ajax_cb_send_bits', 'cb_ajax_send_bits');
+// add_action('wp_ajax_cb_send_bits', 'cb_ajax_send_bits');
 
 function cb_ajax_get_transactions_by_id() {
 	if ( !isset( $_GET['user_id'] ) ) {
@@ -504,3 +495,4 @@ function cb_ajax_get_total_transactions() {
 
 }
 //add_action( 'wp_ajax_cb_participation_get_total_transactions', 'cb_ajax_get_total_transactions' );
+*/

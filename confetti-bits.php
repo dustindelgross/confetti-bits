@@ -5,7 +5,7 @@
  * Description: This plugin gamifies company culture events.
  * Author:      Dustin Delgross
  * Author URI:  https://dustindelgross.com/
- * Version:     2.3.0
+ * Version:     2.3.1
  * Text Domain: confetti-bits
  */
 defined( 'ABSPATH' ) || exit;
@@ -170,11 +170,11 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			}
 
 			if ( ! defined( 'CONFETTI_BITS_PLUGIN_VERSION' ) ) {
-				$this->define( 'CONFETTI_BITS_PLUGIN_VERSION', '2.3.0');
+				$this->define( 'CONFETTI_BITS_PLUGIN_VERSION', '2.3.1');
 			}
 
 			if ( ! defined( 'CONFETTI_BITS_PLUGIN_DB_VERSION' ) ) {
-				$this->define( 'CONFETTI_BITS_PLUGIN_DB_VERSION', '2.3.0');
+				$this->define( 'CONFETTI_BITS_PLUGIN_DB_VERSION', '2.3.1');
 			}
 
 			if ( ! defined( 'CONFETTI_BITS_PLUGIN_BASENAME' ) ) {
