@@ -157,16 +157,21 @@ function cb_core_get_api_key( $secret = '' ) {
  */
 function cb_core_secrets_manager_init() {
 
-	$api_key_safe_name = "cb-core-api-key-" . cb_core_generate_uuid();
-	$api_key = cb_core_generate_uuid();
+	$current_api_key = get_option( 'cb_core_api_key_safe_name' );
 
-	add_option( 'cb_core_api_key_safe_name', $api_key_safe_name );
+	if ( false === $current_api_key ) {
 
-	return cb_core_set_api_key([
-		'Name' => $api_key_safe_name,
-		'Description' => "An API Key for Confetti Bits.",
-		'SecretString' => $api_key,
-	]);
+		$api_key_safe_name = "cb-core-api-key-" . cb_core_generate_uuid();
+		$api_key = cb_core_generate_uuid();
+
+		add_option( 'cb_core_api_key_safe_name', $api_key_safe_name );
+
+		return cb_core_set_api_key([
+			'Name' => $api_key_safe_name,
+			'Description' => "An API Key for Confetti Bits.",
+			'SecretString' => $api_key,
+		]);
+	}
 
 }
 
@@ -182,7 +187,7 @@ function cb_core_secrets_manager_init() {
  * @since 2.3.0
  */
 function cb_core_update_api_key() {
-	
+
 	$api_key_safe_name = "cb-core-api-key-" . cb_core_generate_uuid();
 	$api_key = cb_core_generate_uuid();
 
@@ -193,7 +198,7 @@ function cb_core_update_api_key() {
 		'Description' => "An API Key for Confetti Bits.",
 		'SecretString' => $api_key,
 	]);
-	
+
 }
 
 /**
@@ -215,24 +220,24 @@ function cb_core_update_api_key() {
  * @since 2.3.0
  */
 function cb_core_validate_api_key( $safe_name = '' ) {
-	
+
 	if ( empty( $safe_name ) ) {
 		return false;
 	}
-	
+
 	$valid_safe_name = get_option( 'cb_core_api_key_safe_name' );
-	
+
 	if ( $safe_name !== $valid_safe_name ) {
 		return false;
 	}
-	
+
 	$valid_api_key = cb_core_get_api_key( $valid_safe_name );
 	$testing_api_key = cb_core_get_api_key( $safe_name );
-	
+
 	if ( $testing_api_key !== $valid_api_key ) {
 		return false;
 	}
-	
+
 	return true;
-	
+
 }

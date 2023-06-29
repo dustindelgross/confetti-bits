@@ -512,3 +512,25 @@ function cb_core_get_user_display_name( $user_id = 0 ) {
 	return $display_name;
 
 }
+
+/**
+ * Returns the email address for the given user.
+ * 
+ * @param int $user_id The ID of the user. Default current user.
+ * 
+ * @return string The user's email address, if one exists.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_get_user_email( $user_id = 0 ) {
+	
+	if ( $user_id === 0 ) {
+		$user_id = get_current_user_id();
+	}
+	
+	$user = get_userdata($user_id);
+	
+	return $user->user_email;
+	
+}

@@ -106,21 +106,6 @@ Search.appendIndex(
             "summary": "CB\u0020AJAX\u0020New\u0020Transactions",
             "url": "namespaces/default.html#function_cb_ajax_new_transactions"
         },                {
-            "fqsen": "\\cb_ajax_send_bits\u0028\u0029",
-            "name": "cb_ajax_send_bits",
-            "summary": "CB\u0020AJAX\u0020Send\u0020Bits",
-            "url": "namespaces/default.html#function_cb_ajax_send_bits"
-        },                {
-            "fqsen": "\\cb_ajax_get_transactions_by_id\u0028\u0029",
-            "name": "cb_ajax_get_transactions_by_id",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_ajax_get_transactions_by_id"
-        },                {
-            "fqsen": "\\cb_ajax_get_total_transactions\u0028\u0029",
-            "name": "cb_ajax_get_total_transactions",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_ajax_get_total_transactions"
-        },                {
             "fqsen": "\\CONFETTI_BITS_AJAX_SLUG",
             "name": "CONFETTI_BITS_AJAX_SLUG",
             "summary": "",
@@ -1203,53 +1188,38 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Notifications_Component",
             "name": "CB_Notifications_Component",
-            "summary": "CB\u0020Notifications\u0020Component",
+            "summary": "Formats\u0020Confetti\u0020Bits\u0020Notifications.",
             "url": "classes/CB-Notifications-Component.html"
         },                {
             "fqsen": "\\CB_Notifications_Component\u003A\u003A\u0024instance",
             "name": "instance",
-            "summary": "",
+            "summary": "Set\u0020up\u0020singleton\u0020instance.",
             "url": "classes/CB-Notifications-Component.html#property_instance"
         },                {
             "fqsen": "\\CB_Notifications_Component\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Constructor\u0020function.",
             "url": "classes/CB-Notifications-Component.html#method___construct"
         },                {
             "fqsen": "\\CB_Notifications_Component\u003A\u003Aload\u0028\u0029",
             "name": "load",
-            "summary": "",
+            "summary": "Registers\u0020notification\u0020formats.",
             "url": "classes/CB-Notifications-Component.html#method_load"
         },                {
-            "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_confetti_bits_send_notifications\u0028\u0029",
-            "name": "register_confetti_bits_send_notifications",
-            "summary": "",
-            "url": "classes/CB-Notifications-Component.html#method_register_confetti_bits_send_notifications"
+            "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_cb_transactions_notifications\u0028\u0029",
+            "name": "register_cb_transactions_notifications",
+            "summary": "Registers\u0020all\u0020our\u0020notifications\u0020for\u0020the\u0020transactions\u0020component.",
+            "url": "classes/CB-Notifications-Component.html#method_register_cb_transactions_notifications"
         },                {
-            "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_confetti_bits_transfer_notifications\u0028\u0029",
-            "name": "register_confetti_bits_transfer_notifications",
-            "summary": "",
-            "url": "classes/CB-Notifications-Component.html#method_register_confetti_bits_transfer_notifications"
+            "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_cb_activity_notifications\u0028\u0029",
+            "name": "register_cb_activity_notifications",
+            "summary": "Registers\u0020notifications\u0020for\u0020activity\u0020posts.",
+            "url": "classes/CB-Notifications-Component.html#method_register_cb_activity_notifications"
         },                {
-            "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_confetti_bits_activity_notifications\u0028\u0029",
-            "name": "register_confetti_bits_activity_notifications",
-            "summary": "",
-            "url": "classes/CB-Notifications-Component.html#method_register_confetti_bits_activity_notifications"
-        },                {
-            "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_confetti_bits_import_notifications\u0028\u0029",
-            "name": "register_confetti_bits_import_notifications",
-            "summary": "",
-            "url": "classes/CB-Notifications-Component.html#method_register_confetti_bits_import_notifications"
-        },                {
-            "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_confetti_bits_request_fulfillment_notifications\u0028\u0029",
-            "name": "register_confetti_bits_request_fulfillment_notifications",
-            "summary": "",
-            "url": "classes/CB-Notifications-Component.html#method_register_confetti_bits_request_fulfillment_notifications"
-        },                {
-            "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_confetti_bits_request_sender_notifications\u0028\u0029",
-            "name": "register_confetti_bits_request_sender_notifications",
-            "summary": "",
-            "url": "classes/CB-Notifications-Component.html#method_register_confetti_bits_request_sender_notifications"
+            "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_cb_requests_notifications\u0028\u0029",
+            "name": "register_cb_requests_notifications",
+            "summary": "Registers\u0020notifications\u0020for\u0020the\u0020requests\u0020component.",
+            "url": "classes/CB-Notifications-Component.html#method_register_cb_requests_notifications"
         },                {
             "fqsen": "\\CB_Notifications_Component\u003A\u003Aregister_participation_notifications\u0028\u0029",
             "name": "register_participation_notifications",
@@ -1595,6 +1565,31 @@ Search.appendIndex(
             "name": "cb_setup_requests",
             "summary": "CB\u0020Setup\u0020Requests",
             "url": "namespaces/default.html#function_cb_setup_requests"
+        },                {
+            "fqsen": "\\cb_bits_request_sender_email_notification\u0028\u0029",
+            "name": "cb_bits_request_sender_email_notification",
+            "summary": "CB\u0020Bits\u0020Request\u0020Sender\u0020Email\u0020Notification",
+            "url": "namespaces/default.html#function_cb_bits_request_sender_email_notification"
+        },                {
+            "fqsen": "\\cb_requests_new_request_notifications\u0028\u0029",
+            "name": "cb_requests_new_request_notifications",
+            "summary": "Sends\u0020out\u0020notifications\u0020whenever\u0020someone\u0020submits\u0020a\u0020new\u0020request.",
+            "url": "namespaces/default.html#function_cb_requests_new_request_notifications"
+        },                {
+            "fqsen": "\\cb_requests_admin_new_request_notifications\u0028\u0029",
+            "name": "cb_requests_admin_new_request_notifications",
+            "summary": "Sends\u0020notifications\u0020to\u0020request\u0020admins\u0020after\u0020a\u0020new\u0020request\u0020is\u0020sent\u0020in.",
+            "url": "namespaces/default.html#function_cb_requests_admin_new_request_notifications"
+        },                {
+            "fqsen": "\\cb_requests_leadership_new_request_notifications\u0028\u0029",
+            "name": "cb_requests_leadership_new_request_notifications",
+            "summary": "Sends\u0020notifications\u0020to\u0020leadership\u0020after\u0020a\u0020new\u0020request\u0020is\u0020sent\u0020in.",
+            "url": "namespaces/default.html#function_cb_requests_leadership_new_request_notifications"
+        },                {
+            "fqsen": "\\cb_requests_site_admins_new_request_notifications\u0028\u0029",
+            "name": "cb_requests_site_admins_new_request_notifications",
+            "summary": "Sends\u0020notifications\u0020to\u0020site\u0020admins\u0020after\u0020a\u0020new\u0020request\u0020is\u0020sent\u0020in.",
+            "url": "namespaces/default.html#function_cb_requests_site_admins_new_request_notifications"
         },                {
             "fqsen": "\\cb_requests_nav\u0028\u0029",
             "name": "cb_requests_nav",
@@ -2126,21 +2121,6 @@ Search.appendIndex(
             "summary": "CB\u0020Transactions\u0020Get\u0020Total\u0020Sent\u0020Today",
             "url": "namespaces/default.html#function_cb_transactions_get_total_sent_today"
         },                {
-            "fqsen": "\\cb_bits_request_sender_email_notification\u0028\u0029",
-            "name": "cb_bits_request_sender_email_notification",
-            "summary": "CB\u0020Bits\u0020Request\u0020Sender\u0020Email\u0020Notification",
-            "url": "namespaces/default.html#function_cb_bits_request_sender_email_notification"
-        },                {
-            "fqsen": "\\cb_bits_request_fulfillment_email_notification\u0028\u0029",
-            "name": "cb_bits_request_fulfillment_email_notification",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_bits_request_fulfillment_email_notification"
-        },                {
-            "fqsen": "\\cb_transactions_notifications\u0028\u0029",
-            "name": "cb_transactions_notifications",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_transactions_notifications"
-        },                {
             "fqsen": "\\cb_transactions_get_request_balance\u0028\u0029",
             "name": "cb_transactions_get_request_balance",
             "summary": "CB\u0020Transactions\u0020Get\u0020Request\u0020Balance",
@@ -2176,10 +2156,10 @@ Search.appendIndex(
             "summary": "CB\u0020Is\u0020Multiarray",
             "url": "namespaces/default.html#function_cb_is_multi_array"
         },                {
-            "fqsen": "\\cb_send_sitewide_notice\u0028\u0029",
-            "name": "cb_send_sitewide_notice",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_send_sitewide_notice"
+            "fqsen": "\\cb_core_send_sitewide_notice\u0028\u0029",
+            "name": "cb_core_send_sitewide_notice",
+            "summary": "Sends\u0020out\u0020a\u0020sitewide\u0020notice.",
+            "url": "namespaces/default.html#function_cb_core_send_sitewide_notice"
         },                {
             "fqsen": "\\cb_transactions_has_bits\u0028\u0029",
             "name": "cb_transactions_has_bits",
@@ -2211,6 +2191,11 @@ Search.appendIndex(
             "summary": "CB\u0020Transactions\u0020Delete\u0020Transaction",
             "url": "namespaces/default.html#function_cb_transactions_delete_transaction"
         },                {
+            "fqsen": "\\cb_transactions_new_transaction\u0028\u0029",
+            "name": "cb_transactions_new_transaction",
+            "summary": "CB\u0020Transactions\u0020New\u0020Transaction",
+            "url": "namespaces/default.html#function_cb_transactions_new_transaction"
+        },                {
             "fqsen": "\\cb_import_bits\u0028\u0029",
             "name": "cb_import_bits",
             "summary": "CB\u0020Import\u0020Bits",
@@ -2238,8 +2223,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_groups_activity_notifications\u0028\u0029",
             "name": "cb_groups_activity_notifications",
-            "summary": "",
+            "summary": "Sends\u0020a\u0020notification\u0020to\u0020members\u0020of\u0020a\u0020group\u0020when\u0020someone\u0020posts.",
             "url": "namespaces/default.html#function_cb_groups_activity_notifications"
+        },                {
+            "fqsen": "\\cb_transactions_notifications\u0028\u0029",
+            "name": "cb_transactions_notifications",
+            "summary": "Sends\u0020transaction\u0020notifications\u0020based\u0020on\u0020component\u0020action.",
+            "url": "namespaces/default.html#function_cb_transactions_notifications"
         },                {
             "fqsen": "\\cb_requests\u0028\u0029",
             "name": "cb_requests",
@@ -2790,6 +2780,11 @@ Search.appendIndex(
             "name": "cb_core_get_user_display_name",
             "summary": "Gets\u0020the\u0020user\u0020display\u0020name.",
             "url": "namespaces/default.html#function_cb_core_get_user_display_name"
+        },                {
+            "fqsen": "\\cb_core_get_user_email\u0028\u0029",
+            "name": "cb_core_get_user_email",
+            "summary": "Returns\u0020the\u0020email\u0020address\u0020for\u0020the\u0020given\u0020user.",
+            "url": "namespaces/default.html#function_cb_core_get_user_email"
         },                {
             "fqsen": "\\",
             "name": "\\",

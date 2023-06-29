@@ -89,11 +89,15 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Templates.html" class="">Templates</a>
+                <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
                     <li>
                 <a href="packages/ConfettiBits-Transactions.html" class="">Transactions</a>
+                
+            </li>
+                    <li>
+                <a href="packages/ConfettiBits-Templates.html" class="">Templates</a>
                 
             </li>
             </ul>
@@ -126,9 +130,8 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti.html">Confetti</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits.html">Bits</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits-Notifications.html">Notifications</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-Notifications.html">Notifications</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
@@ -142,9 +145,8 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti.html">Confetti</a></li>
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits.html">Bits</a></li>
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits-Notifications.html">Notifications</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-Notifications.html">Notifications</a></li>
                             </ul>
         </div>
     
@@ -159,14 +161,13 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">CB Notifications Component</p>
+            <p class="phpdocumentor-summary">Formats Confetti Bits Notifications.</p>
 
-    <section class="phpdocumentor-description"><p>Establishes the Confetti Bits Notifications component.</p>
-<p>We use this in tandem with BuddyBoss platform to give us
+    <section class="phpdocumentor-description"><p>We use this in tandem with BuddyBoss Platform to give us
 email, web, and push notifications. An absolute godsend,
 this makes it a million times easier to do that stuff, so
 we can focus on the actual functionality.</p>
@@ -180,15 +181,6 @@ we can focus on the actual functionality.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Notifications</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -225,6 +217,7 @@ we can focus on the actual functionality.</p>
     <span>
                         &nbsp;: mixed            </span>
 </dt>
+<dd>Set up singleton instance.</dd>
 
     </dl>
 
@@ -239,6 +232,7 @@ we can focus on the actual functionality.</p>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Constructor function.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Notifications-Component.html#method_format_notification">format_notification()</a>
@@ -251,12 +245,14 @@ we can focus on the actual functionality.</p>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Return the instance kiddos.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Notifications-Component.html#method_load">load()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Registers notification formats.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Notifications-Component.html#method_register_anniversary_notifications">register_anniversary_notifications()</a>
@@ -271,40 +267,25 @@ we can focus on the actual functionality.</p>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_activity_notifications">register_confetti_bits_activity_notifications()</a>
+    <a href="classes/CB-Notifications-Component.html#method_register_cb_activity_notifications">register_cb_activity_notifications()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Registers notifications for activity posts.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_import_notifications">register_confetti_bits_import_notifications()</a>
+    <a href="classes/CB-Notifications-Component.html#method_register_cb_requests_notifications">register_cb_requests_notifications()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Registers notifications for the requests component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_request_fulfillment_notifications">register_confetti_bits_request_fulfillment_notifications()</a>
+    <a href="classes/CB-Notifications-Component.html#method_register_cb_transactions_notifications">register_cb_transactions_notifications()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_request_sender_notifications">register_confetti_bits_request_sender_notifications()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_send_notifications">register_confetti_bits_send_notifications()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_transfer_notifications">register_confetti_bits_transfer_notifications()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
+<dd>Registers all our notifications for the transactions component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Notifications-Component.html#method_register_group_activity_notifications">register_group_activity_notifications()</a>
@@ -349,11 +330,12 @@ we can focus on the actual functionality.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Set up singleton instance.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
     <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">mixed</span>
@@ -387,20 +369,38 @@ we can focus on the actual functionality.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Constructor function.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+        <section class="phpdocumentor-description"><p>Start your engines. We're gonna be so notified.</p>
+</section>
+
     
     
-    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Notifications-Component.html#method___construct#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\CB_Notifications_Component::start()">CB_Notifications_Component::start()</abbr></span>
+                                        
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -418,7 +418,7 @@ we can focus on the actual functionality.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">694</span>
+    <span class="phpdocumentor-element-found-in__line">765</span>
 
     </aside>
 
@@ -508,11 +508,12 @@ we can focus on the actual functionality.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Return the instance kiddos.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">instance</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -539,20 +540,79 @@ we can focus on the actual functionality.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Registers notification formats.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">load</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+        <section class="phpdocumentor-description"><p>What's the difference between this and start(), you may ask?
+Don't. Don't ask me, at least. Best guess? Start() calls load(),
+and load() actually registers notifications.</p>
+</section>
+
     
     
-    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Notifications-Component.html#method_load#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">UPDATE:</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>I was mostly right. $this::start() calls $this::load(),
+and also adds a bunch of filter hooks that dynamically
+update notification configurations based on the
+what is supplied to the inherited class methods.
+$this::load() is an abstract method that just calls
+whatever is inside of it.</p>
+<p>Regardless, here we are. It works, doesn't it?</p>
+<p>To be a little clearer:</p>
+<pre class="prettyprint"><code class="prettyprint">1. The *notification group* is the one true group for all our
+	  notifications. Everything we have will be registered under
+	  the confetti_bits group (unless I change my mind later
+	  lmao).
+
+2. Notification *types* are going to be for our different
+	  components. So, cb_transactions, cb_requests,
+	  cb_participation, are all going to get their own types.
+	  The type created by $this-&gt;register_notification_type()
+	  is used to add a settings field for a user to control
+	  their notification options. This is a little different
+	  from how BuddyBoss does things, because their notification
+	  *groups* are based on their components, whereas we're
+	  putting all our components into the main 'confetti_bits'
+	  group. Ipso facto, our notification *types* are going to be
+	  component-based. It'll make sense eventually. Maybe.
+
+3. The notifications created by $this-&gt;register_notification()
+	  are going to distinguish which notification
+	  should be sent, based on a user's action. So this would
+	  be where the component_action comes in, like
+	  cb_send_bits, cb_anniversary_bits, cb_import_bits, etc.
+	  The notifications are sent out in a function that's
+	  typically defined in a cb-{$component}-notifications.php
+	  file. If that file doesn't exist... why does it not?
+	  Make one. That file needs to exist.
+
+4. Notification content is formatted in
+	  $this-&gt;format_notification(). The tokens are usually
+	  added in the same function talked about in part 3.
+</code></pre>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -570,7 +630,7 @@ we can focus on the actual functionality.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">627</span>
+    <span class="phpdocumentor-element-found-in__line">716</span>
 
     </aside>
 
@@ -601,7 +661,7 @@ we can focus on the actual functionality.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">560</span>
+    <span class="phpdocumentor-element-found-in__line">650</span>
 
     </aside>
 
@@ -624,22 +684,23 @@ we can focus on the actual functionality.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_register_confetti_bits_activity_notifications">
-        register_confetti_bits_activity_notifications()
-        <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_activity_notifications" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_register_cb_activity_notifications">
+        register_cb_activity_notifications()
+        <a href="classes/CB-Notifications-Component.html#method_register_cb_activity_notifications" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">214</span>
+    <span class="phpdocumentor-element-found-in__line">268</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Registers notifications for activity posts.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">register_confetti_bits_activity_notifications</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">register_cb_activity_notifications</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -655,22 +716,23 @@ we can focus on the actual functionality.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_register_confetti_bits_import_notifications">
-        register_confetti_bits_import_notifications()
-        <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_import_notifications" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_register_cb_requests_notifications">
+        register_cb_requests_notifications()
+        <a href="classes/CB-Notifications-Component.html#method_register_cb_requests_notifications" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">276</span>
+    <span class="phpdocumentor-element-found-in__line">300</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Registers notifications for the requests component.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">register_confetti_bits_import_notifications</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">register_cb_requests_notifications</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -686,115 +748,23 @@ we can focus on the actual functionality.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_register_confetti_bits_request_fulfillment_notifications">
-        register_confetti_bits_request_fulfillment_notifications()
-        <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_request_fulfillment_notifications" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_register_cb_transactions_notifications">
+        register_cb_transactions_notifications()
+        <a href="classes/CB-Notifications-Component.html#method_register_cb_transactions_notifications" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">187</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Registers all our notifications for the transactions component.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">register_confetti_bits_request_fulfillment_notifications</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_register_confetti_bits_request_sender_notifications">
-        register_confetti_bits_request_sender_notifications()
-        <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_request_sender_notifications" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">349</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">register_confetti_bits_request_sender_notifications</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_register_confetti_bits_send_notifications">
-        register_confetti_bits_send_notifications()
-        <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_send_notifications" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">88</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">register_confetti_bits_send_notifications</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_register_confetti_bits_transfer_notifications">
-        register_confetti_bits_transfer_notifications()
-        <a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_transfer_notifications" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">152</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">register_confetti_bits_transfer_notifications</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">register_cb_transactions_notifications</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -818,7 +788,7 @@ we can focus on the actual functionality.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">491</span>
+    <span class="phpdocumentor-element-found-in__line">581</span>
 
     </aside>
 
@@ -849,7 +819,7 @@ we can focus on the actual functionality.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-notifications/classes/class-cb-notifications-component.php"><a href="files/cb-notifications-classes-class-cb-notifications-component.html"><abbr title="cb-notifications/classes/class-cb-notifications-component.php">class-cb-notifications-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">386</span>
+    <span class="phpdocumentor-element-found-in__line">500</span>
 
     </aside>
 
@@ -992,12 +962,9 @@ we can focus on the actual functionality.</p>
                                             <li><a href="classes/CB-Notifications-Component.html#method_load">load()</a></li>
                                             <li><a href="classes/CB-Notifications-Component.html#method_register_anniversary_notifications">register_anniversary_notifications()</a></li>
                                             <li><a href="classes/CB-Notifications-Component.html#method_register_birthday_notifications">register_birthday_notifications()</a></li>
-                                            <li><a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_activity_notifications">register_confetti_bits_activity_notifications()</a></li>
-                                            <li><a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_import_notifications">register_confetti_bits_import_notifications()</a></li>
-                                            <li><a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_request_fulfillment_notifications">register_confetti_bits_request_fulfillment_notifications()</a></li>
-                                            <li><a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_request_sender_notifications">register_confetti_bits_request_sender_notifications()</a></li>
-                                            <li><a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_send_notifications">register_confetti_bits_send_notifications()</a></li>
-                                            <li><a href="classes/CB-Notifications-Component.html#method_register_confetti_bits_transfer_notifications">register_confetti_bits_transfer_notifications()</a></li>
+                                            <li><a href="classes/CB-Notifications-Component.html#method_register_cb_activity_notifications">register_cb_activity_notifications()</a></li>
+                                            <li><a href="classes/CB-Notifications-Component.html#method_register_cb_requests_notifications">register_cb_requests_notifications()</a></li>
+                                            <li><a href="classes/CB-Notifications-Component.html#method_register_cb_transactions_notifications">register_cb_transactions_notifications()</a></li>
                                             <li><a href="classes/CB-Notifications-Component.html#method_register_group_activity_notifications">register_group_activity_notifications()</a></li>
                                             <li><a href="classes/CB-Notifications-Component.html#method_register_participation_notifications">register_participation_notifications()</a></li>
                                     </ul>

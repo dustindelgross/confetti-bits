@@ -89,11 +89,15 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Templates.html" class="">Templates</a>
+                <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
                     <li>
                 <a href="packages/ConfettiBits-Transactions.html" class="">Transactions</a>
+                
+            </li>
+                    <li>
+                <a href="packages/ConfettiBits-Templates.html" class="">Templates</a>
                 
             </li>
             </ul>
@@ -189,6 +193,20 @@
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Dynamically registers a REST route.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_get_transactions">cb_ajax_get_transactions()</a>
+    <span>
+                                &nbsp;: <abbr title="\JSON">JSON</abbr>    </span>
+</dt>
+<dd>CB AJAX Get Transactions</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_new_transactions">cb_ajax_new_transactions()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>CB AJAX New Transactions</dd>
 
     </dl>
 
@@ -426,6 +444,109 @@ and HTTP methods.</p>
 
     
 </article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_get_transactions">
+        cb_ajax_get_transactions()
+        <a href="namespaces/default.html#function_cb_ajax_get_transactions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-transactions.php"><a href="files/cb-ajax-cb-ajax-transactions.html"><abbr title="cb-ajax/cb-ajax-transactions.php">cb-ajax-transactions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">17</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB AJAX Get Transactions</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_get_transactions</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\JSON">JSON</abbr></span></code>
+
+        <section class="phpdocumentor-description"><p>Gets transactions for a user based on the user_id passed in the $_GET array.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_get_transactions#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\JSON">JSON</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>{
+'text': JSON (JSON encoded array of transactions, or error message),
+'type': string (success or error)
+}</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_new_transactions">
+        cb_ajax_new_transactions()
+        <a href="namespaces/default.html#function_cb_ajax_new_transactions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-transactions.php"><a href="files/cb-ajax-cb-ajax-transactions.html"><abbr title="cb-ajax/cb-ajax-transactions.php">cb-ajax-transactions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">83</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB AJAX New Transactions</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_new_transactions</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>AJAX handler for creating transactions.</p>
+<p>All parameters are passed via POST request.</p>
+<p>The following parameters are required:</p>
+<ul>
+<li>sender_id (int) - The ID of the user sending the bits.</li>
+<li>recipient_id (int) - The ID of the user receiving the bits.</li>
+<li>amount (int) - The amount of bits to send.</li>
+<li>log_entry (string) - The log entry to record for this transaction.</li>
+</ul>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_new_transactions#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
@@ -539,6 +660,8 @@ and HTTP methods.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Functions</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_get_transactions">cb_ajax_get_transactions()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_new_transactions">cb_ajax_new_transactions()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_ajax_participation_api_init">cb_ajax_participation_api_init()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_ajax_register_rest_route">cb_ajax_register_rest_route()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_ajax_request_items_api_init">cb_ajax_request_items_api_init()</a></li>

@@ -177,32 +177,28 @@ jQuery(document).ready( function($) {
 
 		e.preventDefault();
 		e.stopPropagation();
-		
+
 		let postData = {
 			recipient_id: $('#cb_transactions_recipient_id').val(),
-			sender_id: $('#cb_transactions_sender_id').val(),
+			sender_id: cb_transactions.user_id,
 			amount: $('#cb_transactions_amount').val(),
 			log_entry: $('#cb_transactions_log_entry').val(),
 			api_key: cb_transactions.api_key
 		};
-		
+
 		if ( $('#cb_transactions_add_activity:checked').length === 1 ) {
 			postData.add_activity = true;
 		}
-		
-		let values = Object.fromEntries(form.serializeArray().map( (object) => {
-			return [ object.name.replace( 'cb_transactions_', '' ), object.value ];
-		}));
 		await $.ajax({
 			url: cb_transactions.new_transactions,
 			method: 'POST',
 			data: postData,
 			success: e => formMessage.setMessage(e),
-			error: (x) => console.error(x)
+			error: (x) => formMessage.setMessage(x.responseJSON)
 		});
-		
+
 		clearForm();
-		
+
 	});
 
 });

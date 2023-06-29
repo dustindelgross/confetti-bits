@@ -89,11 +89,15 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Templates.html" class="">Templates</a>
+                <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
                     <li>
                 <a href="packages/ConfettiBits-Transactions.html" class="">Transactions</a>
+                
+            </li>
+                    <li>
+                <a href="packages/ConfettiBits-Templates.html" class="">Templates</a>
                 
             </li>
             </ul>
@@ -433,6 +437,13 @@
 <dd>CB Is Multiarray</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_core_send_sitewide_notice">cb_core_send_sitewide_notice()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Sends out a sitewide notice.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_core_notifications_init">cb_core_notifications_init()</a>
     <span>
                                 &nbsp;: mixed    </span>
@@ -480,6 +491,13 @@
                                 &nbsp;: string    </span>
 </dt>
 <dd>Gets the user display name.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_core_get_user_email">cb_core_get_user_email()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Returns the email address for the given user.</dd>
 
     </dl>
 
@@ -2294,7 +2312,7 @@ Can refresh them at any time via WordPress admin panel.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-secrets-manager.php"><a href="files/cb-core-cb-core-secrets-manager.html"><abbr title="cb-core/cb-core-secrets-manager.php">cb-core-secrets-manager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">184</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -2345,7 +2363,7 @@ updates its safe name in the options table.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-secrets-manager.php"><a href="files/cb-core-cb-core-secrets-manager.html"><abbr title="cb-core/cb-core-secrets-manager.php">cb-core-secrets-manager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">222</span>
 
     </aside>
 
@@ -2413,7 +2431,7 @@ or it is expired or invalid, it will also fail.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">764</span>
+    <span class="phpdocumentor-element-found-in__line">421</span>
 
     </aside>
 
@@ -2451,6 +2469,50 @@ or it is expired or invalid, it will also fail.</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">1.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_send_sitewide_notice">
+        cb_core_send_sitewide_notice()
+        <a href="namespaces/default.html#function_cb_core_send_sitewide_notice" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">437</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sends out a sitewide notice.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_send_sitewide_notice</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Use this to send out non-critical updates that are
+intended to be informative or nice to know, such as
+an upcoming or recent update, new feature, etc.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_send_sitewide_notice#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.2.0</span>
                                                                                 
                                              
                                     </dd>
@@ -2889,6 +2951,66 @@ Default current user_id.</p>
             </section>
 
 </article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_get_user_email">
+        cb_core_get_user_email()
+        <a href="namespaces/default.html#function_cb_core_get_user_email" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="functions.php"><a href="files/functions.html">functions.php</a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">526</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the email address for the given user.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_get_user_email</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The ID of the user. Default current user.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_get_user_email#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The user's email address, if one exists.</p>
+</section>
+
+            </section>
+
+</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
@@ -3018,6 +3140,7 @@ Default current user_id.</p>
                                                     <li><a href="namespaces/default.html#function_cb_core_get_api_key">cb_core_get_api_key()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_get_missing_users">cb_core_get_missing_users()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_get_user_display_name">cb_core_get_user_display_name()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_get_user_email">cb_core_get_user_email()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_install">cb_core_install()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_install_contests">cb_core_install_contests()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_install_events">cb_core_install_events()</a></li>
@@ -3029,6 +3152,7 @@ Default current user_id.</p>
                                                     <li><a href="namespaces/default.html#function_cb_core_notifications_init">cb_core_notifications_init()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_prepare_install">cb_core_prepare_install()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_secrets_manager_init">cb_core_secrets_manager_init()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_send_sitewide_notice">cb_core_send_sitewide_notice()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_set_reset_date_globals">cb_core_set_reset_date_globals()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_set_role_globals">cb_core_set_role_globals()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_set_uri_globals">cb_core_set_uri_globals()</a></li>
