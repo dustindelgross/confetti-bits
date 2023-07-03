@@ -1,22 +1,19 @@
 <?php 
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
+
 /**
- * Confetti Bits Core Components
+ * A place for our core component functions. At least... some of them.
  * 
  * This is where we house all of our component-related functions.
  * These functions are typically used to determine what component
  * a user is interacting with, which resources are being requested, 
  * and determining access levels for certain features within the app.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
  */
 
-/*
-function cb_core_admin_get_components( $type = 'all' ) {
-
-	$components = cb_core_get_components( $type );
-
-	return apply_filters( 'cb_core_admin_get_components', $components, $type );
-
-}
-*/
 
 /**
  * Sets a global based on the current URI.
@@ -55,7 +52,125 @@ function cb_core_set_uri_globals() {
 
 }
 
+/**
+ * Does an entire song and dance to see if this is the component you want.
+ * 
+ * 1. Checks to see if the current component is the same as the supplied
+ * component. 
+ * 2. Checks to see if the supplied component has a slug that matches.
+ * 3. Checks to see if the supplied component is in the array of active 
+ * components.
+ * 4. Checks one last time to see if any of the active components has a
+ * slug that matches the supplied component.
+ * 
+ * @param string $component The component to check for.
+ * 
+ * @return bool True if it's one of ours, false in any other scenario.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
+function cb_is_current_component( $component = '' ) {
+
+	if ( empty( $component ) ) {
+		return false;
+	}
+
+	$cb = Confetti_Bits();
+
+	if ( empty( $cb->current_component ) ) {
+		return false;
+	}
+
+	if ( $cb->current_component == $component ) {
+		return true;
+	} 
+
+	if ( isset( $cb->{$component}->slug ) && $cb->{$component}->slug == $cb->current_component ) {
+		return true;
+	}
+
+	if ( $key = array_search( $component, $cb->active_components ) ) {
+		if ( strstr( $cb->current_component, $key ) ) {
+			return true;
+		}
+
+	}
+
+	foreach ( $cb->active_components as $id ) {
+
+		if ( empty( $cb->{$id}->slug ) || $cb->{$id}->slug != $cb->current_component ) {
+			continue;
+		}
+
+		if ( $id == $component ) {
+			return true;
+		}
+	}
+	
+	return false;
+
+}
+
+/**
+ * Asks the wizard if we could have some porridge.
+ * 
+ * @return bool Whether we may have some porridge.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
+function cb_is_confetti_bits_component() {
+	return cb_is_current_component( 'confetti-bits' );
+}
+
+/**
+ * Checks whether there is a currently logged-in user.
+ * 
+ * @see is_user_logged_in()
+ * @link https://developer.wordpress.org/reference/functions/is_user_logged_in/
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_is_user() {
+	return is_user_logged_in();
+}
+
+/**
+ * Checks to see if we're in the land of wonder.
+ * 
+ * @return bool Whether we're in the land of wonder.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
+function cb_is_user_confetti_bits() {
+	return (bool) ( cb_is_user() && cb_is_confetti_bits_component() );
+}
+
+/**
+ * Gives us an array of all active components.
+ * 
+ * @return array Active components.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_get_active_components() {
+	return Confetti_Bits()->active_components;
+}
+
+
 /*
+function cb_core_admin_get_components( $type = 'all' ) {
+
+	$components = cb_core_get_components( $type );
+
+	return apply_filters( 'cb_core_admin_get_components', $components, $type );
+
+}
+
 function cb_core_get_components( $type = 'all' ) {
 
 	$required_components = array(
@@ -134,112 +249,3 @@ function cb_is_active( $component = '' ) {
 	return apply_filters( 'cb_is_active', $retval, $component );
 }
 */
-
-/**
- * Does an entire song and dance to see if this is the component you want.
- * 
- * 1. Checks to see if the current component is the same as the supplied
- * component. 
- * 2. Checks to see if the supplied component has a slug that matches.
- * 3. Checks to see if the supplied component is in the array of active 
- * components.
- * 4. Checks one last time to see if any of the active components has a
- * slug that matches the supplied component.
- * 
- * @param string $component The component to check for.
- * 
- * @return bool True if it's one of ours, false in any other scenario.
- * 
- * @package ConfettiBits\Core
- * @since 1.0.0
- */
-function cb_is_current_component( $component = '' ) {
-
-	if ( empty( $component ) ) {
-		return false;
-	}
-
-	$cb = Confetti_Bits();
-
-	if ( empty( $cb->current_component ) ) {
-		return false;
-	}
-
-	if ( $cb->current_component == $component ) {
-		return true;
-	} 
-
-	if ( isset( $cb->{$component}->slug ) && $cb->{$component}->slug == $cb->current_component ) {
-		return true;
-	}
-
-	if ( $key = array_search( $component, $cb->active_components ) ) {
-		if ( strstr( $cb->current_component, $key ) ) {
-			return true;
-		}
-
-	}
-
-	foreach ( $cb->active_components as $id ) {
-
-		if ( empty( $cb->{$id}->slug ) || $cb->{$id}->slug != $cb->current_component ) {
-			continue;
-		}
-
-		if ( $id == $component ) {
-			return true;
-		}
-	}
-	
-	return false;
-
-}
-
-/**
- * Ask the wizard if we could have some porridge.
- * 
- * @return bool Whether we may have some porridge.
- * 
- * @package ConfettiBits\Core
- * @since 1.0.0
- */
-function cb_is_confetti_bits_component() {
-	return cb_is_current_component( 'confetti-bits' );
-}
-
-/**
- * Checks whether there is a currently logged-in user.
- * 
- * @see is_user_logged_in()
- * @link https://developer.wordpress.org/reference/functions/is_user_logged_in/
- * 
- * @package ConfettiBits\Core
- * @since 3.0.0
- */
-function cb_is_user() {
-	return is_user_logged_in();
-}
-
-/**
- * Checks to see if we're in the land of wonder.
- * 
- * @return bool Whether we're in the land of wonder.
- * 
- * @package ConfettiBits\Core
- * @since 1.0.0
- */
-function cb_is_user_confetti_bits() {
-	return (bool) ( cb_is_user() && cb_is_confetti_bits_component() );
-}
-
-/**
- * Gives us an array of all active components.
- * 
- * @return array Active components.
- * 
- * @package ConfettiBits\Core
- * @since 3.0.0
- */
-function cb_core_get_active_components() {
-	return Confetti_Bits()->active_components;
-}

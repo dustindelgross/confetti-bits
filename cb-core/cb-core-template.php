@@ -116,7 +116,7 @@ function cb_get_active_templates() {
 
 	if ( cb_is_user_site_admin() ) {
 		$templates['Events'] = 'events';
-//		$templates['Events Admin'] = 'events-admin';
+		$templates['Events Admin'] = 'events-admin';
 	}
 
 	return $templates;

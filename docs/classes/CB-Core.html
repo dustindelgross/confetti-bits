@@ -57,13 +57,13 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/ConfettiBits.html" class="">ConfettiBits</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
+                
+            </li>
                     <li>
                 <a href="packages/ConfettiBits-AJAX.html" class="">AJAX</a>
                 
@@ -85,10 +85,6 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
-                
-            </li>
-                    <li>
                 <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
@@ -101,6 +97,10 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Confetti.html" class="">Confetti</a>
@@ -328,6 +328,13 @@ dynamically call and/or create functions and the like.</p>
 <dd>Add any additional rewrite tags.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/CB-Core.html#method_enqueue_scripts">enqueue_scripts()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Enqueues scripts for the core component.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Component.html#method_generate_rewrite_rules">generate_rewrite_rules()</a>
     <span>
                                 &nbsp;: mixed    </span>
@@ -360,6 +367,13 @@ dynamically call and/or create functions and the like.</p>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Allow components to parse the main query.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/CB-Component.html#method_register_api_endpoints">register_api_endpoints()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Sets up REST endpoints for the component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Component.html#method_register_global_tables">register_global_tables()</a>
@@ -1189,7 +1203,7 @@ dynamically call and/or create functions and the like.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">856</span>
+    <span class="phpdocumentor-element-found-in__line">961</span>
 
     </aside>
 
@@ -1211,15 +1225,6 @@ dynamically call and/or create functions and the like.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Core</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1245,7 +1250,7 @@ dynamically call and/or create functions and the like.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">836</span>
+    <span class="phpdocumentor-element-found-in__line">942</span>
 
     </aside>
 
@@ -1292,7 +1297,7 @@ dynamically call and/or create functions and the like.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">817</span>
+    <span class="phpdocumentor-element-found-in__line">923</span>
 
     </aside>
 
@@ -1331,6 +1336,63 @@ dynamically call and/or create functions and the like.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_enqueue_scripts">
+        enqueue_scripts()
+        <a href="classes/CB-Core.html#method_enqueue_scripts" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-core.php"><a href="files/cb-core-classes-class-cb-core.html"><abbr title="cb-core/classes/class-cb-core.php">class-cb-core.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">52</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Enqueues scripts for the core component.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">enqueue_scripts</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$components</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$components</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Core.html#method_enqueue_scripts#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_generate_rewrite_rules">
         generate_rewrite_rules()
         <a href="classes/CB-Component.html#method_generate_rewrite_rules" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1339,7 +1401,7 @@ dynamically call and/or create functions and the like.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">901</span>
+    <span class="phpdocumentor-element-found-in__line">1003</span>
 
     </aside>
 
@@ -1361,15 +1423,6 @@ dynamically call and/or create functions and the like.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Core</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1395,7 +1448,7 @@ dynamically call and/or create functions and the like.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">380</span>
+    <span class="phpdocumentor-element-found-in__line">385</span>
 
     </aside>
 
@@ -1475,7 +1528,7 @@ to be parsed and then included.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">432</span>
+    <span class="phpdocumentor-element-found-in__line">437</span>
 
     </aside>
 
@@ -1557,7 +1610,7 @@ empty.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">878</span>
+    <span class="phpdocumentor-element-found-in__line">982</span>
 
     </aside>
 
@@ -1608,6 +1661,67 @@ empty.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_register_api_endpoints">
+        register_api_endpoints()
+        <a href="classes/CB-Component.html#method_register_api_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">449</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets up REST endpoints for the component.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">register_api_endpoints</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$components</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+        <section class="phpdocumentor-description"><p>When passed a collection of strings, uses
+cb_ajax_register_api_endpoints() to register
+endpoints based on the component.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$components</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Component.html#method_register_api_endpoints#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.1</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_register_global_tables">
         register_global_tables()
         <a href="classes/CB-Component.html#method_register_global_tables" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1616,7 +1730,7 @@ empty.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">688</span>
+    <span class="phpdocumentor-element-found-in__line">794</span>
 
     </aside>
 
@@ -1675,7 +1789,7 @@ empty.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">734</span>
+    <span class="phpdocumentor-element-found-in__line">840</span>
 
     </aside>
 
@@ -1737,7 +1851,7 @@ compatibility with the WordPress metadata API.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">779</span>
+    <span class="phpdocumentor-element-found-in__line">885</span>
 
     </aside>
 
@@ -1784,7 +1898,7 @@ compatibility with the WordPress metadata API.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">798</span>
+    <span class="phpdocumentor-element-found-in__line">904</span>
 
     </aside>
 
@@ -1831,7 +1945,7 @@ compatibility with the WordPress metadata API.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">440</span>
+    <span class="phpdocumentor-element-found-in__line">549</span>
 
     </aside>
 
@@ -1878,7 +1992,7 @@ compatibility with the WordPress metadata API.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">570</span>
+    <span class="phpdocumentor-element-found-in__line">676</span>
 
     </aside>
 
@@ -1960,7 +2074,7 @@ required by each item in the $wp_admin_nav parameter array.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">667</span>
+    <span class="phpdocumentor-element-found-in__line">773</span>
 
     </aside>
 
@@ -2007,7 +2121,7 @@ required by each item in the $wp_admin_nav parameter array.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">510</span>
+    <span class="phpdocumentor-element-found-in__line">624</span>
 
     </aside>
 
@@ -2029,15 +2143,6 @@ required by each item in the $wp_admin_nav parameter array.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Core</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -2137,7 +2242,7 @@ Eg, 'Search Groups...'.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">529</span>
+    <span class="phpdocumentor-element-found-in__line">645</span>
 
     </aside>
 
@@ -2149,7 +2254,9 @@ Eg, 'Search Groups...'.
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Maybe we'll use this someday.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2230,7 +2337,7 @@ in the $sub_nav parameter array should be formatted.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">648</span>
+    <span class="phpdocumentor-element-found-in__line">754</span>
 
     </aside>
 
@@ -2527,11 +2634,13 @@ cb_is_active( $this-&gt;id, 'awesome' ) to determine if the feature is active.
                                             <li><a href="classes/CB-Component.html#method_add_permastructs">add_permastructs()</a></li>
                                             <li><a href="classes/CB-Component.html#method_add_rewrite_rules">add_rewrite_rules()</a></li>
                                             <li><a href="classes/CB-Component.html#method_add_rewrite_tags">add_rewrite_tags()</a></li>
+                                            <li><a href="classes/CB-Core.html#method_enqueue_scripts">enqueue_scripts()</a></li>
                                             <li><a href="classes/CB-Component.html#method_generate_rewrite_rules">generate_rewrite_rules()</a></li>
                                             <li><a href="classes/CB-Component.html#method_includes">includes()</a></li>
                                             <li><a href="classes/CB-Component.html#method_late_includes">late_includes()</a></li>
                                             <li><a href="classes/CB-Core.html#method_load_components">load_components()</a></li>
                                             <li><a href="classes/CB-Component.html#method_parse_query">parse_query()</a></li>
+                                            <li><a href="classes/CB-Component.html#method_register_api_endpoints">register_api_endpoints()</a></li>
                                             <li><a href="classes/CB-Component.html#method_register_global_tables">register_global_tables()</a></li>
                                             <li><a href="classes/CB-Component.html#method_register_meta_tables">register_meta_tables()</a></li>
                                             <li><a href="classes/CB-Component.html#method_register_post_types">register_post_types()</a></li>

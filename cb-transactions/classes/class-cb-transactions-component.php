@@ -10,37 +10,82 @@ defined( 'ABSPATH' ) || exit;
  */
 class CB_Transactions_Component extends CB_Component {
 
+	/**
+	 * Initializes the transactions component.
+	 * 
+	 * @package ConfettiBits\Transactions
+	 * @since 1.0.0
+	 */
 	public function __construct() {
 		parent::start(
-			'transactions', __( 'Confetti Bits Transactions', 'confetti-bits' ), CONFETTI_BITS_PLUGIN_PATH, [] );
+			'transactions', 
+			__( 'Confetti Bits Transactions', 'confetti-bits' ), 
+			CONFETTI_BITS_PLUGIN_PATH, 
+			[] 
+		);
 	}
 
+	/**
+	 * Includes required files.
+	 * 
+	 * @package ConfettiBits\Transactions
+	 * @since 1.0.0
+	 */
 	public function includes( $includes = array() ) {
 
 		// Files to include.
 		$includes = array(
 			'functions',
-			'search',
 			'log',
-			'requests',
 			'exports',
 			'imports',
-			'sender',
-			'transfers',
 			'template',
 			'notifications',
 		);
-		
+
 		parent::includes($includes);
 
 	}
 
-	public function late_includes() {
-		if ( cb_is_user_confetti_bits() ) {
-			require_once $this->path . 'cb-transactions/screens/confetti-bits.php';
-		}
+	/**
+	 * Registers API endpoints for the transactions component.
+	 * 
+	 * @package ConfettiBits\Transactions
+	 * @since 2.3.1
+	 */
+	public function register_api_endpoints( $components = [] ) {
+
+		$components = ['transactions'];
+
+		parent::register_api_endpoints($components);
+
 	}
 
+	/**
+	 * Enqueue scripts for the transactions component.
+	 * 
+	 * @package ConfettiBits\Transactions
+	 * @since 3.0.0
+	 */
+	public function enqueue_scripts( $components = [] ) {
+		
+		$components = [
+			'transactions' => [
+				'transactions' => ['new'],
+				'dependencies' => ['jquery'],
+			]
+		];
+		
+		parent::enqueue_scripts($components);
+		
+	}
+
+	/**
+	 * Sets up component globals for the transactions component.
+	 * 
+	 * @package ConfettiBits\Transactions
+	 * @since 1.0.0
+	 */
 	public function setup_globals( $args = array() ) {
 
 		$cb = Confetti_Bits();
@@ -61,7 +106,7 @@ class CB_Transactions_Component extends CB_Component {
 				'global_tables'         => $global_tables,
 			)
 		);
-		
+
 		$cb->loaded_components[ $this->slug ] = $this->id;
 
 	}

@@ -57,13 +57,13 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/ConfettiBits.html" class="">ConfettiBits</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
+                
+            </li>
                     <li>
                 <a href="packages/ConfettiBits-AJAX.html" class="">AJAX</a>
                 
@@ -85,10 +85,6 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
-                
-            </li>
-                    <li>
                 <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
@@ -101,6 +97,10 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Confetti.html" class="">Confetti</a>
@@ -165,13 +165,6 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_get_transactions_slug">cb_get_transactions_slug()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>CB Get Transactions Slug</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_activity_bits">cb_activity_bits()</a>
     <span>
                                 &nbsp;: mixed    </span>
@@ -228,20 +221,6 @@
 <dd>CB Transactions Calculate Activity Bits</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_is_multi_array">cb_is_multi_array()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>CB Is Multiarray</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_core_send_sitewide_notice">cb_core_send_sitewide_notice()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>Sends out a sitewide notice.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_transactions_has_bits">cb_transactions_has_bits()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -290,6 +269,13 @@
 </dt>
 <dd>CB Transactions New Transaction</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_transactions_remove_bits">cb_transactions_remove_bits()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>CB Transactions Remove Bits</dd>
+
     </dl>
 
 
@@ -303,50 +289,6 @@
 
         </h3>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_get_transactions_slug">
-        cb_get_transactions_slug()
-        <a href="namespaces/default.html#function_cb_get_transactions_slug" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">25</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">CB Get Transactions Slug</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_get_transactions_slug</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"><p>Get the slug for the transactions component.
-This is deprecated, and we're working to remove this
-from the codebase.</p>
-</section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_get_transactions_slug#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_activity_bits">
         cb_activity_bits()
         <a href="namespaces/default.html#function_cb_activity_bits" class="headerlink"><i class="fas fa-link"></i></a>
@@ -355,7 +297,7 @@ from the codebase.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -429,7 +371,7 @@ post an update.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
@@ -480,7 +422,7 @@ that have been sent for the current day.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -543,7 +485,7 @@ cycle.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">190</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 
     </aside>
 
@@ -606,7 +548,7 @@ earning cycle.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">243</span>
+    <span class="phpdocumentor-element-found-in__line">226</span>
 
     </aside>
 
@@ -665,7 +607,7 @@ with how activity bits are registered.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">298</span>
+    <span class="phpdocumentor-element-found-in__line">281</span>
 
     </aside>
 
@@ -728,7 +670,7 @@ Uses BuddyBoss's global value for the activities table name.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">323</span>
+    <span class="phpdocumentor-element-found-in__line">306</span>
 
     </aside>
 
@@ -792,7 +734,7 @@ on the BuddyBoss activity feed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">367</span>
+    <span class="phpdocumentor-element-found-in__line">350</span>
 
     </aside>
 
@@ -860,104 +802,6 @@ missing an accompanying transaction on a given day.</p>
 
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_is_multi_array">
-        cb_is_multi_array()
-        <a href="namespaces/default.html#function_cb_is_multi_array" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">421</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">CB Is Multiarray</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_multi_array</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$arr</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"><p>Checks if the parameter is a multi-dimensional array.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$arr</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The array to check.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_is_multi_array#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.3.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_core_send_sitewide_notice">
-        cb_core_send_sitewide_notice()
-        <a href="namespaces/default.html#function_cb_core_send_sitewide_notice" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">437</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Sends out a sitewide notice.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_core_send_sitewide_notice</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"><p>Use this to send out non-critical updates that are
-intended to be informative or nice to know, such as
-an upcoming or recent update, new feature, etc.</p>
-</section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_core_send_sitewide_notice#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.2.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_transactions_has_bits">
         cb_transactions_has_bits()
         <a href="namespaces/default.html#function_cb_transactions_has_bits" class="headerlink"><i class="fas fa-link"></i></a>
@@ -966,7 +810,7 @@ an upcoming or recent update, new feature, etc.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">485</span>
+    <span class="phpdocumentor-element-found-in__line">411</span>
 
     </aside>
 
@@ -1031,7 +875,7 @@ within the past year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">516</span>
+    <span class="phpdocumentor-element-found-in__line">442</span>
 
     </aside>
 
@@ -1073,7 +917,7 @@ within the past year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">558</span>
+    <span class="phpdocumentor-element-found-in__line">484</span>
 
     </aside>
 
@@ -1115,7 +959,7 @@ within the past year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">609</span>
+    <span class="phpdocumentor-element-found-in__line">535</span>
 
     </aside>
 
@@ -1173,7 +1017,7 @@ within the past year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">647</span>
+    <span class="phpdocumentor-element-found-in__line">573</span>
 
     </aside>
 
@@ -1242,7 +1086,7 @@ or the top 15 users by Confetti Bits balance with the current user included</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">732</span>
+    <span class="phpdocumentor-element-found-in__line">658</span>
 
     </aside>
 
@@ -1312,7 +1156,7 @@ recipient_id is 5, and the component_action is cb_activity_bits.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">791</span>
+    <span class="phpdocumentor-element-found-in__line">717</span>
 
     </aside>
 
@@ -1383,6 +1227,85 @@ associated with certain actions.
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_transactions_remove_bits">
+        cb_transactions_remove_bits()
+        <a href="namespaces/default.html#function_cb_transactions_remove_bits" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-functions.php"><a href="files/cb-transactions-cb-transactions-functions.html"><abbr title="cb-transactions/cb-transactions-functions.php">cb-transactions-functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">796</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB Transactions Remove Bits</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_transactions_remove_bits</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reassign</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>This is hooked into the delete_user action, so that
+transactions get deleted whenever a user is.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$reassign</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_transactions_remove_bits#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">TODO:</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Still need to implement this... Yikes. Also.
+why send negative bits, instead of deleting from
+the DB? This program doesn't need analytics based
+on that type of stuff, just delete from the DB.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
                                                                                 
                                              
                                     </dd>
@@ -1504,9 +1427,6 @@ associated with certain actions.
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li><a href="namespaces/default.html#function_cb_activity_bits">cb_activity_bits()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_core_send_sitewide_notice">cb_core_send_sitewide_notice()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_get_transactions_slug">cb_get_transactions_slug()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_is_multi_array">cb_is_multi_array()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_transactions_anniversary_bits">cb_transactions_anniversary_bits()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_transactions_birthday_bits">cb_transactions_birthday_bits()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_transactions_calculate_activity_bits">cb_transactions_calculate_activity_bits()</a></li>
@@ -1521,6 +1441,7 @@ associated with certain actions.
                                                     <li><a href="namespaces/default.html#function_cb_transactions_get_transfer_balance">cb_transactions_get_transfer_balance()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_transactions_has_bits">cb_transactions_has_bits()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_transactions_new_transaction">cb_transactions_new_transaction()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_transactions_remove_bits">cb_transactions_remove_bits()</a></li>
                                             </ul>
                 </li>
                     </ul>

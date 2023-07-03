@@ -5,7 +5,7 @@
  * Description: This plugin gamifies company culture events.
  * Author:      Dustin Delgross
  * Author URI:  https://dustindelgross.com/
- * Version:     2.3.1
+ * Version:     3.0.0
  * Text Domain: confetti-bits
  */
 defined( 'ABSPATH' ) || exit;
@@ -265,6 +265,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 				'core',
 				'ajax',
 				'notifications',
+				'events',
 				'transactions',
 				'requests',
 				'participation',
@@ -273,7 +274,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			$irregular_map = [
 				'CB_Component' => 'core',
 				'CB_Core_Role' => 'core',
-				'CB_Requests_Request_Item' => 'requests',
+//				'CB_Requests_Request_Item' => 'requests',
 			];
 
 			$component = null;

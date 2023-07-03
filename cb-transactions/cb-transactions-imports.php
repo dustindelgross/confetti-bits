@@ -21,7 +21,7 @@ defined('ABSPATH') || exit;
  * @package ConfettiBits\Transactions
  * @since 1.0.0
  */
-function cb_import_bits($args = '') {
+function cb_import_bits($args = [] ) {
 
 	$r = wp_parse_args( $args, [
 		'item_id' => 0,
@@ -33,7 +33,6 @@ function cb_import_bits($args = '') {
 		'component_action' => '',
 		'date_sent' => cb_core_current_date(),
 		'amount' => 0,
-		'error_type' => 'bool',
 	]);
 
 	$feedback = [ 'type' => 'error', 'text' => ''];
@@ -42,21 +41,28 @@ function cb_import_bits($args = '') {
 		$feedback['text'] = "Your transaction was not sent. Missing one of the following: sender, recipient, amount, or log entry.";
 		return $feedback;
 	}
+	
+	$sender_id = intval( $r['sender_id'] );
+	$recipient_id = intval( $r['recipient_id'] );
+	$amount = intval($r['amount']);
+	$log_entry = trim( $r['log_entry'] );
+	$date = new DateTimeImmutable($r['date_sent']);
+	$date_sent = $date->format('Y-m-d H:i:s');
 
 	if (abs($r['amount']) > cb_transactions_get_request_balance($r['recipient_id']) && ($r['amount'] < 0)) {
-			$feedback['text'] = "Sorry, it looks like you don't have enough bits for that.";
+		$feedback['text'] = "Sorry, it looks like you don't have enough bits for that.";
 	}
 
 	$transaction = new CB_Transactions_Transaction();
-	$transaction->item_id = $r['sender_id'];
-	$transaction->secondary_item_id = $r['recipient_id'];
-	$transaction->sender_id = $r['sender_id'];
-	$transaction->recipient_id = $r['recipient_id'];
-	$transaction->date_sent = $r['date_sent'];
-	$transaction->log_entry = $r['log_entry'];
+	$transaction->item_id = $sender_id;
+	$transaction->secondary_item_id = $recipient_id;
+	$transaction->sender_id = $sender_id;
+	$transaction->recipient_id = $recipient_id;
+	$transaction->date_sent = $date_sent;
+	$transaction->log_entry = $log_entry;
 	$transaction->component_name = $r['component_name'];
-	$transaction->component_action = $r['component_action'];
-	$transaction->amount = $r['amount'];
+	$transaction->component_action = 'cb_transactions_import_bits';
+	$transaction->amount = $amount;
 
 	$send = $transaction->send_bits();
 
@@ -64,8 +70,6 @@ function cb_import_bits($args = '') {
 		$feedback['text'] = "Transaction failed. Contact system administrator.";
 		return $feedback;
 	}
-
-	do_action('cb_import_bits', $r);
 
 	return $transaction->id;
 	
@@ -288,7 +292,7 @@ function cb_importer() {
 					$date_sent
 				);
 
-				if ($format_check = 1) {
+				if ($format_check == 1) {
 					$date_sent = date('Y-m-d H:i:s', strtotime($date_sent));
 				} else {
 					$skip_list[] = 'Invalid date in row ' . $row_number . '.';
@@ -317,6 +321,14 @@ function cb_importer() {
 					'component_action' => 'cb_transactions_import_bits',
 					'amount' => $amount
 				]);
+				
+				if ( !is_int( $send ) ) {
+					$skip_list[] = "Transaction failed to process in row {$row_number}. Error: {$send['text']}";
+					$skipped++;
+					$row_number++;
+					$row_error = true;
+					continue;
+				}
 			}
 
 			$row_loop++;
@@ -335,7 +347,7 @@ function cb_importer() {
 
 	}
 
-	if (!empty($skip_list) && $ran = true) {
+	if (!empty($skip_list) && $ran === true) {
 		$type = 'success';
 		$feedback = '
 		<span>Successfully imported: ' . $imported . '. These oopsies came up: </span>

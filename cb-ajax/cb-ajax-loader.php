@@ -14,4 +14,4 @@ defined('ABSPATH') || exit;
 function cb_setup_ajax() {
 	Confetti_Bits()->ajax = new CB_Ajax_Component();
 }
-add_action('cb_setup_components', 'cb_setup_ajax', 5);
+add_action('cb_setup_components', 'cb_setup_ajax', 2);

@@ -57,13 +57,13 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/ConfettiBits.html" class="">ConfettiBits</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
+                
+            </li>
                     <li>
                 <a href="packages/ConfettiBits-AJAX.html" class="">AJAX</a>
                 
@@ -85,10 +85,6 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
-                
-            </li>
-                    <li>
                 <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
@@ -101,6 +97,10 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Confetti.html" class="">Confetti</a>
@@ -158,319 +158,12 @@
 
 
 
-<h4 id="toc-functions">
-    Functions
-    <a href="files/cb-transactions-cb-transactions-sender.html#toc-functions" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_send_bits">cb_send_bits()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>CB Transactions Send Bits</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_transactions_send_bits">cb_transactions_send_bits()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>CB Transactions Send Bits</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_transactions_remove_bits">cb_transactions_remove_bits()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>CB Transactions Remove Bits</dd>
-
-    </dl>
 
 
 
         
 
-            <section class="phpdocumentor-functions">
-        <h3 class="phpdocumentor-elements__header" id="functions">
-            Functions
-            <a href="files/cb-transactions-cb-transactions-sender.html#functions" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_send_bits">
-        cb_send_bits()
-        <a href="namespaces/default.html#function_cb_send_bits" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-sender.php"><a href="files/cb-transactions-cb-transactions-sender.html"><abbr title="cb-transactions/cb-transactions-sender.php">cb-transactions-sender.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">58</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">CB Transactions Send Bits</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_send_bits</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"><p>Manages sending bits between users... I kinda want to
-get rid of this tho.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$args</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An array of arguments that
-get merged into a set of default values. {</p>
-<p>@var int $item_id The item ID associated with
-the transaction. Used with BuddyBoss's
-Notifications API to help format some
-dynamic information in the notifications.
-We use the sender_id for this.</p>
-<p>@var int $secondary_item_id The secondary
-item ID associated with the transaction. Used with
-BuddyBoss's Notifications API to help format some
-dynamic information in the notifications.
-We use the recipient_id for this.</p>
-<p>@var int $sender_id The ID of the user
-sending the bits.</p>
-<p>@var int $recipient_id The ID of the user
-recieving the bits.</p>
-<p>@var datetime $date_sent The date and
-time of the transaction.</p>
-<p>@var string $log_entry A note that usually
-references the purpose for the transaction.</p>
-<p>@TODO: Make log entries optional? Oof.</p>
-<p>@var string $component_name The name
-associated with the component that is sending
-the bits. Used with BuddyBoss's Notifications
-API. This will almost always just be
-'confetti_bits'.</p>
-<p>@var string $component_action The action
-associated with the transaction. We use this
-to differentiate transaction types to easily
-categorize them and run calculations. It
-is also used with BuddyBoss's Notifications
-API to send certain notifications that are
-associated with certain actions.
-}</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_send_bits#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Transactions</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_transactions_send_bits">
-        cb_transactions_send_bits()
-        <a href="namespaces/default.html#function_cb_transactions_send_bits" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-sender.php"><a href="files/cb-transactions-cb-transactions-sender.html"><abbr title="cb-transactions/cb-transactions-sender.php">cb-transactions-sender.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">243</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">CB Transactions Send Bits</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_transactions_send_bits</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"><p>Manages sending bits between users. Yikes.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$args</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An array of arguments that
-get merged into a set of default values. {</p>
-<p>@var int $item_id The item ID associated with
-the transaction. Used with BuddyBoss's
-Notifications API to help format some
-dynamic information in the notifications.
-We use the sender_id for this.</p>
-<p>@var int $secondary_item_id The secondary
-item ID associated with the transaction. Used with
-BuddyBoss's Notifications API to help format some
-dynamic information in the notifications.
-We use the recipient_id for this.</p>
-<p>@var int $sender_id The ID of the user
-sending the bits.</p>
-<p>@var int $recipient_id The ID of the user
-recieving the bits.</p>
-<p>@var datetime $date_sent The date and
-time of the transaction.</p>
-<p>@var string $log_entry A note that usually
-references the purpose for the transaction.</p>
-<p>@TODO: Make log entries optional?</p>
-<p>@var string $component_name The name
-associated with the component that is sending
-the bits. Used with BuddyBoss's Notifications
-API. This will almost always just be
-'confetti_bits'.</p>
-<p>@var string $component_action The action
-associated with the transaction. We use this
-to differentiate transaction types to easily
-categorize them and run calculations. It
-is also used with BuddyBoss's Notifications
-API to send certain notifications that are
-associated with certain actions.
-}</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_transactions_send_bits#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Transactions</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.3.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_transactions_remove_bits">
-        cb_transactions_remove_bits()
-        <a href="namespaces/default.html#function_cb_transactions_remove_bits" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/cb-transactions-sender.php"><a href="files/cb-transactions-cb-transactions-sender.html"><abbr title="cb-transactions/cb-transactions-sender.php">cb-transactions-sender.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">389</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">CB Transactions Remove Bits</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_transactions_remove_bits</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reassign</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"><p>This is hooked into the delete_user action, so that
-transactions get deleted whenever a user is.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$reassign</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="namespaces/default.html#function_cb_transactions_remove_bits#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">TODO:</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Still need to implement this... Yikes. Also.
-why send negative bits, instead of deleting from
-the DB? This program doesn't need analytics based
-on that type of stuff, just delete from the DB.</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.3.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-</article>
-            </section>
-
+        
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
@@ -574,19 +267,10 @@ on that type of stuff, just delete from the DB.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                                                                                                                        <li><a href="files/cb-transactions-cb-transactions-sender.html#toc-functions">Functions</a></li>
-                                    </ul>
+                                                                                                                                                                                </ul>
             </li>
 
             
-                            <li class="phpdocumentor-on-this-page-section__title">Functions</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="namespaces/default.html#function_cb_send_bits">cb_send_bits()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_transactions_remove_bits">cb_transactions_remove_bits()</a></li>
-                                                    <li><a href="namespaces/default.html#function_cb_transactions_send_bits">cb_transactions_send_bits()</a></li>
-                                            </ul>
-                </li>
                     </ul>
     </section>
 

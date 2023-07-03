@@ -57,13 +57,13 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/ConfettiBits.html" class="">ConfettiBits</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
+                
+            </li>
                     <li>
                 <a href="packages/ConfettiBits-AJAX.html" class="">AJAX</a>
                 
@@ -85,10 +85,6 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
-                
-            </li>
-                    <li>
                 <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
@@ -101,6 +97,10 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Confetti.html" class="">Confetti</a>
@@ -130,9 +130,8 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti.html">Confetti</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits.html">Bits</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits-Events.html">Events</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-Events.html">Events</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
@@ -143,9 +142,8 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti.html">Confetti</a></li>
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits.html">Bits</a></li>
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits-Events.html">Events</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-Events.html">Events</a></li>
                             </ul>
         </div>
     
@@ -160,14 +158,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">14</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">CB Events Event</p>
+            <p class="phpdocumentor-summary">Handles the creation and management of events.</p>
 
-    <section class="phpdocumentor-description"><p>Handles the creation and management of events.</p>
-</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -177,19 +173,10 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Events</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -217,6 +204,14 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/CB-Events-Event.html#property_columns">$columns</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd>The columns available in the database. Used to help
+build our orderby clause.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/CB-Events-Event.html#property_date_created">$date_created</a>
     <span>
@@ -280,14 +275,6 @@
 </dt>
 <dd>The ID of the user who created the event.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/CB-Events-Event.html#property_columns">$columns</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
-</dt>
-<dd>The columns available in the database. Used to help
-build our orderby clause.</dd>
-
     </dl>
 
 <h4 id="toc-methods">
@@ -330,14 +317,14 @@ Delete the event from the database.</dd>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Get Orderby SQL</dd>
+<dd>Assembles an ORDER BY clause from an array of fields and directions.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Events-Event.html#method_populate">populate()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: array&lt;string|int, mixed&gt;|bool    </span>
 </dt>
-<dd>Populate</dd>
+<dd>Get information for specific event.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Events-Event.html#method_save">save()</a>
@@ -419,6 +406,41 @@ Insert event entry into the database.</dd>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_columns">
+        $columns
+        <a href="classes/CB-Events-Event.html#property_columns" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">89</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The columns available in the database. Used to help
+build our orderby clause.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$columns</span>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;event_title&#039;, &#039;event_desc&#039;, &#039;event_date_start&#039;, &#039;event_date_end&#039;, &#039;participation_amount&#039;, &#039;user_id&#039;, &#039;date_created&#039;, &#039;date_modified&#039;]</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_date_created">
         $date_created
         <a href="classes/CB-Events-Event.html#property_date_created" class="headerlink"><i class="fas fa-link"></i></a>
@@ -429,7 +451,7 @@ Insert event entry into the database.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -463,7 +485,7 @@ Insert event entry into the database.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -497,7 +519,7 @@ Insert event entry into the database.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -531,7 +553,7 @@ Insert event entry into the database.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -565,7 +587,7 @@ Insert event entry into the database.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -599,7 +621,7 @@ Insert event entry into the database.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -633,7 +655,7 @@ Insert event entry into the database.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
@@ -667,7 +689,7 @@ Insert event entry into the database.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -701,7 +723,7 @@ Insert event entry into the database.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -712,41 +734,6 @@ Insert event entry into the database.</dd>
         <span class="phpdocumentor-signature__type">int</span>
     <span class="phpdocumentor-signature__name">$user_id</span>
     </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_columns">
-        $columns
-        <a href="classes/CB-Events-Event.html#property_columns" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">85</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The columns available in the database. Used to help
-build our orderby clause.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$columns</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;event_title&#039;, &#039;event_desc&#039;, &#039;event_date_start&#039;, &#039;event_date_end&#039;, &#039;participation_amount&#039;, &#039;user_id&#039;, &#039;date_created&#039;, &#039;date_modified&#039;]</span></code>
 
     
     
@@ -775,7 +762,7 @@ build our orderby clause.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -819,7 +806,7 @@ build our orderby clause.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">275</span>
+    <span class="phpdocumentor-element-found-in__line">272</span>
 
     </aside>
 
@@ -828,7 +815,7 @@ Delete the event from the database.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where_args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|false</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where_args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|false</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -838,11 +825,11 @@ Delete the event from the database.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$where_args</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Associative array of columns/values, to
 determine which rows should be updated. Of the format
-array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
+[ 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
 </section>
 
             </dd>
@@ -874,7 +861,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">495</span>
+    <span class="phpdocumentor-element-found-in__line">483</span>
 
     </aside>
 
@@ -882,7 +869,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_date_query_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$date_query</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_date_query_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$date_query</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -892,7 +879,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$date_query</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Date query arguments.</p>
 </section>
@@ -911,7 +898,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -921,22 +908,6 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
                                                  <section class="phpdocumentor-description"><p>public</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">static</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">todo</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Refactor to use Confetti_Bits_Core_Date_Query.</p>
 </section>
 
                                     </dd>
@@ -966,7 +937,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">414</span>
+    <span class="phpdocumentor-element-found-in__line">411</span>
 
     </aside>
 
@@ -974,7 +945,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get_event</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">get_event</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -984,7 +955,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$args</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
@@ -1060,41 +1031,66 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">453</span>
+    <span class="phpdocumentor-element-found-in__line">451</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get Orderby SQL</p>
+        <p class="phpdocumentor-summary">Assembles an ORDER BY clause from an array of fields and directions.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_orderby_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$orderby</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_orderby_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$orderby</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-        <section class="phpdocumentor-description"><p>Checks against the columns available and order
-arguments, then spits out usable SQL if everything
-looks okay.</p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$orderby</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>{
+@type string $field		Field to order by.
+@type string $direction	Direction to order by. Accepts 'ASC' or 'DESC'. Default 'ASC'.
+}</p>
+</section>
+
             </dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Events-Event.html#method_get_orderby_sql#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">access</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>public</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The ORDER BY clause of an SQL query.</p>
+                <section class="phpdocumentor-description"><p>ORDER BY clause.</p>
 </section>
 
             </section>
@@ -1114,29 +1110,29 @@ looks okay.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Populate</p>
+        <p class="phpdocumentor-summary">Get information for specific event.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">populate</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">populate</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-        <section class="phpdocumentor-description"><p>Get information for specific event.</p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
                  = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The ID of the event to fetch.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1148,6 +1144,14 @@ looks okay.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">uses</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1157,7 +1161,15 @@ looks okay.</p>
                                     </dd>
                         </dl>
 
-    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The event data if successful, false otherwise.</p>
+</section>
+
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1173,7 +1185,7 @@ looks okay.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
@@ -1246,7 +1258,7 @@ Save the event to the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">222</span>
+    <span class="phpdocumentor-element-found-in__line">219</span>
 
     </aside>
 
@@ -1255,7 +1267,7 @@ Update the event in the database.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">update</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$update_args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where_args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|false</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">update</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$update_args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where_args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|false</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1265,22 +1277,22 @@ Update the event in the database.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$update_args</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Associative array of fields to update,
 and the values to update them to. Of the format
-array( 'applicant_id' =&gt; 4, 'component_action' =&gt; 'cb_event', ).</p>
+[ 'applicant_id' =&gt; 4, 'component_action' =&gt; 'cb_event', ).</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$where_args</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Associative array of columns/values, to
 determine which rows should be updated. Of the format
-array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
+[ 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
 </section>
 
             </dd>
@@ -1312,7 +1324,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">298</span>
+    <span class="phpdocumentor-element-found-in__line">295</span>
 
     </aside>
 
@@ -1320,7 +1332,7 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">_delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where_format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|false</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">_delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where_format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|false</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1330,10 +1342,10 @@ array( 'item_id' =&gt; 7, 'component_action' =&gt; 'cb_event', ).</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$where</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The WHERE params as passed to wpdb::delete().
-Typically consists of array( 'ID' =&gt; $id ) to specify the ID
+Typically consists of [ 'ID' =&gt; $id ) to specify the ID
 of the item being deleted. See <a href="wpdb::delete()"></a>.</p>
 </section>
 
@@ -1341,7 +1353,7 @@ of the item being deleted. See <a href="wpdb::delete()"></a>.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$where_format</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>See <a href="wpdb::insert()"></a>.</p>
 </section>
@@ -1415,7 +1427,7 @@ of the item being deleted. See <a href="wpdb::delete()"></a>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">204</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -1424,7 +1436,7 @@ Insert event entry into the database.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">_insert</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data_format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|<abbr title="\WP_Error">WP_Error</abbr></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">_insert</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data_format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|<abbr title="\WP_Error">WP_Error</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1434,7 +1446,7 @@ Insert event entry into the database.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$data</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Array of event data to insert, passed to
 <a href="wpdb::insert()"></a>. Accepts any property of a
@@ -1445,9 +1457,9 @@ Confetti_Bits_Event_Event object.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$data_format</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>See <a href="wpdb::insert()"></a>. Default array( '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s' ).</p>
+                    <section class="phpdocumentor-description"><p>See <a href="wpdb::insert()"></a>. Default [ '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s' ).</p>
 </section>
 
             </dd>
@@ -1519,7 +1531,7 @@ Confetti_Bits_Event_Event object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">250</span>
+    <span class="phpdocumentor-element-found-in__line">247</span>
 
     </aside>
 
@@ -1527,7 +1539,7 @@ Confetti_Bits_Event_Event object.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">_update</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data_format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where_format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|false</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">_update</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data_format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$where_format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|false</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1537,7 +1549,7 @@ Confetti_Bits_Event_Event object.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$data</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Array of event data to update, passed to
 <a href="wpdb::update()"></a>. Accepts any property of a
@@ -1548,10 +1560,10 @@ Confetti_Bits_Events_Event object.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$where</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The WHERE params as passed to wpdb::update().
-Typically consists of array( 'ID' =&gt; $id ) to specify the ID
+Typically consists of [ 'ID' =&gt; $id ) to specify the ID
 of the item being updated. See <a href="wpdb::update()"></a>.</p>
 </section>
 
@@ -1559,7 +1571,7 @@ of the item being updated. See <a href="wpdb::update()"></a>.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$data_format</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>See <a href="wpdb::insert()"></a>.</p>
 </section>
@@ -1568,7 +1580,7 @@ of the item being updated. See <a href="wpdb::update()"></a>.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$where_format</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>See <a href="wpdb::insert()"></a>.</p>
 </section>
@@ -1619,7 +1631,7 @@ of the item being updated. See <a href="wpdb::update()"></a>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">525</span>
+    <span class="phpdocumentor-element-found-in__line">513</span>
 
     </aside>
 
@@ -1627,7 +1639,7 @@ of the item being updated. See <a href="wpdb::update()"></a>.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_paged_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_paged_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1639,7 +1651,7 @@ of the item being updated. See <a href="wpdb::update()"></a>.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$args</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Array consisting of
 the page number and items per page. {
@@ -1677,7 +1689,7 @@ the page number and items per page. {
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">349</span>
+    <span class="phpdocumentor-element-found-in__line">346</span>
 
     </aside>
 
@@ -1685,7 +1697,7 @@ the page number and items per page. {
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_query_clauses</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_query_clauses</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1695,22 +1707,22 @@ arguments of the following forms:</p>
 <li>associative arrays whose key/value pairs are column =&gt; value, to
 be used in WHERE, SET, or VALUES clauses.</li>
 <li>arrays of &quot;formats&quot;, which tell $wpdb-&gt;prepare() which type of
-value to expect when sanitizing (eg, array( '%s', '%d' ))</li>
+value to expect when sanitizing (eg, [ '%s', '%d' ))</li>
 </ul>
 <p>This utility method can be used to assemble both kinds of params,
 out of a single set of associative array arguments, such as:</p>
-<pre class="prettyprint"><code class="prettyprint">$args = array(
+<pre class="prettyprint"><code class="prettyprint">$args = [
     'user_id' =&gt; 4,
     'component_name' =&gt; 'groups',
 );
 </code></pre>
 <p>This will be converted to:</p>
-<pre class="prettyprint"><code class="prettyprint">array(
-    'data' =&gt; array(
+<pre class="prettyprint"><code class="prettyprint">[
+    'data' =&gt; [
         'user_id' =&gt; 4,
         'component_name' =&gt; 'groups',
     ),
-    'format' =&gt; array(
+    'format' =&gt; [
         '%d',
         '%s',
     ),
@@ -1724,7 +1736,7 @@ out of a single set of associative array arguments, such as:</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$args</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Associative array of filter arguments.</p>
 </section>
@@ -1758,7 +1770,7 @@ out of a single set of associative array arguments, such as:</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/classes/class-cb-events-event.php"><a href="files/cb-events-classes-class-cb-events-event.html"><abbr title="cb-events/classes/class-cb-events-event.php">class-cb-events-event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">555</span>
+    <span class="phpdocumentor-element-found-in__line">544</span>
 
     </aside>
 
@@ -1766,7 +1778,7 @@ out of a single set of associative array arguments, such as:</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_where_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$select_sql</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$from_sql</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$join_sql</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$meta_query_sql</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_where_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1776,45 +1788,15 @@ out of a single set of associative array arguments, such as:</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$args</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Arguments.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$select_sql</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Select SQL.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$from_sql</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>From SQL.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$join_sql</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Join SQL.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$meta_query_sql</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Meta query SQL.</p>
+                    <section class="phpdocumentor-description"><p>{
+@type	int		$id				Event ID.
+@type	int		$user_id		User ID.
+@type	string	$event_title	Event title.
+@type	string	$event_desc		Event description.
+@type	string	$event_date_query	Date query.
+}</p>
 </section>
 
             </dd>
@@ -1828,10 +1810,18 @@ out of a single set of associative array arguments, such as:</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/CB-Events-Event.html#method_get_date_query_sql"><abbr title="\CB_Events_Event::get_date_query_sql()">CB_Events_Event::get_date_query_sql()</abbr></a></span>
+                                        
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -1843,13 +1833,6 @@ out of a single set of associative array arguments, such as:</p>
                                                  <section class="phpdocumentor-description"><p>protected</p>
 </section>
 
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">static</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
                                     </dd>
                                             </dl>
 
@@ -1976,6 +1959,7 @@ out of a single set of associative array arguments, such as:</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/CB-Events-Event.html#property_columns">$columns<a href="classes/CB-Events-Event.html"></li>
                                                     <li><a href="classes/CB-Events-Event.html#property_date_created">$date_created<a href="classes/CB-Events-Event.html"></li>
                                                     <li><a href="classes/CB-Events-Event.html#property_date_modified">$date_modified<a href="classes/CB-Events-Event.html"></li>
                                                     <li><a href="classes/CB-Events-Event.html#property_event_date_end">$event_date_end<a href="classes/CB-Events-Event.html"></li>
@@ -1985,7 +1969,6 @@ out of a single set of associative array arguments, such as:</p>
                                                     <li><a href="classes/CB-Events-Event.html#property_id">$id<a href="classes/CB-Events-Event.html"></li>
                                                     <li><a href="classes/CB-Events-Event.html#property_participation_amount">$participation_amount<a href="classes/CB-Events-Event.html"></li>
                                                     <li><a href="classes/CB-Events-Event.html#property_user_id">$user_id<a href="classes/CB-Events-Event.html"></li>
-                                                    <li><a href="classes/CB-Events-Event.html#property_columns">$columns<a href="classes/CB-Events-Event.html"></li>
                                             </ul>
                 </li>
             

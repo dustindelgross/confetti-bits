@@ -194,7 +194,7 @@ jQuery(document).ready( function($) {
 			method: 'POST',
 			data: postData,
 			success: e => formMessage.setMessage(e),
-			error: (x) => formMessage.setMessage(x.responseJSON)
+			error: (x) => console.error(x)
 		});
 
 		clearForm();

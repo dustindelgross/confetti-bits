@@ -57,13 +57,13 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/ConfettiBits.html" class="">ConfettiBits</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
+                
+            </li>
                     <li>
                 <a href="packages/ConfettiBits-AJAX.html" class="">AJAX</a>
                 
@@ -85,10 +85,6 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
-                
-            </li>
-                    <li>
                 <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
@@ -101,6 +97,10 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Confetti.html" class="">Confetti</a>
@@ -290,6 +290,13 @@ We're going to have our own little box for these settings.</li>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>CB Core Admin Is User Site Admin</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_core_admin_is_user_admin">cb_core_admin_is_user_admin()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Checks whether a user has the cb_admin capability.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_is_user_participation_admin">cb_is_user_participation_admin()</a>
@@ -712,7 +719,7 @@ help us determine who can see what in our template loop.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_user_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">cb_is_user_admin</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
         <section class="phpdocumentor-description"><p>These include:
 - cb_participation_admin
@@ -725,7 +732,17 @@ will return true for both of those roles, along with
 users that have the 'administrator' capability.</p>
 </section>
 
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
@@ -814,7 +831,7 @@ as its own separate capability.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_is_user_site_admin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">cb_is_user_site_admin</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
         <section class="phpdocumentor-description"><p>Checks whether a user has administrative privileges.
 Also, @see cb_core_admin_is_user_site_admin(), because
@@ -822,7 +839,17 @@ we're deprecating this for the sake of our API and
 sanity (sorry besties).</p>
 </section>
 
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
@@ -931,6 +958,64 @@ isn't particularly good to use as a feature-blocker.</p>
 
 </article>
                     <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_core_admin_is_user_admin">
+        cb_core_admin_is_user_admin()
+        <a href="namespaces/default.html#function_cb_core_admin_is_user_admin" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">493</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks whether a user has the cb_admin capability.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_core_admin_is_user_admin</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_core_admin_is_user_admin#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.1</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether a user has cb_admin privileges.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_is_user_participation_admin">
         cb_is_user_participation_admin()
         <a href="namespaces/default.html#function_cb_is_user_participation_admin" class="headerlink"><i class="fas fa-link"></i></a>
@@ -939,7 +1024,7 @@ isn't particularly good to use as a feature-blocker.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">496</span>
+    <span class="phpdocumentor-element-found-in__line">517</span>
 
     </aside>
 
@@ -991,7 +1076,7 @@ assigning a role on the Edit User admin page.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">512</span>
+    <span class="phpdocumentor-element-found-in__line">533</span>
 
     </aside>
 
@@ -1043,7 +1128,7 @@ assigning a role on the Edit User admin page.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">528</span>
+    <span class="phpdocumentor-element-found-in__line">549</span>
 
     </aside>
 
@@ -1095,7 +1180,7 @@ assigning a role on the Edit User admin page.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">536</span>
+    <span class="phpdocumentor-element-found-in__line">557</span>
 
     </aside>
 
@@ -1122,7 +1207,7 @@ assigning a role on the Edit User admin page.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-admin.php"><a href="files/cb-core-cb-core-admin.html"><abbr title="cb-core/cb-core-admin.php">cb-core-admin.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">565</span>
+    <span class="phpdocumentor-element-found-in__line">586</span>
 
     </aside>
 
@@ -1271,6 +1356,7 @@ assigning a role on the Edit User admin page.</p>
                                                     <li><a href="namespaces/default.html#function_cb_admin_reset_date_options">cb_admin_reset_date_options()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_add_admin_caps">cb_core_add_admin_caps()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_components_settings">cb_core_admin_components_settings()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_core_admin_is_user_admin">cb_core_admin_is_user_admin()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_is_user_site_admin">cb_core_admin_is_user_site_admin()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_setting_general_register_fields">cb_core_admin_setting_general_register_fields()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_core_admin_settings_handler">cb_core_admin_settings_handler()</a></li>

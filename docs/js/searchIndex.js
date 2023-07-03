@@ -1,25 +1,35 @@
 Search.appendIndex(
     [
                 {
-            "fqsen": "\\cb_ajax_transactions_api_init\u0028\u0029",
-            "name": "cb_ajax_transactions_api_init",
-            "summary": "CB\u0020AJAX\u0020Transactions\u0020API\u0020Init",
-            "url": "namespaces/default.html#function_cb_ajax_transactions_api_init"
+            "fqsen": "\\cb_ajax_new_events\u0028\u0029",
+            "name": "cb_ajax_new_events",
+            "summary": "CB\u0020AJAX\u0020Create\u0020Event",
+            "url": "namespaces/default.html#function_cb_ajax_new_events"
         },                {
-            "fqsen": "\\cb_ajax_participation_api_init\u0028\u0029",
-            "name": "cb_ajax_participation_api_init",
-            "summary": "CB\u0020AJAX\u0020Participation\u0020API\u0020Init",
-            "url": "namespaces/default.html#function_cb_ajax_participation_api_init"
+            "fqsen": "\\cb_ajax_update_events\u0028\u0029",
+            "name": "cb_ajax_update_events",
+            "summary": "Updates\u0020an\u0020existing\u0020event\u0020object\u0020and\u0020saves\u0020it\u0020to\u0020the\u0020database.",
+            "url": "namespaces/default.html#function_cb_ajax_update_events"
         },                {
-            "fqsen": "\\cb_ajax_requests_api_init\u0028\u0029",
-            "name": "cb_ajax_requests_api_init",
-            "summary": "Registers\u0020our\u0020REST\u0020API\u0020routes\u0020for\u0020all\u0020our\u0020requests\u0020data.",
-            "url": "namespaces/default.html#function_cb_ajax_requests_api_init"
+            "fqsen": "\\cb_ajax_delete_events\u0028\u0029",
+            "name": "cb_ajax_delete_events",
+            "summary": "Deletes\u0020an\u0020existing\u0020event\u0020object\u0020from\u0020the\u0020database.",
+            "url": "namespaces/default.html#function_cb_ajax_delete_events"
         },                {
-            "fqsen": "\\cb_ajax_request_items_api_init\u0028\u0029",
-            "name": "cb_ajax_request_items_api_init",
-            "summary": "Registers\u0020our\u0020REST\u0020API\u0020routes\u0020for\u0020all\u0020our\u0020request\u0020item\u0020data.",
-            "url": "namespaces/default.html#function_cb_ajax_request_items_api_init"
+            "fqsen": "\\cb_ajax_get_events\u0028\u0029",
+            "name": "cb_ajax_get_events",
+            "summary": "Retrieves\u0020event\u0020objects\u0020from\u0020the\u0020database.",
+            "url": "namespaces/default.html#function_cb_ajax_get_events"
+        },                {
+            "fqsen": "\\cb_ajax_get_event_participants\u0028\u0029",
+            "name": "cb_ajax_get_event_participants",
+            "summary": "Retrieves\u0020a\u0020list\u0020of\u0020participants\u0020for\u0020a\u0020given\u0020event.",
+            "url": "namespaces/default.html#function_cb_ajax_get_event_participants"
+        },                {
+            "fqsen": "\\cb_ajax_new_contest\u0028\u0029",
+            "name": "cb_ajax_new_contest",
+            "summary": "Saves\u0020contest\u0020placements\u0020for\u0020a\u0020given\u0020event.",
+            "url": "namespaces/default.html#function_cb_ajax_new_contest"
         },                {
             "fqsen": "\\cb_ajax_register_rest_route\u0028\u0029",
             "name": "cb_ajax_register_rest_route",
@@ -201,6 +211,11 @@ Search.appendIndex(
             "summary": "CB\u0020Core\u0020Admin\u0020Is\u0020User\u0020Site\u0020Admin",
             "url": "namespaces/default.html#function_cb_core_admin_is_user_site_admin"
         },                {
+            "fqsen": "\\cb_core_admin_is_user_admin\u0028\u0029",
+            "name": "cb_core_admin_is_user_admin",
+            "summary": "Checks\u0020whether\u0020a\u0020user\u0020has\u0020the\u0020cb_admin\u0020capability.",
+            "url": "namespaces/default.html#function_cb_core_admin_is_user_admin"
+        },                {
             "fqsen": "\\cb_is_user_participation_admin\u0028\u0029",
             "name": "cb_is_user_participation_admin",
             "summary": "Checks\u0020to\u0020see\u0020if\u0020the\u0020user\u0020is\u0020a\u0020participation\u0020admin.",
@@ -258,7 +273,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_is_confetti_bits_component\u0028\u0029",
             "name": "cb_is_confetti_bits_component",
-            "summary": "Ask\u0020the\u0020wizard\u0020if\u0020we\u0020could\u0020have\u0020some\u0020porridge.",
+            "summary": "Asks\u0020the\u0020wizard\u0020if\u0020we\u0020could\u0020have\u0020some\u0020porridge.",
             "url": "namespaces/default.html#function_cb_is_confetti_bits_component"
         },                {
             "fqsen": "\\cb_is_user\u0028\u0029",
@@ -586,6 +601,16 @@ Search.appendIndex(
             "summary": "Late\u0020includes\u0020method.",
             "url": "classes/CB-Component.html#method_late_includes"
         },                {
+            "fqsen": "\\CB_Component\u003A\u003Aregister_api_endpoints\u0028\u0029",
+            "name": "register_api_endpoints",
+            "summary": "Sets\u0020up\u0020REST\u0020endpoints\u0020for\u0020the\u0020component.",
+            "url": "classes/CB-Component.html#method_register_api_endpoints"
+        },                {
+            "fqsen": "\\CB_Component\u003A\u003Aenqueue_scripts\u0028\u0029",
+            "name": "enqueue_scripts",
+            "summary": "Enqueues\u0020all\u0020of\u0020our\u0020scripts\u0020in\u0020a\u0020clean\u0020fashion.",
+            "url": "classes/CB-Component.html#method_enqueue_scripts"
+        },                {
             "fqsen": "\\CB_Component\u003A\u003Asetup_actions\u0028\u0029",
             "name": "setup_actions",
             "summary": "Set\u0020up\u0020the\u0020actions.",
@@ -861,6 +886,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/CB-Core.html#method_load_components"
         },                {
+            "fqsen": "\\CB_Core\u003A\u003Aenqueue_scripts\u0028\u0029",
+            "name": "enqueue_scripts",
+            "summary": "Enqueues\u0020scripts\u0020for\u0020the\u0020core\u0020component.",
+            "url": "classes/CB-Core.html#method_enqueue_scripts"
+        },                {
             "fqsen": "\\Confetti_Bits_Core_App_Menus",
             "name": "Confetti_Bits_Core_App_Menus",
             "summary": "",
@@ -875,41 +905,6 @@ Search.appendIndex(
             "name": "parse",
             "summary": "",
             "url": "classes/Confetti-Bits-Core-App-Menus.html#method_parse"
-        },                {
-            "fqsen": "\\cb_ajax_create_event\u0028\u0029",
-            "name": "cb_ajax_create_event",
-            "summary": "CB\u0020AJAX\u0020Create\u0020Event",
-            "url": "namespaces/default.html#function_cb_ajax_create_event"
-        },                {
-            "fqsen": "\\cb_ajax_update_event\u0028\u0029",
-            "name": "cb_ajax_update_event",
-            "summary": "CB\u0020AJAX\u0020Update\u0020Event",
-            "url": "namespaces/default.html#function_cb_ajax_update_event"
-        },                {
-            "fqsen": "\\cb_ajax_delete_event\u0028\u0029",
-            "name": "cb_ajax_delete_event",
-            "summary": "CB\u0020AJAX\u0020Delete\u0020Event",
-            "url": "namespaces/default.html#function_cb_ajax_delete_event"
-        },                {
-            "fqsen": "\\cb_ajax_get_paged_events\u0028\u0029",
-            "name": "cb_ajax_get_paged_events",
-            "summary": "CB\u0020AJAX\u0020Get\u0020Paged\u0020Events",
-            "url": "namespaces/default.html#function_cb_ajax_get_paged_events"
-        },                {
-            "fqsen": "\\cb_ajax_get_event\u0028\u0029",
-            "name": "cb_ajax_get_event",
-            "summary": "CB\u0020AJAX\u0020Get\u0020Event",
-            "url": "namespaces/default.html#function_cb_ajax_get_event"
-        },                {
-            "fqsen": "\\cb_ajax_get_event_participants\u0028\u0029",
-            "name": "cb_ajax_get_event_participants",
-            "summary": "CB\u0020AJAX\u0020Get\u0020Event\u0020Participants",
-            "url": "namespaces/default.html#function_cb_ajax_get_event_participants"
-        },                {
-            "fqsen": "\\cb_ajax_new_contest\u0028\u0029",
-            "name": "cb_ajax_new_contest",
-            "summary": "CB\u0020AJAX\u0020New\u0020Contest",
-            "url": "namespaces/default.html#function_cb_ajax_new_contest"
         },                {
             "fqsen": "\\cb_events_new_notifications\u0028\u0029",
             "name": "cb_events_new_notifications",
@@ -926,10 +921,15 @@ Search.appendIndex(
             "summary": "CB\u0020Setup\u0020Events",
             "url": "namespaces/default.html#function_cb_setup_events"
         },                {
-            "fqsen": "\\cb_events_get_new_event_module\u0028\u0029",
-            "name": "cb_events_get_new_event_module",
+            "fqsen": "\\cb_events_get_new_events_module\u0028\u0029",
+            "name": "cb_events_get_new_events_module",
             "summary": "CB\u0020Events\u0020Get\u0020New\u0020Event\u0020Module",
-            "url": "namespaces/default.html#function_cb_events_get_new_event_module"
+            "url": "namespaces/default.html#function_cb_events_get_new_events_module"
+        },                {
+            "fqsen": "\\cb_events_new_events_module\u0028\u0029",
+            "name": "cb_events_new_events_module",
+            "summary": "Outputs\u0020the\u0020markup\u0020for\u0020the\u0020new\u0020events\u0020module.",
+            "url": "namespaces/default.html#function_cb_events_new_events_module"
         },                {
             "fqsen": "\\CONFETTI_BITS_EVENTS_SLUG",
             "name": "CONFETTI_BITS_EVENTS_SLUG",
@@ -938,37 +938,47 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Events_Component",
             "name": "CB_Events_Component",
-            "summary": "CB\u0020Events\u0020Component",
+            "summary": "A\u0020component\u0020that\u0020allows\u0020certain\u0020users\u0020to\u0020create\u0020and\u0020manage\u0020company\u0020events.",
             "url": "classes/CB-Events-Component.html"
         },                {
             "fqsen": "\\CB_Events_Component\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Initializes\u0020the\u0020component.",
             "url": "classes/CB-Events-Component.html#method___construct"
         },                {
             "fqsen": "\\CB_Events_Component\u003A\u003Aincludes\u0028\u0029",
             "name": "includes",
-            "summary": "Include\u0020required\u0020files.",
+            "summary": "Includes\u0020required\u0020files.",
             "url": "classes/CB-Events-Component.html#method_includes"
         },                {
             "fqsen": "\\CB_Events_Component\u003A\u003Asetup_globals\u0028\u0029",
             "name": "setup_globals",
-            "summary": "Set\u0020up\u0020component\u0020global\u0020variables.",
+            "summary": "Sets\u0020up\u0020component\u0020global\u0020values.",
             "url": "classes/CB-Events-Component.html#method_setup_globals"
+        },                {
+            "fqsen": "\\CB_Events_Component\u003A\u003Aregister_api_endpoints\u0028\u0029",
+            "name": "register_api_endpoints",
+            "summary": "Registers\u0020API\u0020endpoints\u0020for\u0020events\u0020and\u0020contests.",
+            "url": "classes/CB-Events-Component.html#method_register_api_endpoints"
+        },                {
+            "fqsen": "\\CB_Events_Component\u003A\u003Aenqueue_scripts\u0028\u0029",
+            "name": "enqueue_scripts",
+            "summary": "Enqueues\u0020script\u0020for\u0020the\u0020events\u0020component.",
+            "url": "classes/CB-Events-Component.html#method_enqueue_scripts"
         },                {
             "fqsen": "\\CB_Events_Contest",
             "name": "CB_Events_Contest",
-            "summary": "CB\u0020Events\u0020Contest",
+            "summary": "CB_Events_Contest\u0020class.",
             "url": "classes/CB-Events-Contest.html"
         },                {
             "fqsen": "\\CB_Events_Contest\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Constructor",
             "url": "classes/CB-Events-Contest.html#method___construct"
         },                {
             "fqsen": "\\CB_Events_Contest\u003A\u003Apopulate\u0028\u0029",
             "name": "populate",
-            "summary": "",
+            "summary": "Populates\u0020a\u0020contest\u0020object\u0027s\u0020properties\u0020from\u0020the\u0020database,\u0020based\u0020on\u0020contest\u0020ID.",
             "url": "classes/CB-Events-Contest.html#method_populate"
         },                {
             "fqsen": "\\CB_Events_Contest\u003A\u003Asave\u0028\u0029",
@@ -1011,6 +1021,11 @@ Search.appendIndex(
             "summary": "Get\u0020Contest",
             "url": "classes/CB-Events-Contest.html#method_get_contest"
         },                {
+            "fqsen": "\\CB_Events_Contest\u003A\u003Aget_orderby_sql\u0028\u0029",
+            "name": "get_orderby_sql",
+            "summary": "Assembles\u0020an\u0020ORDER\u0020BY\u0020clause\u0020from\u0020an\u0020array\u0020of\u0020fields\u0020and\u0020directions.",
+            "url": "classes/CB-Events-Contest.html#method_get_orderby_sql"
+        },                {
             "fqsen": "\\CB_Events_Contest\u003A\u003Aget_date_query_sql\u0028\u0029",
             "name": "get_date_query_sql",
             "summary": "Get\u0020Date\u0020Query\u0020SQL.",
@@ -1023,7 +1038,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Events_Contest\u003A\u003Aget_where_sql\u0028\u0029",
             "name": "get_where_sql",
-            "summary": "Get\u0020WHERE\u0020SQL.",
+            "summary": "Assemble\u0020the\u0020WHERE\u0020clause\u0020of\u0020a\u0020get\u0028\u0029\u0020SQL\u0020statement.",
             "url": "classes/CB-Events-Contest.html#method_get_where_sql"
         },                {
             "fqsen": "\\CB_Events_Contest\u003A\u003A\u0024id",
@@ -1061,9 +1076,14 @@ Search.appendIndex(
             "summary": "The\u0020date\u0020of\u0020the\u0020last\u0020time\u0020the\u0020entry\u0020was\u0020modified.",
             "url": "classes/CB-Events-Contest.html#property_date_modified"
         },                {
+            "fqsen": "\\CB_Events_Contest\u003A\u003A\u0024columns",
+            "name": "columns",
+            "summary": "The\u0020column\u0020names\u0020for\u0020the\u0020contest\u0020entry\u0020table.",
+            "url": "classes/CB-Events-Contest.html#property_columns"
+        },                {
             "fqsen": "\\CB_Events_Event",
             "name": "CB_Events_Event",
-            "summary": "CB\u0020Events\u0020Event",
+            "summary": "Handles\u0020the\u0020creation\u0020and\u0020management\u0020of\u0020events.",
             "url": "classes/CB-Events-Event.html"
         },                {
             "fqsen": "\\CB_Events_Event\u003A\u003A__construct\u0028\u0029",
@@ -1073,7 +1093,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Events_Event\u003A\u003Apopulate\u0028\u0029",
             "name": "populate",
-            "summary": "Populate",
+            "summary": "Get\u0020information\u0020for\u0020specific\u0020event.",
             "url": "classes/CB-Events-Event.html#method_populate"
         },                {
             "fqsen": "\\CB_Events_Event\u003A\u003Asave\u0028\u0029",
@@ -1118,7 +1138,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Events_Event\u003A\u003Aget_orderby_sql\u0028\u0029",
             "name": "get_orderby_sql",
-            "summary": "Get\u0020Orderby\u0020SQL",
+            "summary": "Assembles\u0020an\u0020ORDER\u0020BY\u0020clause\u0020from\u0020an\u0020array\u0020of\u0020fields\u0020and\u0020directions.",
             "url": "classes/CB-Events-Event.html#method_get_orderby_sql"
         },                {
             "fqsen": "\\CB_Events_Event\u003A\u003Aget_date_query_sql\u0028\u0029",
@@ -1328,38 +1348,28 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Participation_Component\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Initializes\u0020participation\u0020component.",
             "url": "classes/CB-Participation-Component.html#method___construct"
         },                {
             "fqsen": "\\CB_Participation_Component\u003A\u003Aincludes\u0028\u0029",
             "name": "includes",
-            "summary": "Include\u0020required\u0020files.",
+            "summary": "Includes\u0020required\u0020files.",
             "url": "classes/CB-Participation-Component.html#method_includes"
         },                {
-            "fqsen": "\\CB_Participation_Component\u003A\u003Alate_includes\u0028\u0029",
-            "name": "late_includes",
-            "summary": "Late\u0020includes\u0020method.",
-            "url": "classes/CB-Participation-Component.html#method_late_includes"
+            "fqsen": "\\CB_Participation_Component\u003A\u003Aregister_api_endpoints\u0028\u0029",
+            "name": "register_api_endpoints",
+            "summary": "Registers\u0020API\u0020endpoints\u0020for\u0020the\u0020participation\u0020component.",
+            "url": "classes/CB-Participation-Component.html#method_register_api_endpoints"
+        },                {
+            "fqsen": "\\CB_Participation_Component\u003A\u003Aenqueue_scripts\u0028\u0029",
+            "name": "enqueue_scripts",
+            "summary": "Enqueues\u0020scripts\u0020for\u0020the\u0020participation\u0020component.",
+            "url": "classes/CB-Participation-Component.html#method_enqueue_scripts"
         },                {
             "fqsen": "\\CB_Participation_Component\u003A\u003Asetup_globals\u0028\u0029",
             "name": "setup_globals",
-            "summary": "Set\u0020up\u0020component\u0020global\u0020variables.",
+            "summary": "Sets\u0020component\u0020globals\u0020for\u0020the\u0020participation\u0020component.",
             "url": "classes/CB-Participation-Component.html#method_setup_globals"
-        },                {
-            "fqsen": "\\CB_Participation_Component\u003A\u003Asetup_nav\u0028\u0029",
-            "name": "setup_nav",
-            "summary": "Set\u0020up\u0020component\u0020navigation.",
-            "url": "classes/CB-Participation-Component.html#method_setup_nav"
-        },                {
-            "fqsen": "\\CB_Participation_Component\u003A\u003Asetup_admin_bar\u0028\u0029",
-            "name": "setup_admin_bar",
-            "summary": "Set\u0020up\u0020the\u0020component\u0020entries\u0020in\u0020the\u0020WordPress\u0020Admin\u0020Bar.",
-            "url": "classes/CB-Participation-Component.html#method_setup_admin_bar"
-        },                {
-            "fqsen": "\\CB_Participation_Component\u003A\u003Asetup_title\u0028\u0029",
-            "name": "setup_title",
-            "summary": "Set\u0020up\u0020the\u0020component\u0020title.",
-            "url": "classes/CB-Participation-Component.html#method_setup_title"
         },                {
             "fqsen": "\\CB_Participation_Participation",
             "name": "CB_Participation_Participation",
@@ -1653,17 +1663,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Requests_Component\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Initializes\u0020the\u0020requests\u0020component.",
             "url": "classes/CB-Requests-Component.html#method___construct"
         },                {
             "fqsen": "\\CB_Requests_Component\u003A\u003Aincludes\u0028\u0029",
             "name": "includes",
-            "summary": "Include\u0020required\u0020files.",
+            "summary": "Includes\u0020required\u0020files.",
             "url": "classes/CB-Requests-Component.html#method_includes"
+        },                {
+            "fqsen": "\\CB_Requests_Component\u003A\u003Aregister_api_endpoints\u0028\u0029",
+            "name": "register_api_endpoints",
+            "summary": "Registers\u0020API\u0020endpoints\u0020for\u0020the\u0020requests\u0020component.",
+            "url": "classes/CB-Requests-Component.html#method_register_api_endpoints"
+        },                {
+            "fqsen": "\\CB_Requests_Component\u003A\u003Aenqueue_scripts\u0028\u0029",
+            "name": "enqueue_scripts",
+            "summary": "Enqueues\u0020scripts\u0020for\u0020the\u0020requests\u0020component.",
+            "url": "classes/CB-Requests-Component.html#method_enqueue_scripts"
         },                {
             "fqsen": "\\CB_Requests_Component\u003A\u003Asetup_globals\u0028\u0029",
             "name": "setup_globals",
-            "summary": "Set\u0020up\u0020component\u0020global\u0020variables.",
+            "summary": "Sets\u0020component\u0020globals\u0020for\u0020the\u0020requests\u0020component.",
             "url": "classes/CB-Requests-Component.html#method_setup_globals"
         },                {
             "fqsen": "\\CB_Requests_Request_Item",
@@ -2106,11 +2126,6 @@ Search.appendIndex(
             "summary": "CB\u0020Export",
             "url": "namespaces/default.html#function_cb_export"
         },                {
-            "fqsen": "\\cb_get_transactions_slug\u0028\u0029",
-            "name": "cb_get_transactions_slug",
-            "summary": "CB\u0020Get\u0020Transactions\u0020Slug",
-            "url": "namespaces/default.html#function_cb_get_transactions_slug"
-        },                {
             "fqsen": "\\cb_activity_bits\u0028\u0029",
             "name": "cb_activity_bits",
             "summary": "CB\u0020Activity\u0020Bits",
@@ -2151,16 +2166,6 @@ Search.appendIndex(
             "summary": "CB\u0020Transactions\u0020Calculate\u0020Activity\u0020Bits",
             "url": "namespaces/default.html#function_cb_transactions_calculate_activity_bits"
         },                {
-            "fqsen": "\\cb_is_multi_array\u0028\u0029",
-            "name": "cb_is_multi_array",
-            "summary": "CB\u0020Is\u0020Multiarray",
-            "url": "namespaces/default.html#function_cb_is_multi_array"
-        },                {
-            "fqsen": "\\cb_core_send_sitewide_notice\u0028\u0029",
-            "name": "cb_core_send_sitewide_notice",
-            "summary": "Sends\u0020out\u0020a\u0020sitewide\u0020notice.",
-            "url": "namespaces/default.html#function_cb_core_send_sitewide_notice"
-        },                {
             "fqsen": "\\cb_transactions_has_bits\u0028\u0029",
             "name": "cb_transactions_has_bits",
             "summary": "CB\u0020Transactions\u0020Has\u0020Bits",
@@ -2196,6 +2201,11 @@ Search.appendIndex(
             "summary": "CB\u0020Transactions\u0020New\u0020Transaction",
             "url": "namespaces/default.html#function_cb_transactions_new_transaction"
         },                {
+            "fqsen": "\\cb_transactions_remove_bits\u0028\u0029",
+            "name": "cb_transactions_remove_bits",
+            "summary": "CB\u0020Transactions\u0020Remove\u0020Bits",
+            "url": "namespaces/default.html#function_cb_transactions_remove_bits"
+        },                {
             "fqsen": "\\cb_import_bits\u0028\u0029",
             "name": "cb_import_bits",
             "summary": "CB\u0020Import\u0020Bits",
@@ -2230,31 +2240,6 @@ Search.appendIndex(
             "name": "cb_transactions_notifications",
             "summary": "Sends\u0020transaction\u0020notifications\u0020based\u0020on\u0020component\u0020action.",
             "url": "namespaces/default.html#function_cb_transactions_notifications"
-        },                {
-            "fqsen": "\\cb_requests\u0028\u0029",
-            "name": "cb_requests",
-            "summary": "CB\u0020Requests",
-            "url": "namespaces/default.html#function_cb_requests"
-        },                {
-            "fqsen": "\\cb_send_request\u0028\u0029",
-            "name": "cb_send_request",
-            "summary": "",
-            "url": "namespaces/default.html#function_cb_send_request"
-        },                {
-            "fqsen": "\\cb_send_bits\u0028\u0029",
-            "name": "cb_send_bits",
-            "summary": "CB\u0020Transactions\u0020Send\u0020Bits",
-            "url": "namespaces/default.html#function_cb_send_bits"
-        },                {
-            "fqsen": "\\cb_transactions_send_bits\u0028\u0029",
-            "name": "cb_transactions_send_bits",
-            "summary": "CB\u0020Transactions\u0020Send\u0020Bits",
-            "url": "namespaces/default.html#function_cb_transactions_send_bits"
-        },                {
-            "fqsen": "\\cb_transactions_remove_bits\u0028\u0029",
-            "name": "cb_transactions_remove_bits",
-            "summary": "CB\u0020Transactions\u0020Remove\u0020Bits",
-            "url": "namespaces/default.html#function_cb_transactions_remove_bits"
         },                {
             "fqsen": "\\cb_transactions_get_total_sent_today_notice\u0028\u0029",
             "name": "cb_transactions_get_total_sent_today_notice",
@@ -2373,22 +2358,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Transactions_Component\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Initializes\u0020the\u0020transactions\u0020component.",
             "url": "classes/CB-Transactions-Component.html#method___construct"
         },                {
             "fqsen": "\\CB_Transactions_Component\u003A\u003Aincludes\u0028\u0029",
             "name": "includes",
-            "summary": "Include\u0020required\u0020files.",
+            "summary": "Includes\u0020required\u0020files.",
             "url": "classes/CB-Transactions-Component.html#method_includes"
         },                {
-            "fqsen": "\\CB_Transactions_Component\u003A\u003Alate_includes\u0028\u0029",
-            "name": "late_includes",
-            "summary": "Late\u0020includes\u0020method.",
-            "url": "classes/CB-Transactions-Component.html#method_late_includes"
+            "fqsen": "\\CB_Transactions_Component\u003A\u003Aregister_api_endpoints\u0028\u0029",
+            "name": "register_api_endpoints",
+            "summary": "Registers\u0020API\u0020endpoints\u0020for\u0020the\u0020transactions\u0020component.",
+            "url": "classes/CB-Transactions-Component.html#method_register_api_endpoints"
+        },                {
+            "fqsen": "\\CB_Transactions_Component\u003A\u003Aenqueue_scripts\u0028\u0029",
+            "name": "enqueue_scripts",
+            "summary": "Enqueue\u0020scripts\u0020for\u0020the\u0020transactions\u0020component.",
+            "url": "classes/CB-Transactions-Component.html#method_enqueue_scripts"
         },                {
             "fqsen": "\\CB_Transactions_Component\u003A\u003Asetup_globals\u0028\u0029",
             "name": "setup_globals",
-            "summary": "Set\u0020up\u0020component\u0020global\u0020variables.",
+            "summary": "Sets\u0020up\u0020component\u0020globals\u0020for\u0020the\u0020transactions\u0020component.",
             "url": "classes/CB-Transactions-Component.html#method_setup_globals"
         },                {
             "fqsen": "\\CB_Transactions_Transaction",
@@ -2453,12 +2443,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_date_query_sql\u0028\u0029",
             "name": "get_date_query_sql",
-            "summary": "",
+            "summary": "Assembles\u0020a\u0020date\u0020query\u0020clause\u0020for\u0020an\u0020SQL\u0020WHERE\u0020statement.",
             "url": "classes/CB-Transactions-Transaction.html#method_get_date_query_sql"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_where_sql\u0028\u0029",
             "name": "get_where_sql",
-            "summary": "",
+            "summary": "Assembles\u0020the\u0020SQL\u0020WHERE\u0020clause.",
             "url": "classes/CB-Transactions-Transaction.html#method_get_where_sql"
         },                {
             "fqsen": "\\CB_Transactions_Transaction\u003A\u003Aget_query_clauses\u0028\u0029",
@@ -2716,14 +2706,9 @@ Search.appendIndex(
             "summary": "Initializes\u0020our\u0020notifications\u0020class.",
             "url": "namespaces/default.html#function_cb_core_notifications_init"
         },                {
-            "fqsen": "\\cb_core_enqueue_scripts\u0028\u0029",
-            "name": "cb_core_enqueue_scripts",
-            "summary": "Enqueues\u0020all\u0020of\u0020our\u0020scripts\u0020in\u0020a\u0020clean\u0020fashion.",
-            "url": "namespaces/default.html#function_cb_core_enqueue_scripts"
-        },                {
             "fqsen": "\\cb_user_birthday_anniversary_fields\u0028\u0029",
             "name": "cb_user_birthday_anniversary_fields",
-            "summary": "",
+            "summary": "Enqueues\u0020all\u0020of\u0020our\u0020scripts\u0020in\u0020a\u0020clean\u0020fashion.",
             "url": "namespaces/default.html#function_cb_user_birthday_anniversary_fields"
         },                {
             "fqsen": "\\cb_save_user_birthday_anniversary_fields\u0028\u0029",
@@ -2785,6 +2770,21 @@ Search.appendIndex(
             "name": "cb_core_get_user_email",
             "summary": "Returns\u0020the\u0020email\u0020address\u0020for\u0020the\u0020given\u0020user.",
             "url": "namespaces/default.html#function_cb_core_get_user_email"
+        },                {
+            "fqsen": "\\cb_core_is_multi_array\u0028\u0029",
+            "name": "cb_core_is_multi_array",
+            "summary": "Checks\u0020if\u0020the\u0020parameter\u0020is\u0020a\u0020multi\u002Ddimensional\u0020array.",
+            "url": "namespaces/default.html#function_cb_core_is_multi_array"
+        },                {
+            "fqsen": "\\cb_core_send_sitewide_notice\u0028\u0029",
+            "name": "cb_core_send_sitewide_notice",
+            "summary": "Sends\u0020out\u0020a\u0020sitewide\u0020notice.",
+            "url": "namespaces/default.html#function_cb_core_send_sitewide_notice"
+        },                {
+            "fqsen": "\\cb_core_get_doomsday_clock\u0028\u0029",
+            "name": "cb_core_get_doomsday_clock",
+            "summary": "Returns\u0020the\u0020number\u0020of\u0020days\u0020remaining\u0020until\u0020the\u0020reset\u0020date.",
+            "url": "namespaces/default.html#function_cb_core_get_doomsday_clock"
         },                {
             "fqsen": "\\",
             "name": "\\",

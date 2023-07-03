@@ -57,13 +57,13 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/ConfettiBits.html" class="">ConfettiBits</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/ConfettiBits-Events.html" class="-active">Events</a>
+                
+            </li>
                     <li>
                 <a href="packages/ConfettiBits-AJAX.html" class="">AJAX</a>
                 
@@ -85,10 +85,6 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Events.html" class="-active">Events</a>
-                
-            </li>
-                    <li>
                 <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
@@ -101,6 +97,10 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Confetti.html" class="">Confetti</a>
@@ -146,6 +146,13 @@
 
 
 
+    <h4 id="toc-classes">
+        Classes
+        <a href="packages/ConfettiBits-Events.html#toc-classes" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <dl class="phpdocumentor-table-of-contents">
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Events-Component.html"><abbr title="\CB_Events_Component">CB_Events_Component</abbr></a></dt><dd>A component that allows certain users to create and manage company events.</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Events-Contest.html"><abbr title="\CB_Events_Contest">CB_Events_Contest</abbr></a></dt><dd>CB_Events_Contest class.</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Events-Event.html"><abbr title="\CB_Events_Event">CB_Events_Event</abbr></a></dt><dd>Handles the creation and management of events.</dd>    </dl>
 
 
 
@@ -160,6 +167,62 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_new_events">cb_ajax_new_events()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>CB AJAX Create Event</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_update_events">cb_ajax_update_events()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Updates an existing event object and saves it to the database.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_delete_events">cb_ajax_delete_events()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Deletes an existing event object from the database.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_get_events">cb_ajax_get_events()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Retrieves event objects from the database.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_get_event_participants">cb_ajax_get_event_participants()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Retrieves a list of participants for a given event.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_new_contest">cb_ajax_new_contest()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Saves contest placements for a given event.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_events_new_notifications">cb_events_new_notifications()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>CB Events New Notifications</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_events_update_notifications">cb_events_update_notifications()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>CB Events Update Notifications</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_setup_events">cb_setup_events()</a>
     <span>
                                 &nbsp;: mixed    </span>
@@ -167,11 +230,18 @@
 <dd>CB Setup Events</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_cb_events_get_new_event_module">cb_events_get_new_event_module()</a>
+    <a href="namespaces/default.html#function_cb_events_get_new_events_module">cb_events_get_new_events_module()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>CB Events Get New Event Module</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_events_new_events_module">cb_events_new_events_module()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Outputs the markup for the new events module.</dd>
 
     </dl>
 
@@ -183,6 +253,352 @@
             <a href="packages/ConfettiBits-Events.html#functions" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_new_events">
+        cb_ajax_new_events()
+        <a href="namespaces/default.html#function_cb_ajax_new_events" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">22</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB AJAX Create Event</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_new_events</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Creates a new event object and saves it to the database.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_new_events#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_update_events">
+        cb_ajax_update_events()
+        <a href="namespaces/default.html#function_cb_ajax_update_events" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">112</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Updates an existing event object and saves it to the database.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_update_events</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_update_events#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_delete_events">
+        cb_ajax_delete_events()
+        <a href="namespaces/default.html#function_cb_ajax_delete_events" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">173</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deletes an existing event object from the database.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_delete_events</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_delete_events#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_get_events">
+        cb_ajax_get_events()
+        <a href="namespaces/default.html#function_cb_ajax_get_events" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">209</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Retrieves event objects from the database.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_get_events</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_get_events#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_get_event_participants">
+        cb_ajax_get_event_participants()
+        <a href="namespaces/default.html#function_cb_ajax_get_event_participants" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">240</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Retrieves a list of participants for a given event.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_get_event_participants</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_get_event_participants#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_new_contest">
+        cb_ajax_new_contest()
+        <a href="namespaces/default.html#function_cb_ajax_new_contest" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">283</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Saves contest placements for a given event.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_new_contest</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_new_contest#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_events_new_notifications">
+        cb_events_new_notifications()
+        <a href="namespaces/default.html#function_cb_events_new_notifications" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-events/cb-events-functions.php"><a href="files/cb-events-cb-events-functions.html"><abbr title="cb-events/cb-events-functions.php">cb-events-functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">22</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB Events New Notifications</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_events_new_notifications</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Sends out notifications when a new event is created.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_events_new_notifications#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_events_update_notifications">
+        cb_events_update_notifications()
+        <a href="namespaces/default.html#function_cb_events_update_notifications" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-events/cb-events-functions.php"><a href="files/cb-events-cb-events-functions.html"><abbr title="cb-events/cb-events-functions.php">cb-events-functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">96</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB Events Update Notifications</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_events_update_notifications</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Sends out an update notification when an event is updated.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_events_update_notifications#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_setup_events">
         cb_setup_events()
@@ -217,7 +633,7 @@
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -226,15 +642,15 @@
     
 </article>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_cb_events_get_new_event_module">
-        cb_events_get_new_event_module()
-        <a href="namespaces/default.html#function_cb_events_get_new_event_module" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_cb_events_get_new_events_module">
+        cb_events_get_new_events_module()
+        <a href="namespaces/default.html#function_cb_events_get_new_events_module" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-events/cb-events-template.php"><a href="files/cb-events-cb-events-template.html"><abbr title="cb-events/cb-events-template.php">cb-events-template.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -242,7 +658,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">cb_events_get_new_event_module</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">cb_events_get_new_events_module</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
         <section class="phpdocumentor-description"><p>Gets the containerized markup for the new event module in the
 Confetti Bits Events panel.</p>
@@ -252,24 +668,15 @@ Confetti Bits Events panel.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="namespaces/default.html#function_cb_events_get_new_event_module#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="namespaces/default.html#function_cb_events_get_new_events_module#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Events</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -284,6 +691,46 @@ Confetti Bits Events panel.</p>
 
             </section>
 
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_events_new_events_module">
+        cb_events_new_events_module()
+        <a href="namespaces/default.html#function_cb_events_new_events_module" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-events/cb-events-template.php"><a href="files/cb-events-cb-events-template.html"><abbr title="cb-events/cb-events-template.php">cb-events-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">83</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Outputs the markup for the new events module.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_events_new_events_module</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_events_new_events_module#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
 </article>
             </section>
 
@@ -390,7 +837,8 @@ Confetti Bits Events panel.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                                                                                                                        <li><a href="packages/ConfettiBits-Events.html#toc-functions">Functions</a></li>
+                                                                                                        <li><a href="packages/ConfettiBits-Events.html#toc-classes">Classes</a></li>
+                                                                                                                            <li><a href="packages/ConfettiBits-Events.html#toc-functions">Functions</a></li>
                                     </ul>
             </li>
 
@@ -398,7 +846,16 @@ Confetti Bits Events panel.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Functions</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="namespaces/default.html#function_cb_events_get_new_event_module">cb_events_get_new_event_module()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_delete_events">cb_ajax_delete_events()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_get_event_participants">cb_ajax_get_event_participants()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_get_events">cb_ajax_get_events()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_new_contest">cb_ajax_new_contest()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_new_events">cb_ajax_new_events()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_update_events">cb_ajax_update_events()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_events_get_new_events_module">cb_events_get_new_events_module()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_events_new_events_module">cb_events_new_events_module()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_events_new_notifications">cb_events_new_notifications()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_events_update_notifications">cb_events_update_notifications()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_setup_events">cb_setup_events()</a></li>
                                             </ul>
                 </li>

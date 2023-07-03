@@ -1,5 +1,4 @@
 <?php
-
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
@@ -110,16 +109,18 @@ add_action( 'cb_init', 'cb_core_notifications_init', 10 );
  * 
  * So, for example:
  *     - "cb_participation.get_participation" will return the 
- *       API endpoint for getting participation entries.
- *     - "cb_core.new_transactions" will return the API endpoint 
- *       for creating a new transaction.
+ *       API endpoint for getting participation entries ONLY when used
+ * 		 within the cb-participation.js file.
+ *     - "cb_core_admin.new_transactions" will return the API endpoint 
+ *       for creating a new transaction ONLY when used within the 
+ * 		 cb-core-admin.js file.
  * 
  * To access the API key, use "{$unique_name_for_script}.api_key"
  * in the {$unique-name-for-script}.js file.
  * 
  * @package ConfettiBits\Core
  * @since 2.3.0
- */
+ *//*
 function cb_core_enqueue_scripts() {
 
 	if ( function_exists( 'cb_is_confetti_bits_component' ) ) {
@@ -130,31 +131,21 @@ function cb_core_enqueue_scripts() {
 			$api_key_safe_name = get_option( 'cb_core_api_key_safe_name' );
 
 			$components = [
-				'core' => [ 
-					'transactions' => ['get'], 
-					'dependencies' => ['jquery'],
-				],
 				'participation' => [ 
 					'participation' => ['get', 'new', 'update'],
 					'dependencies' => ['jquery'],
 				],
-				'transactions' => [
-					'transactions' => ['new'],
-					'dependencies' => ['jquery'],
-				],
-				'requests' => [
-					'requests' => ['new', 'get', 'update', 'delete' ],
-					'request_items' => ['get'],
-					'dependencies' => ['jquery'],
-				],
 			];
-
-			if ( cb_is_user_participation_admin() ) {
+			
+			if ( cb_is_user_admin() ) {
 				$components['core_admin'] = [ 
 					'participation' => ['get', 'update'], 
 					'transactions' => ['get'],
 					'dependencies' => ['jquery'],
 				];
+			}
+
+			if ( cb_is_user_participation_admin() ) {
 				$components['participation_admin'] = [ 
 					'participation' => ['get', 'update'], 
 					'transactions' => ['get'],
@@ -163,11 +154,11 @@ function cb_core_enqueue_scripts() {
 			}
 
 			if ( cb_is_user_requests_admin() ) {
-				$components['requests_admin'] = [
-					'requests' => ['get', 'update', 'delete' ],
-					'request_items' => ['new', 'get', 'update', 'delete' ],
-					'dependencies' => ['jquery'],
-				];
+				
+			}
+			
+			if ( cb_is_user_site_admin() ) {
+
 			}
 
 			foreach( $components as $component => $params ) {
@@ -202,8 +193,8 @@ function cb_core_enqueue_scripts() {
 		}
 	}
 }
-
-add_action( 'cb_enqueue_scripts', 'cb_core_enqueue_scripts'	);
+//add_action( 'cb_enqueue_scripts', 'cb_core_enqueue_scripts'	);
+*/
 
 function cb_user_birthday_anniversary_fields( $user ) {
 	if( !current_user_can('add_users') ) {
@@ -532,5 +523,82 @@ function cb_core_get_user_email( $user_id = 0 ) {
 	$user = get_userdata($user_id);
 	
 	return $user->user_email;
+	
+}
+
+/**
+ * Checks if the parameter is a multi-dimensional array.
+ * 
+ * @param array $arr The array to check.
+ * 
+ * @return bool Whether the array is multi-dimensional.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.3.0
+ */
+function cb_core_is_multi_array(array $arr) {
+	rsort($arr);
+	return (isset($arr[0]) && is_array($arr[0]));
+}
+
+/**
+ * Sends out a sitewide notice.
+ * 
+ * Use this to send out non-critical updates that are 
+ * intended to be informative or nice to know, such as
+ * an upcoming or recent update, new feature, etc.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.2.0
+ */
+function cb_core_send_sitewide_notice() {
+	
+	if (
+		!cb_is_confetti_bits_component() ||
+		!cb_is_post_request() || 
+		empty( $_POST['cb_sitewide_notice_heading'] ) || 
+		empty( $_POST['cb_sitewide_notice_body'] )
+	) {
+		return;
+	}
+
+	$redirect_to = Confetti_Bits()->page;
+	$feedback = ['type' => 'error', 'text' => ''];
+
+	$username = cb_core_get_user_display_name(intval($_POST['cb_sitewide_notice_user_id']));
+	$subject = trim($_POST['cb_sitewide_notice_heading']);
+	$message = trim($_POST['cb_sitewide_notice_body']) . " - {$username}";
+
+	$notice = messages_send_notice($subject, $message);
+
+	if ($notice) {
+		$feedback['type'] = 'success';
+		$feedback['text'] = 'Sitewide notice was successfully posted.';
+	} else {
+		$feedback['text'] = 'Failed to send sitewide notice.';
+	}
+
+	bp_core_add_message($feedback['text'], $feedback['type']);
+	bp_core_redirect($redirect_to);
+
+}
+add_action('cb_actions', 'cb_core_send_sitewide_notice');
+
+/**
+ * Returns the number of days remaining until the reset date.
+ * 
+ * @return int The number of days remaining before the reset.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_get_doomsday_clock() {
+	
+	$cb = Confetti_Bits();
+	$current_date = new DateTimeImmutable();
+    $reset_date = DateTimeImmutable::createFromFormat('Y-m-d', $cb->earn_end);
+    $interval = $current_date->diff($reset_date);
+	
+    return $interval->days;
 	
 }

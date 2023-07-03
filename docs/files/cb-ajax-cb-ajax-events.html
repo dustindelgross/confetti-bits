@@ -57,13 +57,13 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/ConfettiBits.html" class="">ConfettiBits</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
+                
+            </li>
                     <li>
                 <a href="packages/ConfettiBits-AJAX.html" class="">AJAX</a>
                 
@@ -85,10 +85,6 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
-                
-            </li>
-                    <li>
                 <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
@@ -101,6 +97,10 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Confetti.html" class="">Confetti</a>
@@ -130,15 +130,35 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-Events.html">Events</a></li>
     </ul>
 
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">cb-ajax-events.php</h2>
 
-        
+            <p class="phpdocumentor-summary">CB Events Functions</p>
+
+    <section class="phpdocumentor-description"><p>These are going to be all of our CRUD functions for
+the events component.</p>
+</section>
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="files/cb-ajax-cb-ajax-events.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
 
 
@@ -158,12 +178,310 @@
 
 
 
+<h4 id="toc-functions">
+    Functions
+    <a href="files/cb-ajax-cb-ajax-events.html#toc-functions" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_new_events">cb_ajax_new_events()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>CB AJAX Create Event</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_update_events">cb_ajax_update_events()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Updates an existing event object and saves it to the database.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_delete_events">cb_ajax_delete_events()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Deletes an existing event object from the database.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_get_events">cb_ajax_get_events()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Retrieves event objects from the database.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_get_event_participants">cb_ajax_get_event_participants()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Retrieves a list of participants for a given event.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_ajax_new_contest">cb_ajax_new_contest()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Saves contest placements for a given event.</dd>
+
+    </dl>
 
 
 
         
 
-        
+            <section class="phpdocumentor-functions">
+        <h3 class="phpdocumentor-elements__header" id="functions">
+            Functions
+            <a href="files/cb-ajax-cb-ajax-events.html#functions" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_new_events">
+        cb_ajax_new_events()
+        <a href="namespaces/default.html#function_cb_ajax_new_events" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">22</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">CB AJAX Create Event</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_new_events</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Creates a new event object and saves it to the database.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_new_events#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_update_events">
+        cb_ajax_update_events()
+        <a href="namespaces/default.html#function_cb_ajax_update_events" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">112</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Updates an existing event object and saves it to the database.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_update_events</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_update_events#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_delete_events">
+        cb_ajax_delete_events()
+        <a href="namespaces/default.html#function_cb_ajax_delete_events" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">173</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deletes an existing event object from the database.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_delete_events</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_delete_events#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_get_events">
+        cb_ajax_get_events()
+        <a href="namespaces/default.html#function_cb_ajax_get_events" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">209</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Retrieves event objects from the database.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_get_events</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_get_events#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_get_event_participants">
+        cb_ajax_get_event_participants()
+        <a href="namespaces/default.html#function_cb_ajax_get_event_participants" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">240</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Retrieves a list of participants for a given event.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_get_event_participants</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_get_event_participants#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_ajax_new_contest">
+        cb_ajax_new_contest()
+        <a href="namespaces/default.html#function_cb_ajax_new_contest" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/cb-ajax-events.php"><a href="files/cb-ajax-cb-ajax-events.html"><abbr title="cb-ajax/cb-ajax-events.php">cb-ajax-events.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">283</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Saves contest placements for a given event.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_ajax_new_contest</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_ajax_new_contest#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+            </section>
+
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
@@ -267,10 +585,22 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                                                                                                                </ul>
+                                                                                                                                                                                        <li><a href="files/cb-ajax-cb-ajax-events.html#toc-functions">Functions</a></li>
+                                    </ul>
             </li>
 
             
+                            <li class="phpdocumentor-on-this-page-section__title">Functions</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_delete_events">cb_ajax_delete_events()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_get_event_participants">cb_ajax_get_event_participants()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_get_events">cb_ajax_get_events()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_new_contest">cb_ajax_new_contest()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_new_events">cb_ajax_new_events()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_ajax_update_events">cb_ajax_update_events()</a></li>
+                                            </ul>
+                </li>
                     </ul>
     </section>
 

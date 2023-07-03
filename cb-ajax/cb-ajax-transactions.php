@@ -117,6 +117,8 @@ function cb_ajax_new_transactions() {
 	} else {
 		$sender_id = intval( $_POST['sender_id'] );
 	}
+	
+
 
 	if ( empty( $_POST['recipient_id'] ) || !is_numeric( $_POST['recipient_id'] ) ) {
 		$feedback["text"] = "Invalid or empty Recipient ID. Please select a recipient.";
@@ -133,10 +135,11 @@ function cb_ajax_new_transactions() {
 	$log_entry = "";
 	$amount = 0;
 	$add_activity = isset( $_POST['add_activity'] );
-	$is_admin = cb_is_user_admin();
+	$is_admin = cb_core_admin_is_user_admin($sender_id);
+	
+	$total_today = cb_transactions_get_total_sent_today();
 
 	if ( empty( $_POST['log_entry'] ) ) {
-		http_response_code(400);
 		$feedback["text"] = "Confetti Bits transactions must include a log entry.";
 		$feedback["type"] = "error";
 		echo json_encode($feedback);
@@ -158,24 +161,28 @@ function cb_ajax_new_transactions() {
 	if ( ( abs( $amount ) > cb_transactions_get_transfer_balance( $recipient_id ) ) && 
 		( $amount < 0 ) 
 	   ) {
-		http_response_code(403);
 		$feedback["text"] = "{$recipient_name} doesn't have enough Confetti Bits for that.";
 		$feedback["type"] = "warning";
 		echo json_encode($feedback);
 		die();
 	}
 
-	if ( $amount + cb_transactions_get_total_sent_today() > 20 ) {		
-		http_response_code(403);
+	if ( ( $amount + $total_today ) > 20 ) { 
 		$feedback["text"] = "Transaction not sent. This would put you over the 20 Confetti Bits per diem limit. Your counter will reset tomorrow!";
 		$feedback["type"] = "warning";
 		echo json_encode($feedback);
 		die();
 	}
 
-	if ( ( $amount > cb_transactions_get_transfer_balance( $sender_id ) ) && ( !cb_is_user_admin() ) ) {
-		http_response_code(403);
+	if ( ( $amount > cb_transactions_get_transfer_balance( $sender_id ) ) && ( !cb_is_user_admin($sender_id) ) ) {
 		$feedback["text"] = "Sorry, it looks like you don't have enough bits to send.";
+		$feedback["type"] = "warning";
+		echo json_encode($feedback);
+		die();
+	}
+	
+	if ( cb_core_get_doomsday_clock() <= 7 && !cb_is_user_admin($sender_id) ) {
+		$feedback["text"] = "Transaction not sent. Cannot transfer Confetti Bits within 7 days of cycle reset date.";
 		$feedback["type"] = "warning";
 		echo json_encode($feedback);
 		die();

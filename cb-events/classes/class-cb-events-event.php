@@ -1,17 +1,21 @@
 <?php
+/**
+ * Manages the CRUD operations for the Events component.
+ * 
+ * @package ConfettiBits\Events
+ * @since 3.0.0
+ */
 // Exit if accessed directly
 defined('ABSPATH') || exit;
 
 /**
- * CB Events Event
- * 
  * Handles the creation and management of events.
- * 
- * @package Confetti_Bits
- * @subpackage Events
- * @since 2.3.0
+ *
+ * @package ConfettiBits\Events
+ * @since 3.0.0
  */
-class CB_Events_Event {
+class CB_Events_Event
+{
 
 	/**
 	 * The ID of the event entry.
@@ -40,7 +44,7 @@ class CB_Events_Event {
 	 * @var datetime
 	 */
 	public $event_date_start;
-	
+
 	/**
 	 * The date and time that the event ends.
 	 *
@@ -75,34 +79,32 @@ class CB_Events_Event {
 	 * @var string
 	 */
 	public $date_modified;
-	
+
 	/**
-	 * The columns available in the database. Used to help 
+	 * The columns available in the database. Used to help
 	 * build our orderby clause.
-	 * 
+	 *
 	 * @var array
 	 */
-	private $columns = [
-		'id', 
-		'event_title', 
-		'event_desc', 
-		'event_date_start', 
-		'event_date_end', 
-		'participation_amount', 
-		'user_id', 
-		'date_created', 
+	public $columns = [
+		'id',
+		'event_title',
+		'event_desc',
+		'event_date_start',
+		'event_date_end',
+		'participation_amount',
+		'user_id',
+		'date_created',
 		'date_modified'
 	];
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * If an ID is supplied, populate information about that event.
 	 */
 	public function __construct($id = 0)
 	{
-
-		$this->errors = new WP_Error();
 
 		if (!empty($id)) {
 			$this->id = (int) $id;
@@ -112,23 +114,18 @@ class CB_Events_Event {
 	}
 
 	/**
-	 * Populate
-	 * 
 	 * Get information for specific event.
+	 * @param int $id The ID of the event to fetch.
+	 * @return array|bool The event data if successful, false otherwise.
+	 * @since 3.0.0
 	 * @uses CB_Events_Event::get_event()
 	 */
 	public function populate($id = 0)
 	{
 
-		$event = $this->get_event(
-			array(
-				'where' => array(
-					'id' => $id
-				)
-			)
-		);
+		$event = $this->get_event(['where' => ['id' => $id]]);
 
-		$fetched_event = !empty($event) ? current($event) : array();
+		$fetched_event = !empty($event) ? current($event) : [];
 
 		if (!empty($fetched_event) && is_array($fetched_event)) {
 			$this->event_title = $fetched_event['event_title'];
@@ -156,7 +153,7 @@ class CB_Events_Event {
 
 		$retval = false;
 
-		$data = array(
+		$data = [
 			'event_title' => $this->event_title,
 			'event_desc' => $this->event_desc,
 			'event_date_start' => $this->event_date_start,
@@ -165,9 +162,9 @@ class CB_Events_Event {
 			'user_id' => $this->user_id,
 			'date_created' => $this->date_created,
 			'date_modified' => $this->date_modified,
-		);
+		];
 
-		$data_format = array('%s', '%s', '%s', '%s', '%d', '%d', '%s', '%s');
+		$data_format = ['%s', '%s', '%s', '%s', '%d', '%d', '%s', '%s'];
 		$result = self::_insert($data, $data_format);
 		if (!empty($result) && !is_wp_error($result)) {
 
@@ -195,13 +192,13 @@ class CB_Events_Event {
 	 * @param array $data Array of event data to insert, passed to
 	 * 						  {@link wpdb::insert()}. Accepts any property of a
 	 * 						  Confetti_Bits_Event_Event object.
-	 * @param array $data_format  See {@link wpdb::insert()}. Default array( '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s' ).
+	 * @param array $data_format  See {@link wpdb::insert()}. Default [ '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s' ).
 	 * @return int|WP_Error The ID of the event if successful, WP_Error otherwise.
 	 * @since 1.0.0
 	 * @access protected
 	 * @uses wpdb::insert()
 	 */
-	protected static function _insert($data = array(), $data_format = array())
+	protected static function _insert($data = [], $data_format = [])
 	{
 		global $wpdb;
 		return $wpdb->insert(Confetti_Bits()->events->table_name, $data, $data_format);
@@ -213,13 +210,13 @@ class CB_Events_Event {
 	 *
 	 * @param array $update_args Associative array of fields to update,
 	 *                           and the values to update them to. Of the format
-	 *                           array( 'applicant_id' => 4, 'component_action' => 'cb_event', ).
+	 *                           [ 'applicant_id' => 4, 'component_action' => 'cb_event', ).
 	 * @param array $where_args  Associative array of columns/values, to
 	 *                           determine which rows should be updated. Of the format
-	 *                           array( 'item_id' => 7, 'component_action' => 'cb_event', ).
+	 *                           [ 'item_id' => 7, 'component_action' => 'cb_event', ).
 	 * @return int|false Number of rows updated on success, false on failure.
 	 */
-	public static function update($update_args = array(), $where_args = array())
+	public static function update($update_args = [], $where_args = [])
 	{
 		$update = self::get_query_clauses($update_args);
 		$where = self::get_query_clauses($where_args);
@@ -241,13 +238,13 @@ class CB_Events_Event {
 	 *                            {@link wpdb::update()}. Accepts any property of a
 	 *                            Confetti_Bits_Events_Event object.
 	 * @param array $where  The WHERE params as passed to wpdb::update().
-	 *                            Typically consists of array( 'ID' => $id ) to specify the ID
+	 *                            Typically consists of [ 'ID' => $id ) to specify the ID
 	 *                            of the item being updated. See {@link wpdb::update()}.
 	 * @param array $data_format  See {@link wpdb::insert()}.
 	 * @param array $where_format See {@link wpdb::insert()}.
 	 * @return int|false The number of rows updated, or false on error.
 	 */
-	protected static function _update($data = array(), $where = array(), $data_format = array(), $where_format = array())
+	protected static function _update($data = [], $where = [], $data_format = [], $where_format = [])
 	{
 		global $wpdb;
 
@@ -269,10 +266,10 @@ class CB_Events_Event {
 	 *
 	 * @param array $where_args  Associative array of columns/values, to
 	 *                           determine which rows should be updated. Of the format
-	 *                           array( 'item_id' => 7, 'component_action' => 'cb_event', ).
+	 *                           [ 'item_id' => 7, 'component_action' => 'cb_event', ).
 	 * @return int|false Number of rows updated on success, false on failure.
 	 */
-	public static function delete($where_args = array())
+	public static function delete($where_args = [])
 	{
 		$where = self::get_query_clauses($where_args);
 
@@ -285,7 +282,7 @@ class CB_Events_Event {
 	/**
 	 * Delete event entry.
 	 * @param array $where  The WHERE params as passed to wpdb::delete().
-	 * 						  Typically consists of array( 'ID' => $id ) to specify the ID
+	 * 						  Typically consists of [ 'ID' => $id ) to specify the ID
 	 * 						  of the item being deleted. See {@link wpdb::delete()}.
 	 * @param array $where_format See {@link wpdb::insert()}.
 	 * @return int|false The number of rows updated, or false on error.
@@ -295,7 +292,7 @@ class CB_Events_Event {
 	 * @uses Confetti_Bits_Event_Event::get_where_sql()
 	 *
 	 */
-	protected static function _delete($where = array(), $where_format = array())
+	protected static function _delete($where = [], $where_format = [])
 	{
 
 		global $wpdb;
@@ -316,24 +313,24 @@ class CB_Events_Event {
 	 * - associative arrays whose key/value pairs are column => value, to
 	 *   be used in WHERE, SET, or VALUES clauses.
 	 * - arrays of "formats", which tell $wpdb->prepare() which type of
-	 *   value to expect when sanitizing (eg, array( '%s', '%d' ))
+	 *   value to expect when sanitizing (eg, [ '%s', '%d' ))
 	 *
 	 * This utility method can be used to assemble both kinds of params,
 	 * out of a single set of associative array arguments, such as:
 	 *
-	 *     $args = array(
+	 *     $args = [
 	 *         'user_id' => 4,
 	 *         'component_name' => 'groups',
 	 *     );
 	 *
 	 * This will be converted to:
 	 *
-	 *     array(
-	 *         'data' => array(
+	 *     [
+	 *         'data' => [
 	 *             'user_id' => 4,
 	 *             'component_name' => 'groups',
 	 *         ),
-	 *         'format' => array(
+	 *         'format' => [
 	 *             '%d',
 	 *             '%s',
 	 *         ),
@@ -346,12 +343,12 @@ class CB_Events_Event {
 	 *
 	 * @return array Associative array of 'data' and 'format' args.
 	 */
-	protected static function get_query_clauses($args = array())
+	protected static function get_query_clauses($args = [])
 	{
-		$where_clauses = array(
-			'data' => array(),
-			'format' => array(),
-		);
+		$where_clauses = [
+			'data' => [],
+			'format' => [],
+		];
 
 		if (!empty($args['id'])) {
 			$where_clauses['data']['id'] = absint($args['id']);
@@ -377,7 +374,7 @@ class CB_Events_Event {
 			$where_clauses['data']['event_date_start'] = $args['event_date_start'];
 			$where_clauses['format'][] = '%s';
 		}
-		
+
 		if (!empty($args['event_date_end'])) {
 			$where_clauses['data']['event_date_end'] = $args['event_date_end'];
 			$where_clauses['format'][] = '%s';
@@ -411,7 +408,7 @@ class CB_Events_Event {
 	 * @uses Confetti_Bits_Event_Event::get_paged_sql()
 	 *
 	 */
-	public function get_event($args = array())
+	public function get_event($args = [])
 	{
 
 		global $wpdb;
@@ -419,13 +416,13 @@ class CB_Events_Event {
 
 		$r = wp_parse_args(
 			$args,
-			array(
+			[
 				'select' => '*',
-				'where' => array(),
+				'where' => [],
 				'orderby' => [],
-				'pagination' => array(),
+				'pagination' => [],
 				'group' => '',
-			)
+			]
 		);
 
 		$select = (is_array($r['select'])) ? implode(', ', $r['select']) : $r['select'];
@@ -440,67 +437,58 @@ class CB_Events_Event {
 
 		return $wpdb->get_results($sql, 'ARRAY_A');
 	}
-	
+
 	/**
-	 * Get Orderby SQL
-	 * 
-	 * Checks against the columns available and order
-	 * arguments, then spits out usable SQL if everything
-	 * looks okay.
-	 * 
-	 * @return string The ORDER BY clause of an SQL query.
+	 * Assembles an ORDER BY clause from an array of fields and directions.
+	 * @param array $orderby {
+	 * 		@type string $field		Field to order by.
+	 * 		@type string $direction	Direction to order by. Accepts 'ASC' or 'DESC'. Default 'ASC'.
+	 * }
+	 * @return string ORDER BY clause.
+	 * @since 3.0.0
+	 * @access public
 	 */
-	public static function get_orderby_sql( $orderby = [] ) {
-		
-		global $wpdb;
-		$sql = '';
-		
-		if ( empty($orderby) ) {
-			return $sql;
+	public static function get_orderby_sql($orderby = [])
+	{
+
+		if (empty($orderby)) {
+			return '';
 		}
-		
-		$valid_sql = array_merge( $this->columns, ['DESC', 'ASC'] );
-		
-		$r = wp_parse_args( $orderby, [
-			'column' => 'id',
-			'order' => 'DESC',
-		]);
-		
-		if ( !in_array(strtolower($r['column']), $valid_sql ) ) {
-			return $sql;
+
+		$pieces = [];
+		foreach ($orderby as $field => $direction) {
+			if (!in_array(strtoupper($direction), ['ASC', 'DESC'])) {
+				$direction = 'DESC';
+			}
+			if (!in_array($field, self::$columns)) {
+				continue;
+			}
+
+			$pieces[] = "{$field} {$direction}";
+
 		}
-		
-		if ( !in_array( strtoupper($r['order']), $valid_sql ) ) {
-			return $sql;
-		}
-		
-		$sql = $wpdb->prepare(
-			"ORDER BY %s %s", [$r['column'], $r['order']]
-		);
-		
-		return $sql;
+
+		return 'ORDER BY ' . implode(', ', $pieces);
+
 	}
 
 	/**
 	 * Get Date Query SQL.
 	 *
-	 * @param	array	$date_query	Date query arguments.
-	 * @return	string				Date query SQL.
-	 * @since	1.0.0
+	 * @param	array $date_query Date query arguments.
+	 * @return	string Date query SQL.
+	 * @since	3.0.0
 	 * @access	public
-	 * @static
-	 * @todo	Refactor to use Confetti_Bits_Core_Date_Query.
-	 *
 	 */
-	public static function get_date_query_sql($date_query = array())
+	public static function get_date_query_sql($date_query = [])
 	{
 
 		$sql = '';
-		$columns = array('date_created', 'date_modified', 'event_date_start', 'event_date_end');
+		$columns = ['date_created', 'date_modified', 'event_date_start', 'event_date_end'];
 		$column = !empty($date_query['column']) && in_array($date_query['column'], $columns) ?
 			$date_query['column'] : 'event_date_start';
 
-		$date_query = new Confetti_Bits_Core_Date_Query($date_query, $column);
+		$date_query = new CB_Core_Date_Query($date_query, $column);
 		$sql = preg_replace('/^\sAND/', '', $date_query->get_sql());
 
 		return $sql;
@@ -522,7 +510,7 @@ class CB_Events_Event {
 	 * @return string $retval LIMIT clause.
 	 *
 	 */
-	protected static function get_paged_sql($args = array())
+	protected static function get_paged_sql($args = [])
 	{
 
 		global $wpdb;
@@ -541,21 +529,22 @@ class CB_Events_Event {
 	/**
 	 * Get WHERE SQL.
 	 *
-	 * @param	array	$args			Arguments.
-	 * @param	string	$select_sql		Select SQL.
-	 * @param	string	$from_sql		From SQL.
-	 * @param	string	$join_sql		Join SQL.
-	 * @param	string	$meta_query_sql	Meta query SQL.
-	 * @return	string					WHERE SQL.
-	 * @since	1.0.0
-	 * @access	protected
-	 * @static
-	 *
+	 * @param	array	$args {
+	 * 		@type	int		$id				Event ID.
+	 * 		@type	int		$user_id		User ID.
+	 * 		@type	string	$event_title	Event title.
+	 * 		@type	string	$event_desc		Event description.
+	 * 		@type	string	$event_date_query	Date query.
+	 * }
+	 * @return	string WHERE SQL.
+	 * @see CB_Events_Event::get_date_query_sql()
+	 * @since 3.0.0
+	 * @access protected
 	 */
-	protected static function get_where_sql($args = array(), $select_sql = '', $from_sql = '', $join_sql = '', $meta_query_sql = '')
+	protected static function get_where_sql($args = [])
 	{
 		global $wpdb;
-		$where_conditions = array();
+		$where_conditions = [];
 		$where = '';
 
 		if (!empty($args['id'])) {
@@ -571,7 +560,7 @@ class CB_Events_Event {
 		if (!empty($args['event_title'])) {
 			$event_titles = explode(',', $args['event_title']);
 
-			$event_title_clean = array();
+			$event_title_clean = [];
 			foreach ($event_titles as $event_title) {
 				$event_title_clean[] = $wpdb->prepare('%s', $event_title);
 			}
@@ -584,7 +573,7 @@ class CB_Events_Event {
 		if (!empty($args['event_desc'])) {
 			$event_descs = explode(',', $args['event_desc']);
 
-			$event_desc_clean = array();
+			$event_desc_clean = [];
 			foreach ($event_descs as $event_desc) {
 				$event_desc_clean[] = $wpdb->prepare('%s', $event_desc);
 			}
@@ -596,10 +585,6 @@ class CB_Events_Event {
 
 		if (!empty($args['date_query'])) {
 			$where_conditions['date_query'] = self::get_date_query_sql($args['date_query']);
-		}
-
-		if (!empty($meta_query_sql['where'])) {
-			$where_conditions['meta_query'] = $meta_query_sql['where'];
 		}
 
 		if (!empty($where_conditions)) {

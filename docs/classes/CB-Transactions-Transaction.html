@@ -57,13 +57,13 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/ConfettiBits.html" class="">ConfettiBits</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
+                
+            </li>
                     <li>
                 <a href="packages/ConfettiBits-AJAX.html" class="">AJAX</a>
                 
@@ -85,10 +85,6 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
-                
-            </li>
-                    <li>
                 <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
@@ -101,6 +97,10 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Confetti.html" class="">Confetti</a>
@@ -344,6 +344,7 @@ the recipient_id.</dd>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Assembles a date query clause for an SQL WHERE statement.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Transactions-Transaction.html#method_get_orderby_sql">get_orderby_sql()</a>
@@ -407,8 +408,9 @@ the recipient_id.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/CB-Transactions-Transaction.html#method_get_where_sql">get_where_sql()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: string    </span>
 </dt>
+<dd>Assembles the SQL WHERE clause.</dd>
 
     </dl>
 
@@ -998,7 +1000,7 @@ the recipient_id.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">221</span>
+    <span class="phpdocumentor-element-found-in__line">222</span>
 
     </aside>
 
@@ -1060,7 +1062,7 @@ For example: ['recipient_id' =&gt; 4, 'sender_id' =&gt; 16]</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">402</span>
+    <span class="phpdocumentor-element-found-in__line">403</span>
 
     </aside>
 
@@ -1101,11 +1103,12 @@ For example: ['recipient_id' =&gt; 4, 'sender_id' =&gt; 16]</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">440</span>
+    <span class="phpdocumentor-element-found-in__line">449</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Assembles a date query clause for an SQL WHERE statement.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_date_query_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$date_query</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -1125,6 +1128,29 @@ For example: ['recipient_id' =&gt; 4, 'sender_id' =&gt; 16]</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Transactions-Transaction.html#method_get_date_query_sql#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\CB_Core_Date_Query()">CB_Core_Date_Query()</abbr></span>
+                                        
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -1142,7 +1168,7 @@ For example: ['recipient_id' =&gt; 4, 'sender_id' =&gt; 16]</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">328</span>
+    <span class="phpdocumentor-element-found-in__line">329</span>
 
     </aside>
 
@@ -1204,7 +1230,7 @@ nothing if the args are empty or malformed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">287</span>
 
     </aside>
 
@@ -1289,7 +1315,7 @@ determine the LIMIT clause.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">387</span>
+    <span class="phpdocumentor-element-found-in__line">388</span>
 
     </aside>
 
@@ -1330,7 +1356,7 @@ determine the LIMIT clause.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">183</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -1402,7 +1428,7 @@ determine the LIMIT clause.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">246</span>
+    <span class="phpdocumentor-element-found-in__line">247</span>
 
     </aside>
 
@@ -1490,7 +1516,7 @@ CB_Transactions_Transaction object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">207</span>
+    <span class="phpdocumentor-element-found-in__line">208</span>
 
     </aside>
 
@@ -1538,7 +1564,7 @@ CB_Transactions_Transaction object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">372</span>
+    <span class="phpdocumentor-element-found-in__line">373</span>
 
     </aside>
 
@@ -1596,7 +1622,7 @@ the page number and items per page. {
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">631</span>
+    <span class="phpdocumentor-element-found-in__line">663</span>
 
     </aside>
 
@@ -1677,14 +1703,15 @@ out of a single set of associative array arguments, such as:</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-transactions/classes/class-cb-transactions-transaction.php"><a href="files/cb-transactions-classes-class-cb-transactions-transaction.html"><abbr title="cb-transactions/classes/class-cb-transactions-transaction.php">class-cb-transactions-transaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">455</span>
+    <span class="phpdocumentor-element-found-in__line">487</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Assembles the SQL WHERE clause.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_where_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get_where_sql</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$args</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1693,16 +1720,54 @@ out of a single set of associative array arguments, such as:</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$args</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>{
+An associative array of arguments. All optional.</p>
+<pre class="prettyprint"><code class="prettyprint">@type int $id One or more transaction IDs.
+@type int $item_id One or more item IDs.
+@type int $secondary_item_id One or more secondary item IDs.
+@type int $sender_id One or more sender IDs.
+@type int $item_id One or more recipient IDs.
+@type string $log_entry Search terms that may be in a log_entry.
+@type string $component_name This will probably always be &quot;confetti_bits&quot;.
+                             But we've added this just in case that ever
+								changes.
+@type string $component_action A component action to search for.
+</code></pre>
+<p>}</p>
+</section>
+
             </dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Transactions-Transaction.html#method_get_where_sql#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
-    
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The WHERE clause.</p>
+</section>
+
+            </section>
+
 </article>
             </section>
 

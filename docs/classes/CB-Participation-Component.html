@@ -57,13 +57,13 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/ConfettiBits.html" class="">ConfettiBits</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
+                
+            </li>
                     <li>
                 <a href="packages/ConfettiBits-AJAX.html" class="">AJAX</a>
                 
@@ -85,10 +85,6 @@
                 
             </li>
                     <li>
-                <a href="packages/ConfettiBits-Events.html" class="">Events</a>
-                
-            </li>
-                    <li>
                 <a href="packages/ConfettiBits-Notifications.html" class="">Notifications</a>
                 
             </li>
@@ -101,6 +97,10 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Confetti.html" class="">Confetti</a>
@@ -130,9 +130,8 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti.html">Confetti</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits.html">Bits</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits-Participation.html">Participation</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-Participation.html">Participation</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
@@ -146,9 +145,8 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti.html">Confetti</a></li>
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits.html">Bits</a></li>
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits-Participation.html">Participation</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-Participation.html">Participation</a></li>
                             </ul>
         </div>
     
@@ -163,7 +161,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">14</span>
+    <span class="phpdocumentor-element-found-in__line">13</span>
 
     </aside>
 
@@ -180,19 +178,10 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Participation</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.2.0</span>
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -331,6 +320,7 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Initializes participation component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Component.html#method_add_permastructs">add_permastructs()</a>
@@ -354,6 +344,13 @@
 <dd>Add any additional rewrite tags.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/CB-Participation-Component.html#method_enqueue_scripts">enqueue_scripts()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Enqueues scripts for the participation component.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Component.html#method_generate_rewrite_rules">generate_rewrite_rules()</a>
     <span>
                                 &nbsp;: mixed    </span>
@@ -365,10 +362,10 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Include required files.</dd>
+<dd>Includes required files.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Participation-Component.html#method_late_includes">late_includes()</a>
+    <a href="classes/CB-Component.html#method_late_includes">late_includes()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -380,6 +377,13 @@
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Allow components to parse the main query.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/CB-Participation-Component.html#method_register_api_endpoints">register_api_endpoints()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Registers API endpoints for the participation component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Component.html#method_register_global_tables">register_global_tables()</a>
@@ -417,7 +421,7 @@
 <dd>Set up the actions.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Participation-Component.html#method_setup_admin_bar">setup_admin_bar()</a>
+    <a href="classes/CB-Component.html#method_setup_admin_bar">setup_admin_bar()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -442,17 +446,17 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Set up component global variables.</dd>
+<dd>Sets component globals for the participation component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Participation-Component.html#method_setup_nav">setup_nav()</a>
+    <a href="classes/CB-Component.html#method_setup_nav">setup_nav()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Set up component navigation.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Participation-Component.html#method_setup_title">setup_title()</a>
+    <a href="classes/CB-Component.html#method_setup_title">setup_title()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -1172,11 +1176,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Initializes participation component.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -1186,6 +1191,21 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Participation-Component.html#method___construct#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -1203,7 +1223,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">856</span>
+    <span class="phpdocumentor-element-found-in__line">961</span>
 
     </aside>
 
@@ -1225,15 +1245,6 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Core</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1259,7 +1270,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">836</span>
+    <span class="phpdocumentor-element-found-in__line">942</span>
 
     </aside>
 
@@ -1306,7 +1317,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">817</span>
+    <span class="phpdocumentor-element-found-in__line">923</span>
 
     </aside>
 
@@ -1345,6 +1356,63 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_enqueue_scripts">
+        enqueue_scripts()
+        <a href="classes/CB-Participation-Component.html#method_enqueue_scripts" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">69</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Enqueues scripts for the participation component.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">enqueue_scripts</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$components</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$components</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Participation-Component.html#method_enqueue_scripts#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_generate_rewrite_rules">
         generate_rewrite_rules()
         <a href="classes/CB-Component.html#method_generate_rewrite_rules" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1353,7 +1421,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">901</span>
+    <span class="phpdocumentor-element-found-in__line">1003</span>
 
     </aside>
 
@@ -1375,15 +1443,6 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Core</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1409,11 +1468,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Include required files.</p>
+        <p class="phpdocumentor-summary">Includes required files.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1421,27 +1480,7 @@
 
     <div class="phpdocumentor-label-line">
         </div>
-        <section class="phpdocumentor-description"><p>Please note that, by default, this method is fired on the cb_include
-hook, with priority 8. This is necessary so that core components are
-loaded in time to be available to third-party plugins. However, this
-load order means that third-party plugins whose main files are
-loaded at cb_include with priority 10 (as recommended), will not be
-loaded in time for their includes() method to fire automatically.</p>
-<p>For this reason, it is recommended that your plugin has its own
-method or function for requiring necessary files. If you must use
-this method, you will have to call it manually in your constructor
-class, ie
-$this-&gt;includes();</p>
-<p>Note that when you pass an array value like 'actions' to includes,
-it looks for the following three files (assuming your component is
-called 'my_component'):</p>
-<ul>
-<li>./actions</li>
-<li>./cb-my_component/actions</li>
-<li>./cb-my_component/cb-my_component-actions.php</li>
-</ul>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1457,6 +1496,21 @@ to be parsed and then included.</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Participation-Component.html#method_includes#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -1468,13 +1522,13 @@ to be parsed and then included.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_late_includes">
         late_includes()
-        <a href="classes/CB-Participation-Component.html#method_late_includes" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/CB-Component.html#method_late_includes" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">437</span>
 
     </aside>
 
@@ -1493,6 +1547,21 @@ empty.</p>
 
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Component.html#method_late_includes#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -1510,7 +1579,7 @@ empty.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">878</span>
+    <span class="phpdocumentor-element-found-in__line">982</span>
 
     </aside>
 
@@ -1561,6 +1630,63 @@ empty.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_register_api_endpoints">
+        register_api_endpoints()
+        <a href="classes/CB-Participation-Component.html#method_register_api_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">56</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Registers API endpoints for the participation component.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">register_api_endpoints</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$components</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$components</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Participation-Component.html#method_register_api_endpoints#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_register_global_tables">
         register_global_tables()
         <a href="classes/CB-Component.html#method_register_global_tables" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1569,7 +1695,7 @@ empty.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">688</span>
+    <span class="phpdocumentor-element-found-in__line">794</span>
 
     </aside>
 
@@ -1628,7 +1754,7 @@ empty.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">734</span>
+    <span class="phpdocumentor-element-found-in__line">840</span>
 
     </aside>
 
@@ -1690,7 +1816,7 @@ compatibility with the WordPress metadata API.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">779</span>
+    <span class="phpdocumentor-element-found-in__line">885</span>
 
     </aside>
 
@@ -1737,7 +1863,7 @@ compatibility with the WordPress metadata API.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">798</span>
+    <span class="phpdocumentor-element-found-in__line">904</span>
 
     </aside>
 
@@ -1784,7 +1910,7 @@ compatibility with the WordPress metadata API.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">440</span>
+    <span class="phpdocumentor-element-found-in__line">549</span>
 
     </aside>
 
@@ -1825,13 +1951,13 @@ compatibility with the WordPress metadata API.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_setup_admin_bar">
         setup_admin_bar()
-        <a href="classes/CB-Participation-Component.html#method_setup_admin_bar" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/CB-Component.html#method_setup_admin_bar" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">676</span>
 
     </aside>
 
@@ -1839,7 +1965,7 @@ compatibility with the WordPress metadata API.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setup_admin_bar</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$wp_admin_nav</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">setup_admin_bar</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$wp_admin_nav</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1848,7 +1974,7 @@ compatibility with the WordPress metadata API.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$wp_admin_nav</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>An array of nav item arguments. Each item in this parameter
@@ -1861,6 +1987,41 @@ each item.</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Component.html#method_setup_admin_bar#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\WP_Admin_Bar::add_menu()">WP_Admin_Bar::add_menu()</abbr></span>
+                                        
+                                                 <section class="phpdocumentor-description"><p>for a description of the syntax
+required by each item in the $wp_admin_nav parameter array.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">global</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>object $wp_admin_bar</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -1878,7 +2039,7 @@ each item.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">667</span>
+    <span class="phpdocumentor-element-found-in__line">773</span>
 
     </aside>
 
@@ -1925,7 +2086,7 @@ each item.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">510</span>
+    <span class="phpdocumentor-element-found-in__line">624</span>
 
     </aside>
 
@@ -1947,15 +2108,6 @@ each item.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Core</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1981,11 +2133,11 @@ each item.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Set up component global variables.</p>
+        <p class="phpdocumentor-summary">Sets component globals for the participation component.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -2023,6 +2175,21 @@ Eg, 'Search Groups...'.
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Participation-Component.html#method_setup_globals#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -2034,13 +2201,13 @@ Eg, 'Search Groups...'.
 >
     <h4 class="phpdocumentor-element__name" id="method_setup_nav">
         setup_nav()
-        <a href="classes/CB-Participation-Component.html#method_setup_nav" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/CB-Component.html#method_setup_nav" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">645</span>
 
     </aside>
 
@@ -2048,16 +2215,18 @@ Eg, 'Search Groups...'.
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setup_nav</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$main_nav</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$sub_nav</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">setup_nav</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$main_nav</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$sub_nav</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Maybe we'll use this someday.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$main_nav</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Optional. Passed directly to cb_core_new_nav_item().
@@ -2067,7 +2236,7 @@ See that function for a description.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$sub_nav</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Optional. Multidimensional array, each item in
@@ -2079,6 +2248,43 @@ function for a description.</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Component.html#method_setup_nav#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\cb_core_new_nav_item()">cb_core_new_nav_item()</abbr></span>
+                                        
+                                                 <section class="phpdocumentor-description"><p>For a description of the $main_nav
+parameter formatting.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\cb_core_new_subnav_item()">cb_core_new_subnav_item()</abbr></span>
+                                        
+                                                 <section class="phpdocumentor-description"><p>For a description of how each item
+in the $sub_nav parameter array should be formatted.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -2090,13 +2296,13 @@ function for a description.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_setup_title">
         setup_title()
-        <a href="classes/CB-Participation-Component.html#method_setup_title" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/CB-Component.html#method_setup_title" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/classes/class-cb-participation-component.php"><a href="files/cb-participation-classes-class-cb-participation-component.html"><abbr title="cb-participation/classes/class-cb-participation-component.php">class-cb-participation-component.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">754</span>
 
     </aside>
 
@@ -2111,6 +2317,21 @@ function for a description.</p>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Component.html#method_setup_title#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -2347,21 +2568,23 @@ cb_is_active( $this-&gt;id, 'awesome' ) to determine if the feature is active.
                                             <li><a href="classes/CB-Component.html#method_add_permastructs">add_permastructs()</a></li>
                                             <li><a href="classes/CB-Component.html#method_add_rewrite_rules">add_rewrite_rules()</a></li>
                                             <li><a href="classes/CB-Component.html#method_add_rewrite_tags">add_rewrite_tags()</a></li>
+                                            <li><a href="classes/CB-Participation-Component.html#method_enqueue_scripts">enqueue_scripts()</a></li>
                                             <li><a href="classes/CB-Component.html#method_generate_rewrite_rules">generate_rewrite_rules()</a></li>
                                             <li><a href="classes/CB-Participation-Component.html#method_includes">includes()</a></li>
-                                            <li><a href="classes/CB-Participation-Component.html#method_late_includes">late_includes()</a></li>
+                                            <li><a href="classes/CB-Component.html#method_late_includes">late_includes()</a></li>
                                             <li><a href="classes/CB-Component.html#method_parse_query">parse_query()</a></li>
+                                            <li><a href="classes/CB-Participation-Component.html#method_register_api_endpoints">register_api_endpoints()</a></li>
                                             <li><a href="classes/CB-Component.html#method_register_global_tables">register_global_tables()</a></li>
                                             <li><a href="classes/CB-Component.html#method_register_meta_tables">register_meta_tables()</a></li>
                                             <li><a href="classes/CB-Component.html#method_register_post_types">register_post_types()</a></li>
                                             <li><a href="classes/CB-Component.html#method_register_taxonomies">register_taxonomies()</a></li>
                                             <li><a href="classes/CB-Component.html#method_setup_actions">setup_actions()</a></li>
-                                            <li><a href="classes/CB-Participation-Component.html#method_setup_admin_bar">setup_admin_bar()</a></li>
+                                            <li><a href="classes/CB-Component.html#method_setup_admin_bar">setup_admin_bar()</a></li>
                                             <li><a href="classes/CB-Component.html#method_setup_cache_groups">setup_cache_groups()</a></li>
                                             <li><a href="classes/CB-Component.html#method_setup_canonical_stack">setup_canonical_stack()</a></li>
                                             <li><a href="classes/CB-Participation-Component.html#method_setup_globals">setup_globals()</a></li>
-                                            <li><a href="classes/CB-Participation-Component.html#method_setup_nav">setup_nav()</a></li>
-                                            <li><a href="classes/CB-Participation-Component.html#method_setup_title">setup_title()</a></li>
+                                            <li><a href="classes/CB-Component.html#method_setup_nav">setup_nav()</a></li>
+                                            <li><a href="classes/CB-Component.html#method_setup_title">setup_title()</a></li>
                                             <li><a href="classes/CB-Component.html#method_start">start()</a></li>
                                     </ul>
             </li>
