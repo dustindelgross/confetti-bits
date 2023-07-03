@@ -125,12 +125,11 @@ function cb_get_active_templates() {
 
 
 /**
- * CB Member Template Part
+ * Renders the member template part appropriate for the current page.
  * 
- * Renders the member template part appropriate for the current page
+ * Right now? We only have the one page. Oof.
  * 
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
  * @since 1.0.0
  */
 function cb_member_template_part() {
@@ -145,11 +144,8 @@ function cb_member_template_part() {
 }
 
 /**
- * CB Core Add Confetti Captain Badges
- * 
  * Adds Confetti Captain badges to the user's member profile page
  * as well as to the activity feed, if they are a Confetti Captain.
- * 
  * 
  * @package ConfettiBits\Core
  * @subpackage Templates
@@ -170,8 +166,6 @@ function cb_core_add_confetti_captain_badges()
 add_action('wp_enqueue_scripts', 'cb_core_add_confetti_captain_badges');
 
 /**
- * CB Core Confetti Captain Class
- * 
  * Adds our custom 'confetti-captain' class to the BuddyBoss user avatar
  * so that we can add a cute little sparkler icon using JS.
  * 
@@ -191,8 +185,6 @@ function cb_core_confetti_captain_class($class, $item_id)
 add_filter('bp_core_avatar_class', 'cb_core_confetti_captain_class', 10, 2);
 
 /**
- * CB Core Confetti Captain Profile Badge
- * 
  * Adds a cute litte sparkler badge on the profile page of users
  * who are designated as "Confetti Captains", which meand they are
  * part of the Confetti Captains group.
