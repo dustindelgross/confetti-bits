@@ -163,11 +163,17 @@ function cb_request_items_form() {
  */
 function cb_requests_get_requests_form() {
 	
-	$items = cb_requests_get_request_items();
+	$items = cb_requests_get_request_items([
+		'select' => 'id, item_name, amount',
+		'pagination' => [
+			'page' => 1,
+			'per_page' => 15,
+		]
+	]);
 	$options = [];
 	
 	foreach ( $items as $item ) {
-		$options[$item['item_name']] = ['value' => $item['id'] ];
+		$options["{$item['item_name']} - {$item['amount']}"] = ['value' => $item['id'] ];
 	}
 	
 	return cb_templates_get_form_module([

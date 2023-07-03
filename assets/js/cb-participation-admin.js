@@ -493,13 +493,10 @@ jQuery(document).ready(($) => {
 	 * @param {object} activePanel
 	 * @returns {void}
 	 */
-	function cbCreateEmptyParticipationNotice(response, activePanel) {
+	function cbCreateEmptyParticipationNotice() {
 
-		entryTable.children().remove();
-
-		let $emptyNotice = $(`<div class='cb-participation-admin-empty-notice'><p>${response}</p></div>`);
-		activePanel.children().remove();
-		activePanel.append($emptyNotice);
+		let $emptyNotice = $(`<div class='cb-participation-admin-empty-notice'><p>No results found.</p></div>`);
+		entryTable.append($emptyNotice);
 
 	}
 
@@ -728,7 +725,6 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		let status = $('.cb-participation-admin-nav-item.active').attr('cb-participation-admin-status-type');
 		let eventType = $('.cb-form-selector[name=cb_participation_admin_event_type_filter]').val();
 
-		let activePanel = $('.cb-participation-admin-panel.active');
 		let getData = {
 			status: status,
 			page: page,
@@ -743,17 +739,17 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			success: function (data) {
 				cbPagination(page, status);
 
-				if (data !== false) {
+				entryTable.children().remove();
+				if (data.text !== false) {
+
 					let entries = JSON.parse(data.text);
-					activePanel.children().remove();
-					entryTable.children().remove();
 
 					formatHeaderRow();
 					for (let r of entries) {
 						cbCreateParticipationEntry(r);
 					}
 				} else {
-					cbCreateEmptyParticipationNotice(data.text, activePanel);
+					cbCreateEmptyParticipationNotice();
 				}
 			}
 		});

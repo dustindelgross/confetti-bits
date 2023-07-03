@@ -614,7 +614,6 @@ jQuery( document ).ready( function( $ ) {
 	formatTransactionsHeaderRow();
 	
 	$(document).on('change', '.cb-file-input', function (e) {
-		console.log(this.value);
 	});
 
 });

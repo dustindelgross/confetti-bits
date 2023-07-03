@@ -148,7 +148,7 @@ class CB_Transactions_Transaction {
 
 		$retval = false;
 		do_action( 'cb_transactions_before_send', array( &$this ) );
-		$data = array (
+		$data = [
 			'item_id' => $this->item_id,
 			'secondary_item_id' => $this->secondary_item_id,
 			'sender_id' => $this->sender_id,
@@ -159,7 +159,7 @@ class CB_Transactions_Transaction {
 			'component_action' => $this->component_action,
 			'amount' => $this->amount,
 			'event_id' => $this->event_id
-		);
+		];
 
 		$data_format = array( '%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%d', '%d' );
 
@@ -175,6 +175,7 @@ class CB_Transactions_Transaction {
 			do_action( 'cb_transactions_after_send', $data );
 
 			$retval = $this->id;
+			
 		}
 
 		return $retval;
@@ -226,10 +227,10 @@ class CB_Transactions_Transaction {
 		 * @since 2.3.0
 		 */
 		do_action( 'cb_transactions_before_delete' );
-		
+
 		return self::_delete( $where['data'], $where['format'] );
 	}
-	
+
 	/**
 	 * Deletes a transaction entry.
 	 *
@@ -437,6 +438,14 @@ class CB_Transactions_Transaction {
 		return $wpdb->get_results( $sql, 'ARRAY_A' );
 	}
 
+	/**
+	 * Assembles a date query clause for an SQL WHERE statement.
+	 * 
+	 * @see CB_Core_Date_Query()
+	 * 
+	 * @package ConfettiBits\Transactions
+	 * @since 2.3.0
+	 */
 	public static function get_date_query_sql( $date_query = array() ) {
 
 		$sql = '';
@@ -452,6 +461,29 @@ class CB_Transactions_Transaction {
 		return $sql;
 	}
 
+	/**
+	 * Assembles the SQL WHERE clause.
+	 * 
+	 * @param array $args { 
+	 *     An associative array of arguments. All optional.
+	 * 
+	 *     @type int $id One or more transaction IDs.
+	 *     @type int $item_id One or more item IDs.
+	 *     @type int $secondary_item_id One or more secondary item IDs.
+	 *     @type int $sender_id One or more sender IDs.
+	 *     @type int $item_id One or more recipient IDs.
+	 *     @type string $log_entry Search terms that may be in a log_entry.
+	 *     @type string $component_name This will probably always be "confetti_bits".
+	 *                                  But we've added this just in case that ever 
+	 * 									changes.
+	 *     @type string $component_action A component action to search for.
+	 * }
+	 * 
+	 * @return string The WHERE clause.
+	 * 
+	 * @package ConfettiBits\Transactions
+	 * @since 1.0.0
+	 */
 	protected static function get_where_sql( $args = [] ) {
 		global $wpdb;
 		$where_conditions = array();
@@ -515,6 +547,8 @@ class CB_Transactions_Transaction {
 		}
 
 		if ( ! empty( $args['component_action'] ) ) {
+
+			/*
 			if ( 'leadership' === $args['component_action'] || 'all' === $args['component_action'] ) {
 
 				$where_conditions['component_action'] = array(
@@ -531,33 +565,33 @@ class CB_Transactions_Transaction {
 				$where_conditions['component_action'] = array('cb_transfer_bits',);
 
 			}
+			*/
 
-			if ( ! is_array( $args['component_action'] ) ) {
-				$component_actions = explode( ',', $args['component_action'] );
-			} else {
-				$component_actions = $args['component_action'];
-			}
+			$component_actions = ! is_array( $args['component_action'] ) ? 
+				explode( ',', $args['component_action'] ) 
+				: $args['component_action'];
 
 			$ca_clean = array();
+
 			foreach ( $component_actions as $ca ) {
 				$ca_clean[] = $wpdb->prepare( '%s', $ca );
 			}
 
-			$ca_in                                = implode( ',', $ca_clean );
+			$ca_in = implode( ',', $ca_clean );
 			$where_conditions['component_action'] = "component_action IN ({$ca_in})";
+
 		}
 
 		if ( ! empty( $args['excluded_action'] ) ) {
-			if ( ! is_array( $args['excluded_action'] ) ) {
-				$excluded_action = explode( ',', $args['excluded_action'] );
-			} else {
-				$excluded_action = $args['excluded_action'];
-			}
+			$excluded_action = ! is_array( $args['excluded_action'] ) ? 
+				explode( ',', $args['excluded_action'] ) 
+				: $args['excluded_action'];
+			
 			$ca_clean = array();
 			foreach ( $excluded_action as $ca ) {
 				$ca_clean[] = $wpdb->prepare( '%s', $ca );
 			}
-			$ca_not_in                           = implode( ',', $ca_clean );
+			$ca_not_in = implode( ',', $ca_clean );
 			$where_conditions['excluded_action'] = "component_action NOT IN ({$ca_not_in})";
 		}
 
@@ -577,8 +611,6 @@ class CB_Transactions_Transaction {
 			$where_conditions['amount'] = "amount " . $args['amount_comparison'] . " " . $args['amount'];
 		}
 
-		$where_conditions = apply_filters( 'cb_transactions_get_where_conditions', $where_conditions, $args );
-
 		if ( ! empty( $where_conditions ) ) {
 			$where = !empty( $args['or'] ) ? 
 				'WHERE ' . implode( ' OR ', $where_conditions ) 
@@ -588,7 +620,7 @@ class CB_Transactions_Transaction {
 		return $where;
 
 	}
-	
+
 	/**
 	 * Assemble query clauses, based on arguments, to pass to $wpdb methods.
 	 *
@@ -683,7 +715,7 @@ class CB_Transactions_Transaction {
 			$where_clauses['data']['component_action'] = $args['component_action'];
 			$where_clauses['format'][]                 = '%s';
 		}
-		
+
 		if ( isset( $args['event_id'] ) ) {
 			$where_clauses['data']['event_id'] = $args['event_id'];
 			$where_clauses['format'][]       = '%d';
@@ -692,8 +724,8 @@ class CB_Transactions_Transaction {
 		return $where_clauses;
 	}
 
-//	protected static function strip_leading_and( $s ) {
-//		return preg_replace( '/^\s*AND\s*/', '', $s );
-//	}
+	//	protected static function strip_leading_and( $s ) {
+	//		return preg_replace( '/^\s*AND\s*/', '', $s );
+	//	}
 
 }

@@ -419,8 +419,8 @@ function cb_core_is_component_admin( $component = '' ) {
  * @package ConfettiBits\Core
  * @since 1.0.0
  */
-function cb_is_user_admin() {
-	return current_user_can( 'cb_admin' );
+function cb_is_user_admin( $user_id = 0 ) {
+	return cb_core_admin_is_user_admin($user_id);
 }
 
 /**
@@ -453,8 +453,8 @@ function cb_is_user_executive() {
  * @package ConfettiBits\Core
  * @since 1.0.0
  */
-function cb_is_user_site_admin() {
-	return cb_core_admin_is_user_site_admin();
+function cb_is_user_site_admin( $user_id = 0 ) {
+	return cb_core_admin_is_user_site_admin( $user_id );
 }
 
 /**
@@ -479,6 +479,27 @@ function cb_core_admin_is_user_site_admin( $user_id = 0 ) {
 	$user = new WP_User($user_id);
 
 	return $user->has_cap('administrator');
+	
+}
+
+/**
+ * Checks whether a user has the cb_admin capability.
+ * 
+ * @return bool Whether a user has cb_admin privileges.
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.1
+ */
+function cb_core_admin_is_user_admin( $user_id = 0 ) {
+
+	if ( $user_id === 0 ) {
+		return current_user_can('cb_admin');
+	}
+
+	$user = new WP_User($user_id);
+
+	return $user->has_cap('cb_admin');
+	
 }
 
 /**

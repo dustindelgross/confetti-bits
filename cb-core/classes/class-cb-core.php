@@ -25,7 +25,7 @@ class CB_Core extends CB_Component {
 
 		$cb = Confetti_Bits();
 
-		$cb->required_components = [ 'transactions', 'participation', 'ajax', 'requests' ];
+		$cb->required_components = [ 'transactions', 'participation', 'ajax', 'requests', 'events' ];
 		$cb->active_components = [ 'transactions', 'participation', 'ajax', 'requests' ];
 
 		// Loop through required components.
@@ -41,6 +41,31 @@ class CB_Core extends CB_Component {
 
 		do_action( 'cb_core_components_included' );
 
+	}
+
+	/**
+	 * Enqueues scripts for the core component.
+	 * 
+	 * @package ConfettiBits\Core
+	 * @since 3.0.0
+	 */
+	public function enqueue_scripts( $components = [] ) {
+		$components = [
+			'core' => [ 
+				'transactions' => ['get'], 
+				'dependencies' => ['jquery'],
+			]
+		];
+		
+		if ( cb_is_user_admin() ) {
+			$components['core_admin'] = [ 
+				'participation' => ['get', 'update'], 
+				'transactions' => ['get'],
+				'dependencies' => ['jquery'],
+			];
+		}
+		
+		parent::enqueue_scripts($components);
 	}
 
 }
