@@ -3,12 +3,9 @@
 defined('ABSPATH') || exit;
 
 /**
- * CB Setup Core
- *
  * Sets up our Core component, which loads all of our other components.
  *
- * @package Confetti_Bits
- * @subpackage Core
+ * @package ConfettiBits\Core
  * @since 1.0.0
  */
 function cb_setup_core() {

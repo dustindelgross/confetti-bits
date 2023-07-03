@@ -624,6 +624,13 @@ the canonical stack has been established.</dd>
 <dd>CB Core Install</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_setup_core">cb_setup_core()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Sets up our Core component, which loads all of our other components.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_core_generate_uuid">cb_core_generate_uuid()</a>
     <span>
                                 &nbsp;: string    </span>
@@ -657,6 +664,13 @@ the canonical stack has been established.</dd>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Validates against a supplied API key safe name.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_member_template_part">cb_member_template_part()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Renders the member template part appropriate for the current page.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_cb_core_notifications_init">cb_core_notifications_init()</a>
@@ -3721,6 +3735,46 @@ so that our pages still show up after plugins get updated.</p>
     
 </article>
                     <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_setup_core">
+        cb_setup_core()
+        <a href="namespaces/default.html#function_cb_setup_core" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-loader.php"><a href="files/cb-core-cb-core-loader.html"><abbr title="cb-core/cb-core-loader.php">cb-core-loader.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">11</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets up our Core component, which loads all of our other components.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_setup_core</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_setup_core#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_core_generate_uuid">
         cb_core_generate_uuid()
         <a href="namespaces/default.html#function_cb_core_generate_uuid" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4024,6 +4078,48 @@ or it is expired or invalid, it will also fail.</p>
 
             </section>
 
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_member_template_part">
+        cb_member_template_part()
+        <a href="namespaces/default.html#function_cb_member_template_part" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/cb-core-template.php"><a href="files/cb-core-cb-core-template.html"><abbr title="cb-core/cb-core-template.php">cb-core-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">135</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Renders the member template part appropriate for the current page.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_member_template_part</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Right now? We only have the one page. Oof.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_member_template_part#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
 </article>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_cb_core_notifications_init">
@@ -4855,6 +4951,7 @@ an upcoming or recent update, new feature, etc.</p>
                                                     <li><a href="namespaces/default.html#function_cb_is_user_site_admin">cb_is_user_site_admin()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_late_include">cb_late_include()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_loaded">cb_loaded()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_member_template_part">cb_member_template_part()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_post_request">cb_post_request()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_ready">cb_ready()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_register_member_types">cb_register_member_types()</a></li>
@@ -4863,6 +4960,7 @@ an upcoming or recent update, new feature, etc.</p>
                                                     <li><a href="namespaces/default.html#function_cb_screens">cb_screens()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_setup_canonical_stack">cb_setup_canonical_stack()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_setup_components">cb_setup_components()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_setup_core">cb_setup_core()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_setup_current_user">cb_setup_current_user()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_setup_globals">cb_setup_globals()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_setup_nav">cb_setup_nav()</a></li>

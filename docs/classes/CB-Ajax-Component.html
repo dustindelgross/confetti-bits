@@ -130,9 +130,8 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti.html">Confetti</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits.html">Bits</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits-AJAX.html">AJAX</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-AJAX.html">AJAX</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
@@ -146,9 +145,8 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti.html">Confetti</a></li>
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits.html">Bits</a></li>
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Confetti-Bits-AJAX.html">AJAX</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits.html">ConfettiBits</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/ConfettiBits-AJAX.html">AJAX</a></li>
                             </ul>
         </div>
     
@@ -163,13 +161,16 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/classes/class-cb-ajax-component.php"><a href="files/cb-ajax-classes-class-cb-ajax-component.html"><abbr title="cb-ajax/classes/class-cb-ajax-component.php">class-cb-ajax-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">14</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">CB AJAX Component</p>
+            <p class="phpdocumentor-summary">A component that helps organize our AJAX endpoints.</p>
 
-    <section class="phpdocumentor-description"><p>A component that helps organize our AJAX endpoints.</p>
+    <section class="phpdocumentor-description"><p>Use this to include files that house API handlers
+for each component. The naming convention for our
+endpoints is:
+/cb-ajax/{{version}}/{{component}}/{{action}}</p>
 </section>
 
 
@@ -180,13 +181,12 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">subpackage</span>
+                    <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>AJAX</p>
-</section>
-
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/CB-Component.html"><abbr title="\CB_Component">CB_Component</abbr></a></span>
+                                        
+                                             
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
@@ -331,6 +331,7 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Bring out the dancing wizard.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Component.html#method_add_permastructs">add_permastructs()</a>
@@ -372,10 +373,10 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Include required files.</dd>
+<dd>Include files for the AJAX component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/CB-Ajax-Component.html#method_late_includes">late_includes()</a>
+    <a href="classes/CB-Component.html#method_late_includes">late_includes()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -456,7 +457,7 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Set up component global variables.</dd>
+<dd>Setup component globals for the AJAX component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/CB-Component.html#method_setup_nav">setup_nav()</a>
@@ -1186,11 +1187,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/classes/class-cb-ajax-component.php"><a href="files/cb-ajax-classes-class-cb-ajax-component.html"><abbr title="cb-ajax/classes/class-cb-ajax-component.php">class-cb-ajax-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Bring out the dancing wizard.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -1200,6 +1202,29 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Ajax-Component.html#method___construct#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/CB-Component.html#method_start"><abbr title="\CB_Component::start()">CB_Component::start()</abbr></a></span>
+                                        
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -1495,11 +1520,11 @@ in the {$unique-name-for-script}.js file.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/classes/class-cb-ajax-component.php"><a href="files/cb-ajax-classes-class-cb-ajax-component.html"><abbr title="cb-ajax/classes/class-cb-ajax-component.php">class-cb-ajax-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Include required files.</p>
+        <p class="phpdocumentor-summary">Include files for the AJAX component.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1507,27 +1532,7 @@ in the {$unique-name-for-script}.js file.</p>
 
     <div class="phpdocumentor-label-line">
         </div>
-        <section class="phpdocumentor-description"><p>Please note that, by default, this method is fired on the cb_include
-hook, with priority 8. This is necessary so that core components are
-loaded in time to be available to third-party plugins. However, this
-load order means that third-party plugins whose main files are
-loaded at cb_include with priority 10 (as recommended), will not be
-loaded in time for their includes() method to fire automatically.</p>
-<p>For this reason, it is recommended that your plugin has its own
-method or function for requiring necessary files. If you must use
-this method, you will have to call it manually in your constructor
-class, ie
-$this-&gt;includes();</p>
-<p>Note that when you pass an array value like 'actions' to includes,
-it looks for the following three files (assuming your component is
-called 'my_component'):</p>
-<ul>
-<li>./actions</li>
-<li>./cb-my_component/actions</li>
-<li>./cb-my_component/cb-my_component-actions.php</li>
-</ul>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1543,6 +1548,29 @@ to be parsed and then included.</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Ajax-Component.html#method_includes#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/CB-Component.html#method_includes"><abbr title="\CB_Component::includes()">CB_Component::includes()</abbr></a></span>
+                                        
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -1554,13 +1582,13 @@ to be parsed and then included.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_late_includes">
         late_includes()
-        <a href="classes/CB-Ajax-Component.html#method_late_includes" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/CB-Component.html#method_late_includes" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/classes/class-cb-ajax-component.php"><a href="files/cb-ajax-classes-class-cb-ajax-component.html"><abbr title="cb-ajax/classes/class-cb-ajax-component.php">class-cb-ajax-component.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-core/classes/class-cb-component.php"><a href="files/cb-core-classes-class-cb-component.html"><abbr title="cb-core/classes/class-cb-component.php">class-cb-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">437</span>
 
     </aside>
 
@@ -1579,6 +1607,21 @@ empty.</p>
 
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Component.html#method_late_includes#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -2154,11 +2197,11 @@ required by each item in the $wp_admin_nav parameter array.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="cb-ajax/classes/class-cb-ajax-component.php"><a href="files/cb-ajax-classes-class-cb-ajax-component.html"><abbr title="cb-ajax/classes/class-cb-ajax-component.php">class-cb-ajax-component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Set up component global variables.</p>
+        <p class="phpdocumentor-summary">Setup component globals for the AJAX component.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -2196,6 +2239,29 @@ Eg, 'Search Groups...'.
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/CB-Ajax-Component.html#method_setup_globals#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\CB_Copmonent::setup_globals()">CB_Copmonent::setup_globals()</abbr></span>
+                                        
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.3.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -2577,7 +2643,7 @@ cb_is_active( $this-&gt;id, 'awesome' ) to determine if the feature is active.
                                             <li><a href="classes/CB-Component.html#method_enqueue_scripts">enqueue_scripts()</a></li>
                                             <li><a href="classes/CB-Component.html#method_generate_rewrite_rules">generate_rewrite_rules()</a></li>
                                             <li><a href="classes/CB-Ajax-Component.html#method_includes">includes()</a></li>
-                                            <li><a href="classes/CB-Ajax-Component.html#method_late_includes">late_includes()</a></li>
+                                            <li><a href="classes/CB-Component.html#method_late_includes">late_includes()</a></li>
                                             <li><a href="classes/CB-Component.html#method_parse_query">parse_query()</a></li>
                                             <li><a href="classes/CB-Component.html#method_register_api_endpoints">register_api_endpoints()</a></li>
                                             <li><a href="classes/CB-Component.html#method_register_global_tables">register_global_tables()</a></li>

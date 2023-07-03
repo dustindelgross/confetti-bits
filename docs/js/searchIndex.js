@@ -123,27 +123,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\CB_Ajax_Component",
             "name": "CB_Ajax_Component",
-            "summary": "CB\u0020AJAX\u0020Component",
+            "summary": "A\u0020component\u0020that\u0020helps\u0020organize\u0020our\u0020AJAX\u0020endpoints.",
             "url": "classes/CB-Ajax-Component.html"
         },                {
             "fqsen": "\\CB_Ajax_Component\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Bring\u0020out\u0020the\u0020dancing\u0020wizard.",
             "url": "classes/CB-Ajax-Component.html#method___construct"
         },                {
             "fqsen": "\\CB_Ajax_Component\u003A\u003Aincludes\u0028\u0029",
             "name": "includes",
-            "summary": "Include\u0020required\u0020files.",
+            "summary": "Include\u0020files\u0020for\u0020the\u0020AJAX\u0020component.",
             "url": "classes/CB-Ajax-Component.html#method_includes"
-        },                {
-            "fqsen": "\\CB_Ajax_Component\u003A\u003Alate_includes\u0028\u0029",
-            "name": "late_includes",
-            "summary": "Late\u0020includes\u0020method.",
-            "url": "classes/CB-Ajax-Component.html#method_late_includes"
         },                {
             "fqsen": "\\CB_Ajax_Component\u003A\u003Asetup_globals\u0028\u0029",
             "name": "setup_globals",
-            "summary": "Set\u0020up\u0020component\u0020global\u0020variables.",
+            "summary": "Setup\u0020component\u0020globals\u0020for\u0020the\u0020AJAX\u0020component.",
             "url": "classes/CB-Ajax-Component.html#method_setup_globals"
         },                {
             "fqsen": "\\cb_core_admin_setting_general_register_fields\u0028\u0029",
@@ -463,7 +458,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_rest_api_init\u0028\u0029",
             "name": "cb_rest_api_init",
-            "summary": "CB\u0020REST\u0020API\u0020Init",
+            "summary": "Fires\u0020the\u0020cb_rest_api_init\u0020action,\u0020so\u0020we\u0020\u0028and\u0020others\u0029\u0020can\u0020easily\u0020hook\u0020into\u0020our\u0020REST\u0020API.",
             "url": "namespaces/default.html#function_cb_rest_api_init"
         },                {
             "fqsen": "\\cb_core_install_events\u0028\u0029",
@@ -508,7 +503,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_setup_core\u0028\u0029",
             "name": "cb_setup_core",
-            "summary": "CB\u0020Setup\u0020Core",
+            "summary": "Sets\u0020up\u0020our\u0020Core\u0020component,\u0020which\u0020loads\u0020all\u0020of\u0020our\u0020other\u0020components.",
             "url": "namespaces/default.html#function_cb_setup_core"
         },                {
             "fqsen": "\\cb_core_generate_uuid\u0028\u0029",
@@ -558,22 +553,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_member_template_part\u0028\u0029",
             "name": "cb_member_template_part",
-            "summary": "CB\u0020Member\u0020Template\u0020Part",
+            "summary": "Renders\u0020the\u0020member\u0020template\u0020part\u0020appropriate\u0020for\u0020the\u0020current\u0020page.",
             "url": "namespaces/default.html#function_cb_member_template_part"
         },                {
             "fqsen": "\\cb_core_add_confetti_captain_badges\u0028\u0029",
             "name": "cb_core_add_confetti_captain_badges",
-            "summary": "CB\u0020Core\u0020Add\u0020Confetti\u0020Captain\u0020Badges",
+            "summary": "Adds\u0020Confetti\u0020Captain\u0020badges\u0020to\u0020the\u0020user\u0027s\u0020member\u0020profile\u0020page\nas\u0020well\u0020as\u0020to\u0020the\u0020activity\u0020feed,\u0020if\u0020they\u0020are\u0020a\u0020Confetti\u0020Captain.",
             "url": "namespaces/default.html#function_cb_core_add_confetti_captain_badges"
         },                {
             "fqsen": "\\cb_core_confetti_captain_class\u0028\u0029",
             "name": "cb_core_confetti_captain_class",
-            "summary": "CB\u0020Core\u0020Confetti\u0020Captain\u0020Class",
+            "summary": "Adds\u0020our\u0020custom\u0020\u0027confetti\u002Dcaptain\u0027\u0020class\u0020to\u0020the\u0020BuddyBoss\u0020user\u0020avatar\nso\u0020that\u0020we\u0020can\u0020add\u0020a\u0020cute\u0020little\u0020sparkler\u0020icon\u0020using\u0020JS.",
             "url": "namespaces/default.html#function_cb_core_confetti_captain_class"
         },                {
             "fqsen": "\\cb_core_confetti_captain_profile_badge\u0028\u0029",
             "name": "cb_core_confetti_captain_profile_badge",
-            "summary": "CB\u0020Core\u0020Confetti\u0020Captain\u0020Profile\u0020Badge",
+            "summary": "Adds\u0020a\u0020cute\u0020litte\u0020sparkler\u0020badge\u0020on\u0020the\u0020profile\u0020page\u0020of\u0020users\nwho\u0020are\u0020designated\u0020as\u0020\u0022Confetti\u0020Captains\u0022,\u0020which\u0020meand\u0020they\u0020are\npart\u0020of\u0020the\u0020Confetti\u0020Captains\u0020group.",
             "url": "namespaces/default.html#function_cb_core_confetti_captain_profile_badge"
         },                {
             "fqsen": "\\CB_Component",
@@ -1313,27 +1308,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_participation_nav\u0028\u0029",
             "name": "cb_participation_nav",
-            "summary": "CB\u0020Participation\u0020Nav",
+            "summary": "Outputs\u0020markup\u0020for\u0020the\u0020participation\u0020nav.",
             "url": "namespaces/default.html#function_cb_participation_nav"
         },                {
             "fqsen": "\\cb_participation_format_nav_data\u0028\u0029",
             "name": "cb_participation_format_nav_data",
-            "summary": "CB\u0020Participation\u0020Format\u0020Nav\u0020Data",
+            "summary": "Formats\u0020the\u0020nav\u0020data\u0020for\u0020the\u0020participation\u0020component.",
             "url": "namespaces/default.html#function_cb_participation_format_nav_data"
         },                {
             "fqsen": "\\cb_participation_get_nav\u0028\u0029",
             "name": "cb_participation_get_nav",
-            "summary": "CB\u0020Participation\u0020Get\u0020Nav",
+            "summary": "Returns\u0020the\u0020nav\u0020for\u0020the\u0020participation\u0020filtering\u0020system.",
             "url": "namespaces/default.html#function_cb_participation_get_nav"
         },                {
             "fqsen": "\\cb_participation_admin_nav\u0028\u0029",
             "name": "cb_participation_admin_nav",
-            "summary": "CB\u0020Participation\u0020Admin\u0020Nav",
+            "summary": "Outputs\u0020the\u0020participation\u0020admin\u0020nav.",
             "url": "namespaces/default.html#function_cb_participation_admin_nav"
         },                {
             "fqsen": "\\cb_participation_admin_get_nav\u0028\u0029",
             "name": "cb_participation_admin_get_nav",
-            "summary": "CB\u0020Participation\u0020Admin\u0020Get\u0020Nav",
+            "summary": "Returns\u0020the\u0020nav\u0020for\u0020the\u0020participation\u0020admin\u0020filtering\u0020system.",
             "url": "namespaces/default.html#function_cb_participation_admin_get_nav"
         },                {
             "fqsen": "\\CONFETTI_BITS_PARTICIPATION_SLUG",
@@ -2248,22 +2243,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_transactions_total_sent_today_notice\u0028\u0029",
             "name": "cb_transactions_total_sent_today_notice",
-            "summary": "CB\u0020Transactions\u0020Total\u0020Sent\u0020Today\u0020Notice",
+            "summary": "Output\u0020the\u0020total\u0020number\u0020of\u0020Confetti\u0020Bits\nthat\u0020the\u0020user\u0020has\u0020sent\u0020for\u0020the\u0020current\u0020day.",
             "url": "namespaces/default.html#function_cb_transactions_total_sent_today_notice"
         },                {
             "fqsen": "\\cb_transactions_request_balance\u0028\u0029",
             "name": "cb_transactions_request_balance",
-            "summary": "CB\u0020Users\u0020Request\u0020Balance",
+            "summary": "Display\u0020the\u0020users\u0020request\u0020balance.",
             "url": "namespaces/default.html#function_cb_transactions_request_balance"
         },                {
             "fqsen": "\\cb_transactions_get_request_balance_notice\u0028\u0029",
             "name": "cb_transactions_get_request_balance_notice",
-            "summary": "CB\u0020Transactions\u0020Get\u0020Request\u0020Balance\u0020Notice",
+            "summary": "Get\u0020the\u0020users\u0020request\u0020balance\u0020notice.",
             "url": "namespaces/default.html#function_cb_transactions_get_request_balance_notice"
         },                {
             "fqsen": "\\cb_transactions_request_balance_notice\u0028\u0029",
             "name": "cb_transactions_request_balance_notice",
-            "summary": "CB\u0020Transactions\u0020Request\u0020Balance\u0020Notice",
+            "summary": "Output\u0020the\u0020users\u0020request\u0020balance\u0020notice.",
             "url": "namespaces/default.html#function_cb_transactions_request_balance_notice"
         },                {
             "fqsen": "\\cb_transactions_get_balances_notice\u0028\u0029",
@@ -2283,12 +2278,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_transactions_get_balance_notice\u0028\u0029",
             "name": "cb_transactions_get_balance_notice",
-            "summary": "",
+            "summary": "Dynamically\u0020gets\u0020the\u0020markup\u0020for\u0020the\u0020balance\u0020notice\u0020at\u0020the\u0020top\u0020of\u0020the\u0020dashboard.",
             "url": "namespaces/default.html#function_cb_transactions_get_balance_notice"
         },                {
             "fqsen": "\\cb_transactions_balance_notice\u0028\u0029",
             "name": "cb_transactions_balance_notice",
-            "summary": "",
+            "summary": "Outputs\u0020a\u0020balance\u0020notice\u0020of\u0020the\u0020given\u0020type,\u0020for\u0020the\u0020given\u0020user.",
             "url": "namespaces/default.html#function_cb_transactions_balance_notice"
         },                {
             "fqsen": "\\cb_transactions_transfer_balance_notice\u0028\u0029",
@@ -2303,37 +2298,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\cb_transactions_request_selection\u0028\u0029",
             "name": "cb_transactions_request_selection",
-            "summary": "CB\u0020Transactions\u0020Request\u0020Selection",
+            "summary": "Outputs\u0020markup\u0020for\u0020the\u0020request\u0020selector.",
             "url": "namespaces/default.html#function_cb_transactions_request_selection"
         },                {
             "fqsen": "\\cb_transactions_get_leaderboard_module\u0028\u0029",
             "name": "cb_transactions_get_leaderboard_module",
-            "summary": "CB\u0020Transactions\u0020Get\u0020Leaderboard\u0020Module",
+            "summary": "Returns\u0020container\u0020markup\u0020with\u0020transactions\u0020leaderboard\u0020content\u0020inside.",
             "url": "namespaces/default.html#function_cb_transactions_get_leaderboard_module"
         },                {
             "fqsen": "\\cb_transactions_leaderboard_module\u0028\u0029",
             "name": "cb_transactions_leaderboard_module",
-            "summary": "CB\u0020Transactions\u0020Leaderboard\u0020Module",
+            "summary": "Outputs\u0020the\u0020markup\u0020for\u0020the\u0020Confetti\u0020Bits\u0020leaderboard\u0020module.",
             "url": "namespaces/default.html#function_cb_transactions_leaderboard_module"
         },                {
             "fqsen": "\\cb_transactions_get_send_bits_module\u0028\u0029",
             "name": "cb_transactions_get_send_bits_module",
-            "summary": "CB\u0020Transactions\u0020Get\u0020Send\u0020Bits\u0020Module",
+            "summary": "Gets\u0020the\u0020containerized\u0020markup\u0020for\u0020the\u0020send\u0020bits\u0020module\u0020on\u0020the\u0020Confetti\nBits\u0020dashboard.",
             "url": "namespaces/default.html#function_cb_transactions_get_send_bits_module"
         },                {
             "fqsen": "\\cb_transactions_send_bits_module\u0028\u0029",
             "name": "cb_transactions_send_bits_module",
-            "summary": "CB\u0020Transactions\u0020Send\u0020Bits\u0020Module",
+            "summary": "Outputs\u0020the\u0020markup\u0020for\u0020the\u0020send\u0020bits\u0020module.",
             "url": "namespaces/default.html#function_cb_transactions_send_bits_module"
         },                {
             "fqsen": "\\cb_transactions_get_formatted_leaderboard\u0028\u0029",
             "name": "cb_transactions_get_formatted_leaderboard",
-            "summary": "CB\u0020Transactions\u0020Get\u0020Formatted\u0020Leaderboard",
+            "summary": "Returns\u0020a\u0020string\u0020of\u0020markup\u0020that\u0020contains\u0020listings\u0020for\u0020the\u0020top\u002015\nusers\u0020with\u0020the\u0020most\u0020Confetti\u0020Bits.",
             "url": "namespaces/default.html#function_cb_transactions_get_formatted_leaderboard"
         },                {
             "fqsen": "\\cb_transactions_leaderboard\u0028\u0029",
             "name": "cb_transactions_leaderboard",
-            "summary": "CB\u0020Transactions\u0020Leaderboard",
+            "summary": "Outputs\u0020markup\u0020for\u0020the\u0020transactions\u0020leaderboard.",
             "url": "namespaces/default.html#function_cb_transactions_leaderboard"
         },                {
             "fqsen": "\\cb_get_import_bda_module\u0028\u0029",

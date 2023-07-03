@@ -387,11 +387,9 @@ function cb_allowed_themes( $themes ) {
 }
 
 /**
- * CB REST API Init
- * 
  * Fires the cb_rest_api_init action, so we (and others) can easily hook into our REST API.
  * 
- * @package Confetti_Bits
+ * @package ConfettiBits
  * @since 2.3.0
  */
 function cb_rest_api_init() {

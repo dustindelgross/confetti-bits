@@ -8,8 +8,7 @@ defined( 'ABSPATH' ) || exit;
  * A component that allows users to register their participation 
  * in company activities.
  * 
- * @package Confetti_Bits
- * @subpackage Participation
+ * @package ConfettiBits\Participation
  * @since 2.2.0
  */
 class CB_Participation_Participation {

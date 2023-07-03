@@ -152,7 +152,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Participation-Component.html"><abbr title="\CB_Participation_Component">CB_Participation_Component</abbr></a></dt><dd>CB Participation Component</dd>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Participation-Component.html"><abbr title="\CB_Participation_Component">CB_Participation_Component</abbr></a></dt><dd>CB Participation Component</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/CB-Participation-Participation.html"><abbr title="\CB_Participation_Participation">CB_Participation_Participation</abbr></a></dt><dd>CB Participation Participation</dd>    </dl>
 
 
 
@@ -249,6 +249,41 @@
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>CB Participation Event Type Filter</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_participation_nav">cb_participation_nav()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Outputs markup for the participation nav.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_participation_format_nav_data">cb_participation_format_nav_data()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Formats the nav data for the participation component.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_participation_get_nav">cb_participation_get_nav()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Returns the nav for the participation filtering system.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_participation_admin_nav">cb_participation_admin_nav()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Outputs the participation admin nav.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/default.html#function_cb_participation_admin_get_nav">cb_participation_admin_get_nav()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Returns the nav for the participation admin filtering system.</dd>
 
     </dl>
 
@@ -995,6 +1030,253 @@ down to the wire on this update. :D</p>
 
     
 </article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_participation_nav">
+        cb_participation_nav()
+        <a href="namespaces/default.html#function_cb_participation_nav" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-template.php"><a href="files/cb-participation-cb-participation-template.html"><abbr title="cb-participation/cb-participation-template.php">cb-participation-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">53</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Outputs markup for the participation nav.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_participation_nav</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_participation_nav#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_participation_format_nav_data">
+        cb_participation_format_nav_data()
+        <a href="namespaces/default.html#function_cb_participation_format_nav_data" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-template.php"><a href="files/cb-participation-cb-participation-template.html"><abbr title="cb-participation/cb-participation-template.php">cb-participation-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">71</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Formats the nav data for the participation component.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_participation_format_nav_data</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$component</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$items</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">array()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+        <section class="phpdocumentor-description"><p>We need a pretty complicated set of arguments for
+cb_templates_get_nav() and cb_templates_get_nav_items()
+and this helps us achieve that in a structured way.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$component</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$items</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">array()</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>A collection of key =&gt; value pairs</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_participation_format_nav_data#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The list of formatted nav data.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_participation_get_nav">
+        cb_participation_get_nav()
+        <a href="namespaces/default.html#function_cb_participation_get_nav" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-template.php"><a href="files/cb-participation-cb-participation-template.html"><abbr title="cb-participation/cb-participation-template.php">cb-participation-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">103</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the nav for the participation filtering system.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_participation_get_nav</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_participation_get_nav#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The nav markup.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_participation_admin_nav">
+        cb_participation_admin_nav()
+        <a href="namespaces/default.html#function_cb_participation_admin_nav" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-template.php"><a href="files/cb-participation-cb-participation-template.html"><abbr title="cb-participation/cb-participation-template.php">cb-participation-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">125</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Outputs the participation admin nav.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_participation_admin_nav</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_participation_admin_nav#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_cb_participation_admin_get_nav">
+        cb_participation_admin_get_nav()
+        <a href="namespaces/default.html#function_cb_participation_admin_get_nav" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="cb-participation/cb-participation-template.php"><a href="files/cb-participation-cb-participation-template.html"><abbr title="cb-participation/cb-participation-template.php">cb-participation-template.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">137</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the nav for the participation admin filtering system.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">cb_participation_admin_get_nav</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/default.html#function_cb_participation_admin_get_nav#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">2.2.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The nav markup.</p>
+</section>
+
+            </section>
+
+</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
@@ -1113,10 +1395,15 @@ down to the wire on this update. :D</p>
                                                     <li><a href="namespaces/default.html#function_cb_ajax_new_participation">cb_ajax_new_participation()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_ajax_update_participation">cb_ajax_update_participation()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_add_filler_data">cb_participation_add_filler_data()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_participation_admin_get_nav">cb_participation_admin_get_nav()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_participation_admin_nav">cb_participation_admin_nav()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_event_type_filter">cb_participation_event_type_filter()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_participation_format_nav_data">cb_participation_format_nav_data()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_get_amount">cb_participation_get_amount()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_get_log_entry">cb_participation_get_log_entry()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_participation_get_nav">cb_participation_get_nav()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_get_transaction">cb_participation_get_transaction()</a></li>
+                                                    <li><a href="namespaces/default.html#function_cb_participation_nav">cb_participation_nav()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_new_participation">cb_participation_new_participation()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_new_transaction">cb_participation_new_transaction()</a></li>
                                                     <li><a href="namespaces/default.html#function_cb_participation_update_notifications">cb_participation_update_notifications()</a></li>
