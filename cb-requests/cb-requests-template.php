@@ -181,6 +181,7 @@ function cb_requests_get_requests_form() {
 		'component' => 'requests',
 		'output' => [
 			'heading' => 'Submit Request',
+			'content' => 'Select an item to display a description.',
 			'component' => 'requests',
 			'inputs' => [
 				[ 'type' => 'select', 'args' => [ 'name' => 'request_item_id', 'label' => 'Item Selection', 'select_options' => $options, 'placeholder' => 'Please select an item' ] ],

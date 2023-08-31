@@ -178,7 +178,7 @@ class CB_Requests_Request
 
 		$retval = false;
 
-		$data = array(
+		$data = [
 			'item_id' => $this->item_id,
 			'secondary_item_id' => $this->secondary_item_id,
 			'applicant_id' => $this->applicant_id,
@@ -189,7 +189,7 @@ class CB_Requests_Request
 			'component_action' => $this->component_action,
 			'status' => $this->status,
 			'request_item_id' => $this->request_item_id
-		);
+		];
 
 		$data_format = array('%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%d' );
 		$result = self::_insert($data, $data_format);
@@ -258,27 +258,37 @@ class CB_Requests_Request
 		);
 
 		if (!empty($args['id'])) {
-			$where_clauses['data']['id'] = is_array($args['id']) ? implode(', ', wp_parse_id_list($args['id'])) : intval( $args['id'] );
+			$where_clauses['data']['id'] = is_array($args['id']) ? 
+				implode(', ', wp_parse_id_list($args['id'])) 
+				: intval( $args['id'] );
 			$where_clauses['format'][] = '%d';
 		}
 
 		if (!empty($args['applicant_id'])) {
-			$where_clauses['data']['applicant_id'] = wp_parse_id_list($args['applicant_id']);
+			$where_clauses['data']['applicant_id'] = is_array($args['applicant_id']) ?
+				implode( ', ', wp_parse_id_list($args['applicant_id'])) 
+				: intval($args['applicant_id']);
 			$where_clauses['format'][] = '%d';
 		}
 
 		if (!empty($args['admin_id'])) {
-			$where_clauses['data']['admin_id'] = wp_parse_id_list($args['admin_id']);
+			$where_clauses['data']['admin_id'] = is_array( $args['admin_id'] ) ? 
+				implode( ', ', wp_parse_id_list($args['admin_id']))
+				: intval($args['admin_id']);
 			$where_clauses['format'][] = '%d';
 		}
 
 		if (!empty($args['item_id'])) {
-			$where_clauses['data']['item_id'] = wp_parse_id_list($args['item_id']);
+			$where_clauses['data']['item_id'] = is_array( $args['item_id'] ) ? 
+				implode( ', ', wp_parse_id_list($args['item_id']))
+				: intval($args['item_id']);
 			$where_clauses['format'][] = '%d';
 		}
 
 		if (!empty($args['secondary_item_id'])) {
-			$where_clauses['data']['secondary_item_id'] = wp_parse_id_list($args['secondary_item_id']);
+			$where_clauses['data']['secondary_item_id'] = is_array($args['secondary_item_id']) ?
+				implode( ', ', wp_parse_id_list($args['secondary_item_id']))
+				: intval($args['secondary_item_id']);
 			$where_clauses['format'][] = '%d';
 		}
 
@@ -307,8 +317,10 @@ class CB_Requests_Request
 			$where_clauses['format'][] = '%s';
 		}
 
-		if (isset($args['request_item_id'])) {
-			$where_clauses['data']['request_item_id'] = wp_parse_id_list($args['request_item_id']);
+		if (!empty($args['request_item_id'])) {
+			$where_clauses['data']['request_item_id'] = is_array($args['request_item_id']) ?
+				implode(', ', wp_parse_id_list($args['request_item_id']))
+				: intval($args['request_item_id']);
 			$where_clauses['format'][] = '%d';
 		}
 
@@ -357,7 +369,8 @@ class CB_Requests_Request
 			$where_format
 		);
 
-		do_action('cb_requests_after_update', $data);
+		do_action('cb_requests_after_update', $data );
+		
 		return $retval;
 	}
 
@@ -411,7 +424,7 @@ class CB_Requests_Request
 		return $wpdb->delete($cb->requests->table_name, $where, $where_format);
 
 	}
-	
+
 	/**
 	 * Deletes rows from the database. 
 	 * 
@@ -425,11 +438,11 @@ class CB_Requests_Request
 	 * @since 2.3.0
 	 */
 	public function delete( $where_args = [] ) {
-		
+
 		$where = self::get_query_clauses( $where_args );
-	
+
 		return self::_delete( $where['data'], $where['format'] );
-		
+
 	}
 
 	/**
@@ -451,16 +464,13 @@ class CB_Requests_Request
 		global $wpdb;
 		$cb = Confetti_Bits();
 
-		$r = wp_parse_args(
-			$args,
-			array(
-				'select' => '*',
-				'where' => [],
-				'orderby' => [],
-				'pagination' => [],
-				'group' => '',
-			)
-		);
+		$r = wp_parse_args( $args, [
+			'select' => '*',
+			'where' => [],
+			'orderby' => [],
+			'pagination' => [],
+			'group' => '',
+		]);
 
 		$select = (is_array($r['select'])) ? implode(', ', $r['select']) : $r['select'];
 		$select_sql = "SELECT {$select}";
@@ -473,7 +483,7 @@ class CB_Requests_Request
 		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$orderby_sql} {$pagination_sql}";
 
 		return $wpdb->get_results($sql, 'ARRAY_A');
-		
+
 	}
 
 	/**

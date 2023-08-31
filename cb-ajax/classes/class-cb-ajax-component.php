@@ -49,7 +49,10 @@ class CB_Ajax_Component extends CB_Component {
 			'participation',
 			'requests',
 			'request-items',
+			'events',
+			'contests',
 			'functions',
+			
 		);
 		
 		parent::includes($includes);

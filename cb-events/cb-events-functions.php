@@ -12,40 +12,84 @@
 defined('ABSPATH') || exit;
 
 /**
- * CB Events New Notifications
- *
+ * Saves a new event to the database.
+ * 
+ * @param array $args { 
+ *     An associative array of arguments.
+ *     Accepts any parameters of a 
+ *     CB_Events_Event object.
+ * }
+ */
+function cb_events_new_event( $args = [] ) {
+
+	$r = wp_parse_args( $args, [
+		'user_id' => get_current_user_id(),
+		'event_title' => '',
+		'event_desc' => '',
+		'participation_amount' => 5,
+	]);
+	
+	$feedback = ['type' => 'error', 'text' => ''];
+	$start_date = new DateTimeImmutable($r['event_start_date']);
+
+	if ( 
+		empty( $r['user_id'] ) || 
+		empty( $r['event_title'] ) || 
+		empty( $r['participation_amount'] ) || 
+		empty( $r['event_start_date'] ) || 
+		empty( $r['event_end_date'] ) 
+	) {
+		$feedback["text"] = "Event creation failed. Missing one of the following parameters: user ID, event title, participation amount, start date, or end date.";
+		return $feedback;
+	}
+	
+	$event = new CB_Events_Event();
+	$event->user_id = intval($r['user_id']);
+	$event->event_title = cb_core_sanitize_string($r['event_title']);
+	$event->event_desc = cb_core_sanitize_string($r['event_desc']);
+	$event->participation_amount = intval($r['participation_amount']);
+	$event->date_created = cb_core_current_date();
+	$event->date_modified = cb_core_current_date();
+
+}
+
+/**
  * Sends out notifications when a new event is created.
+ * 
+ * @param array $data { 
+ *     An associative array of key => value pairs from
+ *     a CB_Events_Event object.
+ * 
+ *     @see CB_Events_Event::save()
+ * }
  *
  * @package ConfettiBits\Events
  * @since 3.0.0
  */
-function cb_events_new_notifications($data = array())
+function cb_events_new_notifications($data = [])
 {
 
-	$r = wp_parse_args(
-		$data,
-		array(
-			'applicant_id' => 0,
-			'admin_id' => 0,
-			'component_action' => '',
-			'event_note' => '',
-			'status' => ''
-		)
-	);
+	$r = wp_parse_args( $data, [
+		'event_title' => '',
+		'event_desc' => '',
+		'event_start' => '',
+		'event_end' => '',
+		'participation_amount' => 0,
+		'user_id' => 0,
+	]);
 
 	if (
 		empty($data) ||
-		empty($r['applicant_id']) ||
-		empty($r['admin_id']) ||
-		empty($r['status']) ||
-		empty($r['component_action'])
+		empty($r['event_title']) ||
+		empty($r['user_id']) ||
+		empty($r['participation_amount'])
 	) {
 		return;
 	}
 
 	$item_id = 0;
 	$secondary_item_id = 0;
-
+	/*
 	switch ($r['component_action']) {
 
 		case ('cb_participation_new'):
@@ -69,7 +113,7 @@ function cb_events_new_notifications($data = array())
 			break;
 
 	}
-
+*/
 	bp_notifications_add_notification(
 		array(
 			'user_id' => $item_id,
@@ -93,27 +137,23 @@ function cb_events_new_notifications($data = array())
  * @package ConfettiBits\Events
  * @since 3.0.0
  */
-function cb_events_update_notifications($data = array())
+function cb_events_update_notifications($data = [])
 {
 
-	$r = wp_parse_args(
-		$data,
-		array(
-			'applicant_id' => 0,
-			'admin_id' => 0,
-			'component_action' => '',
-			'event_note' => '',
-			'status' => '',
-			'event_type' => ''
-		)
-	);
+	$r = wp_parse_args( $data, [
+		'event_title' => 0,
+		'event_desc' => 0,
+		'participation_amount' => '',
+		'event_start' => '',
+		'event_end' => '',
+		'user_id'
+	]);
 
 	if (
 		empty($data) ||
-		empty($r['applicant_id']) ||
-		empty($r['admin_id']) ||
-		empty($r['status']) ||
-		empty($r['component_action'])
+		empty($r['event_title']) ||
+		empty($r['participation_amount']) ||
+		empty($r['user_id'])
 	) {
 		return;
 	}

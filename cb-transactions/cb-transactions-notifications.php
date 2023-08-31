@@ -28,7 +28,7 @@ function cb_groups_activity_notifications($content, $user_id, $group_id, $activi
 
 	foreach ((array) $user_ids as $notified_user_id) {
 
-		if ('no' === bp_get_user_meta($notified_user_id, 'cb_group_activity', true)) {
+		if ('no' === bp_get_user_meta($notified_user_id, 'cb_groups_activity_post', true)) {
 			continue;
 		}
 
@@ -150,6 +150,10 @@ function cb_transactions_notifications( $data = [] ) {
 
 		bp_send_email('cb-anniversary-bits', $recipient_id, $email_args);
 
+	}
+	
+	if ( $r['component_action'] === 'cb_requests_status_update' ) {
+		return;
 	}
 
 	bp_notifications_add_notification($notification_args);

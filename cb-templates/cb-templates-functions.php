@@ -20,23 +20,23 @@
  */
 function cb_templates_container( $args = array() ) {
 
-	$r = wp_parse_args( $args, array(
+	$r = wp_parse_args( $args, [
 		'container' => 'div',
 		'id' => '',
-		'classes' => array(),
+		'classes' => [],
 		'output' => '',
-	));
+	]);
 
-	$valid_containers = array(
+	$valid_containers = [
 		'div'  => true,
 		'ul'   => true,
 		'ol'   => true,
 		'li'   => true,
 		'span' => true,
 		'p'    => true,
-	);
+	];
 
-	$default_classes        = array();
+	$default_classes = [];
 	$r['classes'] = array_merge( $r['classes'], $default_classes );
 
 	if ( empty( $r['container'] ) || ! isset( $valid_containers[ $r['container'] ] ) ) {
@@ -58,11 +58,10 @@ function cb_templates_container( $args = array() ) {
 
 	// Print the wrapper and its content.
 	return sprintf('<%1$s%2$s%3$s>%4$s</%1$s>', $container, $id, $classes, $output);
+
 }
 
 /**
- * CB Get Button
- * 
  * Formats a button element with the given arguments
  * 
  * @param array $args {
@@ -79,15 +78,15 @@ function cb_templates_container( $args = array() ) {
  */
 function cb_templates_get_button( $args = array() ) {
 
-	$r = wp_parse_args( $args, array(
-		'classes' => array(),
+	$r = wp_parse_args( $args, [
+		'classes' => [],
 		'id' => '',
 		'content' => '',
 		'type' => 'button',
-		'custom_attr' => array()
-	));
+		'custom_attr' => []
+	]);
 
-	$valid_types = array( 'button', 'reset', 'submit' );
+	$valid_types = [ 'button', 'reset', 'submit' ];
 
 	if ( !in_array( $r['type'], $valid_types ) ) {
 		return;
@@ -121,8 +120,6 @@ function cb_templates_get_button( $args = array() ) {
 }
 
 /**
- * CB Templates Get List Item
- * 
  * Formats a list item element with the given arguments
  * 
  * @param array $args {
@@ -261,7 +258,7 @@ function cb_templates_get_ajax_table( $component = '', $heading = '', $paginated
 	$with_dashes = str_replace( '_', '-', $component );
 
 	if ( $paginated ) {
-		
+
 		/*
 		$page_number_input = cb_templates_get_number_input([
 			'label' => 'Go To...',
@@ -275,7 +272,7 @@ function cb_templates_get_ajax_table( $component = '', $heading = '', $paginated
 			'output' => $page_number_input . $go_to_page_button
 		]);
 		*/
-		
+
 		if ( $heading !== '' ) {
 			$heading = cb_templates_get_heading($heading);
 		}
@@ -474,10 +471,10 @@ function cb_templates_get_nav( $component = '', $items = array() ) {
 
 	$with_dashes = str_replace( '_', '-', $component );
 
-	return cb_templates_container(array(
+	return cb_templates_container([
 		'container' => 'ul',
-		'classes' => array("cb-{$with_dashes}-nav"),
+		'classes' => ["cb-{$with_dashes}-nav"],
 		'output' => cb_templates_get_nav_items( $component, $items )
-	));
+	]);
 
 }

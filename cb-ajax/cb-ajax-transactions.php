@@ -181,8 +181,9 @@ function cb_ajax_new_transactions() {
 		die();
 	}
 	
-	if ( cb_core_get_doomsday_clock() <= 7 && !cb_is_user_admin($sender_id) ) {
-		$feedback["text"] = "Transaction not sent. Cannot transfer Confetti Bits within 7 days of cycle reset date.";
+	if ( (cb_core_get_doomsday_clock() <= 7 && !cb_is_user_admin($sender_id))
+	   ) {
+		$feedback["text"] = "Transaction not sent. Cannot transfer Confetti Bits within 7 days prior to, or one month beyond, the cycle reset date.";
 		$feedback["type"] = "warning";
 		echo json_encode($feedback);
 		die();

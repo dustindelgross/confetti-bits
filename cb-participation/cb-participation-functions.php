@@ -99,162 +99,6 @@ function cb_participation_new_participation( array $args ) {
 	return $participation->id;
 
 }
-
-/**
- * Confetti Bits Update Request Status
- * 
- * Update the request status for a participation entry.
- * 
- * @TODO: Remove this?
- * 
- * @package ConfettiBits\Participation
- * @since 2.2.0
- *//*
-function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_modified = '', $status = '', $transaction_id = 0 ) {
-
-	if ( $id === 0 || $admin_id === 0 || $date_modified === '' || $status === '' ) {
-		return;
-	}
-
-	if ( $status !== 'approved' && $status !== 'denied' ) {
-		return;
-	}
-
-	$participation = new CB_Participation_Participation($id);
-	if ( ! is_wp_error( $participation ) ) {
-		return 	$participation->update(
-			array(
-				'admin_id'			=> $admin_id,
-				'secondary_item_id'	=> $admin_id,
-				'applicant_id'		=> $participation->applicant_id,
-				'event_note'		=> $participation->event_note,
-				'event_type'		=> $participation->event_type,
-				'date_modified'		=> $date_modified,
-				'component_action'	=> 'cb_participation_status_update',
-				'status'			=> $status,
-				'transaction_id'	=> $transaction_id
-			),
-			array(
-				'id'			=> $id
-			)
-		);
-	}
-}
-*/
-/**
- * CB Participation Update Handler
- * 
- * We're probably going to deprecate all over this bad boy as
- * we continue to transition everything to async.
- * 
- * Update: we did indeed do that. B)
- * 
- * @package ConfettiBits\Participation
- * @since 2.1.0
- *//*
-function cb_participation_update_handler() {
-
-	if ( ! cb_is_post_request() || 
-		! cb_is_confetti_bits_component() || 
-		! cb_is_user_participation_admin() ||
-		! wp_verify_nonce( $_POST['cb_participation_admin_nonce'], 'cb_participation_admin_post' )
-	   ) {
-		return;
-	}
-
-	$success = false;
-	$feedback = '';
-	$redirect_to = bp_loggedin_user_domain() . cb_get_transactions_slug() . '/#cb-participation-admin';
-
-	if ( ! isset( 
-		$_POST['cb_participation_admin_id'], 
-		$_POST['cb_participation_id'], 
-		$_POST['cb_participation_approval_status']
-	) ) {
-		$feedback = 'Update invalid. Please try again.';
-	} else {
-
-		$admin_id = intval( $_POST['cb_participation_admin_id'] );
-		$participation_id = intval( $_POST['cb_participation_id'] );
-		$status				= trim( $_POST['cb_participation_approval_status'] );
-		$transaction_id		= intval( $_POST['cb_participation_transaction_id'] );
-		$admin_log_entry	= sanitize_text_field( $_POST['cb_participation_admin_log_entry'] );
-		$amount_override	= intval( $_POST['cb_participation_amount_override'] );
-		$participation = new Confetti_Bits_Participation_Participation( $participation_id );
-		$amount = 0;
-		$log_entry = '';
-		$new_transaction = 0;
-
-		if ( $admin_id == $participation->applicant_id && ! cb_is_user_site_admin() ) {
-			$feedback = "Update unsuccessful. Cannot self-approve culture participation.";
-		} else if ( $status === $participation->status ) {
-			$feedback = "Update unsuccessful. Status already marked as {$status}.";
-		} else {
-
-			$amount = cb_participation_get_amount( 
-				$transaction_id, 
-				$participation->event_type, 
-				$participation->status, 
-				$status, 
-				$amount_override
-			);
-
-			$log_entry = cb_participation_get_log_entry( $participation_id, $admin_log_entry );
-			*/
-			/*
-			if ( $log_entry !== $participation->event_note ) {
-				$log_entry += " | {$participation->event_note}";
-			}
-*//*
-			// Create a transaction if we can.
-			if ( $amount !== 0 && $log_entry !== '' ) {
-
-				$modified = current_time('mysql');
-				$new_transaction = cb_participation_new_transaction( 
-					array(
-						'transaction_id'	=> $transaction_id,
-						'participation_id'	=> $participation_id,
-						'admin_id'			=> $admin_id,
-						'modified'			=> $modified,
-						'status'			=> $status,
-						'amount'			=> $amount,
-						'log_entry'			=> $log_entry
-					)
-				);
-
-				if ( is_int( $new_transaction ) ) {
-
-					$success = true;
-					$feedback = "Update successful. Transaction ID: {$new_transaction}";
-
-				} else {
-					$feedback = "Update failed. Processing error 3050. Error processing Confetti Bits transaction. {$new_transaction}";
-				}
-			}
-
-			cb_participation_update_request_status( 
-				$participation_id, 
-				$admin_id, 
-				$modified, 
-				$status, 
-				$log_entry,
-				$new_transaction
-			);
-		}
-	}
-
-	if ( ! empty( $feedback ) ) {
-		$type = (true === $success) ? 'success' : 'error';
-		bp_core_add_message($feedback, $type);
-	}
-
-	if ( !empty( $redirect_to ) ) {
-		bp_core_redirect( $redirect_to );
-	}
-
-}
-
-*/
 	
 /**
  * Confetti Bits Participation New Transaction
@@ -666,3 +510,159 @@ function cb_participation_update_notifications( $participation_id = 0 ) {
 
 }
 add_action( 'cb_participation_after_update', 'cb_participation_update_notifications', 10, 1 );
+
+/**
+ * Confetti Bits Update Request Status
+ * 
+ * Update the request status for a participation entry.
+ * 
+ * @TODO: Remove this?
+ * 
+ * @package ConfettiBits\Participation
+ * @since 2.2.0
+ *//*
+function cb_participation_update_request_status( $id = 0, $admin_id = 0, $date_modified = '', $status = '', $transaction_id = 0 ) {
+
+	if ( $id === 0 || $admin_id === 0 || $date_modified === '' || $status === '' ) {
+		return;
+	}
+
+	if ( $status !== 'approved' && $status !== 'denied' ) {
+		return;
+	}
+
+	$participation = new CB_Participation_Participation($id);
+	if ( ! is_wp_error( $participation ) ) {
+		return 	$participation->update(
+			array(
+				'admin_id'			=> $admin_id,
+				'secondary_item_id'	=> $admin_id,
+				'applicant_id'		=> $participation->applicant_id,
+				'event_note'		=> $participation->event_note,
+				'event_type'		=> $participation->event_type,
+				'date_modified'		=> $date_modified,
+				'component_action'	=> 'cb_participation_status_update',
+				'status'			=> $status,
+				'transaction_id'	=> $transaction_id
+			),
+			array(
+				'id'			=> $id
+			)
+		);
+	}
+}
+*/
+/**
+ * CB Participation Update Handler
+ * 
+ * We're probably going to deprecate all over this bad boy as
+ * we continue to transition everything to async.
+ * 
+ * Update: we did indeed do that. B)
+ * 
+ * @package ConfettiBits\Participation
+ * @since 2.1.0
+ *//*
+function cb_participation_update_handler() {
+
+	if ( ! cb_is_post_request() || 
+		! cb_is_confetti_bits_component() || 
+		! cb_is_user_participation_admin() ||
+		! wp_verify_nonce( $_POST['cb_participation_admin_nonce'], 'cb_participation_admin_post' )
+	   ) {
+		return;
+	}
+
+	$success = false;
+	$feedback = '';
+	$redirect_to = bp_loggedin_user_domain() . cb_get_transactions_slug() . '/#cb-participation-admin';
+
+	if ( ! isset( 
+		$_POST['cb_participation_admin_id'], 
+		$_POST['cb_participation_id'], 
+		$_POST['cb_participation_approval_status']
+	) ) {
+		$feedback = 'Update invalid. Please try again.';
+	} else {
+
+		$admin_id = intval( $_POST['cb_participation_admin_id'] );
+		$participation_id = intval( $_POST['cb_participation_id'] );
+		$status				= trim( $_POST['cb_participation_approval_status'] );
+		$transaction_id		= intval( $_POST['cb_participation_transaction_id'] );
+		$admin_log_entry	= sanitize_text_field( $_POST['cb_participation_admin_log_entry'] );
+		$amount_override	= intval( $_POST['cb_participation_amount_override'] );
+		$participation = new Confetti_Bits_Participation_Participation( $participation_id );
+		$amount = 0;
+		$log_entry = '';
+		$new_transaction = 0;
+
+		if ( $admin_id == $participation->applicant_id && ! cb_is_user_site_admin() ) {
+			$feedback = "Update unsuccessful. Cannot self-approve culture participation.";
+		} else if ( $status === $participation->status ) {
+			$feedback = "Update unsuccessful. Status already marked as {$status}.";
+		} else {
+
+			$amount = cb_participation_get_amount( 
+				$transaction_id, 
+				$participation->event_type, 
+				$participation->status, 
+				$status, 
+				$amount_override
+			);
+
+			$log_entry = cb_participation_get_log_entry( $participation_id, $admin_log_entry );
+			*/
+			/*
+			if ( $log_entry !== $participation->event_note ) {
+				$log_entry += " | {$participation->event_note}";
+			}
+*//*
+			// Create a transaction if we can.
+			if ( $amount !== 0 && $log_entry !== '' ) {
+
+				$modified = current_time('mysql');
+				$new_transaction = cb_participation_new_transaction( 
+					array(
+						'transaction_id'	=> $transaction_id,
+						'participation_id'	=> $participation_id,
+						'admin_id'			=> $admin_id,
+						'modified'			=> $modified,
+						'status'			=> $status,
+						'amount'			=> $amount,
+						'log_entry'			=> $log_entry
+					)
+				);
+
+				if ( is_int( $new_transaction ) ) {
+
+					$success = true;
+					$feedback = "Update successful. Transaction ID: {$new_transaction}";
+
+				} else {
+					$feedback = "Update failed. Processing error 3050. Error processing Confetti Bits transaction. {$new_transaction}";
+				}
+			}
+
+			cb_participation_update_request_status( 
+				$participation_id, 
+				$admin_id, 
+				$modified, 
+				$status, 
+				$log_entry,
+				$new_transaction
+			);
+		}
+	}
+
+	if ( ! empty( $feedback ) ) {
+		$type = (true === $success) ? 'success' : 'error';
+		bp_core_add_message($feedback, $type);
+	}
+
+	if ( !empty( $redirect_to ) ) {
+		bp_core_redirect( $redirect_to );
+	}
+
+}
+
+*/

@@ -53,31 +53,15 @@ class CB_Events_Contest
 	public $recipient_id;
 
 	/**
-	 * The date the contest was created.
-	 *
-	 * @var string
-	 */
-	public $date_created;
-
-	/**
-	 * The date of the last time the entry was modified.
-	 *
-	 * @var string
-	 */
-	public $date_modified;
-
-	/**
 	 * The column names for the contest entry table.
 	 * @var array
 	 */
-	public $columns = [
+	private static $columns = [
 		'id',
 		'event_id',
 		'placement',
 		'amount',
 		'recipient_id',
-		'date_created',
-		'date_modified',
 	];
 
 	/**
@@ -106,7 +90,7 @@ class CB_Events_Contest
 	public function populate($id = 0)
 	{
 
-		$contest = $this->get_contest(['where' => ['id' => $id]]);
+		$contest = $this->get_contests(['where' => ['id' => $id]]);
 
 		$fetched_contest = !empty($contest) ? current($contest) : [];
 
@@ -115,8 +99,6 @@ class CB_Events_Contest
 			$this->placement = $fetched_contest['placement'];
 			$this->amount = $fetched_contest['amount'];
 			$this->recipient_id = $fetched_contest['recipient_id'];
-			$this->date_created = $fetched_contest['date_created'];
-			$this->date_modified = $fetched_contest['date_modified'];
 		}
 	}
 
@@ -137,22 +119,17 @@ class CB_Events_Contest
 		$data = [
 			'event_id' => $this->event_id,
 			'placement' => $this->placement,
-			'amount' => $this->amount,
-			'recipient_id' => $this->recipient_id,
-			'date_created' => $this->date_created,
-			'date_modified' => $this->date_modified,
+			'amount' => $this->amount
 		];
 
-		$data_format = ['%d', '%d', '%d', '%d', '%s', '%s'];
+		$data_format = ['%d', '%d', '%d'];
 		$result = self::_insert($data, $data_format);
 
 		if (!empty($result)) {
 
 			global $wpdb;
-
-			if (empty($this->id)) {
-				$this->id = $wpdb->insert_id;
-			}
+			
+			$this->id = $wpdb->insert_id;
 
 			do_action('cb_contests_after_save', $data);
 
@@ -177,7 +154,7 @@ class CB_Events_Contest
 	 * }
 	 * @param array $data_format  {
 	 *     See {@link wpdb::insert()}.
-	 *     Default [ '%d', '%d', '%d', '%d', '%s', '%s' ].
+	 *     Default [ '%d', '%d', '%d', '%d' ].
 	 * }
 	 * @return int|bool The ID of the contest if successful, false otherwise.
 	 * @since 3.0.0
@@ -204,8 +181,8 @@ class CB_Events_Contest
 	 * @param array $where  The WHERE params as passed to wpdb::update().
 	 * 						  Typically consists of [ 'ID' => $id ) to specify the
 	 * 						  contest entry ID to update.
-	 * @param array $data_format  See {@link wpdb::update()}. Default [ '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s' ).
-	 * @param array $where_format  See {@link wpdb::update()}. Default is [ '%d' ).
+	 * @param array $data_format  See {@link wpdb::update()}. Default [ '%d', '%d', '%d', '%d' ].
+	 * @param array $where_format  See {@link wpdb::update()}. Default is [ '%d' ].
 	 * @see Confetti_Bits_Events_Contest::_update()
 	 * @return int|WP_Error The number of rows updated, or WP_Error otherwise.
 	 * @since 3.0.0
@@ -326,11 +303,9 @@ class CB_Events_Contest
 	 *     [
 	 *         'data' => [
 	 *             'recipient_id' => 4,
-	 *             'date_modified' => '2023-01-01 00:00:00',
 	 *         ),
 	 *         'format' => [
 	 *             '%d',
-	 *             '%s',
 	 *         ),
 	 *     )
 	 *
@@ -353,33 +328,23 @@ class CB_Events_Contest
 		}
 
 		if (!empty($args['event_id'])) {
-			$where_clauses['data']['event_id'] = $args['event_id'];
+			$where_clauses['data']['event_id'] = absint($args['event_id']);
 			$where_clauses['format'][] = '%d';
 		}
 
 		if (!empty($args['placement'])) {
-			$where_clauses['data']['placement'] = $args['placement'];
+			$where_clauses['data']['placement'] = absint($args['placement']);
 			$where_clauses['format'][] = '%d';
 		}
 
 		if (!empty($args['amount'])) {
-			$where_clauses['data']['amount'] = $args['amount'];
+			$where_clauses['data']['amount'] = absint($args['amount']);
 			$where_clauses['format'][] = '%d';
 		}
 
 		if (!empty($args['recipient_id'])) {
 			$where_clauses['data']['recipient_id'] = absint($args['recipient_id']);
 			$where_clauses['format'][] = '%d';
-		}
-
-		if (!empty($args['date_created'])) {
-			$where_clauses['data']['date_created'] = $args['date_created'];
-			$where_clauses['format'][] = '%s';
-		}
-
-		if (!empty($args['date_modified'])) {
-			$where_clauses['data']['date_modified'] = $args['date_modified'];
-			$where_clauses['format'][] = '%s';
 		}
 
 		return $where_clauses;
@@ -415,7 +380,7 @@ class CB_Events_Contest
 	 * @see CB_Events_Contest::get_paged_sql()
 	 * @see CB_Events_Contest::get_orderby_sql()
 	 */
-	public function get_contest($args = [])
+	public function get_contests($args = [])
 	{
 
 		global $wpdb;
@@ -431,7 +396,7 @@ class CB_Events_Contest
 
 		$select = (is_array($r['select'])) ? implode(', ', $r['select']) : $r['select'];
 		$select_sql = "SELECT {$select}";
-		$from_sql = "FROM {$wpdb->prefix}confetti_bits_contests ";
+		$from_sql = "FROM {$cb->events->table_name_contests}";
 		$where_sql = self::get_where_sql($r['where']);
 		$orderby_sql = (!empty($r['orderby'])) ? self::get_orderby_sql($r['orderby']) : '';
 		$group_sql = (!empty($r['groupby'])) ? "GROUP BY {$r['groupby']}" : '';

@@ -1,7 +1,7 @@
 <?php
 /**
  * Manages the CRUD operations for the Events component.
- * 
+ *
  * @package ConfettiBits\Events
  * @since 3.0.0
  */
@@ -43,14 +43,14 @@ class CB_Events_Event
 	 *
 	 * @var datetime
 	 */
-	public $event_date_start;
+	public $event_start;
 
 	/**
 	 * The date and time that the event ends.
 	 *
 	 * @var datetime
 	 */
-	public $event_date_end;
+	public $event_end;
 
 	/**
 	 * The amount that the user will receive for participating in the event.
@@ -86,12 +86,12 @@ class CB_Events_Event
 	 *
 	 * @var array
 	 */
-	public $columns = [
+	private static $columns = [
 		'id',
 		'event_title',
 		'event_desc',
-		'event_date_start',
-		'event_date_end',
+		'event_start',
+		'event_end',
 		'participation_amount',
 		'user_id',
 		'date_created',
@@ -116,22 +116,21 @@ class CB_Events_Event
 	/**
 	 * Get information for specific event.
 	 * @param int $id The ID of the event to fetch.
-	 * @return array|bool The event data if successful, false otherwise.
 	 * @since 3.0.0
 	 * @uses CB_Events_Event::get_event()
 	 */
 	public function populate($id = 0)
 	{
 
-		$event = $this->get_event(['where' => ['id' => $id]]);
+		$event = $this->get_events(['where' => ['id' => $id]]);
 
 		$fetched_event = !empty($event) ? current($event) : [];
 
 		if (!empty($fetched_event) && is_array($fetched_event)) {
 			$this->event_title = $fetched_event['event_title'];
 			$this->event_desc = $fetched_event['event_desc'];
-			$this->event_date_start = $fetched_event['event_date_start'];
-			$this->event_date_end = $fetched_event['event_date_end'];
+			$this->event_start = $fetched_event['event_start'];
+			$this->event_end = $fetched_event['event_end'];
 			$this->participation_amount = $fetched_event['participation_amount'];
 			$this->user_id = $fetched_event['user_id'];
 			$this->date_created = $fetched_event['date_created'];
@@ -156,8 +155,8 @@ class CB_Events_Event
 		$data = [
 			'event_title' => $this->event_title,
 			'event_desc' => $this->event_desc,
-			'event_date_start' => $this->event_date_start,
-			'event_date_end' => $this->event_date_end,
+			'event_start' => $this->event_start,
+			'event_end' => $this->event_end,
 			'participation_amount' => $this->participation_amount,
 			'user_id' => $this->user_id,
 			'date_created' => $this->date_created,
@@ -185,6 +184,40 @@ class CB_Events_Event
 		return $retval;
 
 	}
+	
+	/**
+	 * Determines whether the given Event exists in the database.
+	 * 
+	 * Because we can't easily use foreign keys in a WordPress instance, we'll have
+	 * to check ourselves whether
+	 */
+	public function exists($id = 0) {
+		
+		global $wpdb;
+		$cb = Confetti_Bits();
+		
+		if ( $id === 0 ) {
+			$id = $this->id;
+		}
+		
+		// Don't pass an empty ID perhaps?
+		if ( empty( $id ) ) {
+			return false;
+		}
+		
+		$select_sql = "SELECT id";
+		$from_sql = "FROM {$cb->events->table_name}";
+		$where_sql = self::get_where_sql(['id' => intval($id)]);
+		$pagination_sql = self::get_paged_sql(['page' => 1, 'per_page' => 1]);
+		
+		$sql = "{$select_sql} {$from_sql} {$where_sql} {$pagination_sql}";
+		
+		$results = $wpdb->get_results($sql, 'ARRAY_A');
+		
+		// Should be exactly 1 event object with the given ID.
+		return sizeof($results) === 1;
+		
+	}
 
 	/**
 	 * _insert
@@ -202,6 +235,46 @@ class CB_Events_Event
 	{
 		global $wpdb;
 		return $wpdb->insert(Confetti_Bits()->events->table_name, $data, $data_format);
+	}
+
+	/**
+	 * Get Event
+	 * @param array $args
+	 * @return array
+	 * @since 1.0.0
+	 * @access public
+	 * @see CB_Events_Event::get_where_sql()
+	 * @see CB_Events_Event::get_paged_sql()
+	 *
+	 */
+	public function get_events($args = [])
+	{
+
+		global $wpdb;
+		$cb = Confetti_Bits();
+
+		$r = wp_parse_args(
+			$args,
+			[
+				'select' => '*',
+				'where' => [],
+				'orderby' => [],
+				'pagination' => [],
+				'group' => '',
+			]
+		);
+
+		$select = (is_array($r['select'])) ? implode(', ', $r['select']) : $r['select'];
+		$select_sql = "SELECT {$select}";
+		$from_sql = "FROM {$cb->events->table_name}";
+		$where_sql = self::get_where_sql($r['where']);
+		$orderby_sql = (!empty($r['orderby'])) ? self::get_orderby_sql($r['orderby']) : '';
+		$group_sql = (!empty($r['group'])) ? "GROUP BY {$r['group']}" : '';
+		$pagination_sql = self::get_paged_sql($r['pagination']);
+
+		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$orderby_sql} {$pagination_sql}";
+
+		return $wpdb->get_results($sql, 'ARRAY_A');
 	}
 
 	/**
@@ -370,13 +443,13 @@ class CB_Events_Event
 			$where_clauses['format'][] = '%d';
 		}
 
-		if (!empty($args['event_date_start'])) {
-			$where_clauses['data']['event_date_start'] = $args['event_date_start'];
+		if (!empty($args['event_start'])) {
+			$where_clauses['data']['event_start'] = $args['event_start'];
 			$where_clauses['format'][] = '%s';
 		}
 
-		if (!empty($args['event_date_end'])) {
-			$where_clauses['data']['event_date_end'] = $args['event_date_end'];
+		if (!empty($args['event_end'])) {
+			$where_clauses['data']['event_end'] = $args['event_end'];
 			$where_clauses['format'][] = '%s';
 		}
 
@@ -399,77 +472,48 @@ class CB_Events_Event
 	}
 
 	/**
-	 * Get Event
-	 * @param array $args
-	 * @return array
-	 * @since 1.0.0
-	 * @access public
-	 * @uses Confetti_Bits_Event_Event::get_where_sql()
-	 * @uses Confetti_Bits_Event_Event::get_paged_sql()
+	 * Get Orderby SQL.
 	 *
-	 */
-	public function get_event($args = [])
-	{
-
-		global $wpdb;
-		$cb = Confetti_Bits();
-
-		$r = wp_parse_args(
-			$args,
-			[
-				'select' => '*',
-				'where' => [],
-				'orderby' => [],
-				'pagination' => [],
-				'group' => '',
-			]
-		);
-
-		$select = (is_array($r['select'])) ? implode(', ', $r['select']) : $r['select'];
-		$select_sql = "SELECT {$select}";
-		$from_sql = "FROM {$cb->events->table_name}";
-		$where_sql = self::get_where_sql($r['where'], $select_sql, $from_sql);
-		$orderby_sql = (!empty($r['orderby'])) ? self::get_orderby_sql($r['orderby']) : '';
-		$group_sql = (!empty($r['group'])) ? "GROUP BY {$r['group']}" : '';
-		$pagination_sql = self::get_paged_sql($r['pagination']);
-
-		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$orderby_sql} {$pagination_sql}";
-
-		return $wpdb->get_results($sql, 'ARRAY_A');
-	}
-
-	/**
-	 * Assembles an ORDER BY clause from an array of fields and directions.
-	 * @param array $orderby {
-	 * 		@type string $field		Field to order by.
-	 * 		@type string $direction	Direction to order by. Accepts 'ASC' or 'DESC'. Default 'ASC'.
+	 * Checks against the columns available and order
+	 * arguments, then spits out usable SQL if everything
+	 * looks okay.
+	 *
+	 * @param array $args {
+	 *     Optional. An array of arguments.
+	 *
+	 *     @type string $column Default 'id'. The column to order by.
+	 *     @type string $order Default 'DESC'. The order of the items.
 	 * }
-	 * @return string ORDER BY clause.
-	 * @since 3.0.0
-	 * @access public
+	 *
+	 * @return string The ORDER BY clause of an SQL query, or
+	 * 				  nothing if the args are empty or malformed.
 	 */
-	public static function get_orderby_sql($orderby = [])
-	{
+	public static function get_orderby_sql( $args = [] ) {
 
-		if (empty($orderby)) {
-			return '';
+		$sql = '';
+
+		if ( empty($args) ) {
+			return $sql;
 		}
 
-		$pieces = [];
-		foreach ($orderby as $field => $direction) {
-			if (!in_array(strtoupper($direction), ['ASC', 'DESC'])) {
-				$direction = 'DESC';
-			}
-			if (!in_array($field, self::$columns)) {
-				continue;
-			}
+		$valid_sql = array_merge( self::$columns, ['DESC', 'ASC', 'calculated_total'] );
 
-			$pieces[] = "{$field} {$direction}";
+		$r = wp_parse_args( $args, [
+			'column' => 'id',
+			'order' => 'DESC',
+		]);
 
+		if ( !in_array(strtolower($r['column']), $valid_sql ) ) {
+			return $sql;
 		}
 
-		return 'ORDER BY ' . implode(', ', $pieces);
+		if ( !in_array( strtoupper($r['order']), $valid_sql ) ) {
+			return $sql;
+		}
 
+		$sql = sprintf("ORDER BY %s %s", $r['column'], $r['order']);
+
+		return $sql;
 	}
 
 	/**
@@ -484,9 +528,9 @@ class CB_Events_Event
 	{
 
 		$sql = '';
-		$columns = ['date_created', 'date_modified', 'event_date_start', 'event_date_end'];
+		$columns = ['date_created', 'date_modified', 'event_start', 'event_end'];
 		$column = !empty($date_query['column']) && in_array($date_query['column'], $columns) ?
-			$date_query['column'] : 'event_date_start';
+			$date_query['column'] : 'event_start';
 
 		$date_query = new CB_Core_Date_Query($date_query, $column);
 		$sql = preg_replace('/^\sAND/', '', $date_query->get_sql());
@@ -571,6 +615,7 @@ class CB_Events_Event
 		}
 
 		if (!empty($args['event_desc'])) {
+
 			$event_descs = explode(',', $args['event_desc']);
 
 			$event_desc_clean = [];
@@ -588,7 +633,7 @@ class CB_Events_Event
 		}
 
 		if (!empty($where_conditions)) {
-			$where = $args['or'] ? 'WHERE ' . implode(' OR ', $where_conditions) : 'WHERE ' . implode(' AND ', $where_conditions);
+			$where = !empty( $args['or'] ) ? 'WHERE ' . implode(' OR ', $where_conditions) : 'WHERE ' . implode(' AND ', $where_conditions);
 		}
 
 		return $where;

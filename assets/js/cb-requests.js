@@ -673,15 +673,15 @@ No requests found.
 	$(document).on('click', '.cb-requests-save-button', async function(e) {
 
 		let parent = $(this).parent();
-		let item = $(`select[name="cb_edit_requests_request_item_id"]`).val();
+		let item = $(`select[name="cb_edit_requests_request_id"]`).val();
 		let patchData = {
 			request_id: activeRequestCache.id,
 			request_item_id: item,
 			api_key: cb_requests.api_key
 		};
 		let entryEdit = $("<button>", {
-			class: "cb-request-items-edit-button cb-button square",
-			'data-cb-request-item-id': activeRequestCache.id,
+			class: "cb-requests-edit-button cb-button square",
+			'data-cb-request-id': activeRequestCache.id,
 			text: "Edit"
 		});
 
@@ -720,7 +720,7 @@ No requests found.
 			request_item_id: requestItemIDInput.val(),
 			applicant_id: cb_requests.user_id,
 			api_key: cb_requests.api_key
-		};
+		}; 
 
 		await $.ajax({
 			type: 'POST',
@@ -746,8 +746,6 @@ No requests found.
 
 		e.preventDefault();
 		
-		console.log(activeRequestID);
-		
 		if ( activeRequestID !== 0 ) {
 			let deleteData = {
 				request_id: activeRequestID,
@@ -769,8 +767,15 @@ No requests found.
 	});
 
 	$(document).on('change', 'select[name=cb_requests_request_item_id]', async function (e) {
-		let requestItems = await cbGetRequestItemData(e.target.value);
-		requestAmountInput.val(requestItems.amount);
+		let requestItem = await cbGetRequestItemData(e.target.value);
+		if ( !requestItem.item_desc ) {
+			$('.cb-requests-form-content').text("Select an item to display a description.");
+		} else {
+			$('.cb-requests-form-content').text(requestItem.item_desc);	
+		}	
+		
+		requestAmountInput.val(requestItem.amount);
+		
 	});
 
 	formatRequestsHeaderRow();

@@ -164,6 +164,9 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		// @TODO: This was never actually implemented, so let's do that.
 		//		$this->register_confetti_bits_request_sender_notifications();
 
+		// Register notifications for requests.
+		$this->register_cb_requests_notifications();
+
 		// Register notifications for activity posts.
 		$this->register_cb_activity_notifications();
 
@@ -205,7 +208,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			'confetti_bits',
 			true
 		);
-		
+
 		$this->register_notification_type(
 			'cb_transactions_import_bits',
 			esc_html__( 'Someone performs a Confetti Bits import', 'confetti-bits' ),
@@ -313,6 +316,13 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			'confetti_bits'
 		);
 
+		$this->register_notification_type(
+			'cb_requests_update_request',
+			esc_html__( 'One of your Confetti Bits requests gets updated', 'confetti-bits' ),
+			esc_html__( 'One of your Confetti Bits requests gets updated', 'confetti-bits' ),
+			'confetti_bits'
+		);
+
 		$this->register_notification(
 			'confetti_bits',
 			'cb_requests_new_request',
@@ -323,6 +333,12 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			'confetti_bits',
 			'cb_requests_new_request',
 			'cb_requests_admin_new_request'
+		);
+
+		$this->register_notification(
+			'confetti_bits',
+			'cb_requests_update_request',
+			'cb_requests_update_request'
 		);
 
 		$this->register_email_type(
@@ -337,6 +353,17 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		);
 
 		$this->register_email_type(
+			'cb-requests-update-request-email', [
+				'email_title'         => __( 'Your Confetti Bits Request for {{request.item}}', 'confetti-bits' ),
+				'email_content'       =>  '<h4>The status of your request for "{{request.item}}" has been updated to {{request.status}}</h4><p>{{request.amount}} Confetti Bits will be deducted from your total balance.</p>',
+				'email_plain_content' => 'The status of your request for "{{request.item}}" has been updated to {{request.status}}. {{request.amount}} Confetti Bits will be deducted from your total balance.',
+				'situation_label'     => __( "Your Confetti Bits request is updated", 'confetti-bits' ),
+				'unsubscribe_text'    => __( 'You will no longer receive emails when your Confetti Bits Requests get updated', 'confetti-bits' ),
+			],
+			'cb_requests_update_request'
+		);
+
+		$this->register_email_type(
 			'cb-requests-admin-new-request-email', [
 				'email_title'         => 'New Confetti Bits Request from {{applicant.name}}',
 				'email_content'       => "A new Confetti Bits Request came in! {{applicant.name}} requested: {{request.item}}.",
@@ -348,8 +375,8 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 		);
 
 	}
-	
-		public function register_participation_notifications() {
+
+	public function register_participation_notifications() {
 
 		$this->register_notification_type(
 			'cb_participation_status_update',
@@ -627,7 +654,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$retval['title'] = "Someone just sent Confetti Bits!";
 			$retval['text'] = esc_html__( cb_core_get_user_display_name( $item_id ) . ' just sent you bits!', 'confetti-bits' );
 			return $retval;
-			
+
 		}
 
 		if ( 'confetti_bits' === $component_name && 'cb_activity_bits' === $component_action_name ) {
@@ -637,7 +664,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 				esc_html__( 'You just got ' . $item_id . ' Confetti Bit for posting!', 'confetti-bits' )
 				: esc_html__( 'You just got ' . $item_id . ' Confetti Bits for posting!', 'confetti-bits' );
 			return $retval;
-			
+
 		}
 
 		if ( 'confetti_bits' === $component_name && 'cb_transactions_import_bits' === $component_action_name ) {
@@ -645,7 +672,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$retval['text'] = cb_core_get_user_display_name( $item_id ) . ' just imported bits!';
 			$retval['title'] = "Someone just imported Confetti Bits!";
 			return $retval;
-			
+
 		}
 
 		if ( 'confetti_bits' === $component_name && 'cb_bits_request' === $component_action_name ) {
@@ -653,7 +680,31 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$retval['text'] = cb_core_get_user_display_name( $secondary_item_id ) . ' just sent in a new Confetti Bits Request!';
 			$retval['title'] = "New Confetti Bits Request!";
 			return $retval;
-			
+
+		}
+
+		if ( 'confetti_bits' === $component_name && 'cb_requests_new_request' === $component_action_name ) {
+
+			$retval['text'] = ' Your request has been submitted.';
+			$retval['title'] = "New Confetti Bits Request!";
+			return $retval;
+
+		}
+
+		if ( 'confetti_bits' === $component_name && 'cb_requests_admin_new_request' === $component_action_name ) {
+
+			$retval['text'] = cb_core_get_user_display_name( $item_id ) . ' just sent in a new Confetti Bits Request!';
+			$retval['title'] = "New Confetti Bits Request!";
+			return $retval;
+
+		}
+
+		if ( 'confetti_bits' === $component_name && 'cb_requests_update_request' === $component_action_name ) {
+
+			$retval['text'] = cb_core_get_user_display_name( $secondary_item_id ) . ' just updated one of your requests!';
+			$retval['title'] = "Request Update";
+			return $retval;
+
 		}
 
 		if ( ( 'groups' === $component_name && 'activity_update' === $component_action_name ) ) {
@@ -663,7 +714,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$retval['text'] = bp_core_get_user_displayname( $secondary_item_id ) . ' just posted in the group ' . $group->name;
 			$retval['link'] = esc_url( bp_get_group_permalink( $group ) );
 			return $retval;
-			
+
 		}
 
 		if ( 'confetti_bits' === $component_name && 'cb_participation_status_update' === $component_action_name ) {
@@ -673,7 +724,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$retval['text'] = "{$admin_name} just updated your participation status.";
 			$retval['title'] = "Participation Update";
 			return $retval;
-			
+
 		}
 
 		if ( 'confetti_bits' === $component_name && 'cb_birthday_bits' === $component_action_name ) {
@@ -681,7 +732,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$retval['title'] = "Happy Birthday!";
 			$retval['text'] = "We sent you a few Confetti Bits to celebrate!";
 			return $retval;
-			
+
 		}
 
 		if ( 'confetti_bits' === $component_name && 'cb_anniversary_bits' === $component_action_name ) {
@@ -689,7 +740,7 @@ class CB_Notifications_Component extends BP_Core_Notification_Abstract {
 			$retval['text'] = "We sent you a few Confetti Bits to celebrate!";
 			$retval['title'] = "Happy Anniversary!";
 			return $retval;
-			
+
 		}
 
 		return $retval;

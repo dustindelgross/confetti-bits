@@ -47,9 +47,14 @@ function cb_core_set_uri_globals() {
 
 	$parts = array_merge( array(), $parts );
 	if ( isset($parts[0] ) ) {
-		$cb->current_component = $parts[0] === 'confetti-bits' ? $parts[0] : "";	
+		if ( $parts[0] === 'confetti-bits' ) {
+			$cb->current_component = $parts[0];
+		}
+		if ( $parts[0] === 'cb-events' ) {
+			$cb->current_component = $parts[0];
+			$cb->current_item = $parts[1];
+		}
 	}
-
 }
 
 /**

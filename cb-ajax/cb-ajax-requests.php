@@ -49,6 +49,7 @@ function cb_ajax_update_requests() {
 
 	$update_args = [
 		'date_modified' => $modified,
+		'applicant_id' => intval( $request->applicant_id )
 	];
 
 	$where_args = ['id' => $request_id];
@@ -72,7 +73,7 @@ function cb_ajax_update_requests() {
 	if ( !empty($_PATCH['status'] ) ) {
 
 		$status = strtolower($_PATCH['status']);
-		
+
 		if ( ! in_array( $status, ['complete', 'in_progress', 'inactive'] ) && !$is_admin ) {
 			$feedback['text'] = "Invalid status. Please try again with a valid status applied to the request update.";
 			echo json_encode($feedback);
@@ -86,16 +87,26 @@ function cb_ajax_update_requests() {
 		}
 
 		$update_args['status'] = $status;
-		$update_args['component_action'] = 'cb_requests_status_update';
+		$update_args['component_action'] = 'cb_requests_update_request';
 		$amount = cb_requests_get_amount( $request->request_item_id );
 
 	}
 
 	if ( !empty( $_PATCH['request_item_id'] ) ) {
 		$request_item_id = intval($_PATCH['request_item_id']);
-		$item_name = cb_requests_get_item_name($request_item_id);
-		$update_args['request_item_id'] = $request_item_id;
+		if ( ! cb_requests_can_update( $request->applicant_id, $request->request_item_id, $request_item_id ) ) {
+			$feedback['text'] = "Submitting this request would put you over your available request balance if fulfilled. You may change or remove any of your other open requests if you decide you would like something else instead.";
+			echo json_encode($feedback);
+			die();
+		} else {
+			$item_name = cb_requests_get_item_name($request_item_id);
+			$update_args['request_item_id'] = $request_item_id;
+		}
+	} else {
+		$update_args['request_item_id'] = intval($request->request_item_id);
 	}
+
+
 
 	if ( $amount !== 0 && $status === 'complete' ) {
 
@@ -119,8 +130,9 @@ function cb_ajax_update_requests() {
 		}
 
 	}
-	
+
 	$request->update($update_args, $where_args);
+
 	$user_name = cb_core_get_user_display_name( $request->applicant_id );
 	$feedback['text'] = "{$user_name}'s request for \"{$item_name}\" has successfully been updated.";
 	$feedback['type'] = "info";
@@ -129,6 +141,8 @@ function cb_ajax_update_requests() {
 	die();
 
 }
+
+
 
 /**
  * CB Ajax New Requests
@@ -165,13 +179,20 @@ function cb_ajax_new_requests() {
 	$applicant_id = intval( $_POST['applicant_id'] );
 	$request_item_id = intval( $_POST['request_item_id'] );
 
+	if ( !cb_requests_can_request( $applicant_id, $request_item_id ) ) {
+		$feedback['text'] = "Submitting this request would put you over your available limit if fulfilled. You may change any of your open requests if you decide you would like something else instead.";
+		echo json_encode($feedback);
+		die();
+	}
+
 	$send = cb_requests_new_request([
+		'item_id'			=> $applicant_id,
 		'applicant_id'		=> $applicant_id,
 		'admin_id'			=> 0,
 		'date_created'		=> cb_core_current_date(),
 		'date_modified'		=> cb_core_current_date(),
 		'component_name'	=> 'confetti_bits',
-		'component_action'	=> 'cb_requests_new',
+		'component_action'	=> 'cb_requests_new_request',
 		'status'			=> 'new',
 		'request_item_id'	=> $request_item_id
 	]);
@@ -298,7 +319,7 @@ function cb_ajax_delete_requests() {
 
 	$request = new CB_Requests_Request($request_id);
 	$delete = $request->delete(['id' => $request_id]);
-	
+
 	if ( is_int( $delete ) ) {
 		$feedback['type'] = 'success';
 		$feedback['text'] = $delete === 1 ? 'Request removed.' : 'Requests removed.';

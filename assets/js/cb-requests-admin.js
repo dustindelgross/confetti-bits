@@ -1133,12 +1133,15 @@ No requests found.
 			'data-cb-request-id': activeRequestID,
 			text: "Edit"
 		});
-
+		
 		await $.ajax({
 			url: cb_requests_admin.update_requests,
 			method: "PATCH",
 			data: JSON.stringify(patchData),
-			success: e => formMessage.setMessage(e),
+			success: e => {
+				formMessage.setMessage(e);
+				console.log(e);
+			},
 			error: x => console.error(x)
 		});
 

@@ -237,9 +237,12 @@ function cb_ajax_get_participation() {
 	if ( !empty( $_GET['status'] ) ) {
 		$get_args['where']['status'] = trim( $_GET['status'] );
 	}
+	
+	if ( ! empty($_GET['date_query'] ) ) {
+		$get_args['where']['date_query'] = $_GET['date_query'];
+	}
 
 	if ( !empty( $_GET['orderby'] ) ) {
-
 		$get_args['orderby']['column'] = !empty($_GET['orderby']['column'] ) ? trim($_GET['orderby']['column']) : 'id';
 		$get_args['orderby']['order'] = !empty($_GET['orderby']['order'] ) ? trim($_GET['orderby']['order']) : 'DESC';
 	}

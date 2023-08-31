@@ -121,7 +121,7 @@ function cb_requests_new_transaction($args = []) {
 
 	$request = new CB_Requests_Request($r['request_id']);
 
-	$date = cb_core_current_date();
+	$date = $request->date_created;
 	$date_obj = new DateTimeImmutable($date);
 	$date_log_entry = $date_obj->format('m/d/Y');
 	$admin_name = cb_core_get_user_display_name($r['admin_id']);
@@ -274,6 +274,127 @@ function cb_requests_get_transaction($transaction_id = 0) {
 }
 
 /**
+ * Gets an array of requests from the database.
+ * 
+ * @param array $args { 
+ *   An associative array of arguments.
+ *   @see CB_Requests_Request::get_requests()
+ * }
+ * 
+ * @package ConfettiBits\Requests
+ * @since 3.0.0
+ */
+function cb_requests_get_requests( $args = [] ) {
+	
+	$r = wp_parse_args( $args, [
+		'select' => '*',
+		'where' => [
+			'applicant_id' => get_current_user_id(),
+		],
+		'pagination' => ['page' => 1, 'per_page' => 10],
+	]);
+	
+	$requests = new CB_Requests_Request();
+	return $requests->get_requests($r);
+	
+}
+
+/**
+ * Returns the total amount of points the user has in open requests.
+ * 
+ * @param int $user_id The ID of the user to check.
+ * @return int The total amount of points that the user has in open requests.
+ * 
+ * @package ConfettiBits\Requests
+ * @since 3.0.0
+ */
+function cb_requests_get_active_request_total( $user_id = 0 ) {
+	
+	if ( $user_id === 0 ) {
+		$user_id = get_current_user_id();
+	}
+	
+	$total = 0;
+	
+	$get_request_args = [
+		'select' => 'request_item_id',
+		'where' => [
+			'applicant_id' => $user_id,
+			'status' => ['new', 'in_progress'],
+		],
+		'pagination' => [],
+	];
+	
+	$requests = cb_requests_get_requests($get_request_args);
+	
+	if ( ! empty( $requests ) ) {
+		foreach ( $requests as $request ) {
+			$request_item = new CB_Requests_Request_Item($request['request_item_id']);
+			$total += $request_item->amount;
+		}
+	}
+	
+	return $total;
+	
+}
+
+/**
+ * Checks to see if a user can request the given item.
+ * 
+ * @param int $user_id The ID of the user we're checking
+ * @param int $item_id The ID of the item they want
+ * 
+ * @return boolean True if they have enough to get the item, false otherwise.
+ * 
+ * @package ConfettiBits\Requests
+ * @since 3.0.0
+ */
+function cb_requests_can_request( $applicant_id = 0, $item_id = 0 ) {
+	
+	if ( $item_id === 0 || $applicant_id === 0 ) {
+		return false;
+	}
+	
+	$item = new CB_Requests_Request_Item($item_id);
+	$request_balance = cb_transactions_get_request_balance($applicant_id);
+	$active_requests_balance = cb_requests_get_active_request_total($applicant_id);
+	
+	return ( $request_balance - ( $active_requests_balance + $item->amount ) ) > 0;
+	
+}
+
+/**
+ * Checks to see if a user can update their request item.
+ * 
+ * It basically subtracts the existing item from the active request total,
+ * adds on the cost of the new item, and checks to see if the items cost
+ * more than they have to spend on requests.
+ * 
+ * @param int $applicant_id The ID of the user to check.
+ * @param int $prev_item_id The ID of the previous item.
+ * @param int $updated_item_id The ID of the new item that they would like to change to.
+ * 
+ * @return bool Whether the item would put the user over their request balance.
+ * 
+ * @package ConfettiBits\Requests
+ * @since 3.0.0
+ */
+function cb_requests_can_update( $applicant_id = 0, $prev_item_id = 0, $updated_item_id = 0 ) {
+	
+	if ( $prev_item_id === 0 || $applicant_id === 0 || $updated_item_id === 0 ) {
+		return false;
+	}
+	
+	$prev_item = new CB_Requests_Request_Item($prev_item_id);
+	$updated_item = new CB_Requests_Request_Item($updated_item_id);
+	$request_balance = cb_transactions_get_request_balance($applicant_id);
+	$active_requests_balance = cb_requests_get_active_request_total($applicant_id) - $prev_item->amount;
+	
+	return ( $request_balance - ( $active_requests_balance + $updated_item->amount ) ) > 0;
+	
+}
+
+/**
  * Sends a notification email when a request comes in.
  * 
  * @TODO: Implement this, maybe. Not a priority, but would be nice.
@@ -347,7 +468,7 @@ function cb_requests_new_notifications($data = [])
  * 
  * @package ConfettiBits\Requests
  * @since 2.3.0
- */
+ *//*
 function cb_requests_update_notifications($data = array())
 {
 
@@ -414,5 +535,5 @@ function cb_requests_update_notifications($data = array())
 		)
 	);
 
-}
+}*/
 // add_action('cb_requests_after_update', 'cb_requests_update_notifications');

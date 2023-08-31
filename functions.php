@@ -136,7 +136,7 @@ function cb_core_enqueue_scripts() {
 					'dependencies' => ['jquery'],
 				],
 			];
-			
+
 			if ( cb_is_user_admin() ) {
 				$components['core_admin'] = [ 
 					'participation' => ['get', 'update'], 
@@ -154,9 +154,9 @@ function cb_core_enqueue_scripts() {
 			}
 
 			if ( cb_is_user_requests_admin() ) {
-				
+
 			}
-			
+
 			if ( cb_is_user_site_admin() ) {
 
 			}
@@ -282,6 +282,12 @@ function cb_core_set_reset_date_globals() {
 	}
 
 	$date = new DateTimeImmutable($reset_date);
+	$today = new DateTimeImmutable();
+
+	if ( $today > $date->modify('+1 month') ) {
+		$date = cb_core_auto_reset();
+	}
+
 	$cb->earn_start = $date->modify('-1 year')->format('Y-m-d H:i:s');
 	$cb->earn_end = $reset_date;
 	$cb->spend_start = $date->modify('-1 year + 1 month')->format('Y-m-d H:i:s');
@@ -291,6 +297,26 @@ function cb_core_set_reset_date_globals() {
 
 }
 add_action( 'cb_setup_globals', 'cb_core_set_reset_date_globals' );
+
+/**
+ * Automatically increments the reset date by 1 year.
+ * 
+ * @returns DateTimeImmutable The DateTimeImmutable object, with the new reset
+ * 							  date already locked and loaded.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_auto_reset() {
+
+	$reset_date = get_option('cb_reset_date');
+	$date = new DateTimeImmutable($reset_date);
+	$new_reset_date = $date->modify('+1 year')->format('Y-m-d');
+	update_option( 'cb_reset_date', $new_reset_date );
+
+	return new DateTimeImmutable($new_reset_date);
+
+}
 
 /**
  * CB Core Current Date
@@ -515,15 +541,15 @@ function cb_core_get_user_display_name( $user_id = 0 ) {
  * @since 3.0.0
  */
 function cb_core_get_user_email( $user_id = 0 ) {
-	
+
 	if ( $user_id === 0 ) {
 		$user_id = get_current_user_id();
 	}
-	
+
 	$user = get_userdata($user_id);
-	
+
 	return $user->user_email;
-	
+
 }
 
 /**
@@ -552,7 +578,7 @@ function cb_core_is_multi_array(array $arr) {
  * @since 1.2.0
  */
 function cb_core_send_sitewide_notice() {
-	
+
 	if (
 		!cb_is_confetti_bits_component() ||
 		!cb_is_post_request() || 
@@ -593,12 +619,200 @@ add_action('cb_actions', 'cb_core_send_sitewide_notice');
  * @since 3.0.0
  */
 function cb_core_get_doomsday_clock() {
-	
+
 	$cb = Confetti_Bits();
 	$current_date = new DateTimeImmutable();
-    $reset_date = DateTimeImmutable::createFromFormat('Y-m-d', $cb->earn_end);
-    $interval = $current_date->diff($reset_date);
-	
-    return $interval->days;
-	
+	$reset_date = DateTimeImmutable::createFromFormat('Y-m-d', $cb->earn_end);
+	$interval = $current_date->diff($reset_date);
+
+	return $interval->days;
+
+}
+
+/**
+ * Washes away the sins of bad actors.
+ * 
+ * Use this to aggressively scrub input strings.
+ * I doubt that there are going to be any
+ * elite hackers playing injecting nonsense
+ * into this app, but this is good practice
+ * for other kinds of sanitization that we might
+ * want to do later.
+ * 
+ * @param string $input An input string
+ * @return string A kinder, gentler string.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_sanitize_string( $input = '' ) {
+
+	$input = trim($input);
+	$input = htmlentities($input, ENT_QUOTES, 'UTF-8');
+	$input = addslashes($input);
+	$input = preg_replace(
+		[ '/\\\\/', '/\0/', '/\n/', '/\r/', '/\'/', '/"/', '/\x1a/' ], 
+		[ '\\\\\\\\', '\\\\0', '\\\\n', '\\\\r', "\\'", '\\"', '\\\\Z' ], 
+		$input
+	);
+
+	return $input;
+
+}
+
+/**
+ * Injects our own config settings into PHPMailer.
+ * 
+ * @param PHPMailer $phpmailer A PHPMailer object.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_smtp_init( $phpmailer ) {
+	$phpmailer->Host = SMTP_HOST;
+	$phpmailer->SMTPAuth = SMTP_AUTH;
+	$phpmailer->Port = SMTP_PORT;
+	$phpmailer->SMTPSecure = SMTP_SECURE;
+	$phpmailer->Username = SMTP_USER;
+	$phpmailer->Password = SMTP_PASS;
+	$phpmailer->From = SMTP_FROM;
+	$phpmailer->FromName = SMTP_NAME;
+	$phpmailer->isSMTP();
+}
+add_action( 'phpmailer_init', 'cb_core_smtp_init' );
+
+
+/**
+ * Adds a menu item for our settings.
+ * 
+ * @package ConfettiBits\Core
+ * @subpackage Templates
+ * @since 3.0.0
+ */
+function cb_core_admin_menu() {
+	add_options_page(
+		'Confetti Bits Settings',    // Page title
+		'Confetti Bits',    // Menu title
+		'manage_options',       // Capability required to access the page
+		'cb-core-admin-settings',    // Menu slug
+		'cb_core_admin_page'// Callback function to display the page content
+	);
+}
+add_action('admin_menu', 'cb_core_admin_menu');
+
+/**
+ * Formats markup for our admin settings page.
+ * 
+ * @TODO: Add a form here, friend.
+ * 
+ * @return string The formatted page markup.
+ * 
+ * @package ConfettiBits\Templates
+ * @since 3.0.0
+ */
+function cb_templates_get_admin_page() {
+
+	$heading = cb_templates_get_heading('Confetti Bits Settings', 1);
+
+	return cb_templates_container([
+		'classes' => ['wrap'],
+		'output' => $heading
+	]);
+
+}
+
+/**
+ * Outputs markup for our admin settings page.
+ * 
+ * @see cb_templates_get_admin_page()
+ * 
+ * @package ConfettiBits\Templates
+ * @since 3.0.0
+ */
+function cb_core_admin_page() {
+
+	echo '<div class="wrap">';
+	cb_templates_heading('Confetti Bits Settings', 1);
+	echo '<form method="POST" action="options.php">';
+	settings_fields('cb_core_admin_settings');
+	do_settings_sections('cb-core-admin-settings'); 
+	submit_button();
+	echo '</form>';
+	echo '</div>';
+
+}
+
+function cb_core_admin_settings_init() {
+	// Register the settings
+	register_setting(
+		'cb_core_admin_settings', // Option group (used in settings_fields)
+		'cb_core_volunteer_amount',       // Option name (used in the database)
+		'cb_core_admin_settings_sanitize'// Sanitization callback function
+	);
+
+	// Add a section and fields for your settings
+	add_settings_section(
+		'cb_core_admin_settings_section',
+		'Confetti Bits Core Settings',
+		'cb_core_admin_settings_section_callback',
+		'cb-core-admin-settings'
+	);
+
+	add_settings_field(
+		'cb_core_volunteer_amount',
+		'Amount for Volunteer Hours',
+		'cb_core_admin_volunteer_setting',
+		'cb-core-admin-settings',
+		'cb_core_admin_settings_section'
+	);
+}
+add_action('admin_init', 'cb_core_admin_settings_init');
+
+/**
+ * Will eventually be used to sanitize user input in the
+ * admin menu.
+ * 
+ * @param mixed $input The input passed via post.
+ * @return string $input The "sanitized" input.
+ * 
+ * @package ConfettiBits\Core
+ * @subpackage Templates
+ * @since 3.0.0
+ */
+function cb_core_admin_settings_sanitize($input) {
+
+	return $input;
+
+}
+add_action('admin_init', 'cb_core_admin_settings_sanitize');
+
+/**
+ * Returns the content for our main settings section.
+ * 
+ * @return string Content.
+ * 
+ * @package ConfettiBits\Core
+ * @subpackage Templates
+ * @since 3.0.0
+ */
+function cb_core_admin_settings_section_callback() {
+	// You can add section description here if needed
+	echo "
+	<p>Here is where we house all of our global settings used throughout the app.</p>
+	<p>This will include things such as the yearly reset date, the amounts for certain actions, and other
+	settings as we add them.</p>
+	";
+}
+
+/**
+ * Outputs the setting field for the volunteer amount per hour.
+ * 
+ * @package ConfettiBits\Core
+ * @subpackage Templates
+ * @since 3.0.0
+ */
+function cb_core_admin_volunteer_setting() {
+	$option = get_option('cb_core_volunteer_amount');
+	$value = isset($option) ? intval($option) : '';
+	echo '<input type="text" name="cb_core_volunteer_amount" value="' . esc_attr($value) . '" />';
 }

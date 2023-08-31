@@ -24,20 +24,24 @@ function cb_core_install_events() {
 				id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 				event_title varchar(75) NOT NULL,
 				event_desc varchar(500) NULL,
+				event_location varchar(100) NULL,
 				date_created datetime NOT NULL,
 				date_modified datetime NOT NULL,
 				participation_amount int(8) DEFAULT 0,
-				event_date_start datetime NOT NULL,
-				event_date_end datetime NOT NULL,
+				event_start datetime NOT NULL,
+				event_end datetime NOT NULL,
 				user_id int(20) NOT NULL,
+				location_id int(20) NULL,
 				KEY event_title (event_title),
 				KEY event_desc (event_desc),
+				KEY event_location (event_location),
 				KEY date_created (date_created),
 				KEY date_modified (date_modified),
 				KEY participation_amount (participation_amount),
-				KEY event_date_start (event_date_start),
-				KEY event_date_end (event_date_end),
-				KEY user_id (user_id)
+				KEY event_start (event_start),
+				KEY event_end (event_end),
+				KEY user_id (user_id),
+				KEY location_id (location_id)
 			) {$charset_collate};";
 
 	dbDelta( $sql );
@@ -175,15 +179,11 @@ function cb_core_install_contests() {
 				id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 				amount int(20) NOT NULL,
 				placement int(20) NOT NULL,
-				recipient_id int(20) NOT NULL,
-				date_created datetime NOT NULL,
-				date_modified datetime NOT NULL,
+				recipient_id int(20) NULL,
 				event_id bigint(20) NOT NULL,
 				KEY amount (amount),
 				KEY placement (placement),
 				KEY recipient_id (recipient_id),
-				KEY date_created (date_created),
-				KEY date_modified (date_modified),
 				KEY event_id (event_id)
 			) {$charset_collate};";
 
@@ -282,9 +282,8 @@ function cb_core_install_requests() {
 function cb_core_prepare_install() {}
 
 /**
- * CB Core Install
- * 
  * Installs all our tables on the database.
+ * 
  * Also flushes the WordPress cache and rewrite rules
  * so that our pages still show up after plugins get updated.
  * 
@@ -302,6 +301,7 @@ function cb_core_install( $active_components = array() ) {
 	
 	cb_core_prepare_install();
 	cb_core_install_events();
+	cb_core_install_contests();
 	cb_core_install_transactions();
 	cb_core_install_participation();
 	cb_core_install_request_items();

@@ -100,7 +100,7 @@ class CB_Events_Component extends CB_Component {
 			$components['events_admin'] = [
 				'events' => [ 'new', 'get', 'update', 'delete' ],
 				'contests' => [ 'new', 'get', 'update', 'delete' ],
-				'dependencies' => ['jquery', 'jquery-ui-datepicker'],
+				'dependencies' => ['jquery', 'jquery-ui-dialog'],
 			];
 		}
 
