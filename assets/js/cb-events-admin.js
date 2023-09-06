@@ -19,7 +19,7 @@ jQuery( document ).ready( ( $ ) => {
 		`<div id="cb-events-admin-contest-modal" title="Contest Placements"><div id="cb-events-admin-contest-modal-inputs"></div></div>`
 	);
 	let contestsCache = new Map();
-
+console.log(cb_events_admin.api_key);
 	let contestPlacementCounter = 1;
 	let cbTotalEvents = 0;
 	let activeEventID = 0;
