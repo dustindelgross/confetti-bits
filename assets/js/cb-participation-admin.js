@@ -17,7 +17,7 @@ jQuery(document).ready(($) => {
 	const transactionsPerPage = 10;
 	let cbTotalEntries = 0;
 	let cbTotalTransactions = 0;
-	let transactionsTable = $('#cb_participation_admin_transactions_table');
+	let participationAdminTransactionsTable = $('#cb_participation_admin_transactions_table');
 	let transactionsUserCache = {
 		userID: 0,
 		page: 0,
@@ -509,7 +509,7 @@ jQuery(document).ready(($) => {
 	 */
 	function cbCreateEmptyTransactionNotice() {
 		let $emptyNotice = $(`<div class='cb-participation-admin-empty-notice'><p>No results found.</p></div>`);
-		transactionsTable.append($emptyNotice);
+		participationAdminTransactionsTable.append($emptyNotice);
 	}
 
 	/**
@@ -555,7 +555,7 @@ jQuery(document).ready(($) => {
 
 			headerRow.append(item);
 		});
-		transactionsTable.append(headerRow);
+		participationAdminTransactionsTable.append(headerRow);
 	}
 
 	/**
@@ -617,7 +617,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		});
 
 		let $entryEditButton = $("<button>", {
-			class: "cb-participation-admin-edit-button",
+			class: "cb-participation-admin-edit-button btn btn-primary",
 			'data-cb-participation-id': participation.id,
 			text: "Edit"
 		});
@@ -706,7 +706,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		transctionRow.append(transactionAmountContainer);
 		transctionRow.append(transactionLogEntryContainer);
 
-		transactionsTable.append(transctionRow);
+		participationAdminTransactionsTable.append(transctionRow);
 
 	}
 
@@ -765,7 +765,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 	 * @param {string} eventFilter
 	 * @returns {void}
 	 */
-	async function refreshTransactions(page, userID) {
+	async function refreshParticipationAdminTransactions(page, userID) {
 
 		if ( page === transactionsUserCache.page && userID === transactionsUserCache.userID ) {
 			return;
@@ -787,7 +787,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 			data: getData,
 			success: async function (data) {
 				await cbTransactionsPagination(page, userID);
-				transactionsTable.children().remove();
+				participationAdminTransactionsTable.empty();
 				if ( data.text !== false ) {	
 					formatTransactionsHeaderRow();
 					for (let entry of data.text) {
@@ -907,7 +907,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		let eventDate = cbFormatDate(participation.event_date);
 		let transactionId = parseInt(participation.transaction_id);
 
-		refreshTransactions(1, applicantId);
+		refreshParticipationAdminTransactions(1, applicantId);
 
 		$($adminEditForm).addClass('active');
 		$('input[name=cb_participation_admin_participation_id]').val(participationId);
@@ -963,7 +963,7 @@ value="${participation.id}" class="cb-participation-admin-entry-selection" />`);
 		e.preventDefault();
 		let page = parseInt($(this).attr('data-cb-participation-admin-transactions-page'));
 		let userID = parseInt($('input[name=cb_participation_admin_applicant_id]').val());
-		refreshTransactions(page, userID);
+		refreshParticipationAdminTransactions(page, userID);
 
 	});
 

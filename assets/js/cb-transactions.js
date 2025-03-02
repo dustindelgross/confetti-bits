@@ -87,7 +87,7 @@ jQuery(document).ready( function($) {
 
 		recipientIdInput.val('');
 		if ( e.target.value === '') {
-			memberSearchResults.children().remove();
+			memberSearchResults.empty();
 		} else {
 
 			$.get( 'https://teamctg.com/wp-json/buddyboss/v1/members', {
@@ -98,7 +98,7 @@ jQuery(document).ready( function($) {
 				bp_ps_search: [1,2],
 			}, function( data ) {
 
-				memberSearchResults.children().remove();
+				memberSearchResults.empty();
 
 				if ( data.length === 0 ) {
 					let result = $('<li class="cb-transactions-member-search-result empty">');

@@ -1,3 +1,5 @@
+import { DataTable, appendAlert, appendConfirmation, DateInput, toSQLDate, toMySQLUTCDate } from './cb-core-modules.js';
+
 jQuery( document ).ready( ( $ ) => {
 
 	const cbEventsPageNext = $('.cb-events-admin-pagination-next');
@@ -11,195 +13,22 @@ jQuery( document ).ready( ( $ ) => {
 	const eventEndDateInput = $('#cb_events_admin_event_end');
 	const eventAmountInput = $('#cb_events_admin_participation_amount');
 	const eventForm = $('#cb_events_admin_form');
+	const editEventForm = $('#cb_events_admin_edit_event_form');
 	const cbDestructConfirm = $('.cb-destruct-feedback');
 	const cbInfoConfirm = $('.cb-info-feedback');
 	const eventsTable = $('#cb_events_admin_table');
 	const eventsTableHeaderRow = $('#cb_events_admin_table tr')[0];
-	const contestModal = $(
-		`<div id="cb-events-admin-contest-modal" title="Contest Placements"><div id="cb-events-admin-contest-modal-inputs"></div></div>`
-	);
+	//	const contestModal = $(`<div id="cb-events-admin-contest-modal" title="Contest Placements"><div id="cb-events-admin-contest-modal-inputs"></div></div>`);
 	let contestsCache = new Map();
-console.log(cb_events_admin.api_key);
 	let contestPlacementCounter = 1;
 	let cbTotalEvents = 0;
 	let activeEventID = 0;
-
-	/**
-	 * Handles setting feedback messages on the admin screen.
-	 *
-	 * Set messages by calling formMessage.setMessage( text, type ),
-	 * where text is the message, and type is used as a key to color
-	 * the message according to whether it's an error, info, warning,
-	 * or success message.
-	 *
-	 * @since 2.0.0
-	 */
-	let formMessage = new function() {
-
-		this.element = $('.cb-feedback-message');
-		this.p = $('<p class="cb-feedback-message">');
-		this.container = $('.cb-feedback');
-		this.position = this.element.offset().top;
-
-		this.style = {
-			error: '#ffad87',
-			info: '#007692',
-			warning: '#dbb778',
-			success: '#62cc8f'
-		};
-
-		this.container.children('.cb-close').on('click', () => {
-			this.container.slideUp(400);
-			this.container.children("p").remove();
-		});
-
-		this.setMessage = (items) => {
-
-			this.container.children("p").remove();
-			let itemsArray = Array.isArray(items) ? items : [items];
-
-			itemsArray.forEach((item) => {
-				if (Array.isArray(item.text)) {
-					item.text.forEach((text) => {
-						let p = this.p.clone();
-						p.css({
-							color: this.style[item.type]
-						}).text(text);
-						this.container.append(p);
-					});
-				} else {
-					let p = this.p.clone();
-					p.css({
-						color: this.style[item.type]
-					}).text(item.text);
-					this.container.append(p);
-				}
-			});
-
-			this.container.css({
-				display: 'flex',
-				border: '1px solid #dbb778',
-				borderRadius: '10px',
-				margin: '1rem auto'
-			});
-
-			window.scrollTo({
-				top: this.element.offset().top - 135,
-				behavior: 'smooth'
-			});
-		};
-	};
-
-	/**
-	 * Handles the display for feedback messages that require confirmation.
-	 */
-	let ConfirmFeedback = function ( component ) {
-
-		this.validComponents = [ 'info', 'destruct' ];
-		this.component = component;
-
-		if ( !this.validComponents.includes( component ) ) {
-			this.component = 'info';
-		}
-
-		this.container	= $(`.cb-${this.component}-feedback`);
+	DateInput(`events_admin_event_start`);
+	DateInput(`events_admin_event_end`);
 
 
-		this.style = {
-			error:		'#ffad87',
-			info:		'#007692',
-			warning:	'#dbb778',
-			success:	'#62cc8f'
-		};
-
-		this.container.children('.cb-close').on( 'click', () => {
-			this.container.slideUp( 400 );
-			this.element.text('');
-		});
-
-		this.container.children( `.cb-${this.component}-confirm` ).on( 'click', () => {
-			this.container.slideUp( 400 );
-			this.element.text('');
-		});
-
-		this.container.children( `.cb-${this.component}-cancel` ).on( 'click', () => {
-			this.container.slideUp( 400 );
-			this.element.text('');
-		});
-
-		this.setMessage = ( text, type ) => {
-			this.element = $(`.cb-${this.component}-feedback-message`);
-			this.element.text(text);
-			this.element.css({
-				color: this.style[type],
-				width: '100%',
-				maxWidth: '400px',
-				margin: '1rem'
-			});
-			this.container.css({
-				display: 'flex',
-				backgroundColor: 'white',
-				border: '1px solid #dbb778',
-				borderRadius: '10px',
-				width: '100%',
-				margin: 'auto',
-				padding: '1rem',
-			});
-
-			this.position = this.element.offset().top;
-
-			window.scrollTo({top: this.element.offset().top - 135, behavior: 'smooth'})
-		}
-
-	};
-
-	/**
-	 * CB Format Date
-	 *
-	 * @param {string} date
-	 * @returns {string}
-	 */
-	function cbFormatDate(date) {
-
-		date = new Date(date);
-		let dd = date.getDate();
-		let mm = date.getMonth() + 1;
-		let yyyy = date.getFullYear();
-		let H = date.getHours();
-		let i = date.getMinutes();
-		let suffix = (H > 12) ? 'pm' : 'am';
-
-		H = (H > 12) ? H - 12 : H;
-		i = (i < 10) ? '0' + i : i;
-		dd = (dd < 10) ? '0' + dd : dd;
-		mm = (mm < 10) ? '0' + mm : mm;
-
-		return [mm, dd, yyyy].join('/');
-
-	}
-
-	/**
-	 * CB Get User Data
-	 *
-	 * Get user data from the BuddyBoss API
-	 *
-	 * @param {int} applicantId
-	 * @returns {object}
-	 * @async
-	 * @since 1.0.0
-	 *
-	 */
-	async function cbGetUserData(applicantId) {
-		let retval = '';
-		await $.get({
-			url: 'https://teamctg.com/wp-json/buddyboss/v1/members',
-			data: {
-				include: applicantId
-			}, success: function (text) {
-				retval = text[0].name;
-			}
-		});
-		return retval;
+	const toSQLDate = (dateString) => {
+		return new Date(dateString).toISOString().slice(0,19).replace('T', ' ');
 	}
 
 	const getContestData = async (eventID) => {
@@ -255,31 +84,7 @@ console.log(cb_events_admin.api_key);
 
 	}
 
-	/**
-	 * Gets total number of requests from the database.
-	 *
-	 * @returns {int}
-	 */
-	const cbGetTotalRequests = async () => {
 
-		let getData = {
-			count: true,
-		}
-
-		let retval = await $.ajax({
-			method: "GET",
-			url: cb_requests_admin.get_requests,
-			data: getData,
-			success: x => {
-				cbTotalRequests = parseInt(JSON.parse(x.text)[0].total_count);
-				return cbTotalRequests;
-			},
-			error: e => console.error(e)
-		});
-
-		return retval;
-
-	}
 
 	/**
 	 * Get event data from the Confetti Bits API
@@ -357,37 +162,6 @@ console.log(cb_events_admin.api_key);
 
 	}
 
-	/**
-	 * Get request item data from the Confetti Bits API
-	 *
-	 * @param {int} requestItemID
-	 * @returns {object}
-	 * @async
-	 * @since 2.3.0
-	 */
-	async function cbGetRequestData(requestID = 0, select = '' ) {
-
-		let retval = {};
-
-		let getData = {
-			id: requestID,
-			select: select,
-		};
-
-		await $.get({
-			url: cb_requests_admin.get_requests,
-			data: getData,
-			success: e => retval = JSON.parse(e.text)
-		});
-
-		if ( retval.length === 1 && requestID !== 0 ) {
-			retval = retval[0];
-		}
-
-		return retval;
-
-	}
-
 
 	/**
 	 * CB Create Requests Pagination Digits
@@ -437,6 +211,7 @@ console.log(cb_events_admin.api_key);
 			$(currentButtons).each((n, el) => {
 				$(el).attr(`data-cb-${component}-page`, k);
 				$(el).text(k);
+
 				if (k === page) {
 					$(el).addClass('active');
 				}
@@ -493,35 +268,7 @@ console.log(cb_events_admin.api_key);
 
 	}
 
-	/**
-	 * CB Pagination
-	 *
-	 * @param {int} page
-	 * @param {string} status
-	 * @param {string} eventType
-	 * @returns {void}
-	 */
-	let cbRequestsPagination = async (page) => {
 
-		await cbGetTotalRequests();
-		if (cbTotalRequests > 0) {
-
-			let last = Math.ceil(cbTotalRequests / 10);
-			let prev = page - 1;
-			let next = page + 1;
-
-			cbRequestsPageLast.attr('data-cb-requests-admin-page', last);
-			cbSetupPaginationEnds(page, prev, next, last, 'requests-admin');
-			cbSetupPaginationDigits(page, last, 'requests-admin');
-		} else {
-			cbRequestsPageLast.toggleClass('disabled', true);
-			cbRequestsPageNext.toggleClass('disabled', true);
-			cbRequestsPagePrev.toggleClass('disabled', true);
-			cbRequestsPageFirst.toggleClass('disabled', true);
-			$('.cb-requests-admin-pagination-numbered').remove();
-		}
-
-	}
 
 	/**
 	 * CB Pagination
@@ -557,13 +304,13 @@ console.log(cb_events_admin.api_key);
 	 *
 	 * @returns {void}
 	 */
-	function cbCreateEmptyRequestItemNotice() {
+	function cbCreateEmptyEventNotice() {
 
-		eventsTable.children().remove();
+		eventsTable.empty();
 		let emptyNotice = $(`
-<div class='cb-request-item-empty-notice cb-ajax-table-empty-notice'>
+<div class='cb-events-empty-notice cb-ajax-table-empty-notice'>
 <p style="margin-bottom: 0;">
-No request items found.
+No events found.
 </p>
 </div>
 `);
@@ -582,35 +329,7 @@ No request items found.
 
 	}
 
-	/**
-	 * Tells the user that there aren't any request items yet.
-	 *
-	 * @returns {void}
-	 */
-	function cbCreateEmptyRequestNotice() {
 
-		requestsTable.children().remove();
-		let emptyNotice = $(`
-<div class='cb-request-empty-notice cb-ajax-table-empty-notice'>
-<p style="margin-bottom: 0;">
-No requests found.
-</p>
-</div>
-`);
-		emptyNotice.css({
-			width: '90%',
-			height: '90%',
-			margin: '1rem auto',
-			backgroundColor: '#d1cbc150',
-			borderRadius: '1rem',
-			display: 'flex',
-			justifyContent: 'center',
-			alignItems: 'center',
-			padding: '1rem'
-		});
-		requestsTable.append(emptyNotice);
-
-	}
 
 	/**
 	 * Format Header Row
@@ -618,10 +337,10 @@ No requests found.
 	 * @returns {void}
 	 */
 	function formatEventsHeaderRow() {
-		let headers = ['Event Title', 'Event Description', 'Participation Amount', 'Start Date', 'End Date','Contest','Edit', 'Delete' ];
+		let headers = ['Title', 'Description', 'Participation Amount', 'Start Date', 'End Date','Actions' ];
 		let headerRow = $('<tr>');
 		headers.forEach((header) => {
-			let item = $(`<th id="cb_events_admin_table_header_${header}">${header}</th>`);
+			let item = $(`<th id="cb_events_admin_table_header_${header}" ${header === 'Actions' ? 'colspan="4"' : ''}>${header}</th>`);
 			item.css({fontWeight: 'lighter'});
 			headerRow.append(item);
 
@@ -638,12 +357,27 @@ No requests found.
 	 */
 	function cbConvertLongDate( dateString ) {
 
-		let parts = dateString.split(' ');
-		let sqlFormat = new Date(`${parts[0]}T${parts[1]}`);
-		return sqlFormat.toDateString() + ' @ ' + sqlFormat.toLocaleTimeString(
-			'en-US', {hour: 'numeric', minute: 'numeric', hour12: true }
-		);
+		let sqlFormat = new Date(dateString.replace(' ', 'T') + 'Z');
 
+		return `${sqlFormat.getMonth() + 1}/${sqlFormat.getDate()}/${sqlFormat.getFullYear()} @ ${sqlFormat.toLocaleTimeString(
+			'en-US', {hour: 'numeric', minute: 'numeric', hour12: true }
+		)}`;
+
+	}
+
+	const formatButton = (text, attributes, classes, tag = 'button') => {
+
+		let attrsArray = [];
+
+		for ( let [key,value] of Object.entries(attributes) ) {
+			attrsArray.push(`${key}="${value}"`);
+		}
+
+		attrsArray.push(`class="${classes.join(' ')}"`);
+
+		let attrs = attrsArray.join(' ');
+
+		return $(`<${tag} ${attrs}>${text}</${tag}>`);
 	}
 
 	/**
@@ -679,143 +413,39 @@ No requests found.
 		let entryEnd = $('<p>', {
 			text: cbConvertLongDate(item.event_end)
 		});
-		let entryContestContainer = $(entryDataContainer).clone();
-		let entryContest = $('<button>', {
-			class: `cb-events-admin-edit-contest-button cb-button square ${hasContest ? 'contest':''}`,
-			text: `${hasContest ? 'Edit Contest':'Add Contest'}`,
-			'data-cb-event-id': item.id
-		});
-		let entryEditContainer = $(entryDataContainer).clone();
-		let entryEdit = $("<button>", {
-			class: "cb-events-admin-edit-button cb-button square",
+		let entryActionsContainer = $(entryDataContainer).clone();
+		let entryEdit = formatButton('Edit', {
 			'data-cb-event-id': item.id,
-			text: "Edit"
-		});
-		let entryDeleteContainer = $(entryDataContainer).clone();
-		let entryDelete = $("<button>", {
-			class: "cb-events-admin-delete-button",
+			'data-bs-toggle': 'modal',
+			'data-bs-target': '#cb_events_admin_edit_event_form_container'
+		},["cb-events-admin-edit-button", "btn", "btn-outline-primary"]);
+		let entryViewButton = formatButton('View', {}, ['h-100', 'w-100', 'text-info', ], 'a');
+		let entryView = formatButton('View', {
+			'target': "_blank",
+			'href': `${cb_events_admin.home_url}/cb-events/${item.id}`,
+			'role': 'button'
+		},["cb-events-admin-view-button", "btn", "btn-outline-info"], 'a');
+		let entryContest = formatButton(`${hasContest ? 'Edit' : 'Add'} Contest`, {
 			'data-cb-event-id': item.id,
-			text: "Delete",
-			css: {
-				color: "#ffad87",
-				background: "transparent",
-				border: "0"
-			}
-		});
+			'data-bs-toggle': 'modal',
+			'data-bs-target': '#cb_events_admin_edit_contests_modal',
+		}, ['cb-events-admin-edit-contest-button', 'btn-outline-secondary', 'btn', `${hasContest ? 'contest' : ''}` ]);
+		let entryDelete = formatButton('Delete', {
+			'data-cb-event-id': item.id,
+		}, ['cb-events-admin-delete-button', 'btn', 'btn-outline-danger']);
 
 		entryTitleContainer.append(entryTitle);
 		entryDescContainer.append(entryDesc);
 		entryAmountContainer.append(entryAmount);
 		entryStartContainer.append(entryStart);
 		entryEndContainer.append(entryEnd);
-		entryContestContainer.append(entryContest);
-		entryEditContainer.append(entryEdit);
-		entryDeleteContainer.append(entryDelete);
-		entryModule.append(entryTitleContainer);
-		entryModule.append(entryDescContainer);
-		entryModule.append(entryAmountContainer);
-		entryModule.append(entryStartContainer);
-		entryModule.append(entryEndContainer);
-		entryModule.append(entryContestContainer);
-		entryModule.append(entryEditContainer);
-		entryModule.append(entryDeleteContainer);
+		entryActionsContainer.append([entryContest, entryView, entryEdit, entryDelete]);
+		entryModule.append([entryTitleContainer, entryDescContainer, entryAmountContainer, entryStartContainer, entryEndContainer, entryActionsContainer]);
 
 		eventsTable.append(entryModule);
 
 	}
 
-	/**
-	 * CB Create Participation Entry
-	 *
-	 * Creates an entry in the requests table
-	 *
-	 * @param {object} participation
-	 * @returns {void}
-	 * @async
-	 */
-	async function cbCreateRequestEntry(request) {
-
-		let colors = {
-			inactive: '#d1cbc1',
-			new: '#007692',
-			in_progress: '#dbb778',
-			complete: '#62cc8f'
-		};
-
-		let applicantName = await cbGetUserData(request.applicant_id);
-		let item = await cbGetEventData( request.request_item_id );
-		let requestDate = cbFormatDate(request.date_created);
-
-		let entryDataContainer = $('<td class="cb-entry-data-container">');
-		let entryModule = $('<tr class="cb-entry-data">');
-		let entryStatusContainer = $(entryDataContainer).clone();
-		let entryStatus = $('<p>', { text: request.status.replaceAll('_', ' '), class: 'cb-entry-status', css: { textTransform: 'capitalize', color: colors[request.status] } });
-		let entryApplicantContainer = $(entryDataContainer).clone();
-		let entryApplicant = $('<p>', { text: applicantName });
-		let entryItemContainer = $(entryDataContainer).clone();
-		let entryItem = $('<p>', { text: item.item_name });
-		let entryDateContainer = $(entryDataContainer).clone();
-		let entryDate = $('<p>', { text: requestDate });
-		let entryEditContainer = $(entryDataContainer).clone();
-		let entryEdit = '';
-		let entryDeleteContainer = $(entryDataContainer).clone();
-		let entryDelete = '';
-
-		if ( request.status === 'new' || request.status === 'in_progress' ) {
-			entryEdit = $("<button>", {
-				class: "cb-requests-admin-edit-button cb-button square",
-				'data-cb-request-id': request.id,
-				text: "Edit"
-			});
-			entryDelete = $("<button>", {
-				class: "cb-requests-admin-delete-button",
-				'data-cb-request-id': request.id,
-				text: "Delete",
-				css: {
-					color: "#ffad87",
-					background: "transparent",
-					border: "0"
-				}
-			});
-		}
-
-		entryStatusContainer.append(entryStatus);
-		entryApplicantContainer.append(entryApplicant);
-		entryItemContainer.append(entryItem);
-		entryDateContainer.append(entryDate);
-		entryEditContainer.append(entryEdit);
-		entryDeleteContainer.append(entryDelete);
-		entryModule.append(entryStatusContainer);
-		entryModule.append(entryApplicantContainer);
-		entryModule.append(entryItemContainer);
-		entryModule.append(entryDateContainer);
-		entryModule.append(entryEditContainer);
-		entryModule.append(entryDeleteContainer);
-
-		requestsTable.append(entryModule);
-
-	}
-
-	/**
-	 * Resets the active item cache back to default values.
-	 */
-	function resetActiveItemCache() {
-		activeItemCache = {
-			item_name: '',
-			item_desc: '',
-			amount: 0
-		};
-	}
-
-	/**
-	 * Resets the active item cache back to default values.
-	 */
-	function resetActiveRequestCache() {
-		activeRequestCache = {
-			request_item_name: '',
-			request_item_id: 0,
-		};
-	}
 
 
 	/**
@@ -840,72 +470,20 @@ No requests found.
 			success: async (data) => {
 				await cbEventsPagination(page);
 				if ( data.text !== false ) {
-
-					let entries = JSON.parse(data.text);
+					let entries = data.text;
 					eventsTable.children().remove();
 					formatEventsHeaderRow();
 					for (let r of entries) {
 						await cbCreateEventEntry(r);
 					}
 				} else {
-					cbCreateEmptyRequestItemNotice();
+					cbCreateEmptyEventNotice();
 				}
 			},
 			error: e => console.log(e.responseText)
 		});
 	}
 
-	async function deleteRequestItem() {
-
-		if ( activeEventID === 0 ) {
-			return;
-		}
-
-		let deleteData = {
-			request_item_id: activeEventID,
-			api_key: cb_requests_admin.api_key
-		};
-
-		console.log(deleteData);
-
-		await $.ajax({
-			method: 'DELETE',
-			url: cb_requests_admin.delete_request_items,
-			data: JSON.stringify( deleteData ),
-			success: e => formMessage.setMessage(e),
-			error: x => console.error(x),
-		});
-
-		activeEventID = 0;
-		$('.cb-destruct-feedback').slideUp();
-		refreshEventsTable(1);
-
-	}
-
-	async function deleteRequest() {
-
-		if ( activeRequestID === 0 ) {
-			return;
-		}
-
-		let deleteData = {
-			request_id: activeRequestID,
-			api_key: cb_requests_admin.api_key
-		};
-
-		await $.ajax({
-			method: 'DELETE',
-			url: cb_requests_admin.delete_requests,
-			data: JSON.stringify( deleteData ),
-			success: e => formMessage.setMessage(e),
-			error: x => console.error(x),
-		});
-
-		activeRequestID = 0;
-		$('.cb-destruct-feedback').slideUp();
-		refreshRequestsTable(1);
-
-	}
 
 	/**
 	 * Handles resetting the new request item inputs.
@@ -914,9 +492,33 @@ No requests found.
 
 		$('#cb_events_admin_event_title').val('');
 		$('#cb_events_admin_event_desc').val('');
-		$('#cb_events_admin_event_start_date').val('');
-		$('#cb_events_admin_event_end_date').val('');
+		$('#cb_events_admin_event_start_calendar_date_input').val('');
+		$('#cb_events_admin_event_end_calendar_date_input').val('');
+
+		$('#cb_events_admin_event_start_time_selector_hour').val('9');
+		$('#cb_events_admin_event_start_time_selector_minute').val('00');
+		$('#cb_events_admin_event_start_time_selector_meridian').val('AM');
+		$('#cb_events_admin_event_end_time_selector_hour').val('9');
+		$('#cb_events_admin_event_end_time_selector_minute').val('00');
+		$('#cb_events_admin_event_end_time_selector_meridian').val('AM');
+
 		$('#cb_events_admin_participation_amount').val('');
+		$('.cb-events-admin-contests-container').empty();
+		$('#cb_events_admin_has_contest').removeAttr("checked");
+		$(".cb-events-admin-add-contest-placement").remove();
+
+		$('#cb_events_admin_edit_event_event_title').val('');
+		$('#cb_events_admin_edit_event_event_desc').val('');
+		$('#cb_events_admin_edit_event_event_start_calendar_date_input').val('');
+		$('#cb_events_admin_edit_event_event_end_calendar_date_input').val('');
+
+		$('#cb_events_admin_edit_event_event_start_time_selector_hour').val('9');
+		$('#cb_events_admin_edit_event_event_start_time_selector_minute').val('00');
+		$('#cb_events_admin_edit_event_event_start_time_selector_meridian').val('AM');
+		$('#cb_events_admin_edit_event_event_end_time_selector_hour').val('9');
+		$('#cb_events_admin_edit_event_event_end_time_selector_minute').val('00');
+		$('#cb_events_admin_edit_event_event_end_time_selector_meridian').val('AM');
+		$('#cb_events_admin_edit_event_participation_amount').val('');
 
 	}
 
@@ -926,9 +528,10 @@ No requests found.
 
 		if ( eventHasContestInput.is(':checked') ) {
 
+			let addAnother = $('<button type="button" class="cb-button square cb-events-admin-add-contest-placement">').text("+");
 			let newPlacement = $('<input name="cb_events_admin_contest_placements[]" type="number" placeholder="Placement" />').val(1);
 			let newAmount = $('<input name="cb_events_admin_contest_amounts[]" type="number" placeholder="Amount" />' );
-			let addAnother = $('<button class="cb-button square">').text("+");
+			let removeButton = $('<button type="buttpn" class="cb-button remove">');
 			let container = $('<div class="cb-events-admin-contests-container">').css({
 				display: 'flex',
 				gap: '.5rem',
@@ -939,74 +542,81 @@ No requests found.
 
 			container.append(newPlacement);
 			container.append(newAmount);
-			container.append(addAnother);
+			container.append(removeButton);
+			eventHasContestInput.after(addAnother);
 			eventHasContestInput.parent().after(container);
 		} else {
 			$('.cb-events-admin-contests-container').remove();
+			$('.cb-events-admin-add-contest-placement').remove();
 		}
 	});
 
-	$(document).on('click', '.cb-events-admin-contests-container button:not(.remove)', function() {
-		let newContainer = $(this).parent().clone();
+	$(document).on('click', '.cb-events-admin-add-contest-placement', function() {
+		let lastPlacement = $('.cb-events-admin-contests-container').last();
+		let newContainer = lastPlacement.clone();
 		let removeButton = $('<button class="cb-button remove">');
 
-		newContainer.children('input')[0].value = (parseInt($(this).parent().children('input')[0].value) + 1);
+		newContainer.children('input')[0].value = (parseInt($('.cb-events-admin-contests-container').last().children('input')[0].value) + 1);
 		newContainer.children('input')[1].value = '';
 
-		$(this).after(removeButton);
-		$(this).parent().after(newContainer);
-		$(this).remove();
+		$(lastPlacement).after(newContainer);
+
 	});
 
 	$(document).on('click', '.cb-events-admin-contests-container button.cb-button.remove', function() {
 
+		if ($('.cb-events-admin-contests-container button.cb-button.remove').length === 1 ) {
+			return;
+		}
+
 		$(this).parent().remove();
 	});
 
-	eventForm.on( 'submit', async (e) => {
+	eventForm.on('submit', async function(e) {
 
 		e.preventDefault();
-		e.stopPropagation();
 
+		const prefix = 'cb_events_admin';
+		let eventStart = toMySQLUTCDate('events_admin', 'event_start');
+		let eventEnd = toMySQLUTCDate('events_admin', 'event_end');
 		let contestPlacements = $('.cb-events-admin-contests-container');
 
-		if (contestPlacements.length !==0 ) {
-			for ( let i = 0; i < contestPlacements.length; i++) {
-				let [placementInput,amountInput] = $(contestPlacements[i]).find('input');
-				console.log(placementInput.value, amountInput.value);
-			}
+		if ( eventStart > eventEnd ) {
+			[eventStart, eventEnd] = [eventEnd, eventStart];
 		}
 
-
-		return;
-		let eventDateStart = new Date(eventStartDateInput.val()).toISOString().slice(0, 19).replace('T', ' ');
-		let eventDateEnd = new Date(eventEndDateInput.val()).toISOString().slice(0, 19).replace('T', ' ');
-
-
 		let postData = {
-			event_title: eventTitleInput.val(),
-			event_desc: eventDescInput.val(),
-			event_start: eventDateStart,
-			event_end: eventDateEnd,
-			participation_amount: eventAmountInput.val(),
+			event_title: $(`#${prefix}_event_title`).val(),
+			event_desc: $(`#${prefix}_event_desc`).val(),
+			event_start: eventStart,
+			event_end: eventEnd,
+			contests: [],
+			participation_amount: $(`#${prefix}_event_participation_amount`).val(),
 			user_id: cb_events_admin.user_id,
 			api_key: cb_events_admin.api_key
 		};
 
-		console.log(cb_events_admin.new_events);
+		if (contestPlacements.length !==0 ) {
+			for ( let i = 0; i < contestPlacements.length; i++) {
+				let [placementInput,amountInput] = $(contestPlacements[i]).find('input');
+				postData.contests.push({ placement: placementInput.value, amount: amountInput.value });
+			}
+		}
 
 		await $.ajax({
-			method: 'POST',
 			url: cb_events_admin.new_events,
+			method: 'POST',
 			data: postData,
-			success: e => formMessage.setMessage(e),
-			error: x => console.error(x)
+			success: ({text, type}) => appendAlert(text, type),
+			error: err => console.error(err), 
 		});
 
 		resetEventInputs();
 		refreshEventsTable(1);
 
 	});
+
+
 
 	/**
 	 * Listener for editing an event.
@@ -1021,19 +631,8 @@ No requests found.
 	$(document).on('click', '.cb-events-admin-edit-button', async function(e) {
 
 		activeEventID = parseInt($(this).data('cbEventId'));
-		let row = $(this).closest('tr');
-		let prevItemData = row.find('.cb-entry-data-container p');
-
-		let saveButton = $('<button>', {
-			class: "cb-events-admin-save-button cb-button solid square",
-			text: "Save",
-			style: "margin-bottom: 5px;"
-		});
-		let cancelButton = $('<button>', {
-			class: "cb-events-admin-cancel-button cb-button square",
-			text: "Cancel"
-		});
-		let item;
+		let prefix = 'cb_events_admin_edit_event';
+		let item = {};
 
 		await $.ajax({
 			url: cb_events_admin.get_events,
@@ -1042,178 +641,136 @@ No requests found.
 				id: activeEventID,
 				api_key: cb_events_admin.api_key
 			},
-			success: e => item = JSON.parse(e.text)[0],
+			success: ({text,type}) => item = text[0],
 			error: x => console.error(x)
 		});
 
-		let inputs = [
-			$(`<input type="text" class="cb-edit-event-input" name="cb_edit_event_title" value="${item.event_title}" />`),
-			$(`<input type="text" class="cb-edit-event-input" name="cb_edit_event_desc" value="${item.event_desc}" />`),
-			$(`<input type="text" class="cb-edit-event-input" name="cb_edit_event_amount" value="${item.participation_amount}" />`),
-			$(`<input type="datetime-local" class="cb-edit-event-input" name="cb_edit_event_start" value="${item.event_start}" />`),
-			$(`<input type="datetime-local" class="cb-edit-event-input" name="cb_edit_event_end" value="${item.event_end}" />`),
-		];
+		DateInput(`events_admin_edit_event_event_start`);
+		DateInput(`events_admin_edit_event_event_end`);
 
-		prevItemData.each( ( index, element ) => {
-			element.replaceWith( inputs[index][0] );
-		});
+		let startDateObj = new Date(item.event_start.replace(' ', 'T') + 'Z');
+		let endDateObj = new Date(item.event_end.replace(' ', 'T') + 'Z');
+		let startHours = startDateObj.getHours();
+		let endHours = endDateObj.getHours();
 
-		$(this).parent().append(saveButton);
-		$(this).parent().append(cancelButton);
-		$(this).remove();
+		let startDateParts = {
+			day: startDateObj.getDate(),
+			month: startDateObj.getMonth() + 1,
+			year: startDateObj.getFullYear(),
+			hours: startHours > 12 ? startHours - 12:startHours,
+			minutes: startDateObj.getMinutes().toString().padStart(2,'0'),
+			meridiem: startHours > 12 ? 'PM' : 'AM'
+		};
+
+		let endDateParts = {
+			day: endDateObj.getDate(),
+			month: endDateObj.getMonth() + 1,
+			year: endDateObj.getFullYear(),
+			hours: endHours > 12 ? endHours - 12 : endHours,
+			minutes: endDateObj.getMinutes().toString().padStart(2,'0'),
+			meridiem: endHours > 12 ? 'PM' : 'AM',
+		};
+
+		$(`#${prefix}_event_title`).val(item.event_title);
+		$(`#${prefix}_event_desc`).val(item.event_desc);
+		$(`#${prefix}_event_start_calendar_date_input`).val(`${startDateParts.month}/${startDateParts.day}/${startDateParts.year}`);
+		$(`#${prefix}_event_start_time_selector_hour`).val(startDateParts.hours);
+		$(`#${prefix}_event_start_time_selector_minute`).val(startDateParts.minutes);
+		$(`#${prefix}_event_start_time_selector_meridiem`).val(startDateParts.meridiem);
+		$(`#${prefix}_event_end_calendar_date_input`).val(`${endDateParts.month}/${endDateParts.day}/${endDateParts.year}`);
+		$(`#${prefix}_event_end_time_selector_hour`).val(endDateParts.hours);
+		$(`#${prefix}_event_end_time_selector_minute`).val(endDateParts.minutes);
+		$(`#${prefix}_event_end_time_selector_meridiem`).val(endDateParts.meridiem);
+		$(`#${prefix}_event_participation_amount`).val(parseInt(item.participation_amount));
 
 	});
 
-	/**
-	 * Event listener for the "Save" action.
-	 *
-	 * Sends the updates for the given request item to the server,
-	 * displays the response using our formMessage function,
-	 * replaces the input elements with their respective values.
-	 * The values will be replaced on page refresh if the update
-	 * fails, so we probably won't super worry about making
-	 * that 100% failsafe. Sorry :D
-	 */
-	$(document).on('click', '.cb-events-admin-save-button', async function(e) {
+	editEventForm.on('submit', async function (e) {
 
-		let parent = $(this).parent();
-		let entryEdit = $("<button>", {
-			class: "cb-events-admin-edit-button cb-button square",
-			'data-cb-event-id': activeEventID,
-			text: "Edit"
-		});
+		e.preventDefault();
 
-		let eventDateStart = new Date(
-			$(`input[name="cb_edit_event_start"]`).val()
-		).toLocaleString('en-US', {timeZone: 'America/New_York'});
-		let eventDateEnd = new Date(
-			$(`input[name="cb_edit_event_end"]`).val()
-		).toLocaleString('en-US', {timeZone: 'America/New_York'});
-
-		let item = [
-			$(`input[name="cb_edit_event_title"]`).val(),
-			$(`input[name="cb_edit_event_desc"]`).val(),
-			$(`input[name="cb_edit_event_amount"]`).val(),
-			eventDateStart,
-			eventDateEnd,
-		];
-
+		let eventStart = toMySQLUTCDate('events_admin_edit_event', 'event_start');
+		let eventEnd = toMySQLUTCDate('events_admin_edit_event', 'event_end');
+		if ( eventStart > eventEnd ) {
+			[eventStart, eventEnd] = [eventEnd, eventStart];
+		}
+		let prefix = 'cb_events_admin_edit_event_event';
 		let patchData = {
-			event_id: activeEventID,
-			event_title: item[0],
-			event_desc: item[1],
-			participation_amount: item[2],
-			event_start: item[3],
-			event_end: item[4],
+			id: activeEventID,
+			event_title: $(`#${prefix}_title`).val(),
+			event_desc: $(`#${prefix}_desc`).val(),
+			event_start: eventStart,
+			event_end: eventEnd,
+			participation_amount: $(`#${prefix}_participation_amount`).val(),
 			user_id: cb_events_admin.user_id,
 			api_key: cb_events_admin.api_key
 		};
 
 		await $.ajax({
 			url: cb_events_admin.update_events,
-			method: "PATCH",
+			method: 'PATCH',
 			data: JSON.stringify(patchData),
-			success: e => formMessage.setMessage(e),
-			error: x => console.error(x)
-		});
-
-		$('.cb-edit-event-input').each( (index, inputElement) => {
-			let newEntryItemData;
-			if ( index === 3 || index === 4  ) {
-				newEntryItemData = $('<p>', { text: cbConvertLongDate(item[index]) });
-			} else {
-				newEntryItemData = $('<p>', { text: item[index] });
-			}
-
-			inputElement.replaceWith(newEntryItemData[0]);
+			success: ({text, type}) => appendAlert(text,type),
+			error: err => console.error(err)
 		});
 
 		activeEventID = 0;
-		parent.children().remove();
-		parent.append(entryEdit);
+		resetEventInputs();
+		refreshEventsTable(1);
 
 	});
 
-	/**
-	 * Event listener for the canceling the "Edit Request" event.
-	 *
-	 * Replaces the inline editing inputs with <p> elements using
-	 * the data stored in the activeItemCache object, then clears
-	 * the cache data and replaces the "Save" and "Cancel" actions
-	 * with the "Edit" button.
-	 */
-	$(document).on('click', '.cb-events-admin-cancel-button', async function(e) {
 
-		let parent = $(this).parent();
-		let entryEdit = $("<button>", {
-			class: "cb-events-admin-edit-button cb-button square",
-			'data-cb-event-id': activeEventID,
-			text: "Edit"
-		});
-
-		let item = await cbGetEventData(activeEventID);
-
-		let textData = [
-			$('<p>', { text: item.event_title }),
-			$('<p>', { text: item.event_desc }),
-			$('<p>', { text: item.participation_amount }),
-			$('<p>', { text: cbConvertLongDate(item.event_start) }),
-			$('<p>', { text: cbConvertLongDate(item.event_end) }),
-		];
-
-		$('.cb-edit-event-input').each( (index, inputElement) => {
-			inputElement.replaceWith(textData[index][0]);
-		});
-
-		activeEventID = 0;
-		parent.children().remove();
-		parent.append(entryEdit);
-
-	});
-
-	$('.cb-events-admin-pagination').on('click', '.cb-events-admin-pagination-button', function (e) {
+	$('#cb_events_admin_pagination').on('click', '.cb-events-admin-page-link', function (e) {
 		e.preventDefault();
 		let page = parseInt($(this).attr('data-cb-events-admin-page'));
 		refreshEventsTable(page);
 	});
 
-	$(document).on( 'click', '.cb-events-admin-delete-button', (e) => {
+	$(document).on( 'click', '.cb-events-admin-delete-button', async function (e) {
 		e.preventDefault();
-		activeEventID = parseInt(e.target.dataset.cbEventId);
-		let feedback = new ConfirmFeedback('destruct');
-		feedback.setMessage("This operation is destructive, which means that you cannot undo this action. Are you sure you want to delete this item?", 'warning');
+		activeEventID = parseInt($(this).data('cbEventId'));
+
+		await appendConfirmation(
+			"This operation is destructive, which means that you cannot undo this action. Are you sure you want to delete this item?",
+			() => {
+
+				if ( cb_events_admin.user_id == 5 )	{
+					$.ajax({
+						url: cb_events_admin.get_transactions,
+						method: 'GET',
+						data: {
+							event_id: activeEventID,
+							api_key: cb_events_admin.api_key
+						},
+						success: ({text, type}) => console.log(text),
+						error: err => console.error(err)
+					});
+				}
+
+				$.ajax({
+					url: cb_events_admin.delete_events,
+					method: 'DELETE',
+					data: JSON.stringify({
+						event_id: activeEventID,
+						api_key: cb_events_admin.api_key,
+					}),
+					success: ({text, type}) => {
+						appendAlert(text, type);
+						activeEventID = 0;
+						refreshEventsTable(1);
+					},
+					error: err => console.error(err)
+				});
+
+			}
+		);
 	});
-
-	async function replaceContestEntries() {
-
-	}
 
 	$(document).on('click', '.cb-events-admin-edit-contest-button', function (e) {
 
-
-
-		contestModal.dialog({
-			modal: true,
-			classes: { 'ui-dialog-titlebar-close':'cb-button square'},
-			open: () => {
-				$('.ui-dialog-buttonset button').addClass('cb-button square solid');
-				$('.ui-dialog-buttonset button').css({
-					paddingTop: '.15rem',
-					paddingBottom: '.15rem',
-				})
-			},
-			buttons: [
-				{
-					text: 'Ok',
-					click: function() {
-						$(this).dialog('close');
-					}
-				}
-			]
-		});
-
 		const button = $(this);
-		const inputsContainer = $('#cb-events-admin-contest-modal-inputs');
+		const inputsContainer = $('#cb_events_admin_contests_modal_inputs');
 
 		activeEventID = button.data('cbEventId');
 
@@ -1225,20 +782,16 @@ No requests found.
 			placements = false;
 		}
 
-		let container = $('<div class="cb-events-admin-contest-modal-input-container">').css({
-			display: 'flex',
-			gap: '.5rem',
-			position: 'relative',
-			marginBottom: '.5rem',
-			marginTop: '.5rem',
-			maxWidth: '600px',
-		}).append([
+
+
+		let container = $(`<div class="d-flex gap-2 position-relative my-2 cb-events-admin-contest-modal-input-container">`).append([
 			$('<input name="cb_events_admin_contest_placement" type="number" placeholder="Placement" />'),
 			$('<input name="cb_events_admin_contest_amount" type="number" placeholder="Amount" />' ),
-			$('<button class="cb-button square">').text("+")
+			$('<input name="cb_events_admin_contest_id" type="hidden" />' ),
+			$('<button class="cb-button remove">')
 		]);
-
-		inputsContainer.children().remove();
+		$('.cb-events-admin-contests-modal-remove').remove();
+		inputsContainer.empty();
 
 		if ( placements !== false ) {
 
@@ -1246,8 +799,11 @@ No requests found.
 				let newContainer = container.clone();
 				newContainer.find('input[name=cb_events_admin_contest_placement]').val(placement.placement);
 				newContainer.find('input[name=cb_events_admin_contest_amount]').val(placement.amount);
+				newContainer.find('input[name=cb_events_admin_contest_id]').val(placement.id);
 				inputsContainer.append(newContainer);
 			}
+
+			$($('.cb-events-admin-contests-modal-actions').children('button')[0]).before(`<button data-bs-dismiss="modal" type="button" class="btn btn-danger cb-events-admin-contests-modal-remove">Remove</button>`);
 
 		} else {
 			let newContainer = container.clone();
@@ -1255,43 +811,118 @@ No requests found.
 		}
 	});
 
-	$(document).on('click', '.cb-events-admin-contest-modal-input-container button:not(.remove)', function() {
-		let newContainer = $(this).parent().clone();
-		let removeButton = $('<button class="cb-button remove">');
+	$(document).on('click', '.cb-events-admin-contests-modal-add-placement-button', function() {
+		let lastPlacement = $('.cb-events-admin-contest-modal-input-container').last();
+		let newContainer = lastPlacement.clone();
 
-		newContainer.children('input')[0].value = (parseInt($(this).parent().children('input')[0].value) + 1);
+		newContainer.children('input')[0].value = (parseInt(lastPlacement.children('input')[0].value) + 1);
 		newContainer.children('input')[1].value = '';
+		lastPlacement.after(newContainer);
 
-		$(this).after(removeButton);
-		$(this).parent().after(newContainer);
-		$(this).remove();
 	});
 
 	$(document).on('click', '.cb-events-admin-contest-modal-input-container button.cb-button.remove', function() {
-
+		if ( $('.cb-events-admin-contest-modal-input-container').length === 1 ) {
+			return;
+		}
 		$(this).parent().remove();
 	});
 
-	
-	$.ajax({
-		url: cb_events_admin.new_contests,
-		method: 'POST',
-		data: {
-			event_id: 2,
-			api_key: cb_events_admin.api_key,
-			contests:[
-				{placement: 1, amount: 15},
-				{placement: 2, amount: 10},
-				{placement: 3, amount: 5},
-			]
-		},
-		success: res => console.log(res)
+	$(document).on('click', '.cb-events-admin-contests-modal-save', async e => {
+
+		e.preventDefault();
+
+		let contestModalInputContainers = $('.cb-events-admin-contest-modal-input-container');
+		let feedback = '';
+		let contestsArray = [];
+		await contestModalInputContainers.each( async (i, el) => {
+			let [placement, amount] = [$(el).children('input')[0].value, $(el).children('input')[1].value ];
+			contestsArray.push({placement: placement, amount: amount});
+		});
+
+		await $.ajax({
+			method: 'PATCH',
+			url: cb_events_admin.update_contests,
+			data: JSON.stringify({
+				event_id: activeEventID,
+				contests: contestsArray,
+				api_key: cb_events_admin.api_key,
+			}),
+			success: ({text, type}) => {
+				let response = text;
+				for ( let {text, type} of response ) {
+					feedback += `${text} `;
+				}
+				appendAlert(feedback, type);
+			},
+			error: err => console.error(err),
+		});
+
+		contestsCache.set(activeEventID, contestsArray);
+		refreshEventsTable(1);
+
 	});
-	
+
+	$(document).on('click', '.cb-events-admin-contests-modal-remove', async e => {
+
+		await $.ajax({
+			url: cb_events_admin.delete_contests,
+			method: 'DELETE',
+			data: JSON.stringify({
+				event_id: activeEventID,
+				api_key: cb_events_admin.api_key
+			}),
+			success: ({text, type}) => appendAlert(text, type),
+			error: ({text, type}) => appendAlert(text, 'danger')
+		});
+
+		contestsCache.delete(activeEventID);
+		activeEventID = 0;
+		refreshEventsTable(1);
+
+	});
 
 	formatEventsHeaderRow();
 	refreshEventsTable(1);
 
-	$('ui-dialog-buttonset button')
+	DataTable({
+		component: 'events_admin',
+		tableHeaders: ['ID', 'sender', 'recipient', 'date_scheduled', 'transaction_id'],
+		fetchCount: {
+			url: cb_events_admin.get_events,
+			method: 'GET',
+			data: {
+				count: true,
+				api_key: cb_events_admin.api_key,
+			},
+			success: ({text, type}) => text[0].total_count,
+			error: err => console.err(err)
+		},
+		fetchList: {
+			url: cb_events_admin.get_events,
+			method: 'GET',
+			data: {
+				per_page: 15,
+				page: 1,
+				api_key: cb_events_admin.api_key
+			},
+			success: e => e,
+			error: err => console.error(err)
+		},
+		deleteItemCallback: async function (itemID) {
+			await jQuery.ajax({
+				url: cb_events_admin.delete_events,
+				method: 'DELETE',
+				data: JSON.stringify({
+					event_id: itemID,
+					api_key: cb_events_admin.api_key,
+				}),
+				success: ({text, type}) => appendAlert(text, type),
+				error: err => console.error(err.message)
+			});
+		},
+		populateTable: false,
+	});
+
 
 });

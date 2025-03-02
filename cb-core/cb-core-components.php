@@ -52,7 +52,7 @@ function cb_core_set_uri_globals() {
 		}
 		if ( $parts[0] === 'cb-events' ) {
 			$cb->current_component = $parts[0];
-			$cb->current_item = $parts[1];
+			$cb->current_item = $parts[1] ?? '';
 		}
 	}
 }
@@ -166,91 +166,3 @@ function cb_core_get_active_components() {
 	return Confetti_Bits()->active_components;
 }
 
-
-/*
-function cb_core_admin_get_components( $type = 'all' ) {
-
-	$components = cb_core_get_components( $type );
-
-	return apply_filters( 'cb_core_admin_get_components', $components, $type );
-
-}
-
-function cb_core_get_components( $type = 'all' ) {
-
-	$required_components = array(
-		'transactions' => array(
-			'title'       => __( 'Confetti Bits Transactions', 'confetti-bits' ),
-			'description' => __( 'Allow members to send and receive Confetti Bits.', 'confetti-bits' ),
-			'default'     => true,
-		),
-	);
-
-	$optional_components = array(
-		'downloads' => array(
-			'title'       => __( 'Confetti Bits Downloads', 'confetti-bits' ),
-			'description' => __( 'Record sitewide file download activity.', 'confetti-bits' ),
-			'default'     => true,
-		),
-	);
-
-	$default_components = array();
-
-	foreach( array_merge( $required_components, $optional_components ) as $key => $component ) {
-		if ( isset( $component['default'] ) && true === $component['default'] ) {
-			$default_components[ $key ] = $component;
-		}
-	}
-
-	switch ( $type ) {
-		case 'required' :
-			$components = $required_components;
-			break;
-		case 'optional' :
-			$components = $optional_components;
-			break;
-		case 'default' :
-			$components = $default_components;
-			break;
-		case 'all' :
-		default :
-			$components = array_merge( $required_components, $optional_components );
-			break;
-	}
-
-	return apply_filters( 'cb_core_get_components', $components, $type );
-
-}
-
-
-function cb_current_component() {
-
-	$cb                = Confetti_Bits();
-	$current_component = !empty( $cb->current_component )
-		? $cb->current_component
-		: false;
-
-	return apply_filters( 'cb_current_component', $current_component );
-
-}
-
-function cb_is_active( $component = '' ) {
-
-	$retval = false;
-
-	if ( empty( $component ) ) {
-		$component = cb_current_component();
-	}
-
-	if ( isset( Confetti_Bits()->active_components[ $component ] ) 
-		|| isset( Confetti_Bits()->required_components[ $component ] ) ) {
-
-		$retval = true;
-
-	}
-
-	$retval = apply_filters( "cb_is_{$component}_active", $retval );
-
-	return apply_filters( 'cb_is_active', $retval, $component );
-}
-*/

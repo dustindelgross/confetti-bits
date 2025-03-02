@@ -13,4 +13,4 @@ defined('ABSPATH') || exit;
 function cb_setup_requests() {
 	Confetti_Bits()->requests = new CB_Requests_Component();
 }
-add_action( 'cb_setup_components', 'cb_setup_requests', 6 );
+add_action( 'cb_setup_components', 'cb_setup_requests', 7 );

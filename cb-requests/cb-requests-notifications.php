@@ -387,7 +387,27 @@ function cb_requests_update_request_notifications( $update_args = []) {
 
 
 
+function cb_requests_format_notifications( $component_action = '', $args = [] ) {
 
+	if ( !isset( $args['title'], $args['text'], $args['item_id'], $component_action ) ) {
+		return;
+	}
+	
+	$retval = [
+		'title' => $args['title'],
+		'link' => home_url('confetti-bits')
+	];
+	$user_name_notifications = ['cb_requests_admin_new_request', 'cb_requests_update_request'];
+	
+	if ( in_array( $component_action, $user_name_notifications ) ) {
+		$retval['text'] = sprintf($args['text'], cb_core_get_user_display_name($args['item_id']));
+		return $retval;
+	}
+	
+	$retval['text'] = $args['text'];
+	return $retval;
+	
+}
 
 
 

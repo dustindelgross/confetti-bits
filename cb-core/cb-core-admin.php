@@ -102,100 +102,6 @@ function cb_core_admin_setting_general_register_fields( $setting ) {
 
 
 
-function cb_admin_reset_date_options() {
-
-	$cb_reset_date =  get_option('cb_reset_date');
-	//	$page      = bp_core_do_network_admin() ? 'admin.php' : 'admin.php';
-
-?>
-<input id="<?php echo esc_attr( "cb_reset_date" ) ?>" 
-	   name="<?php echo esc_attr( "cb_reset_date" ) ?>" 
-	   type="date"
-	   value="<?php echo date( 'Y-m-d', strtotime( $cb_reset_date ) ); ?>"
-	   />
-<?php
-}
-
-
-function cb_core_admin_settings_handler() {
-
-	if ( ! isset( $_GET['page'] ) ) {
-		return;
-	}
-
-	if ( isset( $_GET['page'] ) && $_GET['page'] != 'bp-settings' ) {
-		return;
-	}
-
-
-	if ( isset( $_POST['cb_reset_date'] ) ) {
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		$reset_date = date( 'Y-m-d H:i:s', strtotime( $_POST['cb_reset_date'] ) );
-
-		update_option( 'cb_reset_date', $reset_date );
-
-		$base_url = bp_get_admin_url(
-			add_query_arg(
-				array(
-					'page'    => 'bp-settings',
-					'cb_reset_date'  => 'updated',
-					'updated' => 'true',
-				),
-				'admin.php'
-			)
-		);
-	}
-
-	if ( isset( $_POST['cb_components'] ) ) {
-		$cb = Confetti_Bits();
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		require_once( $cb->plugin_dir . '/cb-core/cb-core-install.php' );
-
-		$submitted = stripslashes_deep( $_POST['cb_components'] );
-		$new_active_components = array();
-		$required = cb_core_admin_get_components('required');
-
-		foreach ( $submitted as $name => $value ) {
-			if ( 1 == $value || isset( $required[$name] ) ) {
-				$new_active_components[$name] = $value;
-			}
-		}
-
-		update_option( 'cb_active_components', $new_active_components );
-		$cb->active_components = $new_active_components;
-		cb_core_install( $cb->active_components );
-		$current_action = 'success';
-
-		$base_url = bp_get_admin_url(
-			add_query_arg(
-				array(
-					'page'    => 'bp-settings',
-					'cb_action' => $current_action,
-				),
-				'admin.php'
-			)
-		);
-	}
-
-	if ( isset( $_POST['cb_panels'] ) ) {
-		$roles	= cb_core_get_roles();
-		$panels	= cb_core_get_panels();
-		$submitted_panels = stripslashes_deep( $_POST['cb_panels'] );
-		$new_active_panels = array();
-		$cb = Confetti_Bits();
-		foreach( $submitted_panels as $name => $value ) {
-			if ( 1 == $value ) {
-				$new_active_panels[$name] = $value;
-			}
-		}
-		$cb->active_panels = $new_active_panels;
-		update_option( "cb_active_panels", $new_active_panels );
-		wp_safe_redirect( $base_url );
-		die();
-	}
-}
-//add_action( 'bp_admin_init', 'cb_core_admin_settings_handler' );
-
 function cb_core_admin_components_settings() { 
 	cb_admin_components_options();
 }
@@ -281,6 +187,7 @@ function cb_core_set_role_globals() {
 				'cb_events_admin' => true,
 				'cb_staffing_admin' => true,
 				'cb_admin' => true,
+				'cb_transactions_admin' => true,
 			]
 		],
 		'leadership' => [
@@ -288,9 +195,18 @@ function cb_core_set_role_globals() {
 			'caps' => [
 				'read' => true,
 				'cb_participation_admin' => true,
+				'cb_staffing_admin' => true,
+				'create_users' => true,
+				'add_users' => true,
+				'list_users' => true,
+				'edit_users' => true,
+				'edit_courses' => true,
+				'edit_groups' => true,
+				'edit_assignments' => true,
 				'cb_requests_admin' => true,
 				'cb_events_admin' => true,
 				'cb_admin' => true,
+				'cb_transactions_admin' => true,
 			]
 		],
 		'requests_admin' => [
@@ -356,6 +272,8 @@ function cb_core_add_admin_caps() {
 		'requests_admin',
 		'participation_admin',
 		'events_admin',
+		'staffing_admin',
+		'transactions_admin',
 	];
 
 	foreach ( $roles as $role ) {
@@ -492,6 +410,8 @@ function cb_core_admin_is_user_site_admin( $user_id = 0 ) {
  */
 function cb_core_admin_is_user_admin( $user_id = 0 ) {
 
+	$user_id = intval($user_id);
+	
 	if ( $user_id === 0 ) {
 		return current_user_can('cb_admin');
 	}
@@ -535,6 +455,22 @@ function cb_is_user_requests_admin() {
 }
 
 /**
+ * Checks to see if the user is a staffing admin.
+ * 
+ * Checks whether a user has administrative privileges for
+ * user moderation. These privileges are granted by
+ * assigning a role on the Edit User admin page.
+ * 
+ * @return bool Whether a user is a staffing admin.
+ * 
+ * @package ConfettiBits\Core
+ * @since 1.0.0
+ */
+function cb_is_user_staffing_admin() {
+	return cb_core_is_component_admin('staffing');
+}
+
+/**
  * Checks to see if the user is an events admin.
  * 
  * Checks whether a user has administrative privileges over the 
@@ -549,6 +485,35 @@ function cb_is_user_requests_admin() {
 function cb_is_user_events_admin() {
 	return cb_core_is_component_admin('events');
 }
+
+/**
+ * Checks to see if the user is a transactions admin.
+ * 
+ * Checks whether a user has administrative privileges to 
+ * send bits to other users.
+ * 
+ * @param int $user_id User ID.
+ * @return bool Whether a user is a transactions admin.
+ * 
+ * @package Core
+ * @since 3.1.1
+ */
+function cb_is_user_transactions_admin( $user_id = 0 ) {
+	
+	$user_id = intval($user_id);
+	
+	if ( $user_id === 0 ) {
+		return current_user_can('cb_transactions_admin');
+	}
+
+	$user = new WP_User($user_id);
+
+	return $user->has_cap('cb_transactions_admin');
+	
+}
+
+
+
 
 /** 
  * Let Editors manage users, and run this only once.

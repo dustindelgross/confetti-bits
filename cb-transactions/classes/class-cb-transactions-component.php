@@ -55,7 +55,7 @@ class CB_Transactions_Component extends CB_Component {
 	 */
 	public function register_api_endpoints( $components = [] ) {
 
-		$components = ['transactions'];
+		$components = ['transactions', 'spot_bonuses', 'volunteers'];
 
 		parent::register_api_endpoints($components);
 
@@ -68,16 +68,32 @@ class CB_Transactions_Component extends CB_Component {
 	 * @since 3.0.0
 	 */
 	public function enqueue_scripts( $components = [] ) {
-		
+
 		$components = [
 			'transactions' => [
+				'spot_bonuses' => ['get'],
 				'transactions' => ['new'],
 				'dependencies' => ['jquery'],
 			]
 		];
 		
-		parent::enqueue_scripts($components);
+		if ( cb_is_user_staffing_admin() ) {
+			$components['staffing_admin'] = [
+				'spot_bonuses' => ['new', 'get', 'update', 'delete' ],
+				'dependencies' => ['jquery', 'jquery-ui-datepicker'],
+			];
+		}
 		
+		if ( cb_is_user_admin() ) {
+			$components['volunteers'] = [
+				'volunteers' => ['new'],
+				'events' => ['get'],
+				'dependencies' => ['jquery'],
+			];
+		}
+
+		parent::enqueue_scripts($components);
+
 	}
 
 	/**
@@ -96,16 +112,15 @@ class CB_Transactions_Component extends CB_Component {
 		}
 
 		// Global tables for messaging component.
-		$global_tables = array(
-			'table_name'    		=> $cb->table_prefix . 'confetti_bits_transactions',
-		);
+		$global_tables = [
+			'table_name'    		=> "{$cb->table_prefix}confetti_bits_transactions",
+			'table_name_spot_bonuses' => "{$cb->table_prefix}confetti_bits_spot_bonuses",
+		];
 
-		parent::setup_globals(
-			array(
-				'slug'                  => CONFETTI_BITS_TRANSACTIONS_SLUG,
-				'global_tables'         => $global_tables,
-			)
-		);
+		parent::setup_globals([
+			'slug'                  => CONFETTI_BITS_TRANSACTIONS_SLUG,
+			'global_tables'         => $global_tables
+		]);
 
 		$cb->loaded_components[ $this->slug ] = $this->id;
 

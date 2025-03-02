@@ -49,6 +49,38 @@ function cb_core_install_events() {
 }
 
 /**
+ * Installs our spot bonus table on the database.
+ * 
+ * @link https://developer.wordpress.org/reference/functions/dbdelta/ Uses dbDelta()
+ * @link https://developer.wordpress.org/reference/classes/wpdb/ Also uses $wpdb
+ * 
+ * @package ConfettiBits\Core
+ * @since 2.3.0
+ */
+function cb_core_install_spot_bonuses() {
+
+	global $wpdb;
+	$prefix = $wpdb->prefix;
+	$charset_collate = $wpdb->get_charset_collate();
+	$sql = [];
+
+	$sql[] = "CREATE TABLE {$prefix}confetti_bits_spot_bonuses (
+				id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+				sender_id int(20) NOT NULL,
+				recipient_id int(20) NOT NULL,
+				spot_bonus_date datetime NOT NULL,
+				transaction_id bigint(20) NULL,
+				KEY sender_id (sender_id),
+				KEY recipient_id (recipient_id),
+				KEY spot_bonus_date (spot_bonus_date),
+				KEY transaction_id (transaction_id)
+			) {$charset_collate};";
+
+	dbDelta( $sql );
+
+}
+
+/**
  * CB Core Install Transactions
  * 
  * Installs our transactions table on the database.
@@ -300,6 +332,7 @@ function cb_core_install( $active_components = array() ) {
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	
 	cb_core_prepare_install();
+	cb_core_install_spot_bonuses();
 	cb_core_install_events();
 	cb_core_install_contests();
 	cb_core_install_transactions();

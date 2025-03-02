@@ -119,6 +119,8 @@ function cb_core_get_api_key( $secret = '' ) {
 	if ( empty( $secret ) || ! $secret ) {
 		return;
 	}
+	
+	
 
 	$client = new SecretsManagerClient([
 		'version' => '2017-10-17',
@@ -126,10 +128,15 @@ function cb_core_get_api_key( $secret = '' ) {
 	]);
 
 	try {
+		
 		$result = $client->getSecretValue(['SecretId' => $secret]);
+		
 	} catch (AwsException $e) {
+		
 		return $e->getAwsErrorMessage();
 	}
+	
+	
 
 	// Depending on whether the secret is a string or binary, one of these fields will be populated.
 	if (isset($result['SecretString'])) {
@@ -224,12 +231,16 @@ function cb_core_validate_api_key( $safe_name = '' ) {
 	if ( empty( $safe_name ) ) {
 		return false;
 	}
+	
+	
 
 	$valid_safe_name = get_option( 'cb_core_api_key_safe_name' );
 
 	if ( $safe_name !== $valid_safe_name ) {
 		return false;
 	}
+	
+	
 
 	$valid_api_key = cb_core_get_api_key( $valid_safe_name );
 	$testing_api_key = cb_core_get_api_key( $safe_name );

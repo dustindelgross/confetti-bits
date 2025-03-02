@@ -21,56 +21,6 @@ jQuery( document ).ready( function( $ ) {
 	let activeTab = window.location.hash;
 	let cbTotalTransactions = null;
 
-	let formMessage = new function () {
-		this.element	= $('.cb-feedback-message');
-		this.p			= $('<p class="cb-feedback-message">');
-		this.br			= $('<br />');
-		this.container	= $('.cb-feedback');
-		this.position = this.element.offset().top;
-
-		this.style = {
-			error:		'#ffad87',
-			info:		'#007692',
-			warning:	'#dbb778',
-			success:	'#62cc8f'
-		};
-
-		this.container.children('.cb-close').on( 'click', () => {
-			this.container.slideUp( 400 );
-			this.element.text('');
-		});
-
-		this.setMessage = ( text, type ) => {
-			if ( typeof(text) === 'object' ) {
-				this.element.remove();
-				text.forEach((t) => {
-					let p = this.p;
-					p.css({
-						'color': this.style[t.type]
-					}).text(t.text);
-					this.container.append(p);
-				});
-			} else if ( typeof(text) === 'string' ) {
-				this.element.remove();
-				let p = this.p;
-				p.css({
-					'color': this.style[text.type]
-				}).text(text.text);
-				this.container.append(p);
-			}
-
-			this.element.css('color', this.style[type] );
-			this.container.css({ 
-				display: 'flex',
-				border: '1px solid #dbb778',
-				borderRadius: '10px',
-				margin: '1rem auto'
-			});
-
-			window.scrollTo({top: this.element.offset().top - 135, behavior: 'smooth'})
-		}
-
-	};
 
 	if ( activeTab ) {
 
@@ -120,21 +70,7 @@ jQuery( document ).ready( function( $ ) {
 			return false;
 		});
 	});
-/*
-	requestSubmitConfirm.submit( function() {
 
-		if ( confirm("Are you sure you want to spend " + sendToAmount.value + " Confetti Bits? They will be deducted from your total balance and will no longer count toward future purchases.") ) {
-
-			return true;
-
-		} else {
-
-			return false;
-
-		}
-
-	});	
-*/
 	submitMessage.ready().fadeIn();
 
 	function unReadNotifications () {
@@ -274,24 +210,26 @@ jQuery( document ).ready( function( $ ) {
 			return;
 		}
 
-		let retval = await $.get({
+		let retval = await $.ajax({
 			url: cb_core.get_transactions,
+			method: 'GET',
 			data: {
 				user_id: userID,
-				count: true
+				count: true,
+				api_key: cb_core.api_key
 			},
-			success: (x) => {
-				cbTotalTransactions = parseInt(x.text[0].total_count);
+			success: ({text,type}) => {
+				cbTotalTransactions = parseInt(text[0].total_count);
 				return cbTotalTransactions;
 			},
-			error: (e) => {
-				console.log(e)
-			}
+			error: err => console.error(err)
 		});
 
 		return retval;
 
 	};
+
+
 
 	/**
 	 * CB Create Transaction Pagination Digits
@@ -440,7 +378,7 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	function cbCreateEmptyTransactionNotice(response) {
 
-		transactionsTable.children().remove();
+		transactionsTable.empty();
 
 		let $emptyNotice = $(`<div class='cb-participation-admin-empty-notice'><p>No results found.</p></div>`);
 		transactionsTable.append($emptyNotice);
@@ -457,7 +395,7 @@ jQuery( document ).ready( function( $ ) {
 		let headerRow = $('<tr>');
 		headers.forEach((header) => {
 			let item;
-			item = $(`<th id="cb_participation_admin_transactions_table_header_${header}">${header}</th>`);
+			item = $(`<th id="cb_transactions_table_header_${header}">${header}</th>`);
 			item.css({
 				textTransform: 'capitalize',
 				fontWeight: 'lighter'
@@ -480,7 +418,6 @@ jQuery( document ).ready( function( $ ) {
 	async function cbCreateTransactionEntry(transaction) {
 
 		let sender = await cbGetUserData(transaction.sender_id);
-
 		let recipient = await cbGetUserData(transaction.recipient_id);
 		let senderName = sender.userDisplayName;
 		let recipientName = recipient.userDisplayName;
@@ -545,32 +482,34 @@ jQuery( document ).ready( function( $ ) {
 	async function refreshTransactions(page, userID) {
 		
 		let getData = {
-				recipient_id: userID,
-				sender_id: userID,
-				or: true,
-				page: page,
-				per_page: 15,
+			recipient_id: userID,
+			sender_id: userID,
+			or: true,
+			page: page,
+			per_page: 15,
+			api_key: cb_core.api_key
 		};
 
-		await $.get({
+		
+		await $.ajax({
 			url: cb_core.get_transactions,
+			method: 'GET',
 			data: getData,
-			success: async (data) => {
+			success: async ({text,type}) => {
 				cbTransactionsPagination(page, userID);
-				if ( data.text !== false ) {
-					transactionsTable.children().remove();
-					formatTransactionsHeaderRow();
-					for (let r of data.text) {
+				if ( text !== false ) {
+					transactionsTable.empty();
+					
+					for (let r of text) {
 						await cbCreateTransactionEntry(r);
 					}
 				} else {
-					cbCreateEmptyTransactionNotice(data);
+					cbCreateEmptyTransactionNotice();
 				}
 			},
-			error: (e) => {
-				console.log(e)
-			}
+			error: err => console.error(err)
 		});
+		
 	}
 
 	/**
@@ -610,10 +549,75 @@ jQuery( document ).ready( function( $ ) {
 
 	});
 
-	refreshTransactions(1, userID );
 	formatTransactionsHeaderRow();
-	
-	$(document).on('change', '.cb-file-input', function (e) {
-	});
+	refreshTransactions(1, userID );
 
 });
+
+/*
+	let formMessage = new function () {
+		this.element	= $('.cb-feedback-message');
+		this.p			= $('<p class="cb-feedback-message">');
+		this.br			= $('<br />');
+		this.container	= $('.cb-feedback');
+		this.position = this.element.offset().top;
+
+		this.style = {
+			error:		'#ffad87',
+			info:		'#007692',
+			warning:	'#dbb778',
+			success:	'#62cc8f'
+		};
+
+		this.container.children('.cb-close').on( 'click', () => {
+			this.container.slideUp( 400 );
+			this.element.text('');
+		});
+
+		this.setMessage = ( text, type ) => {
+			if ( typeof(text) === 'object' ) {
+				this.element.remove();
+				text.forEach((t) => {
+					let p = this.p;
+					p.css({
+						'color': this.style[t.type]
+					}).text(t.text);
+					this.container.append(p);
+				});
+			} else if ( typeof(text) === 'string' ) {
+				this.element.remove();
+				let p = this.p;
+				p.css({
+					'color': this.style[text.type]
+				}).text(text.text);
+				this.container.append(p);
+			}
+
+			this.element.css('color', this.style[type] );
+			this.container.css({ 
+				display: 'flex',
+				border: '1px solid #dbb778',
+				borderRadius: '10px',
+				margin: '1rem auto'
+			});
+
+			window.scrollTo({top: this.element.offset().top - 135, behavior: 'smooth'})
+		}
+
+	};*/
+
+	/*
+	requestSubmitConfirm.submit( function() {
+
+		if ( confirm("Are you sure you want to spend " + sendToAmount.value + " Confetti Bits? They will be deducted from your total balance and will no longer count toward future purchases.") ) {
+
+			return true;
+
+		} else {
+
+			return false;
+
+		}
+
+	});	
+*/

@@ -53,7 +53,7 @@ function cb_requests_new_request(array $args)
 		'admin_id' => 0,
 		'date_created' => cb_core_current_date(),
 		'date_modified' => cb_core_current_date(),
-		'component_name' => 'confetti_bits',
+		'component_name' => 'requests',
 		'component_action' => 'cb_requests_new_request',
 		'status' => 'new',
 		'request_item_id' => 0,
@@ -218,15 +218,20 @@ function cb_requests_get_item_name( $request_item_id = 0 ) {
  * 
  * @param array $args { 
  *     An optional array of arguments.
- * 
- *     @type int $page The page of request items.
- *     @type int $per_page How many request items should
- * 						   appear on each page.
+ * 		
+ * 	   @type string|array $select	A comma-separated list or 
+ * 									array of columns to get.
+ *     @type int $page 				The page of request items.
+ *     @type int $per_page 			How many request items should
+ * 						   			appear on each page.
  * }
  * 
- * @return array A 2D array of request items, where each
- * 				 request item is itself an associative
- * 				 array.
+ * @return array A 2D array of request items, structured like so: { 
+ * 		[ 
+ * 			[ 'id' => 1, 'item_name' => 'Item 1' ],
+ * 			[ 'id' => 2, 'item_name' => 'Item 2' ],
+ * 		]
+ * }
  * 
  * @package ConfettiBits\Requests
  * @since 2.3.0
@@ -447,7 +452,7 @@ function cb_requests_new_notifications($data = [])
 			'user_id' => $item_id,
 			'item_id' => $item_id,
 			'secondary_item_id' => $secondary_item_id,
-			'component_name' => 'confetti_bits',
+			'component_name' => 'requests',
 			'component_action' => 'cb_requests_new',
 			'date_notified' => cb_core_current_date(),
 			'is_new' => 1,

@@ -223,6 +223,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			require_once $this->plugin_dir . 'cb-core/cb-core-secrets-manager.php';
 			require_once $this->plugin_dir . 'cb-templates/cb-templates-forms.php';
 			require_once $this->plugin_dir . 'cb-templates/cb-templates-functions.php';
+			require_once $this->plugin_dir . 'cb-ajax/cb-ajax-functions.php';
 
 
 		}
@@ -243,6 +244,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			$this->table_prefix = $wpdb->prefix;
 			$this->page = trailingslashit(site_url()) . "confetti-bits";
 			$this->roles = new stdClass;
+			$this->volunteer_amount = get_option('cb_core_volunteer_amount');
 
 		}
 
@@ -261,7 +263,7 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 			}
 
 
-			$components = array (
+			$components = [
 				'core',
 				'ajax',
 				'notifications',
@@ -269,7 +271,8 @@ if ( ! class_exists( 'Confetti_Bits' ) ) {
 				'transactions',
 				'requests',
 				'participation',
-			);
+				'settings'
+			];
 
 			$irregular_map = [
 				'CB_Component' => 'core',

@@ -357,7 +357,7 @@ class CB_Requests_Request
 	 * @param array $where_format See {@link wpdb::insert()}.
 	 * @return int|false The number of rows updated, or false on error.
 	 */
-	protected static function _update($data = array(), $where = array(), $data_format = array(), $where_format = array())
+	protected static function _update($data = [], $where = [], $data_format = [], $where_format = [])
 	{
 		global $wpdb;
 

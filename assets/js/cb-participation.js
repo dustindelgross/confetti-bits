@@ -389,8 +389,8 @@ Could not find any participation entries of specified type.
 			status: status,
 			applicant_id: cb_participation.user_id,
 			page: page,
-			per_page: 6,
-			orderby: {column: "id", order: "DESC"},
+			per_page: 10,
+			orderby: {column: "date_modified", order: "DESC"},
 		}
 
 		if ( '' !== eventType ) {
@@ -404,7 +404,7 @@ Could not find any participation entries of specified type.
 				await cbPagination(page);
 				if ( data.text !== false ) {
 					let entries = JSON.parse(data.text);
-					entryTable.children().remove();
+					entryTable.empty();
 					formatHeaderRow();
 					entries.sort( (a,b) => b.id - a.id );
 					for (let r of entries) {
@@ -471,9 +471,9 @@ Could not find any participation entries of specified type.
 	formatHeaderRow();
 	refreshTable(1);
 
-	const participationEventSelector	= $('.cb-form-selector[name=cb_participation_event_type]');
-	const participationEventNote		= $('.cb-form-textbox[name=cb_participation_event_note]');
-	const participationEventDate		= $('.cb-form-datepicker[name=cb_participation_event_date]');
+	const participationEventSelector	= $('select[name=cb_participation_event_type]');
+	const participationEventNote		= $('input[name=cb_participation_event_note]');
+	const participationEventDate		= $('input[name=cb_participation_event_date]');
 	const eventNoteContainer			= participationEventNote.parents('ul.cb-form-page-section')[0];
 	const participationUploadForm		= $('#cb-participation-upload-form');
 	let applicantId					= $('input[name=cb_applicant_id]');
@@ -582,13 +582,15 @@ Could not find any participation entries of specified type.
 		let prev	= now.getUTCMonth(now.setUTCMonth( month - 1 ));
 		let prev2	= now.getUTCMonth(now.setUTCMonth( month - 2) );
 		let inputMonth	= new Date( participationEventDate.val() ).getUTCMonth();
+		
+		/* else if ( prev2 > inputMonth ){
+			formMessage.setMessage( 'Cannot submit participation from outside of up to 2 months prior to event.', 'error' );
+		} */
 
 		if ( ( undefined === typeof( participationEventSelector.val() ) || 
 			  '' === participationEventSelector.val() ) && 
 			( '' === participationEventNote.val() ) ) {
 			formMessage.setMessage( 'Empty or invalid event type.', 'error' );
-		} else if ( prev2 > inputMonth ){
-			formMessage.setMessage( 'Cannot submit participation from outside of up to 2 months prior to event.', 'error' );
 		} else if ( inputMonth > now ) {
 			formMessage.setMessage( 'Cannot submit participation before event occurs.', 'error' );
 		} else {

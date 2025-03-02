@@ -119,10 +119,11 @@ class CB_Events_Contest
 		$data = [
 			'event_id' => $this->event_id,
 			'placement' => $this->placement,
-			'amount' => $this->amount
+			'amount' => $this->amount,
+			'recipient_id' => $this->recipient_id
 		];
 
-		$data_format = ['%d', '%d', '%d'];
+		$data_format = ['%d', '%d', '%d', '%d'];
 		$result = self::_insert($data, $data_format);
 
 		if (!empty($result)) {
@@ -164,9 +165,8 @@ class CB_Events_Contest
 	protected static function _insert($data = [], $data_format = [])
 	{
 		global $wpdb;
-		$cb = Confetti_Bits();
 		return $wpdb->insert(
-			"{$wpdb->prefix}confetti_bits_contests",
+			Confetti_Bits()->events->table_name_contests,
 			$data,
 			$data_format
 		);
@@ -221,7 +221,7 @@ class CB_Events_Contest
 		global $wpdb;
 
 		$retval = $wpdb->update(
-			"{$wpdb->prefix}confetti_bits_contests",
+			Confetti_Bits()->events->table_name_contests,
 			$data,
 			$where,
 			$data_format,
@@ -269,10 +269,9 @@ class CB_Events_Contest
 	{
 
 		global $wpdb;
-		$cb = Confetti_Bits();
 
 		return $wpdb->delete(
-			"{$wpdb->prefix}confetti_bits_contests",
+			Confetti_Bits()->events->table_name_contests,
 			$where,
 			$where_format
 		);
@@ -569,7 +568,11 @@ class CB_Events_Contest
 		}
 
 		if (!empty($where_conditions)) {
-			$where = $args['or'] ? 'WHERE ' . implode(' OR ', $where_conditions) : 'WHERE ' . implode(' AND ', $where_conditions);
+			$conditions = '';
+			if ( isset( $args['or'] ) ) {
+				$conditions = $args['or'] ? implode(' OR ', $where_conditions ) : implode( ' AND ', $where_conditions ); 
+			}
+			$where = "WHERE {$conditions}";
 		}
 
 		return $where;

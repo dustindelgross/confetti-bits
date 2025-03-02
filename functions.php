@@ -79,126 +79,16 @@ function cb_core_notifications_init() {
 add_action( 'cb_init', 'cb_core_notifications_init', 10 );
 
 /**
- * Enqueues all of our scripts in a clean fashion.
+ * Returns form markup that allows privileged users to manually
+ * input the birthday and anniversary dates for other users.
  * 
- * From each according to their capability, to each
- * according to their need.
- * Scripts are enqueued and localized using the following
- * nested array structure: [ 
- *     $unique_name_for_script => [ 
- *         $name_of_api_component_to_use => [ $http_method1, $http_method2, ... ],
- *         'dependencies' => [ $dependency1, $dependency2, ... ]
- *     ]
- * ]
- * This structure is then picked apart to dynamically 
- * enqueue and localize scripts. This gives us granular
- * control over who gets access to what API endpoints,
- * and can perform which actions, based on capability.
- * 
- * The scripts will be enqueued as: "cb_{$unique_name_for_script}", 
- * and will load a corresponding file, with the underscores
- * replaced with dashes, like so: "cb-{$unique-name-for-script}.js".
- * This will also load any dependencies found in the
- * 'dependencies' array.
- * 
- * Scripts will then be localized using the same
- * "cb_{$unique_name_for_script}" identifier, which will 
- * become the global name that is usable within the file.
- * All API endpoints are localized as: 
- * "{$endpoint}_{$name_of_api_component}". 
- * 
- * So, for example:
- *     - "cb_participation.get_participation" will return the 
- *       API endpoint for getting participation entries ONLY when used
- * 		 within the cb-participation.js file.
- *     - "cb_core_admin.new_transactions" will return the API endpoint 
- *       for creating a new transaction ONLY when used within the 
- * 		 cb-core-admin.js file.
- * 
- * To access the API key, use "{$unique_name_for_script}.api_key"
- * in the {$unique-name-for-script}.js file.
- * 
+ * @param object WP_User The current instance of WP_User
  * @package ConfettiBits\Core
- * @since 2.3.0
- *//*
-function cb_core_enqueue_scripts() {
-
-	if ( function_exists( 'cb_is_confetti_bits_component' ) ) {
-		if ( cb_is_confetti_bits_component() ) {
-
-			$cache_bust = 'v1.1';
-			$user_id = intval(get_current_user_id());
-			$api_key_safe_name = get_option( 'cb_core_api_key_safe_name' );
-
-			$components = [
-				'participation' => [ 
-					'participation' => ['get', 'new', 'update'],
-					'dependencies' => ['jquery'],
-				],
-			];
-
-			if ( cb_is_user_admin() ) {
-				$components['core_admin'] = [ 
-					'participation' => ['get', 'update'], 
-					'transactions' => ['get'],
-					'dependencies' => ['jquery'],
-				];
-			}
-
-			if ( cb_is_user_participation_admin() ) {
-				$components['participation_admin'] = [ 
-					'participation' => ['get', 'update'], 
-					'transactions' => ['get'],
-					'dependencies' => ['jquery'],
-				];
-			}
-
-			if ( cb_is_user_requests_admin() ) {
-
-			}
-
-			if ( cb_is_user_site_admin() ) {
-
-			}
-
-			foreach( $components as $component => $params ) {
-
-				$localize_params = [];
-				$with_dashes = str_replace( '_', '-', $component );
-
-				wp_enqueue_script( 
-					"cb_{$component}", 
-					CONFETTI_BITS_PLUGIN_URL . "assets/js/cb-{$with_dashes}.js", 
-					$params['dependencies'],
-					$cache_bust,
-					true
-				);
-
-				unset( $params['dependencies'] );
-
-				foreach ( $params as $api => $endpoints ) {
-					$api_with_dashes = str_replace( '_', '-', $api );
-					foreach ( $endpoints as $endpoint ) {
-						$localize_params["{$endpoint}_{$api}"] = home_url("wp-json/cb-ajax/v1/{$api_with_dashes}/{$endpoint}");
-					}
-
-					$localize_params['api_key'] = $api_key_safe_name;
-					$localize_params['user_id'] = $user_id;
-
-				}
-
-				wp_localize_script( "cb_{$component}", "cb_{$component}", $localize_params );
-
-			}
-		}
-	}
-}
-//add_action( 'cb_enqueue_scripts', 'cb_core_enqueue_scripts'	);
-*/
-
+ * @since 3.0.0
+ */
 function cb_user_birthday_anniversary_fields( $user ) {
 	if( !current_user_can('add_users') ) {
-		return false;
+		return;
 	}
 
 ?>
@@ -284,12 +174,12 @@ function cb_core_set_reset_date_globals() {
 	$date = new DateTimeImmutable($reset_date);
 	$today = new DateTimeImmutable();
 
-	if ( $today > $date->modify('+1 month') ) {
+	if ( $today > $date ) {
 		$date = cb_core_auto_reset();
 	}
 
 	$cb->earn_start = $date->modify('-1 year')->format('Y-m-d H:i:s');
-	$cb->earn_end = $reset_date;
+	$cb->earn_end = $date->format('Y-m-d H:i:s');
 	$cb->spend_start = $date->modify('-1 year + 1 month')->format('Y-m-d H:i:s');
 	$cb->spend_end = $date->modify('+ 1 month')->format('Y-m-d H:i:s');
 	$cb->prev_earn_start = $date->modify('-2 years')->format('Y-m-d H:i:s');
@@ -297,6 +187,30 @@ function cb_core_set_reset_date_globals() {
 
 }
 add_action( 'cb_setup_globals', 'cb_core_set_reset_date_globals' );
+
+
+/**
+ * Sets the amount for spot bonuses in our core class for easy access.
+ * 
+ * Make sure to set this value in the DB via admin settings, or else 
+ * we may never experience the bliss of automation.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_set_spot_bonus_global() {
+
+	$cb = Confetti_Bits();
+	$spot_bonus_amount = get_option('cb_core_spot_bonus_amount');
+
+	if ( !$spot_bonus_amount ) {
+		return;
+	}
+
+	$cb->spot_bonus_amount = intval($spot_bonus_amount);
+
+}
+add_action( 'cb_setup_globals', 'cb_core_set_spot_bonus_global' );
 
 /**
  * Automatically increments the reset date by 1 year.
@@ -337,7 +251,7 @@ function cb_core_auto_reset() {
  * @package ConfettiBits\Core
  * @since 2.3.0
  */
-function cb_core_current_date( $offset = true, $format = "Y-m-d H:i:s" ) {
+function cb_core_current_date( $offset = false, $format = "Y-m-d H:i:s" ) {
 
 	$tz = $offset ? wp_timezone() : null;
 	$date = new DateTimeImmutable("now", $tz);
@@ -622,7 +536,7 @@ function cb_core_get_doomsday_clock() {
 
 	$cb = Confetti_Bits();
 	$current_date = new DateTimeImmutable();
-	$reset_date = DateTimeImmutable::createFromFormat('Y-m-d', $cb->earn_end);
+	$reset_date = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $cb->earn_end);
 	$interval = $current_date->diff($reset_date);
 
 	return $interval->days;
@@ -691,7 +605,7 @@ add_action( 'phpmailer_init', 'cb_core_smtp_init' );
  */
 function cb_core_admin_menu() {
 	add_options_page(
-		'Confetti Bits Settings',    // Page title
+		'Confetti Bits',    // Page title
 		'Confetti Bits',    // Menu title
 		'manage_options',       // Capability required to access the page
 		'cb-core-admin-settings',    // Menu slug
@@ -743,10 +657,23 @@ function cb_core_admin_page() {
 }
 
 function cb_core_admin_settings_init() {
+
 	// Register the settings
 	register_setting(
 		'cb_core_admin_settings', // Option group (used in settings_fields)
+		'cb_reset_date',       // Option name (used in the database)
+		'cb_core_admin_settings_sanitize'// Sanitization callback function
+	);
+
+	register_setting(
+		'cb_core_admin_settings', // Option group (used in settings_fields)
 		'cb_core_volunteer_amount',       // Option name (used in the database)
+		'cb_core_admin_settings_sanitize'// Sanitization callback function
+	);
+
+	register_setting(
+		'cb_core_admin_settings', // Option group (used in settings_fields)
+		'cb_core_spot_bonus_amount',       // Option name (used in the database)
 		'cb_core_admin_settings_sanitize'// Sanitization callback function
 	);
 
@@ -759,12 +686,29 @@ function cb_core_admin_settings_init() {
 	);
 
 	add_settings_field(
+		'cb_reset_date',
+		'Cycle Reset Date',
+		'cb_core_admin_reset_date_setting',
+		'cb-core-admin-settings',
+		'cb_core_admin_settings_section'
+	);
+
+	add_settings_field(
 		'cb_core_volunteer_amount',
 		'Amount for Volunteer Hours',
 		'cb_core_admin_volunteer_setting',
 		'cb-core-admin-settings',
 		'cb_core_admin_settings_section'
 	);
+
+	add_settings_field(
+		'cb_core_spot_bonus_amount',
+		'Amount for Spot Bonuses',
+		'cb_core_admin_spot_bonus_setting',
+		'cb-core-admin-settings',
+		'cb_core_admin_settings_section'
+	);
+
 }
 add_action('admin_init', 'cb_core_admin_settings_init');
 
@@ -805,6 +749,20 @@ function cb_core_admin_settings_section_callback() {
 }
 
 /**
+ * Outputs the setting field for the reset date.
+ * 
+ * @package Core
+ * @since 3.0.0
+ */
+function cb_core_admin_reset_date_setting() {
+
+	$option = get_option('cb_reset_date');
+	$value = !empty($option) ? date('Y-m-d', strtotime($option) ) : '';
+	echo '<input type="date" name="cb_reset_date" value="' . esc_attr($value) . '" />';
+
+}
+
+/**
  * Outputs the setting field for the volunteer amount per hour.
  * 
  * @package ConfettiBits\Core
@@ -815,4 +773,209 @@ function cb_core_admin_volunteer_setting() {
 	$option = get_option('cb_core_volunteer_amount');
 	$value = isset($option) ? intval($option) : '';
 	echo '<input type="text" name="cb_core_volunteer_amount" value="' . esc_attr($value) . '" />';
+}
+
+/**
+ * Outputs the setting field for the volunteer amount per hour.
+ * 
+ * @package ConfettiBits\Core
+ * @subpackage Templates
+ * @since 3.0.0
+ */
+function cb_core_admin_spot_bonus_setting() {
+
+	$option = get_option('cb_core_spot_bonus_amount');
+	$value = isset($option) ? intval($option) : '';
+	echo '<input type="text" name="cb_core_spot_bonus_amount" value="' . esc_attr($value) . '" />';
+}
+
+/**
+ * Replaces our default script tags with modules.
+ */
+function cb_core_convert_scripts_to_modules($tag, $handle, $src) {
+
+	$modules = ['cb_core', 'cb_staffing_admin', 'cb_events_admin', 'cb_events', 'cb_core_modules', 'cb_volunteers', 'cb_settings'];
+
+	if ( in_array( $handle, $modules ) ) {
+		$src = esc_url($src);
+		$tag = "<script type='module' src='{$src}' defer></script>";
+	}
+
+	return $tag;
+}
+add_filter('script_loader_tag', 'cb_core_convert_scripts_to_modules', 10, 3);
+
+
+/**
+ * Deletes all Confetti Bits data associated with deleted user.
+ * 
+ * @param int $id The ID of the user that's being deleted.
+ * @param int $reassign An optional user ID to reassign items to.
+ * @param WP_User $user The instance of WP_User associated with the deleted user.
+ * 
+ * @package ConfettiBits\Core
+ * @since 3.0.0
+ */
+function cb_core_delete_user_data( $id, $reassign, $user ) {
+
+	global $wpdb;
+	$cb = Confetti_Bits();
+
+	if ( ! is_numeric( $id ) ) {
+		return false;
+	}
+
+	$id   = (int) $id;
+	$user = new WP_User( $id );
+
+	if ( ! $user->exists() ) {
+		return false;
+	}
+
+	if ( null !== $reassign ) {
+		$reassign = (int) $reassign;
+	}
+
+	if ( null === $reassign ) {
+		$wpdb->delete($cb->participation->table_name, ['applicant_id' => $id ], ['%d']);
+		$wpdb->delete($cb->transactions->table_name, ['recipient_id' => $id ], ['%d']);
+		$wpdb->delete($cb->transactions->table_name, ['sender_id' => $id ], ['%d']);
+		$wpdb->delete($cb->requests->table_name, ['applicant_id' => $id ], ['%d']);
+		$wpdb->delete($cb->requests->table_name, ['admin_id' => $id ], ['%d']);
+	}
+
+}
+add_action('delete_user', 'cb_core_delete_user_data', 10, 3);
+
+function cb_core_do_spot_bonuses() {
+
+	$spot_bonus = new CB_Transactions_Spot_Bonus();
+	$transaction = new CB_Transactions_Transaction();
+	$date = new DateTime('now', new DateTimeZone('UTC'));
+	$recipient_list = [];
+
+	$spot_bonus_get_args = [
+		'select' => '*',
+		'where' => [
+			'date_query' => [
+				'column' => 'spot_bonus_date',
+				'before' => [
+					'day' => $date->format('d'),
+					'month' => $date->format('m'),
+					'year' => $date->format('Y'),
+				],
+				'after' => [
+					'day' => $date->format('d'),
+					'month' => $date->format('m'),
+					'year' => $date->format('Y') - 1,
+				],
+				'inclusive' => true,
+			],
+			'transaction_id' => null,
+		]
+	];
+
+	$bonuses_for_today = $spot_bonus->get_spot_bonuses($spot_bonus_get_args);
+
+	if ( ! empty( $bonuses_for_today ) && is_array( $bonuses_for_today ) ) {
+
+		foreach ( $bonuses_for_today as $bonus ) {
+
+			if ( !is_null( $bonus['transaction_id'] ) ) {
+				continue;
+			}
+
+
+			$recipient_id = intval($bonus['recipient_id']);
+			$sender_id = intval($bonus['sender_id']);
+			array_push($recipient_list, cb_core_get_user_display_name($recipient_id));
+			$bonus_date = new DateTime($bonus['spot_bonus_date'], new DateTimeZone('UTC'));
+			$transaction->item_id = $sender_id;
+			$transaction->secondary_item_id = $recipient_id;
+			$transaction->sender_id = $sender_id;
+			$transaction->recipient_id = $recipient_id;
+			$transaction->amount = get_option('cb_core_spot_bonus_amount');
+			$transaction->log_entry = "Spot Bonus winner {$bonus_date->format('m/d/Y')}";
+			$transaction->date_sent = $date->format('Y-m-d H:i:s');
+			$transaction->component_name = "transactions";
+			$transaction->component_action = "cb_transactions_spot_bonus";
+
+			$save = $transaction->send_bits();
+
+			$spot_bonus->update(['transaction_id' => $save], ['id' => $bonus['id']]);
+		}
+
+	}
+
+	$message = !empty($recipient_list) ? 
+		'Here\'s a list of people who got their bits: <ul>' . implode('', array_map(cb_core_listify($recipient_list) ) ) . '</ul>' 
+		: "<p>We didn't find anyone waiting on their bits.</p> <p><b>Hooray!</b></p>";
+
+	wp_mail('dustin@celebrationtitlegroup.com', 'Cron Job Report', "<h4>Spot bonuses were sent out!</h4> {$message}", ['Content-Type: text/html; charset=UTF-8']);
+
+}
+add_action('cb_core_run_spot_bonuses', 'cb_core_do_spot_bonuses');
+
+function cb_core_listify( $string ) {
+	return "<li>{$string}</li>";
+}
+
+function cb_core_schedule_events() {
+
+	if (! wp_next_scheduled ( 'cb_core_run_spot_bonuses' )) {
+		wp_schedule_event(time(), 'daily', 'cb_core_run_spot_bonuses');
+	}
+
+}
+add_action('cb_actions', 'cb_core_schedule_events');
+
+add_filter( 'cron_schedules', function ( $schedules ) {
+	$schedules['per_minute'] = array(
+		'interval' => 60,
+		'display' => __( 'One Minute' )
+	);
+	return $schedules;
+} );
+
+function cb_core_utc_to_local( $date_string = '' ) {
+
+	$site_tz = wp_timezone();
+	$date = new DateTime($date_string, new DateTimeZone('UTC'));
+	$date->setTimezone($site_tz);
+
+	return $date;
+}
+
+/**
+ * Adds an ordinal suffix to a given integer.
+ * 
+ * @param int|string $int An integer.
+ * 
+ * @return string The same integer, but with a little spice.
+ * 
+ * @package Core
+ * @since 3.0.0
+ */
+function cb_core_ordinal_suffix( $int ) {
+
+	$int = intval($int);
+
+	if ($int >= 11 && $int <= 13) {
+		return "{$int}th";
+	}
+
+	if ( $int % 10 === 1)  {
+		return "{$int}st";
+	}
+
+	if ( $int % 10 === 2 )  {
+		return "{$int}nd";
+	}
+
+	if ( $int % 10 === 3 )  {
+		return "{$int}rd";
+	}
+
+	return "{$int}th";
+
 }

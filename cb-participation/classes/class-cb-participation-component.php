@@ -41,6 +41,7 @@ class CB_Participation_Component extends CB_Component {
 		$includes = array(
 			'functions',
 			'template',
+			'notifications',
 		);
 
 		parent::includes($includes);
@@ -56,6 +57,7 @@ class CB_Participation_Component extends CB_Component {
 	public function register_api_endpoints( $components = [] ) {
 
 		$components = ['participation'];
+		
 
 		parent::register_api_endpoints($components);
 	}

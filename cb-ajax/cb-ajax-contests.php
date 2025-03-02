@@ -22,7 +22,10 @@ function cb_ajax_new_contests()
 		return;
 	}
 
+
 	$feedback = [ 'text' => "", 'type' => 'error' ];
+	// We'll set this flag later if something goes wrong in the actual data manipulation part.
+	$error = false;
 
 	if ( !isset( $_POST['contests'] ) ) {
 		$feedback['text'] = "Missing or invalid contest data.";
@@ -66,6 +69,10 @@ function cb_ajax_new_contests()
 	$contest_obj = new CB_Events_Contest();
 	$feedback['text'] = [];
 
+	// We do a clean sweep of existing placements.
+	// Maybe it ain't pretty, but you can't say it doesn't simplify things.
+	$contest_obj->delete(['event_id' => $event_id ]);
+
 	foreach ( $_POST['contests'] as $contest ) {
 
 		$response = ['type' => 'error', 'text' => ''];
@@ -85,36 +92,11 @@ function cb_ajax_new_contests()
 		$contest_obj->placement = intval($contest['placement']);
 		$contest_obj->amount = intval($contest['amount']);
 
-		$existing_placement_args = [
-			'where' => [
-				'event_id' => $event_id,
-				'placement' => $contest_obj->placement
-			]
-		];
-
-		$existing_placements = $contest_obj->get_contests($existing_placement_args);
-
-		if ( sizeof( $existing_placements ) > 0 ) {
-
-			$updated = $contest_obj->update(
-				['amount' => $contest_obj->amount],
-				$existing_placement_args['where']
-			);
-
-			if ( $updated ) {
-				$response['text'] = 'Contest placement already exists. Successfully updated placement amount.';
-				$response['type'] = 'success';
-				array_push($feedback['text'], $response);
-			} else {
-				$response['text'] = 'Placement was not updated.';
-				array_push($feedback['text'], $response);
-			}
-			continue;
-		}
-
 		$save = $contest_obj->save();
 
 		if ( is_int($save) === false ) {
+			// Set the flag so we can give an accurate response for the overall .'~*experience*~'.
+			$error = true;
 			array_push( $feedback['text'], ['type' => 'error', 'response' => 'Contest item failed to save to the database.']);
 			continue;
 		} else {
@@ -122,13 +104,27 @@ function cb_ajax_new_contests()
 		}
 	}
 
+	$feedback['type'] = $error ? 'error' : 'success';
 	echo json_encode($feedback);
 	die();
 
 }
 
+/*
+	$input_data_from_admin_user = [
+		['placement' => 1, 'amount' => 20],
+		['placement' => 2, 'amount' => 15],
+		['placement' => 5, 'amount' => 5]
+	];
+	*/
+
 /**
  * Updates contest objects for a given event.
+ * 
+ * I'm a goofy goober. I ended up making this a lot more 
+ * dynamic so it can handle a lot of different user interactions.
+ * 
+ * Sit back and enjoy, friend.
  * 
  * It's important to note that we aren't necessarily always modifying a 
  * singular contest object within the database. Here's a breakdown of 
@@ -148,6 +144,10 @@ function cb_ajax_new_contests()
  * 		c. If the placement doesn't exist, we'll create one.
  * 
  * Should be fairly straightforward, but I've been wrong so many times before.
+ * ~~We might just run everything through the new_contests endpoint~~
+ * ~~We're almost definitely going to be running updates through the new_contests endpoint.~~
+ * 
+ * We are absolutely **not** running updates through the new_contests endpoint.
  * 
  * @package ConfettiBits\Events
  * @subpackage Contests
@@ -175,6 +175,33 @@ function cb_ajax_update_contests() {
 		die();
 	}
 
+	if ( !empty( $_PATCH['id'] ) ) {
+
+		$contest_id = intval($_PATCH['id']);
+
+		if ( empty($_PATCH['recipient_id']) ) {
+			$feedback['text'] = "Failed to update contest entry. Missing recipient ID";
+			echo json_encode($feedback);
+			die();
+		} else {
+			$recipient_id = intval($_PATCH['recipient_id']);
+		}
+
+		$contest_obj = new CB_Events_Contest();
+		$update = $contest_obj->update(['recipient_id' => $recipient_id], ['id' => $contest_id]);
+
+		if ( $update ) {
+			$feedback['text'] = "You should be all set. Congrats!";
+			$feedback['type'] = 'success';
+			echo json_encode($feedback);
+			die();
+		} else {
+			$feedback['text'] = "Failed to process contest update.";
+			echo json_encode($feedback);
+			die();
+		}
+	}
+
 	if ( empty( $_PATCH['event_id'] ) ) {
 		$feedback['text'] = "Missing or invalid event ID.";
 		echo json_encode($feedback);
@@ -195,72 +222,124 @@ function cb_ajax_update_contests() {
 
 	$event_id = intval($_PATCH['event_id']);
 	$events_obj = new CB_Events_Event($event_id);
-	
+
 	if ( !$events_obj->exists() ) {
 		$feedback['text'] = "Event object not found.";
 		echo json_encode($feedback);
 		die();
 	}
-	
-	$contest_obj = new CB_Events_Contests();
+
+	$contest_obj = new CB_Events_Contest();
+	$contest_obj->event_id = $event_id;
 	$feedback['text'] = [];
+	$existing_entries_map = [];
+	$input_entries_map = [];
+	$entries_to_update = [];
+	$entries_to_remove = [];
+	$entries_to_add = [];
 
-	foreach ( $_PATCH['contests'] as $contest ) {
+	$existing_entries_get_args = [
+		'where' => [
+			'event_id' => $event_id
+		]
+	];
+	$existing_entries = $contest_obj->get_contests($existing_entries_get_args);
 
-		$response = ['type' => 'error', 'text' => ''];
+	foreach ($existing_entries as $entry) {
+		$existing_entries_map[$entry['placement']] = $entry;
+	}
+	
+	foreach ( $_PATCH['contests'] as $entry ) {
+		$input_entries_map[$entry['placement']] = $entry;
+	}
 
-		if ( empty($contest['placement'] ) ) {
-			$response['text'] = 'Missing or invalid value for key "placement".';
-			array_push($feedback['text'], $response);
-			continue;
+	foreach ($_PATCH['contests'] as $contest) {
+		$placement = $contest['placement'];
+		$amount = $contest['amount'];
+
+		if (isset($existing_entries_map[$placement])) {
+			// Entry already exists, check if it needs an update
+			$existing_entry = $existing_entries_map[$placement];
+			if ($amount != $existing_entry['amount']) {
+				$existing_entry['amount'] = $amount;
+				$entries_to_update[] = ['update' => $existing_entry, 'where' => [
+					'event_id' => $event_id,
+					'placement' => $placement
+				]];
+			}
+		} else {
+			$entries_to_add[] = [
+				'placement' => $placement,
+				'amount' => $amount,
+			];
 		}
 		
-		if ( empty( $contest['amount'] ) ) {
-			$response['text'] = 'Missing or invalid value for key "amount".';
-			array_push( $feedback['text'], $response);
-			continue;
-		}
+	}
 
-		$contest_obj->event_id = $event_id;
-		$contest_obj->placement = intval($contest['placement']);
-		$contest_obj->amount = intval($contest['amount']);
-
-		$existing_placement_args = [
-			'where' => [
-				'event_id' => $event_id,
-				'placement' => $contest_obj->placement
-			]
-		];
-
-		$existing_placements = $contest_obj->get_contests($existing_placement_args);
-
-		if ( sizeof( $existing_placements ) > 0 ) {
-
-			$updated = $contest_obj->update(
-				['amount' => $contest_obj->amount],
-				$existing_placement_args['where']
-			);
-
-			if ( $updated ) {
-				$response['text'] = 'Contest placement already exists. Successfully updated placement amount.';
-				$response['type'] = 'success';
-				array_push($feedback['text'], $response);
-			} else {
-				$response['text'] = 'Placement was not updated.';
-				array_push($feedback['text'], $response);
-			}
-			continue;
-		}
-
-		$save = $contest_obj->save();
-
-		if ( is_int($save) === false ) {
-			array_push( $feedback['text'], ['type' => 'error', 'response' => 'Contest item failed to save to the database.']);
-			continue;
-		} else {
-			array_push( $feedback['text'], ['type' => 'success', 'response' => "Successfully saved new contest item with ID {$save}"]);
+	$response = ['type' => 'error', 'text' => ''];
+	
+	// Identify entries to remove
+	foreach ($existing_entries as $existing_entry) {
+		$placement = $existing_entry['placement'];
+		if (!isset($input_entries_map[$placement])) {
+			$entries_to_remove[] = $existing_entry;
 		}
 	}
+
+	foreach ( $entries_to_add as $add ) {
+
+		$pretty_placement = cb_core_ordinal_suffix($add['placement']);
+		$contest_obj->placement = intval($add['placement']);
+		$contest_obj->amount = intval($add['amount']);
+		$added = $contest_obj->save();
+
+		if ( is_int( $added ) ) {
+			$response['type'] = "success";
+			$response['text'] = "Successfully added {$pretty_placement} place.";
+		} else {
+			$response['type'] = "error";
+			$response['text'] = "Failed to add {$pretty_placement} place.";
+		}
+
+		$feedback['text'][] = $response;
+
+	}
+
+	foreach ( $entries_to_update as $update ) {
+
+		$pretty_placement = cb_core_ordinal_suffix($update['update']['placement']);
+		$updated = $contest_obj->update($update['update'], $update['where']);
+		if ( is_int( $updated ) ) {
+			$response['type'] = "success";
+			$response['text'] = "Successfully updated {$pretty_placement} place.";
+		} else {
+			$response['type'] = "error";
+			$response['text'] = "Failed to update {$pretty_placement} place.";
+		}
+
+		$feedback['text'][] = $response;
+
+	}
+
+	foreach ( $entries_to_remove as $remove ) {
+
+		$pretty_placement = cb_core_ordinal_suffix($remove['placement']);
+		$response['text'] = $entries_to_remove;
+		$deleted = $contest_obj->delete($remove);
+		if ( is_int( $deleted ) ) {
+			$response['type'] = "success";
+			$response['text'] = "Successfully removed {$pretty_placement} place.";
+		} else {
+			$response['type'] = "error";
+			$response['text'] = "Failed to remove {$pretty_placement} place.";
+		}
+
+		$feedback['text'][] = $response;
+
+	}
+
+	$feedback['type'] = "info";
+
 
 	echo json_encode($feedback);
 	die();

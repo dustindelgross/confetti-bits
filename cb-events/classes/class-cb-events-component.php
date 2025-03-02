@@ -33,7 +33,7 @@ class CB_Events_Component extends CB_Component {
 	 */
 	public function includes( $includes = [] ) {
 
-		$includes = [ 'functions', 'template' ];
+		$includes = [ 'functions', 'template', 'notifications' ];
 
 		parent::includes($includes);
 
@@ -75,7 +75,7 @@ class CB_Events_Component extends CB_Component {
 	 */
 	public function register_api_endpoints( $components = [] ) {
 
-		$components = ['events', 'contests'];
+		$components = ['events', 'contests', 'transactions', 'bda'];
 
 		parent::register_api_endpoints($components);
 	}
@@ -91,7 +91,9 @@ class CB_Events_Component extends CB_Component {
 		$components = [
 			'events' => [
 				'events' => ['get'],
-				'contests' => ['get'],
+				'bda' => ['get'],
+				'contests' => ['get', 'update' ],
+				'transactions' => ['get', 'new'],
 				'dependencies' => ['jquery']
 			],
 		];
@@ -100,6 +102,7 @@ class CB_Events_Component extends CB_Component {
 			$components['events_admin'] = [
 				'events' => [ 'new', 'get', 'update', 'delete' ],
 				'contests' => [ 'new', 'get', 'update', 'delete' ],
+				'transactions' => ['get'],
 				'dependencies' => ['jquery', 'jquery-ui-dialog'],
 			];
 		}

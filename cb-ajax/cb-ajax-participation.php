@@ -241,7 +241,11 @@ function cb_ajax_get_participation() {
 	if ( ! empty($_GET['date_query'] ) ) {
 		$get_args['where']['date_query'] = $_GET['date_query'];
 	}
-
+	
+	if ( !empty($_GET['page'] ) && !empty($_GET['per_page']) ) {
+		$get_args['pagination'] = ['page' => intval($_GET['page']), 'per_page' => intval($_GET['per_page'])];
+	}
+	
 	if ( !empty( $_GET['orderby'] ) ) {
 		$get_args['orderby']['column'] = !empty($_GET['orderby']['column'] ) ? trim($_GET['orderby']['column']) : 'id';
 		$get_args['orderby']['order'] = !empty($_GET['orderby']['order'] ) ? trim($_GET['orderby']['order']) : 'DESC';

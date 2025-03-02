@@ -46,12 +46,16 @@ function cb_templates_get_text_input( $args = [] ) {
 		'hidden' => false,
 		'textarea' => false,
 		'required' => false,
-		'container_classes' => []
+		'container_classes' => [],
+		'classes' => ['cb-form-line']
 	]);
 
 	if ( empty( $r['name'] ) ) {
 		return;
 	}
+
+
+
 
 	$input_tag = $r['textarea'] ? array('textarea', '></textarea') : array('input', '/');
 	$input_type = $r['textarea'] ? '' : ' type="text"';
@@ -61,12 +65,13 @@ function cb_templates_get_text_input( $args = [] ) {
 	$placeholder = !empty($r['placeholder']) ? ' placeholder="' . $r['placeholder'] . '"' : '';
 	$value = !empty($r['value']) ? ' value="' . $r['value'] . '"' : '';
 	$container_classes = implode(' ', $r['container_classes']);
+	$classes = ' class="' . implode(' ', array_merge($r['classes'], ['cb-form-line'])) . '"';
 	$label = "<label for='{$r['name']}'>{$r['label']}</label>";
 	$input_markup = "<{$input_tag[0]}
 		{$input_type}
 		name='{$r['name']}'
 		id='{$r['name']}'
-		class='cb-form-textbox'
+		{$classes}
 		{$placeholder}
 		{$value}
 		{$disabled}
@@ -398,23 +403,28 @@ function cb_templates_get_submit_input( $args = [] ) {
 	$r = wp_parse_args( $args, [
 		'name' => '',
 		'value' => 'Submit',
-		'disabled' => false
+		'disabled' => false,
+		'classes' => ['cb-submit'],
+		'custom_attrs' => []
 	]);
 
 	$disabled = $r['disabled'] ? 'disabled' : '';
 	$id = !empty($r['name']) ? ' id="' . $r['name'] . '"' : '';
 	$name = !empty($r['name']) ? ' name="' . $r['name'] . '"' : '';
+	$classes = ' class="' . implode( ' ', $r['classes'] ) . '"';
+	$custom_attrs = ! empty($r['custom_attrs']) ? implode( ' ', array_map(function ($key, $value) {
+		return sprintf( '%s="%s"', $key, $value );
+	}, array_keys($r['custom_attrs']), array_values($r['custom_attrs']))) : '';
 
-	$markup = "<ul class='cb-form-page-section'>
-		<li class='cb-form-line'>
+	$markup = "
 		<input
 		type='submit'
-		class='cb-submit'
+		{$classes}
 		value='{$r['value']}'
 		{$name}
 		{$id}
-		{$disabled} />
-		</li></ul>";
+		{$disabled} 
+		{$custom_attrs} />";
 
 	return $markup;
 
@@ -679,16 +689,20 @@ function cb_templates_get_toggle_switch_input($args = [])
 		'label' => 'Option',
 		'value' => '',
 		'checked' => false,
-		'disabled' => false
+		'disabled' => false,
+		'classes' => [],
+		'container_classes' => []
 	]);
 
 	$disabled = $r['disabled'] ? 'disabled' : '';
 	$checked = $r['checked'] ? 'checked' : '';
+	$classes = sprintf('class="%s"', implode(' ', array_merge($r['classes'], ['cb-toggle-switch'])));
+	$container_classes = sprintf('class="%s"', implode(' ', array_merge($r['container_classes'], ['cb-toggle-switch-container'])));
 
-	$markup = "<div class='cb-toggle-switch-container'>
+	$markup = "<div {$container_classes}>
 				<input
 					type='checkbox'
-					class='cb-toggle-switch'
+					{$classes}
 					name='{$r['name']}'
 					id='{$r['name']}'
 					value='{$r['value']}'
@@ -816,11 +830,12 @@ function cb_templates_get_form_module($args = [])
 	$r = wp_parse_args($args, [
 		'component' => '',
 		'method' => '',
-		'classes' => ['cb-form'],
+		'classes' => [],
+		'container_classes' => [],
 		'action' => $cb->page,
 		'output' => '',
 		'enctype' => 'multipart/form-data',
-		'autocomplete' => '',
+		'autocomplete' => ''
 	]);
 
 	$valid_methods = ['GET', 'PUT', 'PATCH', 'POST', 'DELETE'];
@@ -835,18 +850,60 @@ function cb_templates_get_form_module($args = [])
 	}
 
 	$name = ' name="cb_' . esc_attr($r['component']) . '_form"';
+	$container_id = 'cb_' . esc_attr($r['component']) . '_form_container';
 	$id = ' id="cb_' . esc_attr($r['component']) . '_form"';
 	$enctype = $method === 'POST' ? ' enctype="' . $r['enctype'] . '"' : '';
 	$autocomplete = !empty($r['autocomplete']) ? ' autocomplete="' . $r['autocomplete'] . '"' : '';
 	$method_output = ' method="' . $method . '"';
-	$classes = !empty($r['classes']) ? ' class="' . implode(' ', $r['classes']) . '"' : '';
+	$classes = !empty($r['classes']) ? ' class="' . implode(' ', $r['classes'] ) . '"' : '';
 	$action = ' action="' . esc_url($r['action']) . '"';
 	$output = is_array($r['output']) ? cb_templates_get_form_output($r['output']) : $r['output'];
 
 	return cb_templates_container([
-		'classes' => ['cb-module'],
+		'classes' => $r['container_classes'],
+		'name' => $container_id,
 		'output' => "<form{$name}{$id}{$enctype}{$autocomplete}{$method_output}{$classes}{$action}>{$output}</form>"
 	]);
+
+}
+
+/**
+ * Returns formatted markup for a form button. Note that this
+ * should not be used as a submit button; we typically use 
+ * input[type=submit] for that functionality. Here we'll
+ * default to button[type=button] to ensure that we can have it
+ * do what we want and not make the app have a heart attack.
+ * 
+ * @param array $args { 
+ * 		An associative array of arguments.
+ * 		Accepts various attributes of button elements, with 
+ * 		support for your own custom attributes as well.
+ * }
+ * @return string The formatted markup.
+ * 
+ * @package ConfettiBits\Templates
+ * @since 3.0.0
+ */
+function cb_templates_get_form_button( $args = [] ) {
+
+	$r = wp_parse_args($args, [
+		'type' => 'button',
+		'name' => '',
+		'classes' => ['btn', 'btn-primary'],
+		'custom_attrs' => [],
+		'value' => ''
+	]);
+
+	$type = ' type="' . esc_attr($r['type']) . '"';
+
+	//	$id = $r['id'] !== '' ? ' id="' . esc_attr($r['id']) . '"' : '';
+	$name = $r['name'] !== '' ? ' id="' . esc_attr($r['name']) . '"' : '';
+	$classes = ' class="' . implode( ' ', $r['classes'] ) . '"';
+	$custom_attrs = ! empty($r['custom_attrs']) ? implode( ' ', array_map(function ($key, $value) {
+		return sprintf( '%s="%s"', $key, $value );
+	}, array_keys($r['custom_attrs']), array_values($r['custom_attrs']))) : '';
+
+	return "<button{$type}{$name}{$custom_attrs}{$classes}>{$r['value']}</button>";
 
 }
 
@@ -897,14 +954,26 @@ function cb_templates_get_form_output($args = [])
 		'component' => '',
 		'heading' => '',
 		'content' => [],
-		'inputs' => []
+		'inputs' => [],
+		'modal' => false
 	]);
 
 	if ($r['component'] === '') {
 		return;
 	}
 
-	$content = $r['heading'] !== '' ? cb_templates_get_heading($r['heading']) : '';
+	$content = '';
+	$content .= $r['modal'] ? '<div class="modal-content"><div class="modal-header">' : '';
+	$content .= $r['heading'] !== '' ? cb_templates_get_heading($r['heading']) : '';
+	$content .= $r['modal'] ? cb_templates_get_form_button([
+		'classes' => ['btn', 'btn-close'],
+		'custom_attrs' => [
+			'data-bs-dismiss' => 'modal',
+			'aria-label' => 'Close',
+		],
+		'value' => ''
+	]) : '';
+	$content .= $r['modal'] ? '</div><div class="modal-body">' : '';
 	if (!empty($r['content'])) {
 		$content .= is_array($r['content']) ? 
 			sprintf("<p class='%s cb-form-content'>%s</p>", "cb-{$r['component']}-form-content", $r['content'])
@@ -912,20 +981,101 @@ function cb_templates_get_form_output($args = [])
 	}
 
 	if (!empty($r['inputs'])) {
+
 		foreach ($r['inputs'] as $input) {
+
+			if ( $input['type'] === 'new_node' ) {
+				$content .= cb_templates_recursive_helper($input['args']);
+				continue;
+			}
+
+			if ( $input['type'] === 'button' ) {
+				$input['args']['name'] = "cb_{$r['component']}_{$input['args']['name']}";
+				$content .= cb_templates_get_form_button($input['args']);
+				continue;
+			}
+
+			if ( $input['type'] === 'container' ) {
+				$input['args']['name'] = "cb_{$r['component']}_{$input['args']['name']}";
+				$content .= call_user_func("cb_templates_container", $input['args']);
+				continue;
+			}
+
+			if ( $input['type'] === 'date' ) {
+				$content .= call_user_func("cb_templates_get_{$input['type']}_input", $input['args']);
+				continue;
+			}
 
 			if ( $input['type'] !== 'datetime_picker' ) {
 				$input['args']['name'] = "cb_{$r['component']}_{$input['args']['name']}";
 				$content .= call_user_func("cb_templates_get_{$input['type']}_input", $input['args']);
-			} else {
-				$input['args']['date']['name'] = "cb_{$r['component']}_{$input['args']['date']['name']}";
-				$input['args']['time']['name'] = "cb_{$r['component']}_{$input['args']['time']['name']}";
-				$content .= call_user_func( "cb_templates_get_datetime_picker_input", $input['args'] );	
+				continue;
 			}
+
+
+			$input['args']['date']['name'] = "cb_{$r['component']}_{$input['args']['date']['name']}";
+			$input['args']['time']['name'] = "cb_{$r['component']}_{$input['args']['time']['name']}";
+			$content .= call_user_func( "cb_templates_get_datetime_picker_input", $input['args'] );
 		}
 	}
 
+	$content .= $r['modal'] ? '</div></div>' : '';
+
 	return $content;
+
+}
+
+/**
+ * A recursive helper function to help us process complex content trees.
+ * 
+ * It'll recurse through each node that's labeled as a 'new_node' and return
+ * a string of content that's ready to echo out into the world.
+ * 
+ * @param array $args { 
+ * 		An associative array of arguments. It expects a few things here:
+ * 			@type array $new_node A node to recurse into for processing.
+ * 			@type array $node_content { 
+ * 				A node with content to process. Expects something like the following:
+ * 				@type string $type The type of content.
+ * 				@type array $args An array of arguments to pass to the processing function.
+ * 			}
+ * }
+ * 
+ * @return string The glorious content.
+ * 
+ * @package ConfettiBits\Templates
+ * @since 3.0.0
+ */
+function cb_templates_recursive_helper($node = []) {
+
+	if ( isset( $node['new_node'] ) ) {
+		return cb_templates_recursive_helper($node['new_node']);
+	}
+
+	if ( !empty($node['node_content']) ) {
+
+		if ( $node['node_content']['type'] === 'new_node' ) {
+			return cb_templates_recursive_helper($node['node_content']['args']);
+		}
+
+		if ( $node['node_content']['type'] === 'container' ) {
+			return call_user_func("cb_templates_container", $node['node_content']['args']);
+		}
+
+		if ( $node['node_content']['type'] === 'datetime_picker' ) {
+			$node['args']['date']['name'] = "cb_{$node['args']['component']}_{$node['args']['date']['name']}";
+			$node['args']['time']['name'] = "cb_{$node['args']['component']}_{$node['args']['time']['name']}";
+			return call_user_func( "cb_templates_get_datetime_picker_input", $node['args'] );
+		}
+
+		if ( $node['node_content']['type'] !== 'datetime_picker' && $node['node_content']['type'] !== 'container' ) {
+			return call_user_func("cb_templates_get_{$node['node_content']['type']}_input", $node['node_content']['args']);
+		}
+
+	}
+
+	// Return nothing if we didn't pass any of the tests above.
+	return '';
 
 }
 
@@ -957,7 +1107,7 @@ function cb_templates_get_time_picker_input($args = [])
 	$r = wp_parse_args($args, [
 		'name' => '',
 		'label' => '',
-		'classes' => ['cb-time-picker'],
+		'classes' => ['cb-time-picker', 'mb-3'],
 		'value' => '',
 		'placeholder' => '',
 		'min' => '',
@@ -1057,7 +1207,7 @@ function cb_templates_get_date_picker_input( $args = [] ) {
 		'disabled' => false,
 		'hidden' => false,
 		'required' => false,
-		'classes' => ['cb-date-picker']
+		'classes' => ['cb-date-picker', 'mb-3']
 	]);
 
 	if ( empty( $r['name'] ) ) {
@@ -1181,7 +1331,7 @@ function cb_datetime_picker( $args = [] ) {
  * @since 3.0.0
  */
 function cb_templates_get_datetime_local_input( $args = [] ) {
-	
+
 	$r = wp_parse_args( $args, [
 		'label' => '',
 		'name' => '',
@@ -1192,7 +1342,7 @@ function cb_templates_get_datetime_local_input( $args = [] ) {
 		'required' => false,
 		'classes' => ['cb-datetime-local']
 	]);
-	
+
 	if ( empty( $r['name'] ) ) {
 		return;
 	}
@@ -1220,7 +1370,7 @@ function cb_templates_get_datetime_local_input( $args = [] ) {
 		'classes' => $r['classes'],
 		'output' => $content
 	]);	
-	
+
 }
 
 /**
@@ -1233,4 +1383,148 @@ function cb_templates_get_datetime_local_input( $args = [] ) {
  */
 function cb_datetime_local_input( $args = [] ) {
 	echo cb_templates_get_datetime_local_input($args);
+}
+
+/**
+ * Outputs markup for an actually nice date input. Uses
+ * Bootstrap styling and plugs in some custom data based on
+ * arguments passed.
+ * 
+ * @param array $args { 
+ * 		An optional array of arguments. 
+ * } 
+ */
+function cb_templates_get_date_input( $args = [] ) {
+
+	$r = wp_parse_args( $args, [
+		'label' => '',
+		'component' => '',
+		'placeholder' => cb_core_current_date(true, 'm/d/Y'),
+		'value' => '',
+		'disabled' => false,
+		'readonly' => true,
+		'required' => false
+	]);
+
+	$component_prefix = "cb_{$r['component']}";
+	$with_dashes = str_replace('_', '-', $component_prefix);
+	$placeholder = esc_attr($r['placeholder']);
+	$readonly = $r['readonly'] ? 'readonly' : ''; 
+	$disabled = $r['disabled'] ? 'disabled' : ''; 
+	$required = $r['required'] ? 'required' : ''; 
+	$value = !empty($r['value']) ? cb_core_sanitize_string($r['value']) : ''; 
+	$label = !empty($r['label']) ? cb_core_sanitize_string($r['label']) : '';
+
+	$input = cb_templates_get_text_input([
+		'name' => "{$component_prefix}_calendar_date_input",
+		'value' => $value,
+		'label' => $label,
+		'placeholder' => $placeholder
+	]);
+
+	// <input type='text' class='form-control' 
+	//	id='{$component_prefix}_calendar_date_input' 
+	//	name='{$component_prefix}_calendar_date_input' {$placeholder} readonly>
+
+	return "<div class='date-picker-container position-relative'>
+		{$input}
+		<div class='d-none {$with_dashes}-calendar position-absolute card z-3' style='min-width:30vw;max-width:100%;width:30rem;'>
+			<div class='card-header text-center row row-cols-4 mx-0 justify-content-center'>
+				<div class='col text-center'>
+					<button type='button' class='btn btn-outline-secondary {$with_dashes}-calendar-prev-btn'>Prev</button>
+				</div>
+				<div class='col text-center'>
+					<select class='{$with_dashes}-calendar-month-dropdown form-select'></select>
+				</div>
+				<div class='col text-center'>
+					<select class='{$with_dashes}-calendar-year-dropdown form-select'></select>
+				</div>
+				<div class='col text-center'>
+					<button type='button' class='btn btn-outline-secondary {$with_dashes}-calendar-next-btn'>Next</button>
+				</div>
+			</div>
+			<div class='card-body text-center'>
+				<div class='my-2 fw-semibold'>
+					<div class='row'>
+						<span class='col' style='flex: 0 1 calc(100%/7);'>S</span>
+						<span class='col' style='flex: 0 1 calc(100%/7);'>M</span>
+						<span class='col' style='flex: 0 1 calc(100%/7);'>T</span>
+						<span class='col' style='flex: 0 1 calc(100%/7);'>W</span>
+						<span class='col' style='flex: 0 1 calc(100%/7);'>T</span>
+						<span class='col' style='flex: 0 1 calc(100%/7);'>F</span>
+						<span class='col' style='flex: 0 1 calc(100%/7);'>S</span>
+					</div>
+				</div>
+				<div class=' text-center'>
+					<div id='{$component_prefix}_calendar_days' class='row'></div>
+				</div>
+			</div>
+		</div>
+	</div>";
+
+}
+
+/**
+ * Outputs markup for a pretty date input.
+ * 
+ * @param array $args An optional array of arguments. 
+ * {
+ * 		@type string $component Used for HTML naming conventions.
+ * 		@type array $container_classes An array of classes that will be added to the element's styling.
+ * 		@type int $minute_step Allows the option for time blocks, instead of 60 different options in the select markup. Default 1.
+ * 		@type array $value A two-value array of integers that represent the hour and minute, so you can provide defaults on render.
+ * }
+ * 
+ * @return string The formatted markup.
+ * 
+ * @package Templates
+ * @since 3.0.0
+ */
+function cb_date_input($args = []) {
+	echo cb_templates_get_date_input($args);
+}
+
+function cb_templates_get_time_selector_input( $args = [] ) {
+
+	$r = wp_parse_args( $args, [
+		'component' => '',
+		'container_classes' => [],
+		'minute_step' => 1,
+		'value' => [1,0]
+	]);
+
+	$hours_options = '';
+	$minutes_options = '';
+	$values = array_map('intval', $r['value']);
+
+	for ( $i = 1; $i <= 12; $i++ ) {
+		$hours_options .= '<option value="' . $i . '" ' . ($i === $values[0] ? "selected" : "") . '>' . $i . '</option>';
+	}
+
+	for ( $j = 0; $j <= 60; $j+= $r['minute_step'] ) {
+		$minutes_options .= '<option value="' . ($j < 10 ? 0 : "") . $j . '"' . ($j === $values[1] ? " selected" : "") . '>' . ($j < 10 ? 0 : '') . $j . '</option>';
+	}
+	
+	$classes = ' class="' . implode(' ', array_merge( ['d-flex', 'my-2'], $r['container_classes'] ) ) . '"';
+	$ids = ["cb_{$r['component']}_time_selector_container", "cb_{$r['component']}_time_selector_hour", "cb_{$r['component']}_time_selector_minute", "cb_{$r['component']}_time_selector_meridiem" ];
+	
+	return sprintf('<div %s id="%s" style="gap:.25rem;">
+      <select class="form-select" id="%s" >
+			%s
+      </select>
+      <select class="form-select" id="%s" >
+			%s
+      </select>
+      <select class="form-select" id="%s" >
+        <option value="AM" selected>AM</option>
+        <option value="PM">PM</option>
+      </select>
+    </div>', $classes, $ids[0], $ids[1], $hours_options, $ids[2], $minutes_options, $ids[3] );
+
+}
+
+function cb_time_selector_input( $args = [] ) {
+	
+	echo cb_templates_get_time_selector_input($args);
+	
 }

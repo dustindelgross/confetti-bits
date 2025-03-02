@@ -83,7 +83,7 @@ function cb_member_get_template_part( $template = '' ) {
  * 
  * @return An array of the active templates.
  * 
- * @package ConfettiBits\Core
+ * @package Core
  * @subpackage Templates
  * @since 1.0.0
  */
@@ -93,21 +93,22 @@ function cb_get_active_templates() {
 	$templates = [
 		'Dashboard Header'	=> 'dashboard-header',
 		'Dashboard'			=> 'dashboard',
-		'My Participation'	=> 'participation',
+		//'My Participation'	=> 'participation',
 		'My Transactions'	=> 'transactions',
 		'My Requests'		=> 'requests',
+		'Events'			=> 'events',
 	];
-	
+
 	if ( cb_is_user_participation_admin() ) {
-		$templates['Participation Admin'] = 'participation-admin';
+		//$templates['Participation Admin'] = 'participation-admin';
 	}
-	
+
 	if ( cb_is_user_requests_admin() ) {
 		$templates['Requests Admin'] = 'requests-admin';
 	}
-	
+
 	if ( cb_is_user_events_admin() ) {
-		
+		$templates['Events Admin'] = 'events-admin';
 	}
 
 	if ( 1 == $debug ) {
@@ -115,8 +116,7 @@ function cb_get_active_templates() {
 	}
 
 	if ( cb_is_user_site_admin() ) {
-		$templates['Events'] = 'events';
-		$templates['Events Admin'] = 'events-admin';
+		$templates['Settings'] = 'settings';
 	}
 
 	return $templates;
@@ -134,14 +134,18 @@ function cb_get_active_templates() {
  */
 function cb_member_template_part() {
 
-	$templates = array_values( cb_get_active_templates() );
+	$cb = Confetti_Bits();
+	if (cb_is_user_confetti_bits()) {
+		$templates = array_values( cb_get_active_templates() );
 
-	foreach ( $templates as $template ) {
-		cb_member_get_template_part( $template );
+		foreach ( $templates as $template ) {
+			cb_member_get_template_part( $template );
+		}
+
+		do_action( 'cb_after_member_body' );
 	}
-
-	do_action( 'cb_after_member_body' );
 }
+// add_action('cb_template_redirect', 'cb_member_template_part');
 
 /**
  * Adds Confetti Captain badges to the user's member profile page

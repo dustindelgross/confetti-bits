@@ -34,7 +34,7 @@ export const toMySQLUTCDate = (component, input) => {
 	let formattedDate = `${dateParts[2]}-${dateParts[0].padStart(2, '0')}-${dateParts[1].padStart(2, '0')}`;
 	let meridiem = jQuery(timeSelectorPrefix('meridiem')).val();
 	let hour = parseInt(jQuery(timeSelectorPrefix('hour')).val());
-	let minute = jQuery(timeSelectorPrefix('minute')).val();
+	let minute = parseInt(jQuery(timeSelectorPrefix('minute')).val());
 
 	if (meridiem === "PM" && hour !== 12) {
 		hour += 12;
@@ -326,19 +326,26 @@ export const DateInput = (component) => {
 export const getUserName = async (userId) => {
 
 	let retval = '';
-
-	await jQuery.ajax({
-		method: 'GET',
-		url: 'https://teamctg.com/wp-json/buddyboss/v1/members',
-		data: {
-			user_ids: [userId]
-		},
-		success: ([firstUser, ...rest]) => retval = firstUser.name ?? 'Unkown Member',
-		error: err => console.error(err)
-	});
-
-	return retval;
-
+	const params = new URLSearchParams({
+		user_ids: [userId]
+	}).toString();
+	const url = `https://teamctg.com/wp-json/buddyboss/v1/members?${params}`;
+	try {
+		const res = await fetch(url);
+		if (!res.ok) {
+			throw new Error(`Response status: ${res.status}`);
+		}
+		const json = await res.json();
+		if ( json.length > 0 ) {
+			retval = json[0].name;
+		} else {
+			retval = "Unknown Member";
+		}
+		return retval;
+	} catch(error) {
+		console.error(error.message);
+		return;
+	};
 }
 
 export const DataTable = async (userConfig = {}) => {
@@ -478,12 +485,12 @@ export const DataTable = async (userConfig = {}) => {
 		prevButton.attr(`data-${withDashes}-page`, prev);
 		nextButton.attr(`data-${withDashes}-page`, next);
 		lastButton.attr(`data-${withDashes}-page`, last);
-		
+
 		firstButton.parent().toggleClass('disabled', (page === 1));
 		prevButton.parent().toggleClass('disabled', (page === 1));
 		nextButton.parent().toggleClass('disabled', (page === last));
 		lastButton.parent().toggleClass('disabled', (page === last));
-		
+
 	}
 
 	async function setupPagination (page) {
@@ -555,30 +562,29 @@ export const DataTable = async (userConfig = {}) => {
 	}
 
 	async function populateTable({ text, type }) {
+
+		if ( !text ) {
+			tableBody.append(jQuery('<p>No items found.</p>'));
+		}
+
 		setupPagination(config.fetchList.data.page);
-		let entries = [];
 		if ( config.populateTable !== false ) {
-			if (text !== false) {
-				tableBody.empty();
-				await text.sort((a,b) => parseInt(b.id) - parseInt(a.id) );
-				text.forEach(async r => {
-					await createEntry(r);
-				});
-			} else {
-				tableBody.append(jQuery('<p>No items found.</p>'));
-			}
+			tableBody.empty();
+			await text.sort((a,b) => parseInt(b.id) - parseInt(a.id) );
+			text.forEach(async r => {
+				await createEntry(r);
+			});
 		}
 	}
 
 	async function regenerateTable() {
-		try {
-			let entries = await jQuery.ajax(config.fetchList);
 
-			populateTable(entries);
+		let entries;
+		entries = jQuery.ajax(config.fetchList).then(res => {
+			populateTable(res);
+		});
+		// console.error("Error in regenerateTable");
 
-		} catch (error) {
-			console.error("Error in regenerateTable:", error);
-		}
 	}
 
 	regenerateTable();

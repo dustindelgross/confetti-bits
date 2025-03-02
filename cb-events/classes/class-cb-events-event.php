@@ -184,7 +184,9 @@ class CB_Events_Event
 		return $retval;
 
 	}
-	
+
+
+
 	/**
 	 * Determines whether the given Event exists in the database.
 	 * 
@@ -192,31 +194,31 @@ class CB_Events_Event
 	 * to check ourselves whether
 	 */
 	public function exists($id = 0) {
-		
+
 		global $wpdb;
 		$cb = Confetti_Bits();
-		
+
 		if ( $id === 0 ) {
 			$id = $this->id;
 		}
-		
+
 		// Don't pass an empty ID perhaps?
 		if ( empty( $id ) ) {
 			return false;
 		}
-		
+
 		$select_sql = "SELECT id";
 		$from_sql = "FROM {$cb->events->table_name}";
 		$where_sql = self::get_where_sql(['id' => intval($id)]);
 		$pagination_sql = self::get_paged_sql(['page' => 1, 'per_page' => 1]);
-		
+
 		$sql = "{$select_sql} {$from_sql} {$where_sql} {$pagination_sql}";
-		
+
 		$results = $wpdb->get_results($sql, 'ARRAY_A');
-		
+
 		// Should be exactly 1 event object with the given ID.
 		return sizeof($results) === 1;
-		
+
 	}
 
 	/**
@@ -278,6 +280,56 @@ class CB_Events_Event
 	}
 
 	/**
+	 * A general purpose method to retrieve member profile data. Used with 
+	 * BuddyBoss Platform. Will not work if you don't have that. Will we 
+	 * replace it? Maybe someday. I would like to. But I have two hands,
+	 * and barely three brain cells; have mercy, I beg your pardon.
+	 * 
+	 * @param array $args { 
+	 * 		An opinionated albeit mostly optional array of arguments.
+	 * 		@type string|array	$select Columns you want to select.
+	 * 		@type array 		$where Key-value pairs of parameters to pack into a WHERE clause.
+	 * 		@type array			$orderby [ 'column' => 'my_column', 'order' => 'ASC_or_DESC' ]
+	 * 		@type array			$pagination [ 'page' => 1+, 'per_page' => 1+ ]
+	 * 		@type string		$group Columns you want to group by.
+	 * }
+	 * 
+	 * @return An array of members whose data is in an associative array format.
+	 * 
+	 * @package Events
+	 * @since 3.0.1
+	 */
+	public function get_member_data( $args = [] ) {
+
+		global $wpdb;
+		$bp = buddypress();
+
+		$r = wp_parse_args(
+			$args,
+			[
+				'select' => '*',
+				'where' => [],
+				'orderby' => [],
+				'pagination' => [],
+				'group' => '',
+			]
+		);
+
+		$select = (is_array($r['select'])) ? implode(', ', $r['select']) : $r['select'];
+		$select_sql = "SELECT {$select}";
+		$from_sql = "FROM {$wpdb->prefix}bp_xprofile_data";
+		$where_sql = self::get_where_sql($r['where']);
+		$orderby_sql = (!empty($r['orderby'])) ? self::get_orderby_sql($r['orderby']) : '';
+		$group_sql = (!empty($r['group'])) ? "GROUP BY {$r['group']}" : '';
+		$pagination_sql = self::get_paged_sql($r['pagination']);
+
+		$sql = "{$select_sql} {$from_sql} {$where_sql} {$group_sql} {$orderby_sql} {$pagination_sql}";
+
+		return $wpdb->get_results($sql, 'ARRAY_A');
+
+	}
+
+	/**
 	 * Update
 	 * Update the event in the database.
 	 *
@@ -317,8 +369,7 @@ class CB_Events_Event
 	 * @param array $where_format See {@link wpdb::insert()}.
 	 * @return int|false The number of rows updated, or false on error.
 	 */
-	protected static function _update($data = [], $where = [], $data_format = [], $where_format = [])
-	{
+	protected static function _update($data = [], $where = [], $data_format = [], $where_format = []) {
 		global $wpdb;
 
 		$retval = $wpdb->update(
@@ -342,8 +393,7 @@ class CB_Events_Event
 	 *                           [ 'item_id' => 7, 'component_action' => 'cb_event', ).
 	 * @return int|false Number of rows updated on success, false on failure.
 	 */
-	public static function delete($where_args = [])
-	{
+	public static function delete($where_args = []) {
 		$where = self::get_query_clauses($where_args);
 
 		return self::_delete(
@@ -365,13 +415,10 @@ class CB_Events_Event
 	 * @uses Confetti_Bits_Event_Event::get_where_sql()
 	 *
 	 */
-	protected static function _delete($where = [], $where_format = [])
-	{
+	protected static function _delete($where = [], $where_format = []) {
 
 		global $wpdb;
-		$cb = Confetti_Bits();
-
-		return $wpdb->delete($cb->events->table_name, $where, $where_format);
+		return $wpdb->delete(Confetti_Bits()->events->table_name, $where, $where_format);
 
 	}
 
@@ -529,14 +576,24 @@ class CB_Events_Event
 
 		$sql = '';
 		$columns = ['date_created', 'date_modified', 'event_start', 'event_end'];
-		$column = !empty($date_query['column']) && in_array($date_query['column'], $columns) ?
-			$date_query['column'] : 'event_start';
+		$relation = $date_query['relation'] ?? 'AND';
+		unset($date_query['relation']);
+		foreach ($date_query as $dq) {
+			$column = !empty($dq['column']) && in_array($dq['column'], $columns) ? $dq['column'] : 'event_start';
+			$date_query_instance = new CB_Core_Date_Query($dq, $column);
+			$sql_segment = preg_replace('/^\sAND/', '', $date_query_instance->get_sql());
+			if (!empty($sql_segment)) {
+				$sqls[] = $sql_segment;
+			}
+		}
 
+		return '(' . implode(" $relation ", $sqls) . ')';
+		/*
 		$date_query = new CB_Core_Date_Query($date_query, $column);
 		$sql = preg_replace('/^\sAND/', '', $date_query->get_sql());
 
 		return $sql;
-
+*/
 	}
 
 	/**
@@ -600,8 +657,28 @@ class CB_Events_Event
 			$user_id_in = implode(',', wp_parse_id_list($args['user_id']));
 			$where_conditions['user_id'] = "user_id IN ({$user_id_in})";
 		}
+		
+		// For birthdays and anniversaries in BuddyBoss Platform
+		if ( !empty( $args['field_id'] ) ) {
+			$field_id_in = implode(',', wp_parse_id_list($args['field_id']));
+			$where_conditions['field_id'] = "field_id IN ({$field_id_in})";
+		}
 
 		if (!empty($args['event_title'])) {
+			$event_titles = explode(',', $args['event_title']);
+
+			$event_title_conditions = [];
+			foreach ($event_titles as $event_title) {
+				// trim() to remove potential whitespace from comma-separated values
+				$clean_event_title = trim($event_title);
+				$prepared_title = $wpdb->prepare('%s', '%' . $wpdb->esc_like($clean_event_title) . '%');
+				$event_title_conditions[] = "event_title LIKE $prepared_title";
+			}
+
+			$event_title_like = implode(' OR ', $event_title_conditions);
+
+			$where_conditions['event_title'] = "($event_title_like)";
+			/*
 			$event_titles = explode(',', $args['event_title']);
 
 			$event_title_clean = [];
@@ -612,6 +689,7 @@ class CB_Events_Event
 			$event_title_like = implode(',', $event_title_clean);
 
 			$where_conditions['event_title'] = "event_title LIKE %{$event_title_like}%";
+			*/
 		}
 
 		if (!empty($args['event_desc'])) {

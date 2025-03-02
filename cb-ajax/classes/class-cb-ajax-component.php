@@ -44,16 +44,18 @@ class CB_Ajax_Component extends CB_Component {
 	public function includes( $includes = array() ) {
 
 		// Files to include.
-		$includes = array(
+		$includes = [
+			'settings',
 			'transactions',
 			'participation',
 			'requests',
 			'request-items',
 			'events',
 			'contests',
-			'functions',
+			'spot-bonuses',
+			'volunteers',
 			
-		);
+		];
 		
 		parent::includes($includes);
 

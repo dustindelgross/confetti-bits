@@ -759,7 +759,7 @@ No requests found.
 				await cbRequestItemsPagination(page);
 				if ( data.text !== false ) {
 					let entries = JSON.parse(data.text);
-					requestItemsTable.children().remove();
+					requestItemsTable.empty();
 					formatRequestItemsHeaderRow();
 					entries.sort( (a,b) => b.id - a.id );
 					for (let r of entries) {
@@ -795,7 +795,7 @@ No requests found.
 				await cbRequestsPagination(page);
 				if ( data.text !== false ) {
 					let entries = JSON.parse(data.text);
-					requestsTable.children().remove();
+					requestsTable.empty();
 					formatRequestsHeaderRow();
 					entries.sort( (a,b) => b.id - a.id );
 					for (let r of entries) {
@@ -819,8 +819,6 @@ No requests found.
 			request_item_id: activeItemID,
 			api_key: cb_requests_admin.api_key
 		};
-
-		console.log(deleteData);
 
 		await $.ajax({
 			method: 'DELETE',

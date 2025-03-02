@@ -22,7 +22,7 @@ function cb_templates_container( $args = array() ) {
 
 	$r = wp_parse_args( $args, [
 		'container' => 'div',
-		'id' => '',
+		'name' => '',
 		'classes' => [],
 		'output' => '',
 	]);
@@ -48,16 +48,16 @@ function cb_templates_container( $args = array() ) {
 	$classes = '';
 	$output = trim($r['output']);
 
-	if ( ! empty( $r['id'] ) ) {
-		$id = ' id="' . esc_attr( $r['id'] ) . '"';
+	if ( ! empty( $r['name'] ) ) {
+		$id = ' id="' . esc_attr( $r['name'] ) . '"';
 	}
 
 	if ( ! empty( $r['classes'] ) && is_array( $r['classes'] ) ) {
-		$classes = ' class="' . join( ' ', array_map( 'sanitize_html_class', $r['classes'] ) ) . '"';
+		$classes = ' class="' . implode( ' ', array_map( 'sanitize_html_class', $r['classes'] ) ) . '"';
 	}
 
 	// Print the wrapper and its content.
-	return sprintf('<%1$s%2$s%3$s>%4$s</%1$s>', $container, $id, $classes, $output);
+	return "<{$container}{$id}{$classes}>{$output}</{$container}>";
 
 }
 
@@ -226,6 +226,80 @@ function cb_templates_get_link($args = array()) {
 
 	return "<a{$href}{$id}{$classes}{$custom_attrs}>{$content}</a>";
 
+}
+
+function cb_templates_get_table( $component = '', $heading = '', $paginated = true ) {
+	if ( empty( $component ) ) {
+		return;
+	}
+
+	$pagination = '';
+	$component_prefix = 'cb_' . trim( $component );
+	$with_dashes = str_replace( '_', '-', $component_prefix );
+
+	if ( $paginated ) {
+
+		/*
+		$page_number_input = cb_templates_get_number_input([
+			'label' => 'Go To...',
+			'name' => "cb_{$component}_go_to_page"
+		]);
+		$go_to_page_button = cb_templates_get_button([
+			'name' => "cb_{$component}_go_to_page_button"
+		]);
+		$go_to_page = cb_templates_container([
+			'classes' => ["cb-{$with_dashes}-go-to-page-container"],
+			'output' => $page_number_input . $go_to_page_button
+		]);
+		*/
+
+		if ( $heading !== '' ) {
+			$heading = cb_templates_get_heading($heading);
+		}
+
+		$pagination_buttons = "<nav aria-label='Search'>
+  <ul class='pagination' id='{$component_prefix}_pagination'>
+    <li class='page-item'>
+<a class='page-link {$with_dashes}-page-link {$with_dashes}-page-link-first' href='#' aria-label='First'>
+        First
+      </a>
+	  </li>
+
+  <li class='page-item'>
+<a class='page-link {$with_dashes}-page-link {$with_dashes}-page-link-prev' href='#' aria-label='Prev'>
+        Prev
+      </a>
+	  </li>
+    <li class='page-item'>
+      <a class='page-link {$with_dashes}-page-link {$with_dashes}-page-link-next' href='#' aria-label='Next'>
+	  Next
+      </a>
+    </li>
+	  <li class='page-item'>
+<a class='page-link {$with_dashes}-page-link {$with_dashes}-page-link-last' href='#' aria-label='Last'>
+        Last
+      </a>
+	  </li>
+  </ul>
+</nav>";
+
+		$pagination = cb_templates_container([
+			'classes' => ["{$with_dashes}-pagination-container", "cb-pagination-container"],
+			'output'  => $pagination_buttons
+		]);
+	}
+
+	$table = cb_templates_container([
+		"classes" => ["cb-data-table-container"],
+		"output" => sprintf( '<table class="table" id="%s_table">
+		<thead><tr id="%s_table_header"></tr></thead><tbody id="%s_table_body"></tbody>
+		</table>', $component_prefix, $component_prefix, $component_prefix )
+	]);
+
+	return cb_templates_container([ 
+		'classes' => ['cb-module', 'cb-module-full'],
+		'output' => sprintf( "%s%s%s", $heading,$pagination, $table )
+	]);
 }
 
 /**

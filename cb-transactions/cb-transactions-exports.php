@@ -68,7 +68,7 @@ function cb_transactions_get_history_for_user( $user_id = 0, $export_type = '' )
 	} else {
 		$limit = is_int(strpos( $export_type, 'leaderboard' ));
 		$prev = is_int(strpos( $export_type, 'previous' ));
-		$user_transactions = cb_get_leaderboard( $limit, $prev );
+		$user_transactions = cb_transactions_get_leaderboard( $limit, $prev );
 	}
 
 	$cb_new_date = new DateTime( 'now' );

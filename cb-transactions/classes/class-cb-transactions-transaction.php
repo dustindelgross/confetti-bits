@@ -116,6 +116,7 @@ class CB_Transactions_Transaction {
 		'component_name',
 		'component_action',
 		'amount',
+		'event_id',
 	);
 
 	public function __construct( $id = 0 ) {
@@ -144,10 +145,18 @@ class CB_Transactions_Transaction {
 
 	}
 
+	/**
+	 * Uses CB_Transactions_Transaction::_insert to plop a new
+	 * transaction in the database.
+	 * 
+	 * @return int|false The transaction ID on success, false on failure.
+	 */
 	public function send_bits() {
 
+		/*
+		global $wpdb;
 		$retval = false;
-		do_action( 'cb_transactions_before_send', array( &$this ) );
+		do_action( 'cb_transactions_before_send', [ &$this ] );
 		$data = [
 			'item_id' => $this->item_id,
 			'secondary_item_id' => $this->secondary_item_id,
@@ -161,12 +170,11 @@ class CB_Transactions_Transaction {
 			'event_id' => $this->event_id
 		];
 
-		$data_format = array( '%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%d', '%d' );
+		$data_format = [ '%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%d', '%d' ];
 
 		$result = self::_insert( $data, $data_format );
 
 		if ( ! empty( $result ) && ! is_wp_error( $result ) ) {
-			global $wpdb;
 
 			if ( empty( $this->id ) ) {
 				$this->id = $wpdb->insert_id;
@@ -175,22 +183,73 @@ class CB_Transactions_Transaction {
 			do_action( 'cb_transactions_after_send', $data );
 
 			$retval = $this->id;
-			
+
+		} else {
+			$retval = $wpdb->last_error;
+		}
+		*/
+
+		return $this->save();
+	}
+
+
+	/**
+	 * Uses CB_Transactions_Transaction::_insert to plop a new
+	 * transaction in the database.
+	 * 
+	 * @return int|false The transaction ID on success, false on failure.
+	 */
+	public function save() {
+
+		global $wpdb;
+		$retval = false;
+		do_action( 'cb_transactions_before_send', [ &$this ] );
+		$data = [
+			'item_id' => $this->item_id,
+			'secondary_item_id' => $this->secondary_item_id,
+			'sender_id' => $this->sender_id,
+			'recipient_id' => $this->recipient_id,
+			'date_sent' => $this->date_sent,
+			'log_entry' => $this->log_entry,
+			'component_name' => $this->component_name,
+			'component_action' => $this->component_action,
+			'amount' => $this->amount,
+			'event_id' => $this->event_id
+		];
+
+		$data_format = [ '%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%d', '%d' ];
+
+		$result = self::_insert( $data, $data_format );
+
+		if ( ! empty( $result ) && ! is_wp_error( $result ) ) {
+
+			if ( empty( $this->id ) ) {
+				$this->id = $wpdb->insert_id;
+			}
+
+			do_action( 'cb_transactions_after_send', $data );
+
+			$retval = $this->id;
+
+		} else {
+			$retval = $wpdb->last_error;
 		}
 
 		return $retval;
 	}
 
+	/**
+	 * Populates the object with data when passed a valid ID.
+	 * 
+	 * @param int $id A valid transaction ID.
+	 */
 	public function populate( $id ) {
-		$transaction = $this->get_transactions(
-			array(
-				'where' 	=> array( 'id' => $id ),
-			)
-		);
+
+		$transaction = $this->get_transactions(['where' => ['id' => $id]]);
 
 		global $wpdb;
 
-		$fetched_transaction = ( ! empty( $transaction[0] ) ? current( $transaction ) : array() );
+		$fetched_transaction = ( ! empty( $transaction[0] ) ? current( $transaction ) : [] );
 		if ( ! empty( $fetched_transaction ) && ! is_wp_error( $fetched_transaction ) ) {
 			$this->item_id           = (int) $fetched_transaction['item_id'];
 			$this->secondary_item_id = (int) $fetched_transaction['secondary_item_id'];
@@ -205,7 +264,24 @@ class CB_Transactions_Transaction {
 		}
 	}
 
-	protected static function _insert( $data = array(), $data_format = array() ) {
+	/**
+	 * Creates a new transaction in the database.
+	 * All the parameters for this are handled by 
+	 * CB_Transactions_Transaction->send_bits().
+	 * 
+	 * @param array $data { 
+	 *     An associative array of data to insert.
+	 *     Takes keys/values associated with a Transactions object.
+	 * }
+	 * 
+	 * @param array $data_format { 
+	 *     A single-dimensional array of formats (i.e., '%s', '%d', etc.)
+	 * 	   Should match the same order of the data array.
+	 * }
+	 * 
+	 * @return int The number of rows inserted.
+	 */
+	protected static function _insert( $data = [], $data_format = [] ) {
 		global $wpdb;
 		return $wpdb->insert( Confetti_Bits()->transactions->table_name, $data, $data_format );
 	}
@@ -248,10 +324,6 @@ class CB_Transactions_Transaction {
 
 		global $wpdb;
 		$cb = Confetti_Bits();
-
-		$where_sql = self::get_where_sql( $where );
-
-		$participation = $wpdb->get_results( "SELECT * FROM {$cb->transactions->table_name} {$where_sql}" );
 
 		return $wpdb->delete( $cb->transactions->table_name, $where, $where_format );
 
@@ -519,6 +591,11 @@ class CB_Transactions_Transaction {
 			$where_conditions['recipient_id'] = "recipient_id IN ({$recipient_id_in})";
 		}
 
+		if ( !empty( $args['event_id'] ) ) {
+			$event_id_in = implode( ',', wp_parse_id_list( $args['event_id'] ) );
+			$where_conditions['event_id'] = "event_id IN ({$event_id_in})";
+		}
+
 		if ( ! empty( $args['log_entry'] ) ) {
 			$log_entries	= explode( ',', $args['log_entry'] );
 
@@ -586,7 +663,7 @@ class CB_Transactions_Transaction {
 			$excluded_action = ! is_array( $args['excluded_action'] ) ? 
 				explode( ',', $args['excluded_action'] ) 
 				: $args['excluded_action'];
-			
+
 			$ca_clean = array();
 			foreach ( $excluded_action as $ca ) {
 				$ca_clean[] = $wpdb->prepare( '%s', $ca );
@@ -610,6 +687,8 @@ class CB_Transactions_Transaction {
 		if ( ! empty( $args['amount'] ) && ! empty( $args['amount_comparison'] ) ) {
 			$where_conditions['amount'] = "amount " . $args['amount_comparison'] . " " . $args['amount'];
 		}
+
+
 
 		if ( ! empty( $where_conditions ) ) {
 			$where = !empty( $args['or'] ) ? 
@@ -716,16 +795,12 @@ class CB_Transactions_Transaction {
 			$where_clauses['format'][]                 = '%s';
 		}
 
-		if ( isset( $args['event_id'] ) ) {
+		if ( !empty( $args['event_id'] ) ) {
 			$where_clauses['data']['event_id'] = $args['event_id'];
 			$where_clauses['format'][]       = '%d';
 		}
 
 		return $where_clauses;
 	}
-
-	//	protected static function strip_leading_and( $s ) {
-	//		return preg_replace( '/^\s*AND\s*/', '', $s );
-	//	}
 
 }
